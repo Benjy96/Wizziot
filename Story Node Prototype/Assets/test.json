@@ -1,0 +1,1 @@
+﻿{"inkVersion":17,"root":["^\"Hey, look, a floating sphere!\"","\n","done",{"sphere":[{"->":".^.interact"},{"interact":["^\"What the hell, man? Back off! Jesus Christ.\"","\n",["G>","ev",{"x()":"PushOff"},"out","/ev","G<",null],"\n","end",{"#f":3}],"#f":3}],"Push_Off":["ev","void","/ev","~ret",{"#f":3}],"#f":3}],"listDefs":{}}
