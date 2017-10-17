@@ -8,11 +8,10 @@ using Ink.Runtime;
 /// </summary>
 public class Script : MonoBehaviour {
 
-    public TextAsset inkAsset;  //Compiled JSON asset
+    [SerializeField] private TextAsset inkAsset;  //Compiled JSON asset
+    [SerializeField] private Story _inkStory;    //The story (ink story/script)
 
-    [SerializeField] private Story _inkStory;    //The story
-
-    public string storyLocation
+    public string StoryLocation
     {
         set
         {
@@ -20,13 +19,19 @@ public class Script : MonoBehaviour {
         }
     }
 
-    bool choiceNeeded = false;
+    private bool choiceNeeded = false;
 
     private void Awake()
     {
         _inkStory = new Story(inkAsset.text);   //The JSON string from the story
     }
 
+    /// <summary>
+    /// Makes calls to the ink story in a loop. There are two repeating stages:
+    /// 1. Present Content
+    /// 2. Present Choices
+    /// Followed by: 3. Make Choice
+    /// </summary>
     public void DoStory()
     {
         //1. Present content
@@ -47,7 +52,7 @@ public class Script : MonoBehaviour {
         }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         //3 Make choice
         if (choiceNeeded)

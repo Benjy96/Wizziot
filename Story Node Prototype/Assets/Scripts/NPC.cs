@@ -37,7 +37,7 @@ public class NPC : Interactable {
 
     public override void Interact()
     {
-        story.storyLocation = inkPath;
+        story.StoryLocation = inkPath;
         story.DoStory();
     }
 }
