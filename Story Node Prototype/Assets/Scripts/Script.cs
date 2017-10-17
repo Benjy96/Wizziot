@@ -9,7 +9,17 @@ using Ink.Runtime;
 public class Script : MonoBehaviour {
 
     public TextAsset inkAsset;  //Compiled JSON asset
-    public Story _inkStory;    //The story
+
+    [SerializeField] private Story _inkStory;    //The story
+
+    public string storyLocation
+    {
+        set
+        {
+            _inkStory.ChoosePathString(value);
+        }
+    }
+
     bool choiceNeeded = false;
 
     private void Awake()
@@ -39,7 +49,7 @@ public class Script : MonoBehaviour {
 
     private void Update()
     {
-        //2.1 Make choice
+        //3 Make choice
         if (choiceNeeded)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))

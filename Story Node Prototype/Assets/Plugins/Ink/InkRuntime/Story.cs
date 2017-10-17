@@ -17,6 +17,11 @@ namespace Ink.Runtime
         /// </summary>
         public const int inkVersionCurrent = 17;
 
+        public void ChoosePathString(Story value)
+        {
+            throw new NotImplementedException();
+        }
+
         // Version numbers are for engine itself and story file, rather
         // than the story state save format (which is um, currently nonexistant)
         //  -- old engine, new format: always fail
