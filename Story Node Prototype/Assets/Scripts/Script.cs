@@ -4,20 +4,13 @@ using UnityEngine;
 using Ink.Runtime;
 
 /// <summary>
-/// Holds/manages the current story state (set it). Presents content and choices. Then allows you to make choices.
+/// Holds/manages the current story state (set it). Presents content and choices, and then it allows you to make choices.
 /// </summary>
 public class Script : MonoBehaviour {
 
-    [SerializeField] private TextAsset inkAsset;  //Compiled JSON asset
-    [SerializeField] private Story _inkStory;    //The story (ink story/script)
+    public Story _inkStory;    //The story (ink story/script)
 
-    public string StoryLocation
-    {
-        set
-        {
-            _inkStory.ChoosePathString(value);
-        }
-    }
+    [SerializeField] private TextAsset inkAsset;  //Compiled JSON asset
 
     private bool choiceNeeded = false;
 
