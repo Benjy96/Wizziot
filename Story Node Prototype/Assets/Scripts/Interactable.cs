@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class Interactable : MonoBehaviour {
 
     public Script story;
-    public string inkPath = "";
+    protected string inkPath = "";
 
     public abstract void Interact();
 }

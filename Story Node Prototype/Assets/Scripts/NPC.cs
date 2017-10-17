@@ -12,18 +12,10 @@ public class NPC : Interactable {
 
     public float pushOffForce = 500f;
 
+    #region MonoBehaviours
     private void Awake()
     {
         story._inkStory.BindExternalFunction("PushOff", () => PushOff());
-    }
-
-    private void PushOff()
-    {
-        PlayerController player = FindObjectOfType<PlayerController>();
-        Vector3 away = (player.transform.position - new Vector3(transform.position.x, player.transform.position.y, transform.position.z)).normalized;
-        away *= pushOffForce;    //set magnitude
-
-        player.GetComponent<Rigidbody>().AddForce(away, ForceMode.Impulse);
     }
 
     void FixedUpdate()
@@ -33,6 +25,16 @@ public class NPC : Interactable {
 
         transform.position = pos;
         transform.Rotate(Vector3.up, Mathf.Sin(Time.time));
+    }
+    #endregion
+
+    private void PushOff()
+    {
+        PlayerController player = FindObjectOfType<PlayerController>();
+        Vector3 away = (player.transform.position - new Vector3(transform.position.x, player.transform.position.y, transform.position.z)).normalized;
+        away *= pushOffForce;    //set magnitude
+
+        player.GetComponent<Rigidbody>().AddForce(away, ForceMode.Impulse);
     }
 
     public override void Interact()
