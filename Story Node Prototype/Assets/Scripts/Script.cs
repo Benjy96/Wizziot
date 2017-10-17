@@ -53,15 +53,15 @@ public class Script : MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 _inkStory.ChooseChoiceIndex(0);
-                DoStory();
                 choiceNeeded = false;
+                DoStory();
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
                 _inkStory.ChooseChoiceIndex(1);
-                DoStory();
                 choiceNeeded = false;
+                DoStory();
             }
         }
     }
