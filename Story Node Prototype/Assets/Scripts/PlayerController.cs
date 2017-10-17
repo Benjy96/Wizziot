@@ -28,16 +28,6 @@ public class PlayerController : MonoBehaviour {
             //sphereNPC.GetComponent<Interactable>().Interact();
         }
 
-        if (interacted)
-        {
-            cooldown -= Time.deltaTime;
-            if(cooldown <= 0)
-            {
-                interacted = false;
-                cooldown = 1.5f;
-            }
-        }
-
         Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));   //get our directions
         Vector3 direction = input.normalized;   //normalize the direction (for when both are held at same time)
         Vector3 velocity = direction * speed * Time.deltaTime;  //get magnitude by multiplying by speed, then scale to time

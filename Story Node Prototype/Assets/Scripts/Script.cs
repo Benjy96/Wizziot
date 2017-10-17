@@ -16,15 +16,16 @@ public class Script : MonoBehaviour {
 
     public void DoStory()
     {
-        //Present content
+        //1. Present content
         while (_inkStory.canContinue)
         {
             Debug.Log(_inkStory.Continue());
         }
 
-        //Present Choices
-        if(_inkStory.currentChoices.Count > 0)
+        //2. Present choices
+        if (_inkStory.currentChoices.Count > 0)
         {
+            choiceNeeded = true;
             for (int i = 0; i < _inkStory.currentChoices.Count; i++)
             {
                 Choice choice = _inkStory.currentChoices[i];
@@ -35,39 +36,22 @@ public class Script : MonoBehaviour {
 
     private void Update()
     {
-        ////2.1 Make choice
-        //if (choiceNeeded)
-        //{
-        //    if (Input.GetKeyDown(KeyCode.Alpha1))
-        //    {
-        //        _inkStory.ChooseChoiceIndex(0);
-        //        choiceNeeded = false;
-        //    }
+        //2.1 Make choice
+        if (choiceNeeded)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                _inkStory.ChooseChoiceIndex(0);
+                DoStory();
+                choiceNeeded = false;
+            }
 
-        //    if (Input.GetKeyDown(KeyCode.Alpha2))
-        //    {
-        //        _inkStory.ChooseChoiceIndex(1);
-        //        choiceNeeded = false;
-        //    }
-        //}
-        //else
-        //{
-        //    //1. Present content
-        //    while (_inkStory.canContinue)
-        //    {
-        //        Debug.Log(_inkStory.Continue());
-        //    }
-
-        //    //2. Present choices
-        //    if (_inkStory.currentChoices.Count > 0 && choiceNeeded != true)
-        //    {
-        //        for (int i = 0; i < _inkStory.currentChoices.Count; i++)
-        //        {
-        //            Choice choice = _inkStory.currentChoices[i];
-        //            Debug.Log("Choice " + (i + 1) + ". " + choice.text);
-        //        }
-        //        choiceNeeded = true;
-        //    }
-        //}
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                _inkStory.ChooseChoiceIndex(1);
+                DoStory();
+                choiceNeeded = false;
+            }
+        }
     }
 }
