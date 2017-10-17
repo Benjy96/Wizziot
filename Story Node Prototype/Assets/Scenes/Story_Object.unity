@@ -529,7 +529,16 @@ Prefab:
     - target: {fileID: 114610396094676532, guid: 55d85d9d36b8ef8458f1d4f56681b3e4,
         type: 2}
       propertyPath: pushOffForce
-      value: 10
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 114610396094676532, guid: 55d85d9d36b8ef8458f1d4f56681b3e4,
+        type: 2}
+      propertyPath: inkPath
+      value: sphere.interact
+      objectReference: {fileID: 0}
+    - target: {fileID: 1003125731606806, guid: 55d85d9d36b8ef8458f1d4f56681b3e4, type: 2}
+      propertyPath: m_Name
+      value: Bob
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 55d85d9d36b8ef8458f1d4f56681b3e4, type: 2}
