@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Ink.Runtime;
 
+/// <summary>
+/// Holds/manages the current story state (set it). Presents content and choices. Then allows you to make choices.
+/// </summary>
 public class Script : MonoBehaviour {
 
     public TextAsset inkAsset;  //Compiled JSON asset

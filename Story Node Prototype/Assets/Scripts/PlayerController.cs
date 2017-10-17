@@ -11,12 +11,8 @@ public class PlayerController : MonoBehaviour {
     private bool interacted = false;
 
     public Interactable sphereNPC;
+    //TODO: Check differences in utility/(performance?) between GameObject/Interactable
     //public GameObject sphereNPC;
-
-	// Use this for initialization
-	void Start () {
-        
-	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -25,10 +21,11 @@ public class PlayerController : MonoBehaviour {
         {
             interacted = true;
             sphereNPC.Interact();
+            //TODO: Check differences in utility/(performance?) between GameObject/Interactable 
             //sphereNPC.GetComponent<Interactable>().Interact();
         }
 
-        if(distanceFromSphere > 5f && interacted == true)
+        if (distanceFromSphere > 5f && interacted == true)
         {
             interacted = false;
         }
