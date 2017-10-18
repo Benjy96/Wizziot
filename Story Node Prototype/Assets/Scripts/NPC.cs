@@ -28,11 +28,7 @@ public class NPC : InteractableNPC {
     //External functions MUST be set in start -- eliminates "Race" condition - inkStory is set in awake
     private void Start()
     {
-        if (externalsSet == false)
-        {
-            SetExternalFunctions();
-            externalsSet = true;
-        }
+        SetExternalFunctions();
     }
 
     void FixedUpdate()
@@ -53,8 +49,16 @@ public class NPC : InteractableNPC {
 
     public override void SetExternalFunctions()
     {
-        story._inkStory.BindExternalFunction("PushOff", () => PushOff());
-        story.
+        //Forgive me father, for I have sinned
+        //Removes need for statics - this allows us to check if we have already bound the external function
+        try
+        {
+            story._inkStory.ValidateExternalBindings();
+        }catch(Exception e)
+        {
+            story._inkStory.BindExternalFunction("PushOff", () => PushOff());
+        }
+        
     }
 
     private void PushOff()
