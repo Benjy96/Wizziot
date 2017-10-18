@@ -10,6 +10,13 @@ public class NPC : Interactable {
     [Range(0f, 0.5f)]
     public float bobRange = .5f;
 
+    PlayerController player;
+
+    private void Awake()
+    {
+        player = FindObjectOfType<PlayerController>();
+    }
+
     #region MonoBehaviours
     private void Start()
     {
@@ -34,8 +41,7 @@ public class NPC : Interactable {
 
     private void PushOff()
     {
-        PlayerController player = FindObjectOfType<PlayerController>();
-        Vector3 away = (player.transform.position - new Vector3(transform.position.x, player.transform.position.y, transform.position.z)).normalized;
+        Vector3 away = (player.transform.position - new Vector3(NPCPos.x, NPCPos.y, NPCPos.z)).normalized;
         away *= pushOffForce;    //set magnitude
 
         player.GetComponent<Rigidbody>().AddForce(away, ForceMode.Impulse);
@@ -50,5 +56,13 @@ public class NPC : Interactable {
     public override void SetExternalFunctions()
     {
         story._inkStory.BindExternalFunction("PushOff", () => PushOff());
+    }
+
+    private Vector3 NPCPos
+    {
+        get
+        {
+            return player.NPC.transform.position;
+        }
     }
 }
