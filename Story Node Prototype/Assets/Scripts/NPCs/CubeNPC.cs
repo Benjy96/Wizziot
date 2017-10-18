@@ -11,14 +11,6 @@ public class CubeNPC : InteractableNPC
     public float bobRange = .5f;
     public float pushOffForce = 20f;
 
-    private Vector3 InteractingNPC
-    {
-        get
-        {
-            return player.interactingNPC.transform.position;
-        }
-    }
-
     #region MonoBehaviours
     //External functions MUST be set in start -- eliminates "Race" condition - inkStory is set in awake
     private void Start()
@@ -42,7 +34,7 @@ public class CubeNPC : InteractableNPC
         story.DoStory();
     }
 
-    public override void SetExternalFunctions()
+    protected override void SetExternalFunctions()
     {
         //Forgive me father, for I have sinned - using a try/catch like an if statement
         //Removes need for statics - this allows us to check if we have already bound the external function

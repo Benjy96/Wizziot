@@ -4,14 +4,25 @@ using UnityEngine;
 
 public abstract class InteractableNPC : MonoBehaviour {
 
+    // ----- FIELDS ----- //
     protected static PlayerController player;
     protected static Script story;
+    [SerializeField] protected string inkPath = "";
 
-    public string inkPath = "";
+    protected Vector3 InteractingNPC
+    {
+        get
+        {
+            return player.interactingNPC.transform.position;
+        }
+    }
 
+    // ----- ABSTRACT METHODS ----- //
     public abstract void Interact();
-    public abstract void SetExternalFunctions();
 
+    protected abstract void SetExternalFunctions();
+
+    // ----- METHODS ----- //
     protected void Awake()
     {
         if (story == null) story = FindObjectOfType<Script>();
