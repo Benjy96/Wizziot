@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class SphereNPC : InteractableNPC
 {
-
     [Range(0f, 10f)]
     public float bobSpeed = 3f;
     [Range(0f, 0.5f)]
@@ -21,11 +20,6 @@ public class SphereNPC : InteractableNPC
     }
 
     #region MonoBehaviours
-    private void Awake()
-    {
-        if (player == null) player = FindObjectOfType<PlayerController>();
-    }
-
     //External functions MUST be set in start -- eliminates "Race" condition - inkStory is set in awake
     private void Start()
     {
