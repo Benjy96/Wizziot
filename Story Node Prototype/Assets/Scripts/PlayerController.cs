@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour {
 
     private bool interacted = false;
 
-    public Interactable interactingNPC;
+    public InteractableNPC interactingNPC;
     //TODO: Check differences in utility/(performance?) between GameObject/Interactable
     //public GameObject sphereNPC;
 	

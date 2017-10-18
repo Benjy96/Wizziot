@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NPC : Interactable {
+public class NPC : InteractableNPC {
 
     [Range(0f, 10f)]
     public float bobSpeed = 3f;
     [Range(0f, 0.5f)]
     public float bobRange = .5f;
+    public float pushOffForce = 20f;
 
     private Vector3 InteractingNPC
     {
@@ -18,12 +19,13 @@ public class NPC : Interactable {
         }
     }
 
+    #region MonoBehaviours
     private void Awake()
     {
         if(player == null) player = FindObjectOfType<PlayerController>();
     }
-
-    #region MonoBehaviours
+    
+    //External functions MUST be set in start -- eliminates "Race" condition - inkStory is set in awake
     private void Start()
     {
         if (externalsSet == false)
