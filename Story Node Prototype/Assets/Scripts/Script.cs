@@ -14,14 +14,9 @@ public class Script : MonoBehaviour {
 
     private bool choiceNeeded = false;
 
-    public delegate void NPCExternalFunctions();
-    public NPCExternalFunctions PushOff;
-
     private void Awake()
     {
         _inkStory = new Story(inkAsset.text);   //The JSON string from the story
-
-        _inkStory.BindExternalFunction("PushOff", () => PushOff());
     }
 
     /// <summary>

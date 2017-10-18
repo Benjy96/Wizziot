@@ -11,9 +11,15 @@ public class NPC : Interactable {
     public float bobRange = .5f;
 
     #region MonoBehaviours
-    private void Awake()
+    private void Start()
     {
-        story.PushOff = PushOff;
+        if (externalsSet == false)
+        {
+            Debug.Log(externalsSet);
+            SetExternalFunctions();
+            externalsSet = true;
+            Debug.Log(externalsSet);
+        }
     }
 
     void FixedUpdate()
@@ -39,5 +45,10 @@ public class NPC : Interactable {
     {
         story._inkStory.ChoosePathString(inkPath);
         story.DoStory();
+    }
+
+    public override void SetExternalFunctions()
+    {
+        story._inkStory.BindExternalFunction("PushOff", () => PushOff());
     }
 }
