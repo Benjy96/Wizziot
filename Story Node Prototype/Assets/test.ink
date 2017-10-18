@@ -1,6 +1,6 @@
 EXTERNAL PushOff()
 
-"Hey, look, a floating sphere!"
+"Hey, look, floating NPCs!"
 
 //We DIVERT to this knot via script
 === sphere ===  //Sphere "Knot" - a branch of the story

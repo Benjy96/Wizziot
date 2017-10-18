@@ -25,11 +25,6 @@ public class PlayerController : MonoBehaviour {
                 //TODO: Check differences in utility/(performance?) between GameObject/Interactable 
                 //sphereNPC.GetComponent<Interactable>().Interact();
             }
-
-            if (distanceFromNPC > 5f && interacted == true)
-            {
-                interacted = false;
-            }
         }
 
         Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));   //get our directions
@@ -48,6 +43,7 @@ public class PlayerController : MonoBehaviour {
 
     private void OnTriggerExit(Collider other)
     {
+        if(interacted) interacted = false;
         NPC = null;
     }
 }
