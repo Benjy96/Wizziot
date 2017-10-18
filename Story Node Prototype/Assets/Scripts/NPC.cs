@@ -54,6 +54,7 @@ public class NPC : InteractableNPC {
     public override void SetExternalFunctions()
     {
         story._inkStory.BindExternalFunction("PushOff", () => PushOff());
+        story.
     }
 
     private void PushOff()
