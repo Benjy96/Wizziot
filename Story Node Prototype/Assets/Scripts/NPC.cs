@@ -10,6 +10,14 @@ public class NPC : Interactable {
     [Range(0f, 0.5f)]
     public float bobRange = .5f;
 
+    private Vector3 InteractingNPC
+    {
+        get
+        {
+            return player.interactingNPC.transform.position;
+        }
+    }
+
     private void Awake()
     {
         if(player == null) player = FindObjectOfType<PlayerController>();
@@ -20,10 +28,8 @@ public class NPC : Interactable {
     {
         if (externalsSet == false)
         {
-            Debug.Log(externalsSet);
             SetExternalFunctions();
             externalsSet = true;
-            Debug.Log(externalsSet);
         }
     }
 
@@ -37,14 +43,6 @@ public class NPC : Interactable {
     }
     #endregion
 
-    private void PushOff()
-    {
-        Vector3 away = (player.transform.position - new Vector3(NPCPos.x, NPCPos.y, NPCPos.z)).normalized;
-        away *= pushOffForce;    //set magnitude
-
-        player.GetComponent<Rigidbody>().AddForce(away, ForceMode.Impulse);
-    }
-
     public override void Interact()
     {
         story._inkStory.ChoosePathString(inkPath);
@@ -56,11 +54,11 @@ public class NPC : Interactable {
         story._inkStory.BindExternalFunction("PushOff", () => PushOff());
     }
 
-    private Vector3 NPCPos
+    private void PushOff()
     {
-        get
-        {
-            return player.NPC.transform.position;
-        }
+        Vector3 away = (player.transform.position - new Vector3(InteractingNPC.x, InteractingNPC.y, InteractingNPC.z)).normalized;
+        away *= pushOffForce;    //set magnitude
+
+        player.GetComponent<Rigidbody>().AddForce(away, ForceMode.Impulse);
     }
 }

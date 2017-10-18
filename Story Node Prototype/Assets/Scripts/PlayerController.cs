@@ -9,19 +9,19 @@ public class PlayerController : MonoBehaviour {
 
     private bool interacted = false;
 
-    public Interactable NPC;
+    public Interactable interactingNPC;
     //TODO: Check differences in utility/(performance?) between GameObject/Interactable
     //public GameObject sphereNPC;
 	
 	// Update is called once per frame
 	void Update () {
-        if (NPC != null)
+        if (interactingNPC != null)
         {
-            float distanceFromNPC = Vector3.Distance(transform.position, NPC.transform.position);
+            float distanceFromNPC = Vector3.Distance(transform.position, interactingNPC.transform.position);
             if (distanceFromNPC <= 5f && interacted == false)
             {
                 interacted = true;
-                NPC.Interact();
+                interactingNPC.Interact();
                 //TODO: Check differences in utility/(performance?) between GameObject/Interactable 
                 //sphereNPC.GetComponent<Interactable>().Interact();
             }
@@ -38,12 +38,12 @@ public class PlayerController : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        NPC = other.gameObject.GetComponent<NPC>();
+        interactingNPC = other.gameObject.GetComponent<NPC>();
     }
 
     private void OnTriggerExit(Collider other)
     {
         if(interacted) interacted = false;
-        NPC = null;
+        interactingNPC = null;
     }
 }
