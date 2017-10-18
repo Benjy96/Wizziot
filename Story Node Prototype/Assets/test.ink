@@ -13,5 +13,14 @@ EXTERNAL PushOff()
     {PushOff()} //External function defined in Unity (NPC.cs) - pushes player away
 -   -> DONE
 
+=== cube ===
+= interact
+"They said be there or be square. Well, guess where I wasn't."
++   ["Ha, nerd."]
+    The cube sulks.
++   ["My Condolences."]
+    The cube sulks.
+-   -> DONE
+
 == function PushOff ==
 ~ return 

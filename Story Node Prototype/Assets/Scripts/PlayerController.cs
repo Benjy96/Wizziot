@@ -7,27 +7,29 @@ public class PlayerController : MonoBehaviour {
     public float speed = 3f;
     public float turnSpeed = 3f;
 
-    private float cooldown = 1.5f;
     private bool interacted = false;
 
-    public Interactable sphereNPC;
+    public Interactable NPC;
     //TODO: Check differences in utility/(performance?) between GameObject/Interactable
     //public GameObject sphereNPC;
 	
 	// Update is called once per frame
 	void Update () {
-        float distanceFromSphere = Vector3.Distance(transform.position, sphereNPC.transform.position);
-        if (distanceFromSphere <= 5f && interacted == false)
+        if (NPC != null)
         {
-            interacted = true;
-            sphereNPC.Interact();
-            //TODO: Check differences in utility/(performance?) between GameObject/Interactable 
-            //sphereNPC.GetComponent<Interactable>().Interact();
-        }
+            float distanceFromNPC = Vector3.Distance(transform.position, NPC.transform.position);
+            if (distanceFromNPC <= 5f && interacted == false)
+            {
+                interacted = true;
+                NPC.Interact();
+                //TODO: Check differences in utility/(performance?) between GameObject/Interactable 
+                //sphereNPC.GetComponent<Interactable>().Interact();
+            }
 
-        if (distanceFromSphere > 5f && interacted == true)
-        {
-            interacted = false;
+            if (distanceFromNPC > 5f && interacted == true)
+            {
+                interacted = false;
+            }
         }
 
         Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));   //get our directions
@@ -37,5 +39,15 @@ public class PlayerController : MonoBehaviour {
 
         transform.Translate(velocity, Space.World);
         transform.LookAt(transform.position + adjustedLook);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        NPC = other.gameObject.GetComponent<NPC>();
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        NPC = null;
     }
 }

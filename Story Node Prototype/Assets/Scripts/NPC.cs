@@ -10,12 +10,10 @@ public class NPC : Interactable {
     [Range(0f, 0.5f)]
     public float bobRange = .5f;
 
-    public float pushOffForce = 500f;
-
     #region MonoBehaviours
     private void Awake()
     {
-        story._inkStory.BindExternalFunction("PushOff", () => PushOff());
+        story.PushOff = PushOff;
     }
 
     void FixedUpdate()
