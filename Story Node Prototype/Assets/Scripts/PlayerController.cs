@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        interactingNPC = other.gameObject.GetComponent<NPC>();
+        interactingNPC = other.gameObject.GetComponent<InteractableNPC>();
     }
 
     private void OnTriggerExit(Collider other)

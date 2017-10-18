@@ -1,4 +1,5 @@
-EXTERNAL PushOff()
+EXTERNAL SpherePushOff()
+EXTERNAL CubePushOff()
 
 "Hey, look, floating NPCs!"
 
@@ -10,17 +11,21 @@ EXTERNAL PushOff()
     "Yeah, well, watch where you're going."
 +   ["Screw you."]    //Choices denoted by a '+' are re-usable (sticky choice)
     "What the hell, man? Back off! Jesus Christ."
-    {PushOff()} //External function defined in Unity (NPC.cs) - pushes player away
+    {SpherePushOff()} //External function defined in Unity (NPC.cs) - pushes player away
 -   -> DONE
 
 === cube ===
 = interact
 "They said be there or be square. Well, guess where I wasn't."
 +   ["Ha, nerd."]
-    The cube sulks.
+    "Prick."
+    {CubePushOff()}
 +   ["My Condolences."]
     The cube sulks.
 -   -> DONE
 
-== function PushOff ==
+== function SpherePushOff ==
 ~ return 
+
+== function CubePushOff ==
+~ return

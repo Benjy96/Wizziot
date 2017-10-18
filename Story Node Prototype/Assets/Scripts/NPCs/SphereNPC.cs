@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NPC : InteractableNPC {
+public class SphereNPC : InteractableNPC
+{
 
     [Range(0f, 10f)]
     public float bobSpeed = 3f;
@@ -22,9 +23,9 @@ public class NPC : InteractableNPC {
     #region MonoBehaviours
     private void Awake()
     {
-        if(player == null) player = FindObjectOfType<PlayerController>();
+        if (player == null) player = FindObjectOfType<PlayerController>();
     }
-    
+
     //External functions MUST be set in start -- eliminates "Race" condition - inkStory is set in awake
     private void Start()
     {
@@ -49,19 +50,22 @@ public class NPC : InteractableNPC {
 
     public override void SetExternalFunctions()
     {
-        //Forgive me father, for I have sinned
+        //Forgive me father, for I have sinned - using a try/catch like an if statement
         //Removes need for statics - this allows us to check if we have already bound the external function
         try
         {
             story._inkStory.ValidateExternalBindings();
-        }catch(Exception e)
-        {
-            story._inkStory.BindExternalFunction("PushOff", () => PushOff());
         }
-        
+#pragma warning disable CS0168 // Variable is declared but never used
+        catch (Exception e)
+#pragma warning restore CS0168 // Variable is declared but never used
+        {
+            story._inkStory.BindExternalFunction("SpherePushOff", () => SpherePushOff());
+        }
+
     }
 
-    private void PushOff()
+    private void SpherePushOff()
     {
         Vector3 away = (player.transform.position - new Vector3(InteractingNPC.x, InteractingNPC.y, InteractingNPC.z)).normalized;
         away *= pushOffForce;    //set magnitude
