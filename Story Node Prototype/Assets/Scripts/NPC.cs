@@ -10,11 +10,9 @@ public class NPC : Interactable {
     [Range(0f, 0.5f)]
     public float bobRange = .5f;
 
-    PlayerController player;
-
     private void Awake()
     {
-        player = FindObjectOfType<PlayerController>();
+        if(player == null) player = FindObjectOfType<PlayerController>();
     }
 
     #region MonoBehaviours
