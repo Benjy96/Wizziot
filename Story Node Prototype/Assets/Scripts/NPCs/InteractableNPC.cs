@@ -13,7 +13,7 @@ public abstract class InteractableNPC : MonoBehaviour {
     {
         get
         {
-            return player.interactingNPC.transform.position;
+            return player.TargetPos;
         }
     }
 

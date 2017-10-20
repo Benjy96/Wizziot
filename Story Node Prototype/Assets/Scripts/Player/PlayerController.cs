@@ -25,10 +25,12 @@ public class PlayerController : MonoBehaviour {
         public float turnSpeed;
     }
 
-    // ---- Runtime Fields ----- //
+    // ---- Book-keeping Fields ----- //
+    //Implementation Data
     private bool interacted = false;
-    public InteractableNPC interactingNPC;
+    private InteractableNPC interactingNPC;
 
+    //Interface
     public float Speed
     {
         get { return playerState.speed; }
@@ -38,6 +40,11 @@ public class PlayerController : MonoBehaviour {
     {
         get { return playerState.turnSpeed; }
         set { if (value < playerConfig.maxTurnSpeed) playerState.turnSpeed = value; }
+    }
+
+    public Vector3 TargetPos
+    {
+        get { return interactingNPC.transform.position; }
     }
 
     #region MonoBehaviour
