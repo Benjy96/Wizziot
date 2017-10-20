@@ -5,19 +5,7 @@ using UnityEngine;
 
 public class CubeNPC : InteractableNPC
 {
-    [Range(0f, 10f)]
-    public float bobSpeed = 3f;
-    [Range(0f, 0.5f)]
-    public float bobRange = .5f;
-    public float pushOffForce = 20f;
-
     #region MonoBehaviours
-    //External functions MUST be set in start -- eliminates "Race" condition - inkStory is set in awake
-    private void Start()
-    {
-        SetExternalFunctions();
-    }
-
     void FixedUpdate()
     {
         Vector3 pos = transform.position;
