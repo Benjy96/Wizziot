@@ -42,7 +42,9 @@ public class CubeNPC : InteractableNPC
         {
             story._inkStory.ValidateExternalBindings();
         }
+#pragma warning disable CS0168 // Variable is declared but never used
         catch (Exception e)
+#pragma warning restore CS0168 // Variable is declared but never used
         {
             story._inkStory.BindExternalFunction("CubePushOff", () => CubePushOff());
         }
