@@ -7,13 +7,14 @@ public abstract class InteractableNPC : MonoBehaviour {
     /**
      * Configuration values are tweaked via the inspector to define our objects.
      * */
-    // ----- CONFIGURATION DATA ----- //
+    // ----- CONFIGURATION OBJECT ----- //
     public NPCStats stats;
 
-    // ----- STATE FIELDS ----- //
+    // ----- CONFIGURATION VARIABLES ----- //
     protected static PlayerController player;
     protected static Script story;
 
+    // ----- STATE VARIABLES ----- //
     [SerializeField] protected string inkPath = "";
 
     protected Vector3 InteractingNPC
@@ -40,16 +41,16 @@ public abstract class InteractableNPC : MonoBehaviour {
         if (story == null) story = FindObjectOfType<Script>();
         if (player == null) player = FindObjectOfType<PlayerController>();
 
-        //Define the NPC's stats
+        //Define the NPC's default stats
         Debug.Assert(stats != null);
         bobSpeed = stats.movementData.bobSpeed;
         bobRange = stats.movementData.bobRange;
         pushOffForce = stats.physicsData.pushOffForce;
     }
     
-    //External functions MUST be set in start -- eliminates "Race" condition - inkStory is set in awake
     protected void Start()
     {
+        //External functions MUST be set in start -- eliminates "Race" condition - inkStory is set in awake
         SetExternalFunctions();
     }
 }

@@ -4,7 +4,6 @@ using System;
 [CreateAssetMenu(fileName = "NPCStats", menuName = "SharedConfig/NPCStats")]
 public class NPCStats : ScriptableObject
 {
-
     [Serializable]
     public class MovementData
     {
