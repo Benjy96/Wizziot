@@ -1,11 +1,11 @@
 fileFormatVersion: 2
 guid: 8bc2e81d83b40e8419a77c982dd72494
-timeCreated: 1508508558
+timeCreated: 1508521913
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
   defaultReferences:
-  - npcConfig: {fileID: 11400000, guid: 1301613e254268747be084f0e6db0a5d, type: 2}
+  - stats: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

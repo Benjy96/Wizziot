@@ -8,8 +8,7 @@ public abstract class InteractableNPC : MonoBehaviour {
      * Configuration values are tweaked via the inspector to define our objects.
      * */
     // ----- CONFIGURATION DATA ----- //
-    public NPCStats.MovementData movementData;  //Scriptable Object
-    public NPCStats.PhysicsData physicsData;  //Scriptable Object
+    public NPCStats stats;
 
     // ----- STATE FIELDS ----- //
     protected static PlayerController player;
@@ -42,9 +41,10 @@ public abstract class InteractableNPC : MonoBehaviour {
         if (player == null) player = FindObjectOfType<PlayerController>();
 
         //Define the NPC's stats
-        bobSpeed = movementData.bobSpeed;
-        bobRange = movementData.bobRange;
-        pushOffForce = physicsData.pushOffForce;
+        Debug.Assert(stats != null);
+        bobSpeed = stats.movementData.bobSpeed;
+        bobRange = stats.movementData.bobRange;
+        pushOffForce = stats.physicsData.pushOffForce;
     }
     
     //External functions MUST be set in start -- eliminates "Race" condition - inkStory is set in awake

@@ -123,11 +123,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a3e5aaea68be3241b08456b6ac9d682, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  story: {fileID: 114117606878268300, guid: d017861d85b76c641ac8897a3fe0ec2e, type: 2}
+  stats: {fileID: 11400000, guid: 369992b2f4ea131438a0b4dafb4fbb51, type: 2}
   inkPath: sphere.interact
-  bobSpeed: 2.33
-  bobRange: 0.242
-  pushOffForce: 20
 --- !u!135 &135441772291355274
 SphereCollider:
   m_ObjectHideFlags: 1

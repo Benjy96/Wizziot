@@ -147,8 +147,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da9e9eba16f663d4c85a20f0814a786c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  story: {fileID: 114117606878268300, guid: d017861d85b76c641ac8897a3fe0ec2e, type: 2}
+  stats: {fileID: 11400000, guid: 369992b2f4ea131438a0b4dafb4fbb51, type: 2}
   inkPath: cube.interact
-  bobSpeed: 3
-  bobRange: 0.5
-  pushOffForce: 20

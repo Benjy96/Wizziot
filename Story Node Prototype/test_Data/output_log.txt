@@ -1,0 +1,32 @@
+Initialize engine version: 5.6.0f3 (497a0f351392)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA GeForce GTX 780 (ID=0x1004)
+    Vendor:   NVIDIA
+    VRAM:     3039 MB
+    Driver:   22.21.13.8233
+Begin MonoManager ReloadAssembly
+Platform assembly: H:\Unity\Projects\StoryManager_Prototype\Story Node Prototype\test_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading H:\Unity\Projects\StoryManager_Prototype\Story Node Prototype\test_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: H:\Unity\Projects\StoryManager_Prototype\Story Node Prototype\test_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading H:\Unity\Projects\StoryManager_Prototype\Story Node Prototype\test_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: H:\Unity\Projects\StoryManager_Prototype\Story Node Prototype\test_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading H:\Unity\Projects\StoryManager_Prototype\Story Node Prototype\test_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: H:\Unity\Projects\StoryManager_Prototype\Story Node Prototype\test_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading H:\Unity\Projects\StoryManager_Prototype\Story Node Prototype\test_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: H:\Unity\Projects\StoryManager_Prototype\Story Node Prototype\test_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading H:\Unity\Projects\StoryManager_Prototype\Story Node Prototype\test_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+- Completed reload, in  0.191 seconds
+Platform assembly: H:\Unity\Projects\StoryManager_Prototype\Story Node Prototype\test_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: H:\Unity\Projects\StoryManager_Prototype\Story Node Prototype\test_Data\Managed\System.dll (this message is harmless)
+desktop: 1920x1080 60Hz; virtual: 3840x1080 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 0.916041 ms
+Setting up 4 worker threads for Enlighten.
+  Thread -> id: 7538 -> priority: 1 
+  Thread -> id: 48dc -> priority: 1 
+  Thread -> id: 7648 -> priority: 1 
+  Thread -> id: 732c -> priority: 1 
