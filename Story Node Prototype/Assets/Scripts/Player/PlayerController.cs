@@ -11,8 +11,8 @@ public class PlayerController : MonoBehaviour {
     [Serializable]
     public class PlayerConfigurationData
     {
-        public float speed;
-        public float turnSpeed;
+        public float maxSpeed;
+        public float maxTurnSpeed;
     }
 
     // ----- State Variables ----- //
@@ -21,20 +21,23 @@ public class PlayerController : MonoBehaviour {
     [Serializable]
     public class PlayerStateData
     {
-        //public float health;
+        public float speed;
+        public float turnSpeed;
     }
 
-    // ---- Book Keeping Fields ----- //
+    // ---- Runtime Fields ----- //
     private bool interacted = false;
     public InteractableNPC interactingNPC;
 
     public float Speed
     {
-        get { return playerConfig.speed; }
+        get { return playerState.speed; }
+        set { if (value < playerConfig.maxSpeed) playerState.speed = value; }
     }
     public float TurnSpeed
     {
-        get { return playerConfig.turnSpeed; }
+        get { return playerState.turnSpeed; }
+        set { if (value < playerConfig.maxTurnSpeed) playerState.turnSpeed = value; }
     }
 
     #region MonoBehaviour
