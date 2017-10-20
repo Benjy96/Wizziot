@@ -1,38 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerController : MonoBehaviour {
 
     // ----- Configuration Variables ----- //
-    PlayerConfigurationData playerConfig;
+    public PlayerConfigurationData playerConfig;
 
-    [SerializeField]
+    [Serializable]
     public class PlayerConfigurationData
     {
-        public float maxHealth;
-        public float speed = 3f;
-        public float turnSpeed = 3f;
+        public float speed;
+        public float turnSpeed;
     }
 
     // ----- State Variables ----- //
-    PlayerStateData playerData;
+    public PlayerStateData playerState;
 
-    [SerializeField]
+    [Serializable]
     public class PlayerStateData
     {
-        public float health;
+        //public float health;
     }
 
     // ---- Book Keeping Fields ----- //
     private bool interacted = false;
     public InteractableNPC interactingNPC;
 
-    public float Health
-    {
-        get { return playerData.health; }
-        set { playerData.health = value; }
-    }
     public float Speed
     {
         get { return playerConfig.speed; }
@@ -42,12 +37,7 @@ public class PlayerController : MonoBehaviour {
         get { return playerConfig.turnSpeed; }
     }
 
-    private void Awake()
-    {
-        playerConfig = new PlayerConfigurationData();
-        playerData = new PlayerStateData();
-    }
-
+    #region MonoBehaviour
     // Update is called once per frame
     void Update () {
         if (interactingNPC != null)
@@ -68,6 +58,7 @@ public class PlayerController : MonoBehaviour {
         transform.Translate(velocity, Space.World);
         transform.LookAt(transform.position + adjustedLook);
     }
+#endregion MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {

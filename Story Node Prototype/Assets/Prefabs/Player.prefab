@@ -22,8 +22,8 @@ GameObject:
   - component: {fileID: 33984999312761298}
   - component: {fileID: 65068491791960126}
   - component: {fileID: 23370093231177938}
-  - component: {fileID: 114062456038442322}
   - component: {fileID: 54694654279500918}
+  - component: {fileID: 114232869456884162}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -110,7 +110,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114062456038442322
+--- !u!114 &114232869456884162
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -121,6 +121,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e92ec31c08157314eacdd8d159adb604, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 6
-  turnSpeed: 6
-  sphereNPC: {fileID: 0}
+  interactingNPC: {fileID: 0}
