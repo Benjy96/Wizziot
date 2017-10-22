@@ -11,6 +11,7 @@ public class Script : MonoBehaviour {
     public Story _inkStory;    //The story (ink story/script)
 
     [SerializeField] private TextAsset inkAsset;  //Compiled JSON asset
+    [SerializeField] private TextAsset savedAsset;
 
     private bool choiceNeeded = false;
 

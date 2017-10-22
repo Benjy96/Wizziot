@@ -13,10 +13,16 @@ public abstract class InteractableNPC : MonoBehaviour {
 
     // ----- CONFIGURATION VARIABLES ----- //
     protected static PlayerController player;
-    protected static Script story;
+    protected Script story;
 
     // ----- STATE VARIABLES ----- //
     [SerializeField] protected string inkPath = "";
+    protected string storyActorName = "";
+
+    protected string State
+    {
+        get { return story._inkStory.variablesState[storyActorName].ToString(); }
+    }
 
     protected Vector3 InteractingNPC
     {

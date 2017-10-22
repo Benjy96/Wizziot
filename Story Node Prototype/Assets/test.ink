@@ -7,15 +7,18 @@ EXTERNAL CubePushOff()
     //? test event
 //State Machine: States e.g. Annoyed, standing
     //= set state
-    //test event
+    //== test state
 
-//State Machine for when the state can change, flags for one offs 
+//State Machine for when the state can change, flags for one offs, e.g. 
+//multiple flags can be set to true by subscribing (+=) - don't mix the syntax
+//or it'll mix behaviours! i.e. not strongly typed - = on flag makes it equal
+//the state
 
 //Flag example:
-LIST Events = (unmolested), haveAnnoyedSphere   
+// LIST Events = (unmolested), haveAnnoyedSphere   
 
 //State Machine example:
-// LIST sphereState = (unmolested), pissed
+LIST SphereState = (unmolested), annoyed
 
 "Hey, look, floating NPCs!"
 
@@ -23,12 +26,12 @@ LIST Events = (unmolested), haveAnnoyedSphere
 === sphere ===  //Sphere "Knot" - a branch of the story
 = interact  //A subdivision of a knot is a "Stitch"
 "Hey!" the sphere shouts. <>
-{ Events ? unmolested:
+{ SphereState == unmolested:
 +   ["Sorry."]    
     "Yeah, well, watch where you're going."
 +   ["Screw you."]    
     "What the hell, man? Back off! Jesus Christ."
-    ~ Events += haveAnnoyedSphere
+    ~ SphereState = annoyed
     {SpherePushOff()} //External function defined in Unity (NPC.cs) - pushes player aw
     -> DONE
 - else:

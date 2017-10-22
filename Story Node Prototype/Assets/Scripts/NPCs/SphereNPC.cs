@@ -18,6 +18,13 @@ public class SphereNPC : InteractableNPC
 
     public override void Interact()
     {
+        storyActorName = "SphereState";
+        Debug.Log(State);
+        if (State.Equals("annoyed"))
+        {
+            Debug.Log("Do coroutine");
+            ChangeColor();
+        }
         story._inkStory.ChoosePathString(inkPath);
         story.DoStory();
     }
@@ -45,5 +52,10 @@ public class SphereNPC : InteractableNPC
         away *= pushOffForce;    //set magnitude
 
         player.GetComponent<Rigidbody>().AddForce(away, ForceMode.Impulse);
+    }
+
+    private void ChangeColor()
+    {
+        GetComponent<MeshRenderer>().material.color = Color.red;
     }
 }
