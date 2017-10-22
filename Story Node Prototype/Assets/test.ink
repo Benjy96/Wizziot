@@ -1,18 +1,29 @@
 EXTERNAL SpherePushOff()
 EXTERNAL CubePushOff()
 
+//State tracking
+LIST sphereState = (unmolested), pissed
+
 "Hey, look, floating NPCs!"
 
 //We DIVERT to this knot via script
 === sphere ===  //Sphere "Knot" - a branch of the story
 = interact  //A subdivision of a knot is a "Stitch"
-"Hey!"
-+   ["Sorry."]    //Bracketed choices aren't printed once you choose the response
+"Hey!" the sphere shouts. <>
+{ sphereState == unmolested:
++   ["Sorry."]    
     "Yeah, well, watch where you're going."
-+   ["Screw you."]    //Choices denoted by a '+' are re-usable (sticky choice)
++   ["Screw you."]    
     "What the hell, man? Back off! Jesus Christ."
-    {SpherePushOff()} //External function defined in Unity (NPC.cs) - pushes player away
--   -> DONE
+    ~ sphereState = pissed
+    {SpherePushOff()} //External function defined in Unity (NPC.cs) - pushes player aw
+    -> DONE
+- else:
+    <>"Get lost!"
+    {SpherePushOff()}
+    ->DONE
+}
+-   ->DONE
 
 === cube ===
 = interact

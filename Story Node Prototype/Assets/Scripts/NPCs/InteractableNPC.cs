@@ -6,8 +6,9 @@ public abstract class InteractableNPC : MonoBehaviour {
 
     /**
      * Configuration values are tweaked via the inspector to define our objects.
+     * Config values are treated as runtime constants.
      * */
-    // ----- CONFIGURATION OBJECT ----- //
+    // ----- SHARED CONFIGURATION OBJECT ----- //
     public NPCStats stats;
 
     // ----- CONFIGURATION VARIABLES ----- //

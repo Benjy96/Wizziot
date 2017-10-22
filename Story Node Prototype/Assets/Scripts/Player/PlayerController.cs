@@ -6,7 +6,7 @@ using System;
 public class PlayerController : MonoBehaviour {
 
     // ----- Configuration Variables ----- //
-    public PlayerConfigurationData playerConfig;
+    public PlayerConfigurationData playerConfig;    //Config data "defines" our object's "attributes" and is treated as a constant. Set in inspector.
 
     [Serializable]
     public class PlayerConfigurationData
@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     // ----- State Variables ----- //
-    public PlayerStateData playerState;
+    public PlayerStateData playerState; //Player state manages the player's current state, and will be saved (if the game supports saving).
 
     [Serializable]
     public class PlayerStateData
@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour {
         public float turnSpeed;
     }
 
-    // ---- Book-keeping Fields ----- //
+    // ---- Book-keeping Fields ----- //    //Convenience properties and variables, plus variables that do not need saved.
     //Implementation Data
     private bool interacted = false;
     private InteractableNPC interactingNPC;
@@ -50,23 +50,8 @@ public class PlayerController : MonoBehaviour {
     #region MonoBehaviour
     // Update is called once per frame
     void Update () {
-        if (interactingNPC != null)
-        {
-            float distanceFromNPC = Vector3.Distance(transform.position, interactingNPC.transform.position);
-            if (distanceFromNPC <= 5f && interacted == false)
-            {
-                interacted = true;
-                interactingNPC.Interact();
-            }
-        }
-
-        Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));   //get our directions
-        Vector3 direction = input.normalized;   //normalize the direction (for when both are held at same time)
-        Vector3 velocity = direction * Speed * Time.deltaTime;  //get magnitude by multiplying by speed, then scale to time
-        Vector3 adjustedLook = Vector3.Lerp(transform.forward, direction, Time.deltaTime * TurnSpeed);
-
-        transform.Translate(velocity, Space.World);
-        transform.LookAt(transform.position + adjustedLook);
+        HandleInput();
+        HandleInteraction();
     }
 #endregion MonoBehaviour
 
@@ -79,5 +64,29 @@ public class PlayerController : MonoBehaviour {
     {
         if(interacted) interacted = false;
         interactingNPC = null;
+    }
+
+    private void HandleInput()
+    {
+        Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));   //get our directions
+        Vector3 direction = input.normalized;   //normalize the direction (for when both are held at same time)
+        Vector3 velocity = direction * Speed * Time.deltaTime;  //get magnitude by multiplying by speed, then scale to time
+        Vector3 adjustedLook = Vector3.Lerp(transform.forward, direction, Time.deltaTime * TurnSpeed);
+
+        transform.Translate(velocity, Space.World);
+        transform.LookAt(transform.position + adjustedLook);
+    }
+
+    private void HandleInteraction()
+    {
+        if (interactingNPC != null)
+        {
+            float distanceFromNPC = Vector3.Distance(transform.position, interactingNPC.transform.position);
+            if (distanceFromNPC <= 5f && interacted == false)
+            {
+                interacted = true;
+                interactingNPC.Interact();
+            }
+        }
     }
 }
