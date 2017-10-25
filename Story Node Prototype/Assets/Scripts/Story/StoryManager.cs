@@ -6,6 +6,7 @@ using Ink.Runtime;
 /// <summary>
 /// Singleton.
 /// Wrapper class for Ink Story/Runtime
+/// Holds references to Ink assets and Game assets that directly interact with ink
 /// Holds/manages the current story state (set it). Presents content and choices, and then it allows you to make choices.
 /// </summary>
 public class StoryManager : MonoBehaviour {
@@ -19,13 +20,14 @@ public class StoryManager : MonoBehaviour {
     [SerializeField] private TextAsset savedAsset;
 
     // ----- PROPERTIES ----- //
-    public StoryManager _Story_Manager  //Singleton instance accessor
+    public Story InkScript
     {
-        get { return _StoryManager; }
+        get { return inkStory; }
+        private set { inkStory = value; }
     }
 
-    public Story StoryScript {
-        get { return inkStory; }
+    public string StoryPosition
+    {
         set { inkStory.ChoosePathString(value); }
     }
 

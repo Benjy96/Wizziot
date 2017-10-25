@@ -22,13 +22,13 @@ public class SphereNPC : InteractableNPC
         //Removes need for statics - this allows us to check if we have already bound the external function
         try
         {
-            story.inkStory.ValidateExternalBindings();
+            story.InkScript.ValidateExternalBindings();
         }
 #pragma warning disable CS0168 // Variable is declared but never used
         catch (Exception e)
 #pragma warning restore CS0168 // Variable is declared but never used
         {
-            story.inkStory.BindExternalFunction("SpherePushOff", () => SpherePushOff());
+            story.InkScript.BindExternalFunction("SpherePushOff", () => SpherePushOff());
         }
 
     }

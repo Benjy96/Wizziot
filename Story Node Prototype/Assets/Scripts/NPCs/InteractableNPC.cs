@@ -34,12 +34,16 @@ public abstract class InteractableNPC : MonoBehaviour {
     // ----- ABSTRACT METHODS ----- //
     public virtual void Interact()
     {
+        float objectHeight = transform.localScale.y;
+        Vector3 textPos = new Vector3(transform.position.x, transform.position.y + objectHeight, transform.position.z);
+
         /* BENEATH IS ASSIGNED BY REFERENCE - GAMEOBJECT IS A CLASS - WE AREN'T CREATING NEW OBJECTS FOR EACH CHILD */
         storyText = story.displayStoryAsset;
-        storyText.transform.position = transform.position;
+        storyText.transform.position = textPos;
         storyText.SetActive(true);
 
-        story.inkStory.ChoosePathString(inkPath);
+        //Set and run story
+        story.StoryPosition = inkPath;
         story.DoStory();
     }
 
