@@ -16,26 +16,19 @@ public class CubeNPC : InteractableNPC
     }
     #endregion
 
-    public override void Interact()
-    {
-        base.Interact();
-        story._inkStory.ChoosePathString(inkPath);
-        story.DoStory();
-    }
-
     protected override void SetExternalFunctions()
     {
         //Forgive me father, for I have sinned - using a try/catch like an if statement
         //Removes need for statics - this allows us to check if we have already bound the external function
         try
         {
-            story._inkStory.ValidateExternalBindings();
+            story.inkStory.ValidateExternalBindings();
         }
 #pragma warning disable CS0168 // Variable is declared but never used
         catch (Exception e)
 #pragma warning restore CS0168 // Variable is declared but never used
         {
-            story._inkStory.BindExternalFunction("CubePushOff", () => CubePushOff());
+            story.inkStory.BindExternalFunction("CubePushOff", () => CubePushOff());
         }
 
     }

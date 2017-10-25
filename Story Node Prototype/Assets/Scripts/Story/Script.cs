@@ -4,22 +4,49 @@ using UnityEngine;
 using Ink.Runtime;
 
 /// <summary>
+/// Singleton.
+/// Wrapper class for Ink Story/Runtime
 /// Holds/manages the current story state (set it). Presents content and choices, and then it allows you to make choices.
 /// </summary>
-public class Script : MonoBehaviour {
+public class StoryManager : MonoBehaviour {
 
-    public Story _inkStory;    //The story (ink story/script)
+    // ----- SINGLETON ----- //
+    private static StoryManager _StoryManager= null;
 
-    public GameObject displayStoryAsset;
-
+    // ----- INK RUNTIME ----- //
+    [SerializeField] private Story inkStory;    //The story (ink story/script)
     [SerializeField] private TextAsset inkAsset;  //Compiled JSON asset
     [SerializeField] private TextAsset savedAsset;
 
+    // ----- PROPERTIES ----- //
+    public StoryManager _Story_Manager  //Singleton instance accessor
+    {
+        get { return _StoryManager; }
+    }
+
+    public Story StoryScript {
+        get { return inkStory; }
+        set { inkStory.ChoosePathString(value); }
+    }
+
+    // ----- STATE ----- //
+    public GameObject displayStoryAsset;    //Reference to dialogue box
     private bool choiceNeeded = false;
+    
 
     private void Awake()
     {
-        _inkStory = new Story(inkAsset.text);   //The JSON string from the story
+        #region Singleton
+        if (_StoryManager == null)
+        {
+            _StoryManager = this;
+        }else if(_StoryManager != this){
+            Destroy(gameObject);
+        }
+        DontDestroyOnLoad(gameObject);
+        #endregion
+
+        inkStory = new Story(inkAsset.text);   //The JSON string from the story
     }
 
     /// <summary>
@@ -31,18 +58,18 @@ public class Script : MonoBehaviour {
     public void DoStory()
     {
         //1. Present content
-        while (_inkStory.canContinue)
+        while (inkStory.canContinue)
         {
-            Debug.Log(_inkStory.Continue());
+            Debug.Log(inkStory.Continue());
         }
 
         //2. Present choices
-        if (_inkStory.currentChoices.Count > 0)
+        if (inkStory.currentChoices.Count > 0)
         {
             choiceNeeded = true;
-            for (int i = 0; i < _inkStory.currentChoices.Count; i++)
+            for (int i = 0; i < inkStory.currentChoices.Count; i++)
             {
-                Choice choice = _inkStory.currentChoices[i];
+                Choice choice = inkStory.currentChoices[i];
                 Debug.Log("Choice " + (i + 1) + ". " + choice.text);
             }
         }
@@ -55,14 +82,14 @@ public class Script : MonoBehaviour {
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                _inkStory.ChooseChoiceIndex(0);
+                inkStory.ChooseChoiceIndex(0);
                 choiceNeeded = false;
                 DoStory();
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-                _inkStory.ChooseChoiceIndex(1);
+                inkStory.ChooseChoiceIndex(1);
                 choiceNeeded = false;
                 DoStory();
             }

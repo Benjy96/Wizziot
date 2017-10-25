@@ -13,7 +13,7 @@ public abstract class InteractableNPC : MonoBehaviour {
 
     // ----- CONFIGURATION VARIABLES ----- //
     protected static PlayerController player;
-    protected Script story;
+    protected StoryManager story;
 
     // ----- STATE VARIABLES ----- //
     [SerializeField] protected string inkPath = "";
@@ -38,6 +38,9 @@ public abstract class InteractableNPC : MonoBehaviour {
         storyText = story.displayStoryAsset;
         storyText.transform.position = transform.position;
         storyText.SetActive(true);
+
+        story.inkStory.ChoosePathString(inkPath);
+        story.DoStory();
     }
 
     protected abstract void SetExternalFunctions();
@@ -46,7 +49,7 @@ public abstract class InteractableNPC : MonoBehaviour {
     protected void Awake()
     {
         //Get shared reference to story & player
-        if (story == null) story = FindObjectOfType<Script>();
+        if (story == null) story = FindObjectOfType<StoryManager>();
         if (player == null) player = FindObjectOfType<PlayerController>();
 
         //Define the NPC's default stats
