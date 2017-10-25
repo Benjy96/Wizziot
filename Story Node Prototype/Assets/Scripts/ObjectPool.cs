@@ -6,7 +6,7 @@ using UnityEngine;
 class ObjectPool<T> where T : Object
 {
     public T prefab;
-    private Stack<T> inactiveObjects = new Stack<T>();
+    private List<T> inactiveObjects = new List<T>();
 
     public T GetObject()
     {
@@ -14,7 +14,8 @@ class ObjectPool<T> where T : Object
 
         if (inactiveObjects.Count > 0)
         {
-            objectToReturn = inactiveObjects.Pop();
+            objectToReturn = inactiveObjects[0];
+            inactiveObjects.RemoveAt(0);
         }
         else
         {
@@ -26,6 +27,6 @@ class ObjectPool<T> where T : Object
 
     public void ReturnObject(T objectToPool)
     {
-        inactiveObjects.Push(objectToPool);
+        inactiveObjects.Add(objectToPool);
     }
 }

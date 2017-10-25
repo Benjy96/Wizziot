@@ -32,7 +32,7 @@ public class StoryManager : MonoBehaviour {
         set { inkStory.ChoosePathString(value); }
     }
 
-    // ----- STATE ----- //
+    // ----- GAME & STATE ----- //
     //UI
     public UI userInterface;
 
@@ -41,9 +41,9 @@ public class StoryManager : MonoBehaviour {
 
     //World Display
     public GameObject displayStoryObject;    //Reference to dialogue box - for world pos
-
     private Text displayStoryText;    //Story object's text component - for displaying text
 
+    //Ink Logic
     private bool choiceMade = false;
     private bool choiceNeeded = false;
     private bool choicesPresented = false;
@@ -79,7 +79,7 @@ public class StoryManager : MonoBehaviour {
         {
             foreach(Button x in choiceButtonReferences)
             {
-                userInterface.RemoveButton(x);
+                userInterface.RemoveChoices(playerChoiceBox, x);
             }
             choiceMade = false;
         }
@@ -101,8 +101,7 @@ public class StoryManager : MonoBehaviour {
                 for (int i = 0; i < inkStory.currentChoices.Count; i++)
                 {
                     Choice choice = inkStory.currentChoices[i];
-                    Debug.Log(choice.text);
-                    choiceButtonReferences[i] = userInterface.AssignButton(playerChoiceBox, (i + 1) + ": " + choice.text + ".");
+                    choiceButtonReferences[i] = userInterface.PresentChoices(playerChoiceBox, (i + 1) + ": " + choice.text);
                 }
                 choicesPresented = true;
             }

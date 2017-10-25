@@ -14,8 +14,9 @@ public class UI : MonoBehaviour {
         if(buttonPool.prefab == null) buttonPool.prefab = buttonPrefab;
     }
 
-    public Button AssignButton(RectTransform parent, string buttonText)
+    public Button PresentChoices(RectTransform parent, string buttonText)
     {
+        if(parent.gameObject.activeInHierarchy == false) parent.gameObject.SetActive(true);
         Button newButton = buttonPool.GetObject();
         newButton.gameObject.SetActive(true);
         newButton.transform.SetParent(parent);
@@ -23,8 +24,9 @@ public class UI : MonoBehaviour {
         return newButton;
     }
 
-    public void RemoveButton(Button button)
+    public void RemoveChoices(RectTransform parent, Button button)
     {
+        if (parent.gameObject.activeInHierarchy == true) parent.gameObject.SetActive(false);
         button.gameObject.SetActive(false);
         buttonPool.ReturnObject(button);
     }
