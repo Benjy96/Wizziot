@@ -18,6 +18,7 @@ public class CubeNPC : InteractableNPC
 
     public override void Interact()
     {
+        base.Interact();
         story._inkStory.ChoosePathString(inkPath);
         story.DoStory();
     }

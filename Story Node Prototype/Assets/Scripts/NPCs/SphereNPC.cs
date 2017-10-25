@@ -18,13 +18,7 @@ public class SphereNPC : InteractableNPC
 
     public override void Interact()
     {
-        storyActorName = "SphereState";
-        Debug.Log(State);
-        if (State.Equals("annoyed"))
-        {
-            Debug.Log("Do coroutine");
-            ChangeColor();
-        }
+        base.Interact();
         story._inkStory.ChoosePathString(inkPath);
         story.DoStory();
     }

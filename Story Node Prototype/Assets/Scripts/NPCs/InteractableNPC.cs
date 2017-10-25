@@ -17,12 +17,7 @@ public abstract class InteractableNPC : MonoBehaviour {
 
     // ----- STATE VARIABLES ----- //
     [SerializeField] protected string inkPath = "";
-    protected string storyActorName = "";
-
-    protected string State
-    {
-        get { return story._inkStory.variablesState[storyActorName].ToString(); }
-    }
+    [SerializeField] protected GameObject storyText;
 
     protected Vector3 InteractingNPC
     {
@@ -37,7 +32,13 @@ public abstract class InteractableNPC : MonoBehaviour {
     protected float pushOffForce;
 
     // ----- ABSTRACT METHODS ----- //
-    public abstract void Interact();
+    public virtual void Interact()
+    {
+        /* BENEATH IS ASSIGNED BY REFERENCE - GAMEOBJECT IS A CLASS - WE AREN'T CREATING NEW OBJECTS FOR EACH CHILD */
+        storyText = story.displayStoryAsset;
+        storyText.transform.position = transform.position;
+        storyText.SetActive(true);
+    }
 
     protected abstract void SetExternalFunctions();
 
@@ -49,7 +50,6 @@ public abstract class InteractableNPC : MonoBehaviour {
         if (player == null) player = FindObjectOfType<PlayerController>();
 
         //Define the NPC's default stats
-        Debug.Assert(stats != null);
         bobSpeed = stats.movementData.bobSpeed;
         bobRange = stats.movementData.bobRange;
         pushOffForce = stats.physicsData.pushOffForce;

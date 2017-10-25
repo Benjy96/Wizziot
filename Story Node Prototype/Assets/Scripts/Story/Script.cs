@@ -10,6 +10,8 @@ public class Script : MonoBehaviour {
 
     public Story _inkStory;    //The story (ink story/script)
 
+    public GameObject displayStoryAsset;
+
     [SerializeField] private TextAsset inkAsset;  //Compiled JSON asset
     [SerializeField] private TextAsset savedAsset;
 
