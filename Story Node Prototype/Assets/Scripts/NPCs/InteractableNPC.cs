@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class InteractableNPC : MonoBehaviour {
 
@@ -34,13 +35,17 @@ public abstract class InteractableNPC : MonoBehaviour {
     // ----- ABSTRACT METHODS ----- //
     public virtual void Interact()
     {
+        //Get space above head for the story text
         float objectHeight = transform.localScale.y;
         Vector3 textPos = new Vector3(transform.position.x, transform.position.y + objectHeight, transform.position.z);
 
         /* BENEATH IS ASSIGNED BY REFERENCE - GAMEOBJECT IS A CLASS - WE AREN'T CREATING NEW OBJECTS FOR EACH CHILD */
-        storyText = story.displayStoryAsset;
+        storyText = story.displayStoryObject;
         storyText.transform.position = textPos;
+        storyText.transform.SetParent(gameObject.transform);
+        //Enable canvas and text
         storyText.SetActive(true);
+        storyText.transform.GetChild(0).gameObject.SetActive(true);
 
         //Set and run story
         story.StoryPosition = inkPath;

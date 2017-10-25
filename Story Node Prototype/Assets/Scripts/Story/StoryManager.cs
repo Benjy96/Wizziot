@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Ink.Runtime;
 
 /// <summary>
@@ -17,7 +18,7 @@ public class StoryManager : MonoBehaviour {
     // ----- INK RUNTIME ----- //
     [SerializeField] private Story inkStory;    //The story (ink story/script)
     [SerializeField] private TextAsset inkAsset;  //Compiled JSON asset
-    [SerializeField] private TextAsset savedAsset;
+    [SerializeField] private TextAsset savedAsset;  //Saved ink story state - choices, vars, lists, etc.
 
     // ----- PROPERTIES ----- //
     public Story InkScript
@@ -32,8 +33,20 @@ public class StoryManager : MonoBehaviour {
     }
 
     // ----- STATE ----- //
-    public GameObject displayStoryAsset;    //Reference to dialogue box
+    //UI
+    public UI userInterface;
+
+    private RectTransform playerChoiceBox;
+    private Button[] choiceButtonReferences;
+
+    //World Display
+    public GameObject displayStoryObject;    //Reference to dialogue box - for world pos
+
+    private Text displayStoryText;    //Story object's text component - for displaying text
+
+    private bool choiceMade = false;
     private bool choiceNeeded = false;
+    private bool choicesPresented = false;
     
 
     private void Awake()
@@ -49,6 +62,9 @@ public class StoryManager : MonoBehaviour {
         #endregion
 
         inkStory = new Story(inkAsset.text);   //The JSON string from the story
+
+        displayStoryText = displayStoryObject.gameObject.transform.Find("StoryText").GetComponent<Text>();
+        playerChoiceBox = userInterface.gameObject.GetComponent<RectTransform>().Find("PlayerChoiceBox").GetComponent<RectTransform>();
     }
 
     /// <summary>
@@ -59,20 +75,36 @@ public class StoryManager : MonoBehaviour {
     /// </summary>
     public void DoStory()
     {
+        if (choiceMade == true)
+        {
+            foreach(Button x in choiceButtonReferences)
+            {
+                userInterface.RemoveButton(x);
+            }
+            choiceMade = false;
+        }
+
         //1. Present content
         while (inkStory.canContinue)
         {
-            Debug.Log(inkStory.Continue());
+            displayStoryText.text = inkStory.Continue();
         }
 
         //2. Present choices
-        if (inkStory.currentChoices.Count > 0)
+        if (choicesPresented == false)
         {
-            choiceNeeded = true;
-            for (int i = 0; i < inkStory.currentChoices.Count; i++)
+            if (inkStory.currentChoices.Count > 0)
             {
-                Choice choice = inkStory.currentChoices[i];
-                Debug.Log("Choice " + (i + 1) + ". " + choice.text);
+                choiceButtonReferences = new Button[inkStory.currentChoices.Count];
+                choiceNeeded = true;
+
+                for (int i = 0; i < inkStory.currentChoices.Count; i++)
+                {
+                    Choice choice = inkStory.currentChoices[i];
+                    Debug.Log(choice.text);
+                    choiceButtonReferences[i] = userInterface.AssignButton(playerChoiceBox, (i + 1) + ": " + choice.text + ".");
+                }
+                choicesPresented = true;
             }
         }
     }
@@ -86,6 +118,8 @@ public class StoryManager : MonoBehaviour {
             {
                 inkStory.ChooseChoiceIndex(0);
                 choiceNeeded = false;
+                choicesPresented = false;
+                choiceMade = true;
                 DoStory();
             }
 
@@ -93,6 +127,8 @@ public class StoryManager : MonoBehaviour {
             {
                 inkStory.ChooseChoiceIndex(1);
                 choiceNeeded = false;
+                choicesPresented = false;
+                choiceMade = true;
                 DoStory();
             }
         }

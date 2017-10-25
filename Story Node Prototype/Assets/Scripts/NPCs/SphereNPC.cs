@@ -40,9 +40,4 @@ public class SphereNPC : InteractableNPC
 
         player.GetComponent<Rigidbody>().AddForce(away, ForceMode.Impulse);
     }
-
-    private void ChangeColor()
-    {
-        GetComponent<MeshRenderer>().material.color = Color.red;
-    }
 }
