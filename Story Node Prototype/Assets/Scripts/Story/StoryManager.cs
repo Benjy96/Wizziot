@@ -41,7 +41,6 @@ public class StoryManager : MonoBehaviour {
     private Text displayStoryText;    //Story object's text component - for displaying text
 
     //Ink Logic
-    private bool choiceMade = false;
     private bool choiceNeeded = false;
     private bool choicesPresented = false;
     
@@ -78,46 +77,25 @@ public class StoryManager : MonoBehaviour {
         }
 
         //2. Present choices
-        if (choicesPresented == false)
+        if (inkStory.currentChoices.Count > 0)
         {
-            if (inkStory.currentChoices.Count > 0)
-            {
-                int numChoices = inkStory.currentChoices.Count;
-                choiceNeeded = true;
-                userInterface.EnableChoiceWindow(numChoices);
+            int numChoices = inkStory.currentChoices.Count;
+            choiceNeeded = true;
+            userInterface.EnableChoiceWindow(numChoices);
 
-                for (int i = 0; i < numChoices; i++)
-                {
-                    Choice choice = inkStory.currentChoices[i];
-                    userInterface.PresentChoice((i + 1) + ": " + choice.text, i);
-                }
-                choicesPresented = true;
+            for (int i = 0; i < numChoices; i++)
+            {
+                Choice choice = inkStory.currentChoices[i];
+                userInterface.PresentChoice((i + 1) + ": " + choice.text, i);
             }
         }
     }
 
-    private void FixedUpdate()
+    public void MakeChoice(int choice)
     {
-        //3 Make choice
-        if (choiceNeeded)
-        {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                inkStory.ChooseChoiceIndex(0);
-                choiceNeeded = false;
-                choicesPresented = false;
-                userInterface.DisableChoiceWindow();
-                DoStory();
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                inkStory.ChooseChoiceIndex(1);
-                choiceNeeded = false;
-                choicesPresented = false;
-                userInterface.DisableChoiceWindow();
-                DoStory();
-            }
-        }
+        inkStory.ChooseChoiceIndex((choice-1)); //Convert human choice number to index 
+        userInterface.DisableChoiceWindow();
+        choiceNeeded = false;
+        DoStory();
     }
 }
