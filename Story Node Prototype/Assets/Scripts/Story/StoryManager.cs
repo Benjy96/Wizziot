@@ -34,7 +34,7 @@ public class StoryManager : MonoBehaviour {
 
     // ----- GAME & STATE ----- //
     //UI
-    public PlayerUIController userInterface;
+    public UIController userInterface;
 
     //World Display
     public GameObject displayStoryObject;    //Reference to dialogue box - for world pos
@@ -82,12 +82,14 @@ public class StoryManager : MonoBehaviour {
         {
             if (inkStory.currentChoices.Count > 0)
             {
+                int numChoices = inkStory.currentChoices.Count;
                 choiceNeeded = true;
+                userInterface.EnableChoiceWindow(numChoices);
 
-                for (int i = 0; i < inkStory.currentChoices.Count; i++)
+                for (int i = 0; i < numChoices; i++)
                 {
                     Choice choice = inkStory.currentChoices[i];
-                  //  choiceButtonReferences[i] = userInterface.PresentChoices(playerChoiceBox, (i + 1) + ": " + choice.text);
+                    userInterface.PresentChoice((i + 1) + ": " + choice.text, i);
                 }
                 choicesPresented = true;
             }
@@ -104,7 +106,7 @@ public class StoryManager : MonoBehaviour {
                 inkStory.ChooseChoiceIndex(0);
                 choiceNeeded = false;
                 choicesPresented = false;
-                choiceMade = true;
+                userInterface.DisableChoiceWindow();
                 DoStory();
             }
 
@@ -113,7 +115,7 @@ public class StoryManager : MonoBehaviour {
                 inkStory.ChooseChoiceIndex(1);
                 choiceNeeded = false;
                 choicesPresented = false;
-                choiceMade = true;
+                userInterface.DisableChoiceWindow();
                 DoStory();
             }
         }
