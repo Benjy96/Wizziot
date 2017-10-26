@@ -34,10 +34,7 @@ public class StoryManager : MonoBehaviour {
 
     // ----- GAME & STATE ----- //
     //UI
-    public UI userInterface;
-
-    private RectTransform playerChoiceBox;
-    private Button[] choiceButtonReferences;
+    public PlayerUIController userInterface;
 
     //World Display
     public GameObject displayStoryObject;    //Reference to dialogue box - for world pos
@@ -64,7 +61,6 @@ public class StoryManager : MonoBehaviour {
         inkStory = new Story(inkAsset.text);   //The JSON string from the story
 
         displayStoryText = displayStoryObject.gameObject.transform.Find("StoryText").GetComponent<Text>();
-        playerChoiceBox = userInterface.gameObject.GetComponent<RectTransform>().Find("PlayerChoiceBox").GetComponent<RectTransform>();
     }
 
     /// <summary>
@@ -75,15 +71,6 @@ public class StoryManager : MonoBehaviour {
     /// </summary>
     public void DoStory()
     {
-        if (choiceMade == true)
-        {
-            foreach(Button x in choiceButtonReferences)
-            {
-                userInterface.RemoveChoices(playerChoiceBox, x);
-            }
-            choiceMade = false;
-        }
-
         //1. Present content
         while (inkStory.canContinue)
         {
@@ -95,13 +82,12 @@ public class StoryManager : MonoBehaviour {
         {
             if (inkStory.currentChoices.Count > 0)
             {
-                choiceButtonReferences = new Button[inkStory.currentChoices.Count];
                 choiceNeeded = true;
 
                 for (int i = 0; i < inkStory.currentChoices.Count; i++)
                 {
                     Choice choice = inkStory.currentChoices[i];
-                    choiceButtonReferences[i] = userInterface.PresentChoices(playerChoiceBox, (i + 1) + ": " + choice.text);
+                  //  choiceButtonReferences[i] = userInterface.PresentChoices(playerChoiceBox, (i + 1) + ": " + choice.text);
                 }
                 choicesPresented = true;
             }

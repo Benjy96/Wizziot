@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//Constraint on type : must be or derive from a UnityEngine object
-class ObjectPool<T> where T : Object
+/// <summary>
+/// Utility class for storing gameobjects. Prevents unneeded instantiation. Good for things like bullets, etc.
+/// </summary>
+/// <typeparam name="T"></typeparam>
+class ObjectPool<T> where T : Object    //Constraint on type : must be or derive from a UnityEngine object
 {
     public T prefab;
     private List<T> inactiveObjects = new List<T>();
