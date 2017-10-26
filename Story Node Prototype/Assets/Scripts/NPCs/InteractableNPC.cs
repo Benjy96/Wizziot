@@ -14,7 +14,7 @@ public abstract class InteractableNPC : MonoBehaviour {
 
     // ----- CONFIGURATION VARIABLES ----- //
     protected static PlayerController player;
-    protected StoryManager story;
+    protected static StoryManager story;
 
     // ----- STATE VARIABLES ----- //
     [SerializeField] protected string inkPath = "";
@@ -35,6 +35,7 @@ public abstract class InteractableNPC : MonoBehaviour {
     // ----- ABSTRACT METHODS ----- //
     public virtual void Interact()
     {
+        //TODO: Decouple this UI code (add to a component)
         //Get space above head for the story text
         float objectHeight = transform.localScale.y;
         Vector3 textPos = new Vector3(transform.position.x, transform.position.y + objectHeight, transform.position.z);
@@ -58,7 +59,7 @@ public abstract class InteractableNPC : MonoBehaviour {
     protected void Awake()
     {
         //Get shared reference to story & player
-        if (story == null) story = FindObjectOfType<StoryManager>();
+        if (story == null) story = StoryManager.Instance;
         if (player == null) player = FindObjectOfType<PlayerController>();
 
         //Define the NPC's default stats

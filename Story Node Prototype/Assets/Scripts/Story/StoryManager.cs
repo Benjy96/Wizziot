@@ -21,6 +21,8 @@ public class StoryManager : MonoBehaviour {
     [SerializeField] private TextAsset savedAsset;  //Saved ink story state - choices, vars, lists, etc.
 
     // ----- PROPERTIES ----- //
+    public static StoryManager Instance { get { return _StoryManager; } }
+
     public Story InkScript
     {
         get { return inkStory; }
@@ -42,9 +44,7 @@ public class StoryManager : MonoBehaviour {
 
     //Ink Logic
     private bool choiceNeeded = false;
-    private bool choicesPresented = false;
     
-
     private void Awake()
     {
         #region Singleton
@@ -70,17 +70,17 @@ public class StoryManager : MonoBehaviour {
     /// </summary>
     public void DoStory()
     {
-        //1. Present content
+        //1. Present Content
         while (inkStory.canContinue)
         {
             displayStoryText.text = inkStory.Continue();
         }
 
-        //2. Present choices
+        //2. Present Choices
         if (inkStory.currentChoices.Count > 0)
         {
-            int numChoices = inkStory.currentChoices.Count;
             choiceNeeded = true;
+            int numChoices = inkStory.currentChoices.Count;
             userInterface.EnableChoiceWindow(numChoices);
 
             for (int i = 0; i < numChoices; i++)
@@ -91,6 +91,7 @@ public class StoryManager : MonoBehaviour {
         }
     }
 
+    //3. Make Choice
     public void MakeChoice(int choice)
     {
         inkStory.ChooseChoiceIndex((choice-1)); //Convert human choice number to index 
