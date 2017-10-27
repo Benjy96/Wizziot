@@ -8,26 +8,6 @@ using UnityEngine.UI;
 /// </summary>
 public class StoryDisplayManager : MonoBehaviour {
 
-    #region Singleton  
-    private static StoryDisplayManager _StoryDisplay = null;
-    
-    private void Awake()
-    {
-        if (_StoryDisplay == null)
-        {
-            _StoryDisplay = this;
-        }
-        else if (_StoryDisplay != this)
-        {
-            Destroy(gameObject);
-        }
-        DontDestroyOnLoad(gameObject);
-    }
-    #endregion
-
-    // ----- SINGLETON ----- //
-    public static StoryDisplayManager Instance { get { return _StoryDisplay; } }
-
     // ----- Worldspace UI ----- //
     [Header("Set in Inspector")]
     public GameObject storyDisplayCanvas;

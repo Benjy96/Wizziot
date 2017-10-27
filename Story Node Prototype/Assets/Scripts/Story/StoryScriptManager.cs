@@ -11,10 +11,6 @@ using Ink.Runtime;
 /// </summary>
 public class StoryScriptManager : MonoBehaviour {
 
-    // ----- SINGLETON ----- //
-    private static StoryScriptManager _Script = null;
-    public static StoryScriptManager Instance { get { return _Script; } }
-
     // ----- INK RUNTIME ----- //
     [SerializeField] private Story inkStory;    //The story (ink story/script)
     [SerializeField] private TextAsset inkAsset;  //Compiled JSON asset
@@ -34,16 +30,6 @@ public class StoryScriptManager : MonoBehaviour {
     
     private void Awake()
     {
-        #region Singleton
-        if (_Script == null)
-        {
-            _Script = this;
-        }else if(_Script != this){
-            Destroy(gameObject);
-        }
-        DontDestroyOnLoad(gameObject);
-        #endregion
-
         inkStory = new Story(inkAsset.text);   //The JSON string from the story
     }
 

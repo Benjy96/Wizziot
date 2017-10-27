@@ -1264,24 +1264,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   storyDisplayCanvas: {fileID: 55694046}
   storyText: {fileID: 1076111724}
---- !u!1 &1522070513 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1458570314575524, guid: 0e6afb90b2ea6fb4391ecd6b4a9f34a2,
-    type: 2}
-  m_PrefabInternal: {fileID: 1702844901}
---- !u!114 &1522070514
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1522070513}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcc2265c86cc2e842b3a0f77ce72817c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerUI: {fileID: 0}
-  displayStory: {fileID: 0}
 --- !u!1001 &1702844901
 Prefab:
   m_ObjectHideFlags: 0
