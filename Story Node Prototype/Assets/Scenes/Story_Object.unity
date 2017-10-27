@@ -1193,6 +1193,10 @@ Prefab:
       propertyPath: userInterface
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1655292882218776, guid: dec5156688353bf4b96805dbe5bfb135, type: 2}
+      propertyPath: m_TagString
+      value: StoryManager
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dec5156688353bf4b96805dbe5bfb135, type: 2}
   m_IsPrefabParent: 0
@@ -1210,7 +1214,7 @@ GameObject:
   - component: {fileID: 1446508420}
   m_Layer: 0
   m_Name: Story Manager
-  m_TagString: Untagged
+  m_TagString: StoryManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

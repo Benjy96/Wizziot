@@ -28,6 +28,8 @@ public class StoryDisplayManager : MonoBehaviour {
     // ----- SINGLETON ----- //
     public static StoryDisplayManager Instance { get { return _StoryDisplay; } }
 
+    // ----- Worldspace UI ----- //
+    [Header("Set in Inspector")]
     public GameObject storyDisplayCanvas;
     public Text storyText;
 
