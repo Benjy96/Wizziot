@@ -3,7 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StoryInterface : MonoBehaviour {
+/// <summary>
+/// Controls input options for altering the story's state
+/// </summary>
+public class StoryInterfaceManager : MonoBehaviour {
+
+    #region Singleton  
+    private static StoryInterfaceManager _StoryInterface = null;
+
+    private void Awake()
+    {
+        if (_StoryInterface == null)
+        {
+            _StoryInterface = this;
+        }
+        else if (_StoryInterface != this)
+        {
+            Destroy(gameObject);
+        }
+        DontDestroyOnLoad(gameObject);
+    }
+    #endregion
+
+    // ----- SINGLETON ----- //
+    public static StoryInterfaceManager Instance { get { return _StoryInterface; } }
 
     // ----- 2D UI ----- //
     [Header("Set in Inspector")]

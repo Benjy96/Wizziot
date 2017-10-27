@@ -14,8 +14,7 @@ public abstract class InteractableNPC : MonoBehaviour {
 
     // ----- CONFIGURATION VARIABLES ----- //
     protected static PlayerController player;
-    protected static StoryScript story;
-    protected static UIController ui;
+    protected static StoryScriptManager story;
 
     // ----- STATE VARIABLES ----- //
     [SerializeField] protected string inkPath = "";
@@ -50,9 +49,8 @@ public abstract class InteractableNPC : MonoBehaviour {
     protected void Start()
     {
         //Get shared reference to story & player
-        if (story == null) story = StoryScript.Instance;
+        if (story == null) story = StoryScriptManager.Instance;
         if (player == null) player = FindObjectOfType<PlayerController>();
-        if (ui == null) ui = FindObjectOfType<UIController>();
         //External functions MUST be set in start -- eliminates "Race" condition - inkStory is set in awake
         SetExternalFunctions();
     }

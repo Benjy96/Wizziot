@@ -9,17 +9,16 @@ using Ink.Runtime;
 /// Holds references to Ink assets and Game assets that directly interact with ink
 /// Holds/manages the current story state (set it).
 /// </summary>
-public class StoryScript : MonoBehaviour {
+public class StoryScriptManager : MonoBehaviour {
 
     // ----- SINGLETON ----- //
-    private static StoryScript _Script = null;
+    private static StoryScriptManager _Script = null;
+    public static StoryScriptManager Instance { get { return _Script; } }
 
     // ----- INK RUNTIME ----- //
     [SerializeField] private Story inkStory;    //The story (ink story/script)
     [SerializeField] private TextAsset inkAsset;  //Compiled JSON asset
     [SerializeField] private TextAsset savedAsset;  //Saved ink story state - choices, vars, lists, etc.
-
-    public static StoryScript Instance { get { return _Script; } }
 
     public Story InkScript
     {

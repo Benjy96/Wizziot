@@ -3,7 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StoryDisplayer : MonoBehaviour {
+/// <summary>
+/// Outputs the story in the game world
+/// </summary>
+public class StoryDisplayManager : MonoBehaviour {
+
+    #region Singleton  
+    private static StoryDisplayManager _StoryDisplay = null;
+    
+    private void Awake()
+    {
+        if (_StoryDisplay == null)
+        {
+            _StoryDisplay = this;
+        }
+        else if (_StoryDisplay != this)
+        {
+            Destroy(gameObject);
+        }
+        DontDestroyOnLoad(gameObject);
+    }
+    #endregion
+
+    // ----- SINGLETON ----- //
+    public static StoryDisplayManager Instance { get { return _StoryDisplay; } }
 
     public GameObject storyDisplayCanvas;
     public Text storyText;
