@@ -14,19 +14,12 @@ public abstract class InteractableNPC : MonoBehaviour {
 
     // ----- CONFIGURATION VARIABLES ----- //
     protected static PlayerController player;
-    protected static StoryManager story;
+    protected static StoryScript story;
+    protected static UIController ui;
 
     // ----- STATE VARIABLES ----- //
     [SerializeField] protected string inkPath = "";
     [SerializeField] protected GameObject storyText;
-
-    protected Vector3 InteractingNPC
-    {
-        get
-        {
-            return player.TargetPos;
-        }
-    }
 
     protected float bobSpeed;
     protected float bobRange;
@@ -35,18 +28,8 @@ public abstract class InteractableNPC : MonoBehaviour {
     // ----- ABSTRACT METHODS ----- //
     public virtual void Interact()
     {
-        //TODO: Decouple this UI code (add to a component)
-        //Get space above head for the story text
-        float objectHeight = transform.localScale.y;
-        Vector3 textPos = new Vector3(transform.position.x, transform.position.y + objectHeight, transform.position.z);
-
-        /* BENEATH IS ASSIGNED BY REFERENCE - GAMEOBJECT IS A CLASS - WE AREN'T CREATING NEW OBJECTS FOR EACH CHILD */
-        storyText = story.displayStoryObject;
-        storyText.transform.position = textPos;
-        storyText.transform.SetParent(gameObject.transform);
-        //Enable canvas and text
-        storyText.SetActive(true);
-        storyText.transform.GetChild(0).gameObject.SetActive(true);
+        //Place story text
+        //TODO: Implement
 
         //Set and run story
         story.StoryPosition = inkPath;
@@ -58,10 +41,6 @@ public abstract class InteractableNPC : MonoBehaviour {
     // ----- METHODS ----- //
     protected void Awake()
     {
-        //Get shared reference to story & player
-        if (story == null) story = StoryManager.Instance;
-        if (player == null) player = FindObjectOfType<PlayerController>();
-
         //Define the NPC's default stats
         bobSpeed = stats.movementData.bobSpeed;
         bobRange = stats.movementData.bobRange;
@@ -70,6 +49,10 @@ public abstract class InteractableNPC : MonoBehaviour {
     
     protected void Start()
     {
+        //Get shared reference to story & player
+        if (story == null) story = StoryScript.Instance;
+        if (player == null) player = FindObjectOfType<PlayerController>();
+        if (ui == null) ui = FindObjectOfType<UIController>();
         //External functions MUST be set in start -- eliminates "Race" condition - inkStory is set in awake
         SetExternalFunctions();
     }

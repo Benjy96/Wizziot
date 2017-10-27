@@ -9,7 +9,13 @@ using UnityEngine;
 class ObjectPool<T> where T : Object    //Constraint on type : must be or derive from a UnityEngine object
 {
     public T prefab;
-    private List<T> inactiveObjects = new List<T>();
+    private List<T> inactiveObjects;
+
+    public ObjectPool(T prefab)
+    {
+        this.prefab = prefab;
+        inactiveObjects = new List<T>();
+    }
 
     public T GetObject()
     {

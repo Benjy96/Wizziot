@@ -35,7 +35,7 @@ public class SphereNPC : InteractableNPC
 
     private void SpherePushOff()
     {
-        Vector3 away = (player.transform.position - new Vector3(InteractingNPC.x, InteractingNPC.y, InteractingNPC.z)).normalized;
+        Vector3 away = (player.transform.position - transform.position).normalized;
         away *= pushOffForce;    //set magnitude
 
         player.GetComponent<Rigidbody>().AddForce(away, ForceMode.Impulse);
