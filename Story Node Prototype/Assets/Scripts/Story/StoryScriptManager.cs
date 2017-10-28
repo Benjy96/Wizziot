@@ -58,9 +58,6 @@ public class StoryScriptManager : MonoBehaviour {
 
     public string GetContent
     {
-        get {
-            string test = inkStory.Continue();
-            Debug.Log(test);
-            return test; }
+        get { return inkStory.Continue(); }
     }
 }
