@@ -99,13 +99,20 @@ public class StoryManager : MonoBehaviour {
     {
         if (takeStoryInput)
         {
-            switch (Input.inputString)
+            int playerChoice;
+            bool correctInput = int.TryParse(Input.inputString, out playerChoice);
+            if (correctInput)
             {
-                case "1":
-                    scriptManager.MakeChoice(0);
-                    if (scriptManager.ContentAvailable) Converse(conversationTarget);
-                    ClearConversation();
-                    break;
+                switch (playerChoice)
+                {
+                    case 1:
+                    case 2:
+                    case 3:
+                        scriptManager.MakeChoice(playerChoice - 1);
+                        if (scriptManager.ContentAvailable) Converse(conversationTarget);   //Loop
+                        ClearConversation();
+                        break;
+                }
             }
         }
     }
