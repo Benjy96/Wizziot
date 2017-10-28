@@ -21,10 +21,12 @@ public class StoryManager : MonoBehaviour {
 
     //Story Manager Components
     private StoryScriptManager scriptManager;
-    private StoryDisplayManager displayManager;
+    private StoryDisplayManager displayManager; //TODO: investigate multiple text displays - i.e. multiple canvases displayed concurrently
     private StoryInterfaceManager interfaceManager;
 
     private InteractableNPC conversationTarget;
+
+    private bool playerStartedNewConversation = false;
 
     private bool storyDisplayActive = false;
     private bool storyChoiceDisplayActive = false;
@@ -56,6 +58,7 @@ public class StoryManager : MonoBehaviour {
 
     public void AttemptToConverse(InteractableNPC targetNPC)
     {
+        playerStartedNewConversation = true;
         ResetStoryInterface();
 
         //Find out if NPC has "anything to say"
@@ -84,7 +87,7 @@ public class StoryManager : MonoBehaviour {
             storyDisplayActive = true;
         }
 
-        //Present Story
+        //INK: 1. Present Story
         if (scriptManager.ContentAvailable && storyDisplayActive == true)
         {
             PresentStory();
@@ -97,7 +100,7 @@ public class StoryManager : MonoBehaviour {
             storyChoiceDisplayActive = true;
         }
 
-        //Make Choices
+        //INK: 2. Make Choices
         if (scriptManager.ChoicesAvailable && storyChoiceDisplayActive == true)
         {
             EnableInput();
@@ -120,7 +123,7 @@ public class StoryManager : MonoBehaviour {
 
     private void HideStory()
     {
-        if (storyDisplayActive)
+        if (storyDisplayActive && playerStartedNewConversation == false)
         {
             displayManager.DisableStoryDisplay(gameObject.transform);
             storyDisplayActive = false;
@@ -148,6 +151,7 @@ public class StoryManager : MonoBehaviour {
    
     private IEnumerator ExitConversation()
     {
+        playerStartedNewConversation = false;
         DisableInput();
         yield return new WaitForSeconds(5f);
         HideStory();
@@ -155,7 +159,7 @@ public class StoryManager : MonoBehaviour {
 
     private void Update()
     {
-        //3. Make Choice and Loop Story.
+        //INK: 3. Make Choice and Loop Story.
         if (takeStoryInput)
         {
             int playerChoice;
