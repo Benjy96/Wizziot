@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class StoryManager : MonoBehaviour {
 
@@ -12,6 +10,12 @@ public class StoryManager : MonoBehaviour {
     private StoryScriptManager scriptManager;
     private StoryDisplayManager displayManager;
     private StoryInterfaceManager interfaceManager;
+
+    private InteractableNPC conversationTarget;
+
+    private bool storyTextDisplayed = false;
+    private bool storyChoicesDisplayed = false;
+    private bool takeStoryInput = false;
 
     private void Awake()
     {
@@ -31,28 +35,78 @@ public class StoryManager : MonoBehaviour {
         displayManager = GetComponent<StoryDisplayManager>();
         interfaceManager = GetComponent<StoryInterfaceManager>();
     }
-    
-    public void StartConversation(InteractableNPC targetNPC)
+
+    public StoryScriptManager AccessInk //TODO: find a way to bind external functions here - pass the "BindExternalFunctions" parameters
     {
-        //TODO: Implement conversation
-        //1. Check NPC story path (what it wants to say - individual "path" attribute
-        //LOOP:    
-            
-            //2. Check if we can run story
-                //INK FLOW:
-                //I.1. Present Content
-            //3. Display world UI (story output)
-                //I.2 Present Choices
-            //4. Display Canvas 2D UI (story input canvas)
-                //I.3 Make Choices
-            //5. Get player input
+        get { return scriptManager; }
+    }
+    
+    public void Converse(InteractableNPC targetNPC)
+    {
+        conversationTarget = targetNPC;
 
-        //END LOOP
+        scriptManager.StoryPosition = targetNPC.inkPath;
 
-        //6. Remove Canvas and world UI
-        //7. Close input streams
+        if (scriptManager.ContentAvailable && storyTextDisplayed == false)
+        {
+            displayManager.EnableStoryDisplay(targetNPC.transform);
+            displayManager.SetDisplayPosition = targetNPC.transform;
 
+            while (scriptManager.ContentAvailable)
+            {
+                displayManager.DisplayedStoryText = scriptManager.GetContent;
+            }
 
+            storyTextDisplayed = true;
+        }
 
+        if(scriptManager.ChoicesAvailable && storyChoicesDisplayed == false)
+        {
+            interfaceManager.EnableChoiceWindow(scriptManager.NumChoicesAvailable);
+
+            for (int i = 0; i < scriptManager.NumChoicesAvailable; i++)
+            {
+                interfaceManager.PresentChoice(scriptManager.GetChoice(i), i);
+            }
+
+            storyChoicesDisplayed = true;
+        }
+
+        if (storyChoicesDisplayed)
+        {
+            takeStoryInput = true;
+        }
+    }
+
+    public void ClearConversation()
+    {
+        if (storyTextDisplayed)
+        {
+            displayManager.DisableStoryDisplay(gameObject.transform);
+            storyTextDisplayed = false;
+        }
+
+        if (storyChoicesDisplayed)
+        {
+            interfaceManager.DisableChoiceWindow();
+            storyChoicesDisplayed = false;
+        }
+
+        takeStoryInput = false;
+    }
+
+    private void Update()
+    {
+        if (takeStoryInput)
+        {
+            switch (Input.inputString)
+            {
+                case "1":
+                    scriptManager.MakeChoice(0);
+                    if (scriptManager.ContentAvailable) Converse(conversationTarget);
+                    ClearConversation();
+                    break;
+            }
+        }
     }
 }

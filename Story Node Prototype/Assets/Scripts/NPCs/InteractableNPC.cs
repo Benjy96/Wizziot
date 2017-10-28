@@ -14,6 +14,7 @@ public abstract class InteractableNPC : MonoBehaviour {
 
     // ----- CONFIGURATION VARIABLES ----- //
     protected static PlayerController player;
+    protected static StoryManager storyManager;
 
     // ----- STATE VARIABLES ----- //
     public string inkPath = "";
@@ -43,6 +44,7 @@ public abstract class InteractableNPC : MonoBehaviour {
     {
         //Get shared reference to the player
         if (player == null) player = FindObjectOfType<PlayerController>();
+        if (storyManager == null) storyManager = FindObjectOfType<StoryManager>();
         //External functions MUST be set in start -- eliminates "Race" condition - inkStory is set in awake
         SetExternalFunctions();
     }

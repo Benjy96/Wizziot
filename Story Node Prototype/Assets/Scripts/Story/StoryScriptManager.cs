@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Ink.Runtime;
 
 /// <summary>
@@ -16,53 +14,53 @@ public class StoryScriptManager : MonoBehaviour {
     [SerializeField] private TextAsset inkAsset;  //Compiled JSON asset
     [SerializeField] private TextAsset savedAsset;  //Saved ink story state - choices, vars, lists, etc.
 
+    private void Awake()
+    {
+        inkStory = new Story(inkAsset.text);   //The JSON string from the story
+    }
+
     public Story InkScript
     {
         get { return inkStory; }
         private set { inkStory = value; }
     }
 
-    // ----- STATE PROPERTIES ----- //
+    public bool ContentAvailable
+    {
+        get { return inkStory.canContinue; }
+    }
+
+    public bool ChoicesAvailable
+    {
+        get { return inkStory.currentChoices.Count > 0; }
+    }
+
+    public int NumChoicesAvailable
+    {
+        get { return inkStory.currentChoices.Count; }
+    }
+
     public string StoryPosition
     {
         set { inkStory.ChoosePathString(value); }
     }
     
-    private void Awake()
+    public string GetChoice(int availableChoiceIndex)
     {
-        inkStory = new Story(inkAsset.text);   //The JSON string from the story
+        Choice choice = inkStory.currentChoices[availableChoiceIndex];
+        return choice.text;
     }
 
-    /// <summary>
-    /// Makes calls to the ink story in a loop. There are two repeating stages:
-    /// 1. Present Content
-    /// 2. Present Choices
-    /// Followed by: 3. Make Choice
-    /// </summary>
-    public void DoStory()
+    public void MakeChoice(int choiceIndex)
     {
-        //1. Present Content
-        while (inkStory.canContinue)
-        {
-            //TODO: Implement
-            Debug.Log(inkStory.Continue());
-        }
-
-        //2. Present Choices
-        if (inkStory.currentChoices.Count > 0)
-        {
-            int numChoices = inkStory.currentChoices.Count;
-
-            for (int i = 0; i < numChoices; i++)
-            {
-                Choice choice = inkStory.currentChoices[i];
-            }
-        }
+        inkStory.ChooseChoiceIndex(choiceIndex);
     }
 
-    //3. Make Choice
-    public void MakeChoice(int choice)
+    public string GetContent
     {
-        DoStory();
+        get {
+            string test = inkStory.Continue();
+            Debug.Log(test);
+            return test; }
     }
 }

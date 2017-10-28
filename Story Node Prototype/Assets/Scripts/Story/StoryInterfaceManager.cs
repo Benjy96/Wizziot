@@ -10,8 +10,8 @@ public class StoryInterfaceManager : MonoBehaviour {
 
     // ----- 2D UI ----- //
     [Header("Set in Inspector")]
-    public RectTransform playerChoiceBox;   //The background "underlay" for the buttons
-    public List<Button> playerChoiceButtons;    //Resizable button array - may change how many choices the player can make
+    [SerializeField] private RectTransform playerChoiceBox;   //The background "underlay" for the buttons
+    [SerializeField] private List<Button> playerChoiceButtons;    //Resizable button array - may change how many choices the player can make
 
     private int numChoices;
 
@@ -27,15 +27,19 @@ public class StoryInterfaceManager : MonoBehaviour {
 
     public void PresentChoice(string choiceText, int choice)
     {
-        playerChoiceButtons[choice].GetComponentInChildren<Text>().text = choiceText;
+        playerChoiceButtons[choice].GetComponentInChildren<Text>().text = "Choice: " + (choice+1) + ": " +choiceText;
     }
 
     public void DisableChoiceWindow()
     {
-        for (int i = 0; i < numChoices; i++)
+        if (numChoices > 0)
         {
-            playerChoiceButtons[i].gameObject.SetActive(false); //Disable the no longer needed buttons
+            for (int i = 0; i < numChoices; i++)
+            {
+                playerChoiceButtons[i].gameObject.SetActive(false); //Disable the no longer needed buttons
+            }
+            playerChoiceBox.gameObject.SetActive(false);
+            numChoices = 0;
         }
-        playerChoiceBox.gameObject.SetActive(false);
     }
 }

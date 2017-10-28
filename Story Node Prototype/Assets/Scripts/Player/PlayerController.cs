@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour {
             {
                 case "f":
                     //Enter a conversation
-                    StoryManager.Instance.StartConversation(interactingNPC);
+                    StoryManager.Instance.Converse(interactingNPC);
                     break;
             }
         }

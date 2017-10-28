@@ -10,17 +10,19 @@ public class StoryDisplayManager : MonoBehaviour {
 
     // ----- Worldspace UI ----- //
     [Header("Set in Inspector")]
-    public GameObject storyDisplayCanvas;
-    public Text storyText;
+    [SerializeField] private GameObject storyDisplayCanvas;
+    [SerializeField] private Text storyText;
 
-    public void EnableStoryDisplay()
+    public void EnableStoryDisplay(Transform attachTo)
     {
         storyDisplayCanvas.SetActive(true);
+        storyDisplayCanvas.transform.SetParent(attachTo);
     }
 
-    public void DisableStoryDisplay()
+    public void DisableStoryDisplay(Transform attachTo)
     {
         storyDisplayCanvas.SetActive(false);
+        storyDisplayCanvas.transform.SetParent(attachTo);
     }
 
     public string DisplayedStoryText
@@ -28,7 +30,7 @@ public class StoryDisplayManager : MonoBehaviour {
         set { storyText.text = value; }
     }
 
-    public Transform SetWorldPosition
+    public Transform SetDisplayPosition
     {
         set
         {
