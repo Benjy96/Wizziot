@@ -663,7 +663,7 @@ MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 114975743755949878, guid: dec5156688353bf4b96805dbe5bfb135,
     type: 2}
-  m_PrefabInternal: {fileID: 1426824652}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1446508418}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -1124,96 +1124,21 @@ RectTransform:
   m_PrefabParentObject: {fileID: 224365318198043712, guid: 440d7df23e68cce43b6a67045a00f1c4,
     type: 2}
   m_PrefabInternal: {fileID: 1363454170}
---- !u!1001 &1426824652
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4636297065009406, guid: dec5156688353bf4b96805dbe5bfb135, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4636297065009406, guid: dec5156688353bf4b96805dbe5bfb135, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4636297065009406, guid: dec5156688353bf4b96805dbe5bfb135, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4636297065009406, guid: dec5156688353bf4b96805dbe5bfb135, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4636297065009406, guid: dec5156688353bf4b96805dbe5bfb135, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4636297065009406, guid: dec5156688353bf4b96805dbe5bfb135, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4636297065009406, guid: dec5156688353bf4b96805dbe5bfb135, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4636297065009406, guid: dec5156688353bf4b96805dbe5bfb135, type: 2}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114975743755949878, guid: dec5156688353bf4b96805dbe5bfb135,
-        type: 2}
-      propertyPath: inkAsset
-      value: 
-      objectReference: {fileID: 4900000, guid: 431cc3e6c720cbb4c9e9b80be1c4dea9, type: 3}
-    - target: {fileID: 114975743755949878, guid: dec5156688353bf4b96805dbe5bfb135,
-        type: 2}
-      propertyPath: savedAsset
-      value: 
-      objectReference: {fileID: 4900000, guid: 431cc3e6c720cbb4c9e9b80be1c4dea9, type: 3}
-    - target: {fileID: 114975743755949878, guid: dec5156688353bf4b96805dbe5bfb135,
-        type: 2}
-      propertyPath: displayStoryAsset
-      value: 
-      objectReference: {fileID: 1076111722}
-    - target: {fileID: 114975743755949878, guid: dec5156688353bf4b96805dbe5bfb135,
-        type: 2}
-      propertyPath: displayStoryObject
-      value: 
-      objectReference: {fileID: 55694046}
-    - target: {fileID: 114975743755949878, guid: dec5156688353bf4b96805dbe5bfb135,
-        type: 2}
-      propertyPath: selectionCanvas
-      value: 
-      objectReference: {fileID: 2078710272}
-    - target: {fileID: 114975743755949878, guid: dec5156688353bf4b96805dbe5bfb135,
-        type: 2}
-      propertyPath: userInterface
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1655292882218776, guid: dec5156688353bf4b96805dbe5bfb135, type: 2}
-      propertyPath: m_TagString
-      value: StoryManager
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: dec5156688353bf4b96805dbe5bfb135, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &1446508418
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 1655292882218776, guid: dec5156688353bf4b96805dbe5bfb135,
     type: 2}
-  m_PrefabInternal: {fileID: 1426824652}
+  m_PrefabInternal: {fileID: 0}
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1446508419}
+  - component: {fileID: 1446508422}
   - component: {fileID: 728703044}
   - component: {fileID: 1446508421}
   - component: {fileID: 1446508420}
   m_Layer: 0
-  m_Name: Story Manager
+  m_Name: StoryManager
   m_TagString: StoryManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1224,7 +1149,7 @@ Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 4636297065009406, guid: dec5156688353bf4b96805dbe5bfb135,
     type: 2}
-  m_PrefabInternal: {fileID: 1426824652}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1446508418}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -1264,6 +1189,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   storyDisplayCanvas: {fileID: 55694046}
   storyText: {fileID: 1076111724}
+--- !u!114 &1446508422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1446508418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fad978a1d52e3049a45101ed01416d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1702844901
 Prefab:
   m_ObjectHideFlags: 0

@@ -14,7 +14,6 @@ public abstract class InteractableNPC : MonoBehaviour {
 
     // ----- CONFIGURATION VARIABLES ----- //
     protected static PlayerController player;
-    protected static StoryScriptManager story;
 
     // ----- STATE VARIABLES ----- //
     [SerializeField] protected string inkPath = "";
@@ -27,12 +26,7 @@ public abstract class InteractableNPC : MonoBehaviour {
     // ----- ABSTRACT METHODS ----- //
     public virtual void Interact()
     {
-        //Place story text
         //TODO: Implement
-
-        //Set and run story
-        story.StoryPosition = inkPath;
-        story.DoStory();
     }
 
     protected abstract void SetExternalFunctions();
@@ -48,8 +42,7 @@ public abstract class InteractableNPC : MonoBehaviour {
     
     protected void Start()
     {
-        //Get shared reference to story & player
-        if (story == null) story = StoryScriptManager.Instance;
+        //Get shared reference to the player
         if (player == null) player = FindObjectOfType<PlayerController>();
         //External functions MUST be set in start -- eliminates "Race" condition - inkStory is set in awake
         SetExternalFunctions();

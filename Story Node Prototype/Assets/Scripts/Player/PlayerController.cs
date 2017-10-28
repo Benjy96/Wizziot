@@ -27,7 +27,6 @@ public class PlayerController : MonoBehaviour {
 
     // ---- Book-keeping Fields ----- //    //Convenience properties and variables, plus variables that do not need saved.
     //Implementation Data
-    private bool interacted = false;
     private InteractableNPC interactingNPC;
 
     //Interface
@@ -47,23 +46,9 @@ public class PlayerController : MonoBehaviour {
         get { return interactingNPC.transform.position; }
     }
 
-    #region MonoBehaviour
     // Update is called once per frame
     void Update () {
         HandleInput();
-        HandleInteraction();
-    }
-#endregion MonoBehaviour
-
-    private void OnTriggerEnter(Collider other)
-    {
-        interactingNPC = other.gameObject.GetComponent<InteractableNPC>();
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if(interacted) interacted = false;
-        interactingNPC = null;
     }
 
     private void HandleInput()
@@ -75,18 +60,5 @@ public class PlayerController : MonoBehaviour {
 
         transform.Translate(velocity, Space.World);
         transform.LookAt(transform.position + adjustedLook);
-    }
-
-    private void HandleInteraction()
-    {
-        if (interactingNPC != null)
-        {
-            float distanceFromNPC = Vector3.Distance(transform.position, interactingNPC.transform.position);
-            if (distanceFromNPC <= 5f && interacted == false)
-            {
-                interacted = true;
-                interactingNPC.Interact();
-            }
-        }
     }
 }
