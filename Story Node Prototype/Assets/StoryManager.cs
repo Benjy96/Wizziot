@@ -31,4 +31,25 @@ public class StoryManager : MonoBehaviour {
         displayManager = GetComponent<StoryDisplayManager>();
         interfaceManager = GetComponent<StoryInterfaceManager>();
     }
+    
+    public void StartConversation()
+    {
+        //TODO: Implement conversation
+        //1. Check NPC story path (what it wants to say - individual "path" attribute
+        //LOOP:    
+            
+            //2. Check if we can run story
+                //INK FLOW:
+                //I.1. Present Content
+            //3. Display world UI (story output)
+                //I.2 Present Choices
+            //4. Display Canvas 2D UI (story input canvas)
+                //I.3 Make Choices
+            //5. Get player input
+
+        //END LOOP
+
+        //6. Remove Canvas and world UI
+        //7. Close input streams
+    }
 }

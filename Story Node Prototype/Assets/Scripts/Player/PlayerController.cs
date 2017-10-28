@@ -56,6 +56,7 @@ public class PlayerController : MonoBehaviour {
     void Update () {
         HandleDirectionInput();
         HandleTargetingInput();
+        HandleKeyboardInput();
     }
 
     private void HandleDirectionInput()
@@ -78,11 +79,25 @@ public class PlayerController : MonoBehaviour {
 
             if(Physics.Raycast(ray, out pointHit, 100f))    //If the raycast hits something within 100
             {
-                if (pointHit.transform.tag.Equals("InteractableNPC"))
+                if (pointHit.transform.GetComponent<InteractableNPC>())
                 {
                     interactingNPC = pointHit.transform.GetComponent<InteractableNPC>();
                     Debug.Log("Targeting: " + interactingNPC.name);
                 }
+            }
+        }
+    }
+
+    private void HandleKeyboardInput()
+    {
+        if (interactingNPC != null) //If we have a target, allow possibility of starting a conversation
+        {
+            switch (Input.inputString)
+            {
+                case "f":
+                    //Enter a conversation
+                    StoryManager.Instance.StartConversation();
+                    break;
             }
         }
     }
