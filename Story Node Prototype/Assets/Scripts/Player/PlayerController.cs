@@ -81,8 +81,12 @@ public class PlayerController : MonoBehaviour {
             {
                 if (pointHit.transform.GetComponent<InteractableNPC>())
                 {
+                    if(interactingNPC != null)
+                    {
+                        interactingNPC.GetComponent<Light>().enabled = false;
+                    }
                     interactingNPC = pointHit.transform.GetComponent<InteractableNPC>();
-                    Debug.Log("Targeting: " + interactingNPC.name);
+                    interactingNPC.GetComponent<Light>().enabled = true;
                 }
             }
         }

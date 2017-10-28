@@ -30,7 +30,7 @@ public class StoryDisplayManager : MonoBehaviour {
         set { storyText.text = value; }
     }
 
-    public Transform SetDisplayPosition
+    public Transform DisplayPosition
     {
         set
         {

@@ -10,6 +10,8 @@ using UnityEngine;
 ///     Run ink story (if available)
 ///     Get player input TODO: Create separate setup conversation/end conversation methods to make more dynamic
 ///     Clear story displays - need to change when cleared
+///     
+/// StoryManager sets up the story's flow, output, and handles input
 /// </summary>
 public class StoryManager : MonoBehaviour {
 
@@ -78,7 +80,7 @@ public class StoryManager : MonoBehaviour {
         if (scriptManager.ContentAvailable && storyDisplayActive == false)
         {
             displayManager.EnableStoryDisplay(conversationTarget.transform);
-            displayManager.SetDisplayPosition = conversationTarget.transform;
+            displayManager.DisplayPosition = conversationTarget.transform;
             storyDisplayActive = true;
         }
 

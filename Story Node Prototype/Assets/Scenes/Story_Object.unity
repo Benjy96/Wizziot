@@ -815,15 +815,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 114663951765115494, guid: 55d85d9d36b8ef8458f1d4f56681b3e4,
-        type: 2}
-      propertyPath: story
-      value: 
-      objectReference: {fileID: 728703044}
-    - target: {fileID: 1003125731606806, guid: 55d85d9d36b8ef8458f1d4f56681b3e4, type: 2}
-      propertyPath: m_TagString
-      value: InteractableNPC
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 55d85d9d36b8ef8458f1d4f56681b3e4, type: 2}
   m_IsPrefabParent: 0

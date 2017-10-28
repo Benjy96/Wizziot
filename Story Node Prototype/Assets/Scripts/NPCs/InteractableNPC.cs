@@ -22,13 +22,8 @@ public abstract class InteractableNPC : MonoBehaviour {
     protected float bobSpeed;
     protected float bobRange;
     protected float pushOffForce;
-
+    
     // ----- ABSTRACT METHODS ----- //
-    public virtual void Interact()
-    {
-        //TODO: Implement
-    }
-
     protected abstract void SetExternalFunctions();
 
     // ----- METHODS ----- //
