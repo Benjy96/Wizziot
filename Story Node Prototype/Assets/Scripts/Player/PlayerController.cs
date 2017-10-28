@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour {
     // ---- Book-keeping Fields ----- //    //Convenience properties and variables, plus variables that do not need saved.
     //Implementation Data
     private InteractableNPC interactingNPC;
+    private Camera cam;
 
     //Interface
     public float Speed
@@ -46,12 +47,18 @@ public class PlayerController : MonoBehaviour {
         get { return interactingNPC.transform.position; }
     }
 
-    // Update is called once per frame
-    void Update () {
-        HandleInput();
+    private void Awake()
+    {
+        cam = Camera.main;
     }
 
-    private void HandleInput()
+    // Update is called once per frame
+    void Update () {
+        HandleDirectionInput();
+        HandleTargetingInput();
+    }
+
+    private void HandleDirectionInput()
     {
         Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));   //get our directions
         Vector3 direction = input.normalized;   //normalize the direction (for when both are held at same time)
@@ -60,5 +67,23 @@ public class PlayerController : MonoBehaviour {
 
         transform.Translate(velocity, Space.World);
         transform.LookAt(transform.position + adjustedLook);
+    }
+
+    private void HandleTargetingInput()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            RaycastHit pointHit;
+
+            if(Physics.Raycast(ray, out pointHit, 100f))    //If the raycast hits something within 100
+            {
+                if (pointHit.transform.tag.Equals("InteractableNPC"))
+                {
+                    interactingNPC = pointHit.transform.GetComponent<InteractableNPC>();
+                    Debug.Log("Targeting: " + interactingNPC.name);
+                }
+            }
+        }
     }
 }

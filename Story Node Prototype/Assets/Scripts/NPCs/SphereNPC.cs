@@ -18,18 +18,18 @@ public class SphereNPC : InteractableNPC
 
     protected override void SetExternalFunctions()
     {
-        //Forgive me father, for I have sinned - using a try/catch like an if statement
-        //Removes need for statics - this allows us to check if we have already bound the external function
-        try
-        {
-            story.InkScript.ValidateExternalBindings();
-        }
-#pragma warning disable CS0168 // Variable is declared but never used
-        catch (Exception e)
-#pragma warning restore CS0168 // Variable is declared but never used
-        {
-            story.InkScript.BindExternalFunction("SpherePushOff", () => SpherePushOff());
-        }
+//        //Forgive me father, for I have sinned - using a try/catch like an if statement
+//        //Removes need for statics - this allows us to check if we have already bound the external function
+//        try
+//        {
+//            story.InkScript.ValidateExternalBindings();
+//        }
+//#pragma warning disable CS0168 // Variable is declared but never used
+//        catch (Exception e)
+//#pragma warning restore CS0168 // Variable is declared but never used
+//        {
+//            story.InkScript.BindExternalFunction("SpherePushOff", () => SpherePushOff());
+//        }
 
     }
 

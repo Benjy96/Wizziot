@@ -20,16 +20,16 @@ public class CubeNPC : InteractableNPC
     {
         //Forgive me father, for I have sinned - using a try/catch like an if statement
         //Removes need for statics - this allows us to check if we have already bound the external function
-        try
-        {
-            story.InkScript.ValidateExternalBindings();
-        }
-#pragma warning disable CS0168 // Variable is declared but never used
-        catch (Exception e)
-#pragma warning restore CS0168 // Variable is declared but never used
-        {
-            story.InkScript.BindExternalFunction("CubePushOff", () => CubePushOff());
-        }
+//        try
+//        {
+//            story.InkScript.ValidateExternalBindings();
+//        }
+//#pragma warning disable CS0168 // Variable is declared but never used
+//        catch (Exception e)
+//#pragma warning restore CS0168 // Variable is declared but never used
+//        {
+//            story.InkScript.BindExternalFunction("CubePushOff", () => CubePushOff());
+//        }
 
     }
 
