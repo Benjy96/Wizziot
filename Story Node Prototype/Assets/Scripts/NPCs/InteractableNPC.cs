@@ -16,8 +16,7 @@ public abstract class InteractableNPC : MonoBehaviour {
     protected static PlayerController player;
 
     // ----- STATE VARIABLES ----- //
-    [SerializeField] protected string inkPath = "";
-    [SerializeField] protected GameObject storyText;
+    public string inkPath = "";
 
     protected float bobSpeed;
     protected float bobRange;

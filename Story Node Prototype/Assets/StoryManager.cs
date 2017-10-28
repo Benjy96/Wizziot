@@ -32,7 +32,7 @@ public class StoryManager : MonoBehaviour {
         interfaceManager = GetComponent<StoryInterfaceManager>();
     }
     
-    public void StartConversation()
+    public void StartConversation(InteractableNPC targetNPC)
     {
         //TODO: Implement conversation
         //1. Check NPC story path (what it wants to say - individual "path" attribute
@@ -51,5 +51,8 @@ public class StoryManager : MonoBehaviour {
 
         //6. Remove Canvas and world UI
         //7. Close input streams
+
+
+
     }
 }
