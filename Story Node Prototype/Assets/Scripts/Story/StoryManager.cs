@@ -54,6 +54,8 @@ public class StoryManager : MonoBehaviour {
 
     public void AttemptToConverse(InteractableNPC targetNPC)
     {
+        ResetStoryInterface();
+
         //Find out if NPC has "anything to say"
         conversationTarget = targetNPC;
         scriptManager.StoryPosition = targetNPC.inkPath;
@@ -62,6 +64,12 @@ public class StoryManager : MonoBehaviour {
         {
             Converse();
         }
+    }
+
+    private void ResetStoryInterface()
+    {
+        HideStory();
+        DisableInput();
     }
 
     private void Converse()
@@ -74,6 +82,7 @@ public class StoryManager : MonoBehaviour {
             storyDisplayActive = true;
         }
 
+        //Present Story
         if (scriptManager.ContentAvailable && storyDisplayActive == true)
         {
             PresentStory();
@@ -86,11 +95,13 @@ public class StoryManager : MonoBehaviour {
             storyChoiceDisplayActive = true;
         }
 
+        //Make Choices
         if (scriptManager.ChoicesAvailable && storyChoiceDisplayActive == true)
         {
             EnableInput();
         }
 
+        //If no content or choices available, end the conversation
         if (!scriptManager.ContentAvailable && !scriptManager.ChoicesAvailable)
         {
             StartCoroutine(ExitConversation());
@@ -142,6 +153,7 @@ public class StoryManager : MonoBehaviour {
 
     private void Update()
     {
+        //3. Make Choice and Loop Story.
         if (takeStoryInput)
         {
             int playerChoice;
@@ -157,10 +169,6 @@ public class StoryManager : MonoBehaviour {
                         if (scriptManager.ContentAvailable)
                         {
                             Converse(); //Story runs in a loop (enabled by bool - takestoryinput) - bool in update
-                        }
-                        else
-                        {
-                            StartCoroutine(ExitConversation());
                         }
                         break;
                 }
