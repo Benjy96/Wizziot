@@ -26,8 +26,8 @@ public class StoryManager : MonoBehaviour {
 
     private InteractableNPC conversationTarget;
 
-    private bool playerStartedNewConversation = false;
-
+    //State Variables
+    private bool playerStartedNewConversation = false;  //Prevents the coroutine closing the display if a new conversation has started within the disable UI time delay since last convo
     private bool storyDisplayActive = false;
     private bool storyChoiceDisplayActive = false;
     private bool takeStoryInput = false;

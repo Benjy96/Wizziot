@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour {
     // ---- Book-keeping Fields ----- //    //Convenience properties and variables, plus variables that do not need saved.
     //Implementation Data
     private InteractableNPC interactingNPC;
+    private Light targetIndicator;
     private Camera cam;
 
     //Interface
@@ -49,6 +50,7 @@ public class PlayerController : MonoBehaviour {
 
     private void Awake()
     {
+        targetIndicator = GetComponentInChildren<Light>();
         cam = Camera.main;
     }
 
@@ -83,10 +85,11 @@ public class PlayerController : MonoBehaviour {
                 {
                     if(interactingNPC != null)
                     {
-                        interactingNPC.GetComponent<Light>().enabled = false;
+                        targetIndicator.enabled = false;
                     }
                     interactingNPC = pointHit.transform.GetComponent<InteractableNPC>();
-                    interactingNPC.GetComponent<Light>().enabled = true;
+                    targetIndicator.transform.position = interactingNPC.transform.position;
+                    targetIndicator.enabled = true;
                 }
             }
         }
