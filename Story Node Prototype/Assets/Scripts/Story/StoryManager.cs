@@ -27,7 +27,7 @@ public class StoryManager : MonoBehaviour {
     private InteractableNPC conversationTarget;
 
     //State Variables
-    private bool playerStartedNewConversation = false;  //Prevents the coroutine closing the display if a new conversation has started within the disable UI time delay since last convo
+    private IEnumerator ExitConversation;  //Prevents the coroutine closing the display if a new conversation has started within the disable UI time delay since last convo
     private bool storyDisplayActive = false;
     private bool storyChoiceDisplayActive = false;
     private bool takeStoryInput = false;
@@ -45,6 +45,8 @@ public class StoryManager : MonoBehaviour {
         }
         DontDestroyOnLoad(gameObject);
 
+        ExitConversation = DisableStoryOnDelay();
+
         //Get references to the story manager components
         scriptManager = GetComponent<StoryScriptManager>();
         displayManager = GetComponent<StoryDisplayManager>();
@@ -58,7 +60,7 @@ public class StoryManager : MonoBehaviour {
 
     public void AttemptToConverse(InteractableNPC targetNPC)
     {
-        playerStartedNewConversation = true;
+        StopCoroutine(ExitConversation);
         ResetStoryInterface();
 
         //Find out if NPC has "anything to say"
@@ -109,7 +111,7 @@ public class StoryManager : MonoBehaviour {
         //If no content or choices available, end the conversation
         if (!scriptManager.ContentAvailable && !scriptManager.ChoicesAvailable)
         {
-            StartCoroutine(ExitConversation());
+            StartCoroutine(ExitConversation);
         }
     }
 
@@ -123,7 +125,7 @@ public class StoryManager : MonoBehaviour {
 
     private void HideStory()
     {
-        if (storyDisplayActive && playerStartedNewConversation == false)
+        if (storyDisplayActive)
         {
             displayManager.DisableStoryDisplay(gameObject.transform);
             storyDisplayActive = false;
@@ -149,9 +151,8 @@ public class StoryManager : MonoBehaviour {
         }
     }
    
-    private IEnumerator ExitConversation()
+    private IEnumerator DisableStoryOnDelay()
     {
-        playerStartedNewConversation = false;
         DisableInput();
         yield return new WaitForSeconds(5f);
         HideStory();
@@ -172,7 +173,7 @@ public class StoryManager : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            StartCoroutine(ExitConversation());
+            StartCoroutine(ExitConversation);
         }
     }
 
