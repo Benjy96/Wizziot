@@ -88,6 +88,7 @@ public class PlayerController : MonoBehaviour {
                         targetIndicator.enabled = false;
                     }
                     interactingNPC = pointHit.transform.GetComponent<InteractableNPC>();
+                    targetIndicator.transform.SetParent(interactingNPC.transform);
                     targetIndicator.transform.position = interactingNPC.transform.position;
                     targetIndicator.enabled = true;
                 }

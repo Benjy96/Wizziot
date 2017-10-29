@@ -430,7 +430,7 @@ Prefab:
     - target: {fileID: 114713582599319944, guid: 440d7df23e68cce43b6a67045a00f1c4,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224365318198043712, guid: 440d7df23e68cce43b6a67045a00f1c4,
         type: 2}
@@ -526,7 +526,7 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 728703044}
+      objectReference: {fileID: 1446508422}
     - target: {fileID: 1113066540819946, guid: 440d7df23e68cce43b6a67045a00f1c4, type: 2}
       propertyPath: m_Name
       value: PlayerChoiceButton1
@@ -538,12 +538,12 @@ Prefab:
     - target: {fileID: 114713582599319944, guid: 440d7df23e68cce43b6a67045a00f1c4,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: 
+      value: Choice
       objectReference: {fileID: 0}
     - target: {fileID: 114713582599319944, guid: 440d7df23e68cce43b6a67045a00f1c4,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 114713582599319944, guid: 440d7df23e68cce43b6a67045a00f1c4,
         type: 2}
@@ -578,7 +578,7 @@ Prefab:
     - target: {fileID: 114713582599319944, guid: 440d7df23e68cce43b6a67045a00f1c4,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224365318198043712, guid: 440d7df23e68cce43b6a67045a00f1c4,
         type: 2}
@@ -678,11 +678,11 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 728703044}
+      objectReference: {fileID: 1446508422}
     - target: {fileID: 114713582599319944, guid: 440d7df23e68cce43b6a67045a00f1c4,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: MakeChoice
+      value: Choice
       objectReference: {fileID: 0}
     - target: {fileID: 114713582599319944, guid: 440d7df23e68cce43b6a67045a00f1c4,
         type: 2}
@@ -1128,7 +1128,7 @@ Prefab:
     - target: {fileID: 114713582599319944, guid: 440d7df23e68cce43b6a67045a00f1c4,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224365318198043712, guid: 440d7df23e68cce43b6a67045a00f1c4,
         type: 2}
@@ -1228,11 +1228,11 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 728703044}
+      objectReference: {fileID: 1446508422}
     - target: {fileID: 114713582599319944, guid: 440d7df23e68cce43b6a67045a00f1c4,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: MakeChoice
+      value: Choice
       objectReference: {fileID: 0}
     - target: {fileID: 114713582599319944, guid: 440d7df23e68cce43b6a67045a00f1c4,
         type: 2}
