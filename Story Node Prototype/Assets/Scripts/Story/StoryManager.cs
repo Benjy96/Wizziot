@@ -30,7 +30,7 @@ public class StoryManager : MonoBehaviour {
     private IEnumerator ExitConversation;  //Prevents the coroutine closing the display if a new conversation has started within the disable UI time delay since last convo
     private bool storyDisplayActive = false;
     private bool storyChoiceDisplayActive = false;
-    private bool takeStoryInput = false;
+    private bool takeStoryInput = false;    //This variable is accessed concurrently
 
     private void Awake()
     {
