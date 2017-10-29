@@ -39,7 +39,7 @@ public abstract class InteractableNPC : MonoBehaviour {
     {
         //Get shared reference to the player
         if (player == null) player = FindObjectOfType<PlayerController>();
-        if (storyManager == null) storyManager = FindObjectOfType<StoryManager>();
+        if (storyManager == null) storyManager = StoryManager.Instance;
         //External functions MUST be set in start -- eliminates "Race" condition - inkStory is set in awake
         SetExternalFunctions();
     }
