@@ -145,11 +145,8 @@ public class StoryManager : MonoBehaviour {
     private void DisableInput()
     {
         takeStoryInput = false;
-        if (storyChoiceDisplayActive)
-        {
-            interfaceManager.DisableChoiceWindow();
-            storyChoiceDisplayActive = false;
-        }
+        interfaceManager.DisableChoiceWindow();
+        storyChoiceDisplayActive = false;
     }
    
     private IEnumerator DisableStoryOnDelay()

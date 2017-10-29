@@ -43,11 +43,6 @@ public class PlayerController : MonoBehaviour {
         set { if (value < playerConfig.maxTurnSpeed) playerState.turnSpeed = value; }
     }
 
-    public Vector3 TargetPos
-    {
-        get { return interactingNPC.transform.position; }
-    }
-
     private void Awake()
     {
         targetIndicator = GetComponentInChildren<Light>();
