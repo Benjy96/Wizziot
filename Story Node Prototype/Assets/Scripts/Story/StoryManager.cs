@@ -106,7 +106,8 @@ public class StoryManager : MonoBehaviour {
         //INK: 2. Make Choices
         if (scriptManager.ChoicesAvailable && storyChoiceDisplayActive == true)
         {
-            EnableInput();
+            EnableInput();  //We need an UPDATE input beneath this if display active but buttons different
+            //e.g. what happens if we have 3 choices after picking from 2? draw flowchart
         }
 
         //If no content or choices available, end the conversation

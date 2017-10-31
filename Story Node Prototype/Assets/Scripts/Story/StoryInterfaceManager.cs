@@ -27,6 +27,8 @@ public class StoryInterfaceManager : MonoBehaviour {
     //TODO: we need an UPDATE choice window so that numChoices is kept updated and we can make choices
     //at a depth greater than one
     //Current Bug: input buttons stay up when cube convo ends
+    //Need to make sure we track the state of numchoices and keep it updated - revolves around displayed
+    //choices
     public void PresentChoice(string choiceText, int choice)
     {
         playerChoiceButtons[choice].GetComponentInChildren<Text>().text = "Choice: " + (choice+1) + ": " +choiceText;
