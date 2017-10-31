@@ -32,9 +32,9 @@ LIST SphereState = (unmolested), annoyed
         ~ SphereState = annoyed
         {SpherePushOff()} //External function defined in Unity (NPC.cs) - pushes player
 - else:
-    <>"Get lost!"
-    {SpherePushOff()}
-    -> DONE
+<>"Get lost!"
+{SpherePushOff()}
+-> DONE
 }
 -   -> DONE
 

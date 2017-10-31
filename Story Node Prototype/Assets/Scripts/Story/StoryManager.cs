@@ -103,6 +103,8 @@ public class StoryManager : MonoBehaviour {
             storyChoiceDisplayActive = true;
         }
 
+        //bool if(storyChoiceActive && choicesAvailable && buttonsAlreadyDisplayed)
+
         //INK: 2. Make Choices
         if (scriptManager.ChoicesAvailable && storyChoiceDisplayActive == true)
         {
