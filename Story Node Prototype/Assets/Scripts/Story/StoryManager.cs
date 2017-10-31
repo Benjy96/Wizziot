@@ -62,7 +62,7 @@ public class StoryManager : MonoBehaviour {
     public void AttemptToConverse(InteractableNPC targetNPC)
     {
         StopCoroutine(ExitConversation);
-        ExitConversation = DisableStoryOnDelay();
+        ExitConversation = DisableStoryOnDelay();   //Resubscribe the variable, otherwise null once stopped
         ResetStoryInterface();
 
         //Find out if NPC has "anything to say"
