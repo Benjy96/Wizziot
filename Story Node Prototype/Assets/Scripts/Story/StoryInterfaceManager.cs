@@ -15,13 +15,18 @@ public class StoryInterfaceManager : MonoBehaviour {
 
     private int numChoices; //The number of choices displayed
 
-    public void EnableChoiceWindow(int numButtons)
+    public void DisplayButtons(int buttonsNeeded)
     {
-        numChoices = numButtons;
-        playerChoiceBox.gameObject.SetActive(true);
+        numChoices = buttonsNeeded;
+        if(playerChoiceBox.gameObject.activeSelf == false) playerChoiceBox.gameObject.SetActive(true);
         for (int i = 0; i < numChoices; i++)
         {
             playerChoiceButtons[i].gameObject.SetActive(true);  //Only activate the amount of buttons needed
+        }
+
+        for(int j = numChoices; j < playerChoiceButtons.Count; j++)
+        {
+            playerChoiceButtons[j].gameObject.SetActive(false);
         }
     }
     //TODO: we need an UPDATE choice window so that numChoices is kept updated and we can make choices
@@ -31,6 +36,14 @@ public class StoryInterfaceManager : MonoBehaviour {
     //choices
     public void PresentChoice(string choiceText, int choice)
     {
+        if(choice == 0)
+        {
+            numChoices = 1;
+        }
+        else
+        {
+            numChoices++;
+        }
         playerChoiceButtons[choice].GetComponentInChildren<Text>().text = "Choice: " + (choice+1) + ": " +choiceText;
     }
 

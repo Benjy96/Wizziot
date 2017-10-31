@@ -19,7 +19,6 @@ EXTERNAL CubePushOff()
 
 //State Machine example:
 LIST SphereState = (unmolested), annoyed
-->cube.interact
 //We DIVERT to this knot via script
 === sphere ===  //Sphere "Knot" - a branch of the story
 = interact  //A subdivision of a knot is a "Stitch"

@@ -62,6 +62,7 @@ public class StoryManager : MonoBehaviour {
     public void AttemptToConverse(InteractableNPC targetNPC)
     {
         StopCoroutine(ExitConversation);
+        ExitConversation = DisableStoryOnDelay();
         ResetStoryInterface();
 
         //Find out if NPC has "anything to say"
@@ -99,7 +100,7 @@ public class StoryManager : MonoBehaviour {
         //Set up choice window
         if (scriptManager.ChoicesAvailable && storyChoiceDisplayActive == false)
         {
-            interfaceManager.EnableChoiceWindow(scriptManager.NumChoicesAvailable);
+            interfaceManager.DisplayButtons(scriptManager.NumChoicesAvailable);
             storyChoiceDisplayActive = true;
         }
 
@@ -115,7 +116,7 @@ public class StoryManager : MonoBehaviour {
         //If no content or choices available, end the conversation
         if (!scriptManager.ContentAvailable && !scriptManager.ChoicesAvailable)
         {
-            Debug.Log("Exit Conversation");
+            Debug.Log("Call Exit Conversation");
             StartCoroutine(ExitConversation);
         }
     }
@@ -155,6 +156,7 @@ public class StoryManager : MonoBehaviour {
    
     private IEnumerator DisableStoryOnDelay()
     {
+        Debug.Log("Coroutine method");
         DisableInput();
         yield return new WaitForSeconds(5f);
         HideStory();
