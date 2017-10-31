@@ -112,6 +112,7 @@ public class StoryManager : MonoBehaviour {
         //If no content or choices available, end the conversation
         if (!scriptManager.ContentAvailable && !scriptManager.ChoicesAvailable)
         {
+            Debug.Log("Exit Conversation");
             StartCoroutine(ExitConversation);
         }
     }

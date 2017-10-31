@@ -19,18 +19,18 @@ EXTERNAL CubePushOff()
 
 //State Machine example:
 LIST SphereState = (unmolested), annoyed
-
+->cube.interact
 //We DIVERT to this knot via script
 === sphere ===  //Sphere "Knot" - a branch of the story
 = interact  //A subdivision of a knot is a "Stitch"
 "Hey!" the sphere shouts. <>
 { SphereState == unmolested:
-+   ["Sorry."]    
-    "Yeah, well, watch where you're going."
-+   ["Screw you."]    
-    "What the hell, man? Back off! Jesus Christ."
-    ~ SphereState = annoyed
-    {SpherePushOff()} //External function defined in Unity (NPC.cs) - pushes player
+    +   ["Sorry."]    
+        "Yeah, well, watch where you're going."
+    +   ["Screw you."]    
+        "What the hell, man? Back off! Jesus Christ."
+        ~ SphereState = annoyed
+        {SpherePushOff()} //External function defined in Unity (NPC.cs) - pushes player
 - else:
     <>"Get lost!"
     {SpherePushOff()}
@@ -41,11 +41,11 @@ LIST SphereState = (unmolested), annoyed
 === cube ===
 = interact
 "They said be there or be square. Well, guess where I wasn't."
-+   ["Ha, nerd."]
-    "Prick."
-    {CubePushOff()}
-+   ["My Condolences."]
-    The cube sulks.
+    +   ["Ha, nerd."]
+        "Prick."
+        {CubePushOff()}
+    +   ["My Condolences."]
+        The cube sulks.
 -   -> DONE
 
 == function SpherePushOff ==
