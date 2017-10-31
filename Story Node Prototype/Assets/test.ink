@@ -30,12 +30,13 @@ LIST SphereState = (unmolested), annoyed
 +   ["Screw you."]    
     "What the hell, man? Back off! Jesus Christ."
     ~ SphereState = annoyed
-    {SpherePushOff()} //External function defined in Unity (NPC.cs) - pushes player aw
+    {SpherePushOff()} //External function defined in Unity (NPC.cs) - pushes player
 - else:
     <>"Get lost!"
     {SpherePushOff()}
+    -> DONE
 }
--   ->END
+-   -> DONE
 
 === cube ===
 = interact
@@ -45,7 +46,7 @@ LIST SphereState = (unmolested), annoyed
     {CubePushOff()}
 +   ["My Condolences."]
     The cube sulks.
--   -> END
+-   -> DONE
 
 == function SpherePushOff ==
 ~ return 

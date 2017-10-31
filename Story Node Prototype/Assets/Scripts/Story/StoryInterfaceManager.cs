@@ -13,7 +13,7 @@ public class StoryInterfaceManager : MonoBehaviour {
     [SerializeField] private RectTransform playerChoiceBox;   //The background "underlay" for the buttons
     [SerializeField] private List<Button> playerChoiceButtons;    //Resizable button array - may change how many choices the player can make
 
-    private int numChoices;
+    private int numChoices; //The number of choices displayed
 
     public void EnableChoiceWindow(int numButtons)
     {
