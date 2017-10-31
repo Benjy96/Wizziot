@@ -177,17 +177,20 @@ public class StoryManager : MonoBehaviour {
 
     public void Choice(int playerChoice)
     {
-        switch (playerChoice)
+        if (takeStoryInput)
         {
-            case 1:
-            case 2:
-            case 3:
-                scriptManager.MakeChoice(playerChoice - 1);
-                if (scriptManager.ContentAvailable)
-                {
-                    Converse(); //Story runs in a loop (enabled by bool - takestoryinput) - bool in update
-                }
-                break;
+            switch (playerChoice)
+            {
+                case 1:
+                case 2:
+                case 3:
+                    scriptManager.MakeChoice(playerChoice - 1);
+                    if (scriptManager.ContentAvailable)
+                    {
+                        Converse(); //Story runs in a loop (enabled by bool - takestoryinput) - bool in update
+                    }
+                    break;
+            }
         }
     }
 }
