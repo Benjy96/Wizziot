@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// All story NPCs (that have dialogue in the Ink Script) inherit from this class
+/// </summary>
 public abstract class InteractableNPC : MonoBehaviour {
 
     /**
@@ -24,23 +27,24 @@ public abstract class InteractableNPC : MonoBehaviour {
     protected float pushOffForce;
     
     // ----- ABSTRACT METHODS ----- //
-    protected abstract void SetExternalFunctions(); //Bind functions that correlate to ink in here
+    protected abstract void RegisterExternalFunctions(); //Bind functions that correlate to ink in here
 
     // ----- METHODS ----- //
-    protected void Awake()
+    protected void Awake()  //Objects initialised in scene
     {
+        player = FindObjectOfType<PlayerController>();  //Objects are available when awake is called
+        
         //Define the NPC's default stats
         bobSpeed = stats.movementData.bobSpeed;
         bobRange = stats.movementData.bobRange;
         pushOffForce = stats.physicsData.pushOffForce;
     }
 
-    protected void Start()
+    protected void Start()  //Scripts & variables initialised
     {
         //Get shared reference to the player
-        if (player == null) player = FindObjectOfType<PlayerController>();
-        if (storyManager == null) storyManager = StoryManager.Instance;
+        storyManager = StoryManager.Instance;   //Script instances and variables may not have been set in awake - awake is called in random order
 
-        SetExternalFunctions(); //Set external functions in start - ensures story is loaded up - eliminates race condition
+        RegisterExternalFunctions(); //Set external functions in start - ensures story is loaded up - eliminates race condition
     }
 }

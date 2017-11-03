@@ -16,7 +16,7 @@ public class SphereNPC : InteractableNPC
     }
     #endregion
 
-    protected override void SetExternalFunctions()
+    protected override void RegisterExternalFunctions()
     {
         storyManager.BindExternalFunction("SpherePushOff", SpherePushOff);
     }

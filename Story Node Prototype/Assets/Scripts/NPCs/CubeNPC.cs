@@ -16,7 +16,7 @@ public class CubeNPC : InteractableNPC
     }
     #endregion
 
-    protected override void SetExternalFunctions()
+    protected override void RegisterExternalFunctions()
     {
         storyManager.BindExternalFunction("CubePushOff", CubePushOff);
     }

@@ -4,15 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Current story flow:
-/// Player targets NPC
-/// Begins conversation with keypress - F
-///     Story displays set up
-///     Run ink story (if available)
-///     Get player input TODO: Create separate setup conversation/end conversation methods to make more dynamic
-///     Clear story displays - need to change when cleared
-///     
-/// StoryManager sets up the story's flow, output, and handles input
+/// StoryManager sets up Story I/O, controls its flow, & allows access to get/set its state
 /// </summary>
 public class StoryManager : MonoBehaviour {
 
