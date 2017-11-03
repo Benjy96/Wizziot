@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,9 +25,9 @@ public class StoryManager : MonoBehaviour {
     private StoryDisplayManager displayManager; //TODO: investigate multiple text displays - i.e. multiple canvases displayed concurrently
     private StoryInterfaceManager interfaceManager;
 
+    //State Variables
     private InteractableNPC conversationTarget;
 
-    //State Variables
     private IEnumerator ExitConversation;  //Prevents the coroutine closing the display if a new conversation has started within the disable UI time delay since last convo
     private bool storyDisplayActive = false;
     private bool storyChoiceDisplayActive = false;
@@ -54,9 +55,18 @@ public class StoryManager : MonoBehaviour {
         interfaceManager = GetComponent<StoryInterfaceManager>();
     }
 
-    public StoryScriptManager AccessInk //TODO: find a way to bind external functions here - pass the "BindExternalFunctions" parameters
+    public void BindExternalFunction(string functionToBind, Action UnityFunction)
     {
-        get { return scriptManager; }
+        try
+        {
+            scriptManager.InkScript.ValidateExternalBindings();
+        }
+        #pragma warning disable CS0168 // Variable is declared but never used
+        catch (Exception e)
+        #pragma warning restore CS0168 // Variable is declared but never used
+        {
+            scriptManager.InkScript.BindExternalFunction(functionToBind, () => UnityFunction());
+        }
     }
 
     public void AttemptToConverse(InteractableNPC targetNPC)
@@ -116,7 +126,6 @@ public class StoryManager : MonoBehaviour {
         //If no content or choices available, end the conversation
         if (!scriptManager.ContentAvailable && !scriptManager.ChoicesAvailable)
         {
-            Debug.Log("Call Exit Conversation");
             StartCoroutine(ExitConversation);
         }
     }

@@ -24,7 +24,7 @@ public abstract class InteractableNPC : MonoBehaviour {
     protected float pushOffForce;
     
     // ----- ABSTRACT METHODS ----- //
-    protected abstract void SetExternalFunctions();
+    protected abstract void SetExternalFunctions(); //Bind functions that correlate to ink in here
 
     // ----- METHODS ----- //
     protected void Awake()
@@ -34,13 +34,13 @@ public abstract class InteractableNPC : MonoBehaviour {
         bobRange = stats.movementData.bobRange;
         pushOffForce = stats.physicsData.pushOffForce;
     }
-    
+
     protected void Start()
     {
         //Get shared reference to the player
         if (player == null) player = FindObjectOfType<PlayerController>();
         if (storyManager == null) storyManager = StoryManager.Instance;
-        //External functions MUST be set in start -- eliminates "Race" condition - inkStory is set in awake
-        SetExternalFunctions();
+
+        SetExternalFunctions(); //Set external functions in start - ensures story is loaded up - eliminates race condition
     }
 }
