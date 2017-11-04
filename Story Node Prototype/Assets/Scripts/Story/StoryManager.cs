@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,10 @@ public class StoryManager : MonoBehaviour {
     private StoryInterfaceManager interfaceManager;
 
     //State Variables
+    private string gameDataFileName;
+    private string filepath;
+    private string storyState_JSON;
+
     private InteractableNPC conversationTarget;
 
     private IEnumerator ExitConversation;  //Prevents the coroutine closing the display if a new conversation has started within the disable UI time delay since last convo
@@ -38,8 +43,11 @@ public class StoryManager : MonoBehaviour {
         }
         DontDestroyOnLoad(gameObject);
 
-        //Set up Coroutine to close story on a time delay
-        ExitConversation = DisableStoryOnDelay();
+        gameDataFileName = "wizziot.json";
+        filepath = Path.Combine(Application.streamingAssetsPath, gameDataFileName);
+
+    //Set up Coroutine to close story on a time delay
+    ExitConversation = DisableStoryOnDelay();
 
         //Get references to the story manager components
         scriptManager = GetComponent<StoryScriptManager>();
@@ -197,6 +205,28 @@ public class StoryManager : MonoBehaviour {
                         Converse(); //Story runs in a loop (enabled by bool - takestoryinput) - bool in update
                     }
                     break;
+            }
+        }
+    }
+
+    public void SaveGame()
+    {
+        storyState_JSON = scriptManager.InkScript.state.ToJson();
+        //TODO: create diff save file name for each file - check num of files already in existence & increment a count variable
+
+        File.WriteAllText(filepath, storyState_JSON);
+        Debug.Log("Should have written");
+    }
+
+    public void LoadGame()
+    {
+        if (File.Exists(filepath))
+        {
+            storyState_JSON = File.ReadAllText(filepath);
+
+            if (!storyState_JSON.Equals(""))
+            {
+                scriptManager.InkScript.state.LoadJson(storyState_JSON);
             }
         }
     }

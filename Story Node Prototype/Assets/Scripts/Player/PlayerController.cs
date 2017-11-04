@@ -87,6 +87,10 @@ public class PlayerController : MonoBehaviour {
                     targetIndicator.transform.position = interactingNPC.transform.position;
                     targetIndicator.enabled = true;
                 }
+                else
+                {
+                    targetIndicator.enabled = false;
+                }
             }
         }
     }
