@@ -208,25 +208,29 @@ public class StoryManager : MonoBehaviour {
             }
         }
     }
-
-    public void SaveGame()
+    
+    public void SaveStory()
     {
         storyState_JSON = scriptManager.InkScript.state.ToJson();
         //TODO: create diff save file name for each file - check num of files already in existence & increment a count variable
 
         File.WriteAllText(filepath, storyState_JSON);
-        Debug.Log("Should have written");
+        Debug.Log("...Saved story state");
     }
 
-    public void LoadGame()
+    public void LoadStory()
     {
-        if (File.Exists(filepath))
+        if (!storyChoiceDisplayActive)
         {
-            storyState_JSON = File.ReadAllText(filepath);
-
-            if (!storyState_JSON.Equals(""))
+            Debug.Log("... Loading previous story state");
+            if (File.Exists(filepath))
             {
-                scriptManager.InkScript.state.LoadJson(storyState_JSON);
+                storyState_JSON = File.ReadAllText(filepath);
+
+                if (!storyState_JSON.Equals(""))
+                {
+                    scriptManager.InkScript.state.LoadJson(storyState_JSON);
+                }
             }
         }
     }
