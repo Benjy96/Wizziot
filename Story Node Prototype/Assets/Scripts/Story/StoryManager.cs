@@ -43,7 +43,7 @@ public class StoryManager : MonoBehaviour {
         }
         DontDestroyOnLoad(gameObject);
 
-        gameDataFileName = "wizziot.json";
+        gameDataFileName = "ink_wizziot.json";
         filepath = Path.Combine(Application.streamingAssetsPath, gameDataFileName);
 
     //Set up Coroutine to close story on a time delay
@@ -230,6 +230,7 @@ public class StoryManager : MonoBehaviour {
                 if (!storyState_JSON.Equals(""))
                 {
                     scriptManager.InkScript.state.LoadJson(storyState_JSON);
+                    Debug.Log("Loaded saved story");
                 }
             }
         }
