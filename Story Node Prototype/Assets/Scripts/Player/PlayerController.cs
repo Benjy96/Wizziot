@@ -23,8 +23,8 @@ public class PlayerController : MonoBehaviour {
     private Camera cam;
 
     //Lasers
+    public GameObject destroyFX;
     public float fireRate = .25f;
-
     private LineRenderer laserLine;
     private WaitForSeconds spellDuration = new WaitForSeconds(0.07f);
     private float nextFire; //track time passed
@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour {
 
     private void HandleShoot()  //TODO: could make this (and all abils) components - add them to player when u unlock the abil (and bind it to a key?)
     {
-        if (interactingNPC != null)
+        if (interactingNPC != null) //TODO: make so can't shoot story NPCs 
         {
             if (Input.GetKeyDown(KeyCode.Alpha1) && Time.time > nextFire)
             {
@@ -70,10 +70,9 @@ public class PlayerController : MonoBehaviour {
                 Vector3 rayOrigin = transform.position;
 
                 laserLine.SetPosition(0, rayOrigin);
-                if (Physics.Raycast(rayOrigin, interactingNPC.transform.position))
-                {
-                    laserLine.SetPosition(1, interactingNPC.transform.position);
-                }
+                laserLine.SetPosition(1, interactingNPC.transform.position);
+                Instantiate(destroyFX, interactingNPC.transform.position, Quaternion.identity);
+                Destroy(interactingNPC.gameObject); //TODO: remove <- not final implementation - destroys any nested components
             }
         }
     }

@@ -780,6 +780,26 @@ Transform:
   m_PrefabParentObject: {fileID: 4744336005825828, guid: 90946347734dbea4f896a7babea5ea41,
     type: 2}
   m_PrefabInternal: {fileID: 737421829}
+--- !u!1 &634589310 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1515367592789010, guid: d84a990537cd81242bc4a7223e14252e,
+    type: 2}
+  m_PrefabInternal: {fileID: 828778280}
+--- !u!54 &634589311
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 634589310}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &678657684 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1458570314575524, guid: 0e6afb90b2ea6fb4391ecd6b4a9f34a2,
@@ -2353,6 +2373,11 @@ Prefab:
       propertyPath: fireRate
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 114232869456884162, guid: 0e6afb90b2ea6fb4391ecd6b4a9f34a2,
+        type: 2}
+      propertyPath: destroyFX
+      value: 
+      objectReference: {fileID: 100000, guid: 921a3ff88856fe04ebc86b196fd8cc59, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0e6afb90b2ea6fb4391ecd6b4a9f34a2, type: 2}
   m_IsPrefabParent: 0
