@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour {
     }
 
     // ---- Book-keeping Fields ----- //    //Convenience properties and variables, plus variables that do not need saved.
+    public bool takeMovementInput;
+        
     //Implementation Data
     private InteractableNPC interactingNPC;
     private Light targetIndicator;
@@ -51,7 +53,7 @@ public class PlayerController : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        HandleDirectionInput();
+        if(takeMovementInput) HandleDirectionInput();
         HandleTargetingInput();
         HandleKeyboardInput();
     }
