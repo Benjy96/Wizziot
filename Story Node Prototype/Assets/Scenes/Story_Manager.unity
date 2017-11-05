@@ -2223,6 +2223,16 @@ Prefab:
       propertyPath: takeMovementInput
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114232869456884162, guid: 0e6afb90b2ea6fb4391ecd6b4a9f34a2,
+        type: 2}
+      propertyPath: maxTargetDistance
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 114232869456884162, guid: 0e6afb90b2ea6fb4391ecd6b4a9f34a2,
+        type: 2}
+      propertyPath: sqrMaxTargetDistance
+      value: 225
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0e6afb90b2ea6fb4391ecd6b4a9f34a2, type: 2}
   m_IsPrefabParent: 0

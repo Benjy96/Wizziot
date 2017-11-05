@@ -6,8 +6,6 @@ using System;
 public class PlayerController : MonoBehaviour {
 
     // ----- Configuration Variables ----- //
-    public PlayerConfigurationData playerConfig;    //Config data "defines" our object's "attributes" and is treated as a constant. Set in inspector.
-
     [Serializable]
     public class PlayerConfigurationData
     {
@@ -32,15 +30,15 @@ public class PlayerController : MonoBehaviour {
     private Camera cam;
 
     //Interface
+    [Range(0, 225)] public float sqrMaxTargetDistance;
+
     public float Speed
     {
         get { return playerState.speed; }
-        set { if (value < playerConfig.maxSpeed) playerState.speed = value; }
     }
     public float TurnSpeed
     {
         get { return playerState.turnSpeed; }
-        set { if (value < playerConfig.maxTurnSpeed) playerState.turnSpeed = value; }
     }
 
     private void Awake()
@@ -71,9 +69,10 @@ public class PlayerController : MonoBehaviour {
     {
         //Must be within 10 metres - using sqr values since getting root is expensive
         if(interactingNPC != null && 
-            (interactingNPC.transform.position - transform.position).sqrMagnitude > 100f)
+            (interactingNPC.transform.position - transform.position).sqrMagnitude > sqrMaxTargetDistance)
         {
             targetIndicator.enabled = false;
+            interactingNPC = null;
         }
 
         if (Input.GetMouseButtonDown(0))
@@ -83,7 +82,7 @@ public class PlayerController : MonoBehaviour {
 
             if(Physics.Raycast(ray, out pointHit, 100f))    //If the raycast hits something within 100
             {
-                if ((pointHit.transform.position - transform.position).sqrMagnitude < 100f)
+                if ((pointHit.transform.position - transform.position).sqrMagnitude < sqrMaxTargetDistance)
                 {
                     if (pointHit.transform.GetComponent<InteractableNPC>())
                     {
