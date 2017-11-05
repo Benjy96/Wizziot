@@ -21,10 +21,6 @@ public abstract class InteractableNPC : MonoBehaviour {
 
     // ----- STATE VARIABLES ----- //
     public string inkPath = "";
-
-    protected float bobSpeed;
-    protected float bobRange;
-    protected float pushOffForce;
     
     // ----- ABSTRACT METHODS ----- //
     protected abstract void RegisterExternalFunctions(); //Bind functions that correlate to ink in here
@@ -33,11 +29,6 @@ public abstract class InteractableNPC : MonoBehaviour {
     protected void Awake()  //Objects initialised in scene
     {
         player = FindObjectOfType<PlayerController>();  //Objects are available when awake is called
-        
-        //Define the NPC's default stats
-        bobSpeed = stats.movementData.bobSpeed;
-        bobRange = stats.movementData.bobRange;
-        pushOffForce = stats.physicsData.pushOffForce;
     }
 
     protected void Start()  //Scripts & variables initialised

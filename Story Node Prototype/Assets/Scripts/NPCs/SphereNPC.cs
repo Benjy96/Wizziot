@@ -5,16 +5,7 @@ using UnityEngine;
 
 public class SphereNPC : InteractableNPC
 {
-    #region MonoBehaviours
-    void FixedUpdate()
-    {
-        Vector3 pos = transform.position;
-        pos.y = transform.localScale.y + (Mathf.Sin(Time.time * bobSpeed) * bobRange);
-
-        transform.position = pos;
-        transform.Rotate(Vector3.up, Mathf.Sin(Time.time));
-    }
-    #endregion
+    public float pushOffForce = 5f;
 
     protected override void RegisterExternalFunctions()
     {
