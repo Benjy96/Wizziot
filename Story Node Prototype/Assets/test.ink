@@ -47,6 +47,12 @@ LIST SphereState = (unmolested), annoyed
         The cube sulks.
 -   -> DONE
 
+=== shop_keeper ===
+= interact
+Greetings!
+-> DONE
+
+
 == function SpherePushOff ==
 ~ return 
 

@@ -2196,6 +2196,7 @@ GameObject:
   - component: {fileID: 1897165670}
   - component: {fileID: 1897165669}
   - component: {fileID: 1897165668}
+  - component: {fileID: 1897165672}
   m_Layer: 0
   m_Name: Capsule NPC
   m_TagString: Untagged
@@ -2268,6 +2269,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1897165672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1897165667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cd56058ac4e4d343969a1095dc262fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inkPath: shop_keeper.interact
 --- !u!1 &1913936806
 GameObject:
   m_ObjectHideFlags: 0
