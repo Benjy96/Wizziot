@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,7 +28,12 @@ public class StoryDisplayManager : MonoBehaviour {
 
     public string DisplayedStoryText
     {
-        set { storyText.text = value; }
+        set
+        {
+            string trimmedStoryText = value;
+            trimmedStoryText = trimmedStoryText.Replace("\n", string.Empty);
+            storyText.text = trimmedStoryText;
+        }
     }
 
     public Transform DisplayPosition
