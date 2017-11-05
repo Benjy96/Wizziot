@@ -459,7 +459,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 130, y: 21}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &266872713
 MonoBehaviour:
@@ -511,7 +511,7 @@ MonoBehaviour:
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
-  m_DynamicPixelsPerUnit: 1
+  m_DynamicPixelsPerUnit: 10
 --- !u!223 &266872716
 Canvas:
   m_ObjectHideFlags: 0
@@ -530,7 +530,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: 6888177
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!1 &442220730
@@ -1326,15 +1326,15 @@ MonoBehaviour:
     m_FontSize: 10
     m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 8
-    m_MaxSize: 40
+    m_MinSize: 4
+    m_MaxSize: 34
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: dasadsasdasadsadsasd
+  m_Text: dggdgdfdgdgdgdg
 --- !u!222 &1181765626
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1358,8 +1358,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 61, y: -6.5}
-  m_SizeDelta: {x: 120, y: 11}
+  m_AnchoredPosition: {x: 48.5, y: -10.5}
+  m_SizeDelta: {x: 87, y: 11}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1199105436
 GameObject:
@@ -2050,10 +2050,10 @@ RectTransform:
   m_Father: {fileID: 266872712}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 122, y: 13}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 65, y: -10.5}
+  m_SizeDelta: {x: 97, y: 21}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1828882783
 MonoBehaviour:
@@ -2086,9 +2086,9 @@ MonoBehaviour:
     m_Bottom: 5
   m_ChildAlignment: 4
   m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 1
+  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandHeight: 0
+  m_ChildControlWidth: 0
   m_ChildControlHeight: 1
 --- !u!114 &1828882785
 MonoBehaviour:
