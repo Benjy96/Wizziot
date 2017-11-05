@@ -12,7 +12,6 @@ public abstract class InteractableNPC : MonoBehaviour {
     protected static PlayerController player;
     protected static StoryManager storyManager;
 
-    // ----- STATE VARIABLES ----- //
     public string inkPath = "";
     
     // ----- ABSTRACT METHODS ----- //

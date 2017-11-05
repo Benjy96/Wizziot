@@ -5,14 +5,6 @@ using System;
 
 public class PlayerController : MonoBehaviour {
 
-    // ----- Configuration Variables ----- //
-    [Serializable]
-    public class PlayerConfigurationData
-    {
-        public float maxSpeed;
-        public float maxTurnSpeed;
-    }
-
     // ----- State Variables ----- //
     public PlayerStateData playerState; //Player state manages the player's current state, and will be saved (if the game supports saving).
 
@@ -21,30 +13,40 @@ public class PlayerController : MonoBehaviour {
     {
         public float speed;
         public float turnSpeed;
+        [Range(0, 225)] public float sqrMaxTargetDistance;
     }
 
     // ---- Book-keeping Fields ----- //    //Convenience properties and variables, plus variables that do not need saved.
-    //Implementation Data
+    //Interaction
     private InteractableNPC interactingNPC;
     private Projector targetIndicator;
     private Camera cam;
 
-    //Interface
-    [Range(0, 225)] public float sqrMaxTargetDistance;
+    //Lasers
+    public float fireRate = .25f;
+
+    private LineRenderer laserLine;
+    private WaitForSeconds spellDuration = new WaitForSeconds(0.07f);
+    private float nextFire; //track time passed
 
     public float Speed
     {
         get { return playerState.speed; }
     }
+
     public float TurnSpeed
     {
         get { return playerState.turnSpeed; }
     }
 
-    private void Awake()
+    private void Awake()    //References & initialisation - Start is once scripts are definitely enabled - Awake the GOs are all enabled
     {
         targetIndicator = GetComponentInChildren<Projector>();
+        laserLine = GetComponent<LineRenderer>();
         cam = Camera.main;
+
+        
+        nextFire = 0;
     }
 
     // Update is called once per frame
@@ -53,6 +55,34 @@ public class PlayerController : MonoBehaviour {
         HandleTargeting();
         HandleKeyboardInput();
         HandleConversationInput();
+        HandleShoot();
+    }
+
+    private void HandleShoot()  //TODO: could make this (and all abils) components - add them to player when u unlock the abil (and bind it to a key?)
+    {
+        if (interactingNPC != null)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1) && Time.time > nextFire)
+            {
+                nextFire = Time.time + fireRate;
+                StartCoroutine(ShotEffect());
+
+                Vector3 rayOrigin = transform.position;
+
+                laserLine.SetPosition(0, rayOrigin);
+                if (Physics.Raycast(rayOrigin, interactingNPC.transform.position))
+                {
+                    laserLine.SetPosition(1, interactingNPC.transform.position);
+                }
+            }
+        }
+    }
+
+    private IEnumerator ShotEffect()
+    {
+        laserLine.enabled = true;
+        yield return spellDuration;
+        laserLine.enabled = false;
     }
 
     private void HandleDirectionInput()
@@ -70,10 +100,11 @@ public class PlayerController : MonoBehaviour {
     {
         //Must be within 10 metres - using sqr values since getting root is expensive
         if(interactingNPC != null && 
-            (interactingNPC.transform.position - transform.position).sqrMagnitude > sqrMaxTargetDistance)
+            (interactingNPC.transform.position - transform.position).sqrMagnitude > playerState.sqrMaxTargetDistance)
         {
             targetIndicator.enabled = false;
             interactingNPC = null;
+            StoryManager.Instance.CloseConversation();
         }
 
         if (Input.GetMouseButtonDown(0))
@@ -83,7 +114,7 @@ public class PlayerController : MonoBehaviour {
 
             if(Physics.Raycast(ray, out pointHit, 100f))    //If the raycast hits something within 100
             {
-                if ((pointHit.transform.position - transform.position).sqrMagnitude < sqrMaxTargetDistance)
+                if ((pointHit.transform.position - transform.position).sqrMagnitude < playerState.sqrMaxTargetDistance)
                 {
                     if (pointHit.transform.GetComponent<InteractableNPC>())
                     {

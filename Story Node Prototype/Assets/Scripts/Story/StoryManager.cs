@@ -46,8 +46,8 @@ public class StoryManager : MonoBehaviour {
         gameDataFileName = "ink_wizziot.json";
         filepath = Path.Combine(Application.streamingAssetsPath, gameDataFileName);
 
-    //Set up Coroutine to close story on a time delay
-    ExitConversation = DisableStoryOnDelay();
+        //Set up Coroutine to close story on a time delay
+        ExitConversation = DisableStoryOnDelay();
 
         //Get references to the story manager components
         scriptManager = GetComponent<StoryScriptManager>();
@@ -55,6 +55,7 @@ public class StoryManager : MonoBehaviour {
         interfaceManager = GetComponent<StoryInterfaceManager>();
     }
 
+    #region Interface
     public void BindExternalFunction(string functionToBind, Action UnityFunction)
     {
         try
@@ -87,9 +88,60 @@ public class StoryManager : MonoBehaviour {
 
     public void CloseConversation()
     {
-        StartCoroutine(ExitConversation);
+        if (storyChoiceDisplayActive && storyDisplayActive)
+        {
+            StartCoroutine(ExitConversation);
+        }
     }
 
+    public void Choice(int playerChoice)
+    {
+        if (takeStoryInput)
+        {
+            switch (playerChoice)
+            {
+                case 1:
+                case 2:
+                case 3:
+                    scriptManager.MakeChoice(playerChoice - 1);
+                    if (scriptManager.ContentAvailable)
+                    {
+                        Converse(); //Story runs in a loop (enabled by bool - takestoryinput) - bool in update
+                    }
+                    break;
+            }
+        }
+    }
+
+    public void SaveStory()
+    {
+        storyState_JSON = scriptManager.InkScript.state.ToJson();
+        //TODO: create diff save file name for each file - check num of files already in existence & increment a count variable
+
+        File.WriteAllText(filepath, storyState_JSON);
+        Debug.Log("...Saved story state");
+    }
+
+    public void LoadStory()
+    {
+        if (!storyChoiceDisplayActive)
+        {
+            Debug.Log("... Loading previous story state");
+            if (File.Exists(filepath))
+            {
+                storyState_JSON = File.ReadAllText(filepath);
+
+                if (!storyState_JSON.Equals(""))
+                {
+                    scriptManager.InkScript.state.LoadJson(storyState_JSON);
+                    Debug.Log("Loaded saved story");
+                }
+            }
+        }
+    }
+    #endregion
+
+    #region Story Implementation
     private void ResetStoryInterface()
     {
         HideStory();
@@ -171,55 +223,9 @@ public class StoryManager : MonoBehaviour {
    
     private IEnumerator DisableStoryOnDelay()
     {
-        Debug.Log("Coroutine method");
         DisableInput();
         yield return new WaitForSeconds(5f);
         HideStory();
     }
-
-    public void Choice(int playerChoice)
-    {
-        if (takeStoryInput)
-        {
-            switch (playerChoice)
-            {
-                case 1:
-                case 2:
-                case 3:
-                    scriptManager.MakeChoice(playerChoice - 1);
-                    if (scriptManager.ContentAvailable)
-                    {
-                        Converse(); //Story runs in a loop (enabled by bool - takestoryinput) - bool in update
-                    }
-                    break;
-            }
-        }
-    }
-    
-    public void SaveStory()
-    {
-        storyState_JSON = scriptManager.InkScript.state.ToJson();
-        //TODO: create diff save file name for each file - check num of files already in existence & increment a count variable
-
-        File.WriteAllText(filepath, storyState_JSON);
-        Debug.Log("...Saved story state");
-    }
-
-    public void LoadStory()
-    {
-        if (!storyChoiceDisplayActive)
-        {
-            Debug.Log("... Loading previous story state");
-            if (File.Exists(filepath))
-            {
-                storyState_JSON = File.ReadAllText(filepath);
-
-                if (!storyState_JSON.Equals(""))
-                {
-                    scriptManager.InkScript.state.LoadJson(storyState_JSON);
-                    Debug.Log("Loaded saved story");
-                }
-            }
-        }
-    }
+    #endregion
 }
