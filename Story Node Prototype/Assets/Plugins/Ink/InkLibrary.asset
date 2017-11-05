@@ -15,4 +15,13 @@ MonoBehaviour:
   - compileAutomatically: 0
     inkAsset: {fileID: 102900000, guid: ffec8e67279972a4083c07a2de308ded, type: 3}
     jsonAsset: {fileID: 4900000, guid: 431cc3e6c720cbb4c9e9b80be1c4dea9, type: 3}
-  compilationStack: []
+  compilationStack:
+  - state: 1
+    inkFile:
+      compileAutomatically: 0
+      inkAsset: {fileID: 102900000, guid: ffec8e67279972a4083c07a2de308ded, type: 3}
+      jsonAsset: {fileID: 4900000, guid: 431cc3e6c720cbb4c9e9b80be1c4dea9, type: 3}
+    inkAbsoluteFilePath: H:/Unity/Projects/StoryManager_Prototype/Story Node Prototype/Assets/test.ink
+    jsonAbsoluteFilePath: H:/Unity/Projects/StoryManager_Prototype/Story Node Prototype/Assets/test.json
+    output: 
+    errorOutput: 

@@ -93,6 +93,7 @@ public class StoryManager : MonoBehaviour {
 
     private void Converse()
     {
+        //TODO: If npc doesn't speak first, don't display text box - i.e. if a choice but no content, (on start) - hide text? OR change way ink is written
         //Set up output display
         if (scriptManager.ContentAvailable && storyDisplayActive == false)
         {

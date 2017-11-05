@@ -1,6 +1,8 @@
 EXTERNAL SpherePushOff()
 EXTERNAL CubePushOff()
 
+-> shop_keeper.interact
+
 //LIST can be used for FLAGS or STATE MACHINES
 //Flags: Events e.g. have met Gordon
     //+= mark event occurred
@@ -49,8 +51,11 @@ LIST SphereState = (unmolested), annoyed
 
 === shop_keeper ===
 = interact
-Greetings!
--> DONE
+*   [Hello]
+    "I have some wares, if you'd like to take a look."
++   ->
+    "You look familiar..."
+- -> DONE
 
 
 == function SpherePushOff ==
