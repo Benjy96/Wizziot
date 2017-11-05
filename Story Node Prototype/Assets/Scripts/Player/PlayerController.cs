@@ -52,6 +52,7 @@ public class PlayerController : MonoBehaviour {
         HandleDirectionInput();
         HandleTargeting();
         HandleKeyboardInput();
+        HandleConversationInput();
     }
 
     private void HandleDirectionInput()
@@ -114,6 +115,24 @@ public class PlayerController : MonoBehaviour {
                     //Enter a conversation
                     StoryManager.Instance.AttemptToConverse(interactingNPC);
                     break;
+            }
+        }
+    }
+
+    private void HandleConversationInput()
+    {
+        if (interactingNPC != null)
+        {
+            int playerChoice;
+            bool correctInput = int.TryParse(Input.inputString, out playerChoice);
+            if (correctInput)
+            {
+                StoryManager.Instance.Choice(playerChoice);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                StoryManager.Instance.CloseConversation();
             }
         }
     }

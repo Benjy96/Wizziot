@@ -1,3 +1,8 @@
+VAR DEBUG = true
+{DEBUG:
+-> sphere.interact
+}
+
 EXTERNAL SpherePushOff()
 EXTERNAL CubePushOff()
 

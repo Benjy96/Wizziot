@@ -85,6 +85,11 @@ public class StoryManager : MonoBehaviour {
         }
     }
 
+    public void CloseConversation()
+    {
+        StartCoroutine(ExitConversation);
+    }
+
     private void ResetStoryInterface()
     {
         HideStory();
@@ -170,25 +175,6 @@ public class StoryManager : MonoBehaviour {
         DisableInput();
         yield return new WaitForSeconds(5f);
         HideStory();
-    }
-
-    private void Update()
-    {
-        //INK: 3. Make Choice and Loop Story.
-        if (takeStoryInput)
-        {
-            int playerChoice;
-            bool correctInput = int.TryParse(Input.inputString, out playerChoice);
-            if (correctInput)
-            {
-                Choice(playerChoice);
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            StartCoroutine(ExitConversation);
-        }
     }
 
     public void Choice(int playerChoice)
