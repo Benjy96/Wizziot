@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour {
         
     //Implementation Data
     private InteractableNPC interactingNPC;
-    private Light targetIndicator;
+    private Projector targetIndicator;
     private Camera cam;
 
     //Interface
@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour {
 
     private void Awake()
     {
-        targetIndicator = GetComponentInChildren<Light>();
+        targetIndicator = GetComponentInChildren<Projector>();
         cam = Camera.main;
     }
 
@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour {
                     }
                     interactingNPC = pointHit.transform.GetComponent<InteractableNPC>();
                     targetIndicator.transform.SetParent(interactingNPC.transform);
-                    targetIndicator.transform.position = interactingNPC.transform.position;
+                    targetIndicator.transform.position = interactingNPC.transform.position + new Vector3(0f, interactingNPC.transform.localScale.y * 5);
                     targetIndicator.enabled = true;
                 }
                 else

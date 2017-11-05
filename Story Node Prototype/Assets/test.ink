@@ -51,8 +51,9 @@ LIST SphereState = (unmolested), annoyed
 
 === shop_keeper ===
 = interact
-*   [Hello]
-    "I have some wares, if you'd like to take a look."
+"I have some wares, if you'd like to take a look..."
+*   [No, thanks.] // * choices can be used in a "state way" - ink tracks if seen
+    "Alright, kid."
 +   ->
     "You look familiar..."
 - -> DONE
