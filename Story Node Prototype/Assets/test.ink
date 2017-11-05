@@ -1,8 +1,6 @@
 EXTERNAL SpherePushOff()
 EXTERNAL CubePushOff()
 
--> shop_keeper.interact
-
 //LIST can be used for FLAGS or STATE MACHINES
 //Flags: Events e.g. have met Gordon
     //+= mark event occurred

@@ -26,8 +26,6 @@ public class PlayerController : MonoBehaviour {
     }
 
     // ---- Book-keeping Fields ----- //    //Convenience properties and variables, plus variables that do not need saved.
-    public bool takeMovementInput;
-        
     //Implementation Data
     private InteractableNPC interactingNPC;
     private Projector targetIndicator;
@@ -53,8 +51,8 @@ public class PlayerController : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if(takeMovementInput) HandleDirectionInput();
-        HandleTargetingInput();
+        HandleDirectionInput();
+        HandleTargeting();
         HandleKeyboardInput();
     }
 
@@ -69,8 +67,15 @@ public class PlayerController : MonoBehaviour {
         transform.LookAt(transform.position + adjustedLook);
     }
 
-    private void HandleTargetingInput()
+    private void HandleTargeting()
     {
+        //Must be within 10 metres - using sqr values since getting root is expensive
+        if(interactingNPC != null && 
+            (interactingNPC.transform.position - transform.position).sqrMagnitude > 100f)
+        {
+            targetIndicator.enabled = false;
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
@@ -78,20 +83,23 @@ public class PlayerController : MonoBehaviour {
 
             if(Physics.Raycast(ray, out pointHit, 100f))    //If the raycast hits something within 100
             {
-                if (pointHit.transform.GetComponent<InteractableNPC>())
+                if ((pointHit.transform.position - transform.position).sqrMagnitude < 100f)
                 {
-                    if(interactingNPC != null)
+                    if (pointHit.transform.GetComponent<InteractableNPC>())
+                    {
+                        if (interactingNPC != null)
+                        {
+                            targetIndicator.enabled = false;
+                        }
+                        interactingNPC = pointHit.transform.GetComponent<InteractableNPC>();
+                        targetIndicator.transform.SetParent(interactingNPC.transform);
+                        targetIndicator.transform.position = interactingNPC.transform.position + new Vector3(0f, interactingNPC.transform.localScale.y * 5);
+                        targetIndicator.enabled = true;
+                    }
+                    else
                     {
                         targetIndicator.enabled = false;
                     }
-                    interactingNPC = pointHit.transform.GetComponent<InteractableNPC>();
-                    targetIndicator.transform.SetParent(interactingNPC.transform);
-                    targetIndicator.transform.position = interactingNPC.transform.position + new Vector3(0f, interactingNPC.transform.localScale.y * 5);
-                    targetIndicator.enabled = true;
-                }
-                else
-                {
-                    targetIndicator.enabled = false;
                 }
             }
         }
