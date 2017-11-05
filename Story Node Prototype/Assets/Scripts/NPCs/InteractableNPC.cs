@@ -7,14 +7,6 @@ using UnityEngine.UI;
 /// All story NPCs (that have dialogue in the Ink Script) inherit from this class
 /// </summary>
 public abstract class InteractableNPC : MonoBehaviour {
-
-    /**
-     * Configuration values are tweaked via the inspector to define our objects.
-     * Config values are treated as runtime constants.
-     * */
-    // ----- SHARED CONFIGURATION OBJECT ----- //
-    public NPCStats stats;
-
     // ----- CONFIGURATION VARIABLES ----- //
     protected static PlayerController player;
     protected static StoryManager storyManager;

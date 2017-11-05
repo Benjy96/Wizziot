@@ -2197,7 +2197,7 @@ GameObject:
   - component: {fileID: 1897165669}
   - component: {fileID: 1897165668}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: Capsule NPC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

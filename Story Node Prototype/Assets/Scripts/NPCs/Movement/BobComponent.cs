@@ -6,7 +6,6 @@ public class BobComponent : MonoBehaviour {
 
     public float bobSpeed;
     public float bobRange;
-    public float pushOffForce;
 
     private void FixedUpdate()
     {
