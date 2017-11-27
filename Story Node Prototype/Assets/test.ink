@@ -22,7 +22,8 @@ EXTERNAL CubePushOff()
 //Flag example:
 // LIST Events = (unmolested), haveAnnoyedSphere   
 
-//State Machine example:
+
+//State Machine:
 LIST SphereState = (unmolested), annoyed
 //We DIVERT to this knot via script
 === sphere ===  //Sphere "Knot" - a branch of the story
@@ -37,10 +38,17 @@ LIST SphereState = (unmolested), annoyed
         {SpherePushOff()} //External function defined in Unity (NPC.cs) - pushes player
 - else:
 <>"Get lost!"
-{SpherePushOff()}
+{SpherePushOff()} //External Function bound in Unity
 -> DONE
 }
 -   -> DONE
+
+
+
+
+
+
+
 
 === cube ===
 = interact

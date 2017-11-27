@@ -58,17 +58,17 @@ public class StoryManager : MonoBehaviour {
     #region Interface
     public void BindExternalFunction(string functionToBind, Action UnityFunction)
     {
-        try
+        try //Using try/catch like an if statement: If all externals not bound, bind UnityFunction
         {
             scriptManager.InkScript.ValidateExternalBindings();
         }
-        #pragma warning disable CS0168 // Variable is declared but never used
         catch (Exception e)
-        #pragma warning restore CS0168 // Variable is declared but never used
         {
             scriptManager.InkScript.BindExternalFunction(functionToBind, () => UnityFunction());
         }
     }
+
+
 
     public void AttemptToConverse(InteractableNPC targetNPC)
     {
