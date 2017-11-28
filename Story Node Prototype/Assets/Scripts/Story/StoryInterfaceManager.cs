@@ -33,7 +33,7 @@ public class StoryInterfaceManager : MonoBehaviour {
     //TODO: Check what happens when variables numbers of choices - see if flow adjusts num of buttons
     public void PresentChoice(string choiceText, int choice)
     {
-        playerChoiceButtons[choice].GetComponentInChildren<Text>().text = "Choice: " + (choice+1) + ": " +choiceText;
+        playerChoiceButtons[choice].GetComponentInChildren<Text>().text = "Choice: " + (choice + 1) + ": " + choiceText;
     }
 
     public void DisableChoiceWindow()

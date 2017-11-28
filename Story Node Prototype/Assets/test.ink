@@ -1,6 +1,6 @@
 VAR DEBUG = true
 {DEBUG:
--> sphere.interact
+-> cube.interact
 }
 
 EXTERNAL SpherePushOff()
@@ -44,20 +44,29 @@ LIST SphereState = (unmolested), annoyed
 -   -> DONE
 
 
-
-
-
-
-
-
 === cube ===
 = interact
 "They said be there or be square. Well, guess where I wasn't."
     +   ["Ha, nerd."]
         "Prick."
         {CubePushOff()}
-    +   ["My Condolences."]
-        The cube sulks.
+    +   ["Who said that to you?"]
+        That sphere guy over in the corner...
+        + + ["Want me to do anything about it?"]
+            "What do you mean?"
+            +++ ["I need money, and I have a particular set of skills."]
+                "Uh..."
+                ++++ ["No, not that"]
+                    "Oh, like, you'll kill him for me?"
+                    +++++ ["Wow, I meant I'd just go talk to him."]
+                        "Oh, uh... you should probably leave."
+                    +++++ ["Of course."]
+                        "Tell me when it's done, I have some milk money left over."
+                ++++ ["Nevermind."]
+        ++ ["What's his problem?]
+            "I don't know, but I think I'm gonna tell my mum."
+            ++++ ["Don't be a baby, man."]
+                "Screw you."
 -   -> DONE
 
 === shop_keeper ===

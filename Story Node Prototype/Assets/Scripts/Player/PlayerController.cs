@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour {
         HandleTargeting();
         HandleKeyboardInput();
         HandleConversationInput();
-        HandleShoot();
+        //HandleShoot();
     }
 
     private void HandleShoot()  //TODO: could make this (and all abils) components - add them to player when u unlock the abil (and bind it to a key?)

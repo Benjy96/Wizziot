@@ -68,8 +68,6 @@ public class StoryManager : MonoBehaviour {
         }
     }
 
-
-
     public void AttemptToConverse(InteractableNPC targetNPC)
     {
         StopCoroutine(ExitConversation);
@@ -142,12 +140,6 @@ public class StoryManager : MonoBehaviour {
     #endregion
 
     #region Story Implementation
-    private void ResetStoryInterface()
-    {
-        HideStory();
-        DisableInput();
-    }
-
     private void Converse()
     {
         //TODO: If npc doesn't speak first, don't display text box - i.e. if a choice but no content, (on start) - hide text? OR change way ink is written
@@ -165,20 +157,11 @@ public class StoryManager : MonoBehaviour {
             PresentStory();
         }
 
-        //Set up choice window
-        if (scriptManager.ChoicesAvailable && storyChoiceDisplayActive == false)
+        if (scriptManager.ChoicesAvailable)
         {
             interfaceManager.DisplayButtons(scriptManager.NumChoicesAvailable);
+            EnableInput();
             storyChoiceDisplayActive = true;
-        }
-
-        //bool if(storyChoiceActive && choicesAvailable && buttonsAlreadyDisplayed)
-
-        //INK: 2. Make Choices
-        if (scriptManager.ChoicesAvailable && storyChoiceDisplayActive == true)
-        {
-            EnableInput();  //We need an UPDATE input beneath this if display active but buttons different
-            //e.g. what happens if we have 3 choices after picking from 2? draw flowchart
         }
 
         //If no content or choices available, end the conversation
@@ -186,6 +169,12 @@ public class StoryManager : MonoBehaviour {
         {
             StartCoroutine(ExitConversation);
         }
+    }
+
+    private void ResetStoryInterface()
+    {
+        HideStory();
+        DisableInput();
     }
 
     private void PresentStory()
