@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -23,8 +22,8 @@ public class StoryManager : MonoBehaviour {
     private string filepath;
     private string storyState_JSON;
 
+    //Implementation Variables
     private InteractableNPC conversationTarget;
-
     private IEnumerator ExitConversation;  //Prevents the coroutine closing the display if a new conversation has started within the disable UI time delay since last convo
     private bool storyDisplayActive = false;
     private bool storyChoiceDisplayActive = false;
@@ -104,7 +103,7 @@ public class StoryManager : MonoBehaviour {
                     scriptManager.MakeChoice(playerChoice - 1);
                     if (scriptManager.ContentAvailable)
                     {
-                        Converse(); //Story runs in a loop (enabled by bool - takestoryinput) - bool in update
+                        Converse();
                     }
                     break;
             }

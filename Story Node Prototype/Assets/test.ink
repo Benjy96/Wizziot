@@ -43,7 +43,6 @@ LIST SphereState = (unmolested), annoyed
 }
 -   -> DONE
 
-
 === cube ===
 = interact
 "They said be there or be square. Well, guess where I wasn't."
