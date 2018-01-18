@@ -45,7 +45,6 @@ public class PlayerController : MonoBehaviour {
         laserLine = GetComponent<LineRenderer>();
         cam = Camera.main;
 
-        
         nextFire = 0;
     }
 
