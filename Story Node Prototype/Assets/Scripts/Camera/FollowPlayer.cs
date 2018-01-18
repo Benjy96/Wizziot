@@ -14,7 +14,7 @@ public class FollowPlayer : MonoBehaviour {
     public Vector3 offsetAmounts;
 
     private Vector3 offset;
-    private float zoom = 10f;
+    public float zoom = .5f;
     private float yawInput = 0f;
 
     private Vector3 lastClickPos;
@@ -40,7 +40,7 @@ public class FollowPlayer : MonoBehaviour {
     private void LateUpdate()
     {
         offset = Quaternion.AngleAxis(yawInput, Vector3.up) * offset;
-        transform.position = target.position + offset;
+        transform.position = (target.position + offset * zoom);
         transform.LookAt(target.position);
     }
 }
