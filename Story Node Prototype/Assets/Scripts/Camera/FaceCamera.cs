@@ -14,7 +14,7 @@ public class FaceCamera : MonoBehaviour {
 	// Look at the camera (only rotate about one axis)
 	void Update () {
         //Rotate ABOUT the x axis (gets the y and z of target - stays at same x - this rotates around the x)
-        Vector3 targetPos = new Vector3(transform.position.x, playersView.transform.position.y, playersView.transform.position.z);
+        Vector3 targetPos = new Vector3(playersView.transform.position.x, playersView.transform.position.y, playersView.transform.position.z);
         transform.LookAt(targetPos);
         transform.Rotate(Vector3.up, 180);  //Flip text from back to front
 	}

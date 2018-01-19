@@ -359,9 +359,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 2024245276}
-  smoothSpeed: 10
-  zoomSpeed: 4
-  yawSpeed: 50
+  smoothSpeed: 20
+  zoomSpeed: 5
+  rotationSpeed: 2
   maxZoom: 4
   minZoom: 0.2
   zoom: 2
