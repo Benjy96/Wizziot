@@ -4,12 +4,13 @@ public class FollowPlayer : MonoBehaviour {
 
     public Transform player;
 
-    public float smoothSpeed = 10f;
-    public float zoom = .5f;
-    public float zoomSpeed = 4f;
-    public float yawSpeed = 20f;
-    public float maxZoom = 20f;
-    public float minZoom = 5f;
+    public float smoothSpeed;
+    public float zoomSpeed;
+    public float yawSpeed;
+    public float maxZoom;
+    public float minZoom;
+
+    public float zoom;
     public Vector3 offsetAmounts;
 
     private Vector3 offset;    
