@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
 
 //TODO: Link to a config file or options menu (Smoothing controls everything; zoom - zoom speed; rotation speed - pitch & yaw)
-public class FollowPlayer : MonoBehaviour {
+public class PlayerCamera : MonoBehaviour {
 
     public Transform player;
 
     public float smoothSpeed;
-    public float zoomSpeed;
-    public float rotationSpeed;
+    public float cameraSpeed;
     public float maxZoom;
     public float minZoom;
 
@@ -26,13 +25,13 @@ public class FollowPlayer : MonoBehaviour {
     private void Update()
     {
         //Zoom
-        zoom -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
+        zoom -= Input.GetAxis("Mouse ScrollWheel") * cameraSpeed;
         zoom = Mathf.Clamp(zoom, minZoom, maxZoom);
 
         //Yaw
         if (Input.GetMouseButton(1))
         {
-            yawInput = Input.GetAxis("Mouse X") * rotationSpeed;
+            yawInput = Input.GetAxis("Mouse X") * cameraSpeed;
         }
         else
         {
@@ -41,7 +40,7 @@ public class FollowPlayer : MonoBehaviour {
 
         if (Input.GetMouseButton(1))
         {
-            pitchInput = Input.GetAxis("Mouse Y") * rotationSpeed;
+            pitchInput = Input.GetAxis("Mouse Y") * cameraSpeed;
         }
         else
         {

@@ -360,8 +360,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 2024245276}
   smoothSpeed: 20
-  zoomSpeed: 5
-  rotationSpeed: 2
+  cameraSpeed: 5
   maxZoom: 4
   minZoom: 0.2
   zoom: 2
