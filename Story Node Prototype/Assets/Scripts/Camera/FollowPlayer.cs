@@ -1,23 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class FollowPlayer : MonoBehaviour {
 
-    public Transform target;
+    public Transform player;
 
+    public float smoothSpeed = 10f;
+    public float zoom = .5f;
     public float zoomSpeed = 4f;
     public float yawSpeed = 20f;
     public float maxZoom = 20f;
     public float minZoom = 5f;
-
     public Vector3 offsetAmounts;
 
-    private Vector3 offset;
-    public float zoom = .5f;
+    private Vector3 offset;    
     private float yawInput = 0f;
-
-    private Vector3 lastClickPos;
+    private float pitchInput = 0f;
 
     private void Start()
     {
@@ -35,12 +32,22 @@ public class FollowPlayer : MonoBehaviour {
         {
             yawInput = Input.GetAxis("Mouse X") * yawSpeed * Time.deltaTime;
         }
+
+        if (Input.GetMouseButton(1))
+        {
+            pitchInput = Input.GetAxis("Mouse Y") * yawSpeed * Time.deltaTime;
+        }
     }
 
+    //Target will have done movement by the time this is called - no race / concurrency issues
     private void LateUpdate()
     {
+        //TODO: add user controlled pitch
         offset = Quaternion.AngleAxis(yawInput, Vector3.up) * offset;
-        transform.position = (target.position + offset * zoom);
-        transform.LookAt(target.position);
+        Vector3 desiredPos = player.position + offset * zoom;
+        Vector3 smoothedPos = Vector3.Lerp(transform.position, desiredPos, smoothSpeed * Time.deltaTime);
+
+        transform.position = smoothedPos;
+        transform.LookAt(player.position);
     }
 }
