@@ -54,10 +54,12 @@ public class FollowPlayer : MonoBehaviour {
         //Yaw and pitch control (and offset)
         offset = Quaternion.AngleAxis(yawInput, Vector3.up) * Quaternion.AngleAxis(-pitchInput, Vector3.right) * offset;
 
-        //Smoothing
+        //Smoothing (interpolate between current position, desired position (offsetted and zoomed) with smooth speed)
         Vector3 desiredPos = player.position + offset * zoom;
+        //Max camera pitch
+        desiredPos.y = Mathf.Clamp(desiredPos.y, 2f, 15f);
         Vector3 smoothedPos = Vector3.MoveTowards(transform.position, desiredPos, smoothSpeed * Time.deltaTime);
-
+        
         //Camera position
         transform.position = smoothedPos;
         transform.LookAt(player.position);
