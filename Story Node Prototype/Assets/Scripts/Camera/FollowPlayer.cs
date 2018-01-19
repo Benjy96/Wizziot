@@ -33,21 +33,32 @@ public class FollowPlayer : MonoBehaviour {
         {
             yawInput = Input.GetAxis("Mouse X") * yawSpeed * Time.deltaTime;
         }
+        else
+        {
+            yawInput = 0f;
+        }
 
         if (Input.GetMouseButton(1))
         {
             pitchInput = Input.GetAxis("Mouse Y") * yawSpeed * Time.deltaTime;
+        }
+        else
+        {
+            pitchInput = 0f;
         }
     }
 
     //Target will have done movement by the time this is called - no race / concurrency issues
     private void LateUpdate()
     {
-        //TODO: add user controlled pitch
-        offset = Quaternion.AngleAxis(yawInput, Vector3.up) * offset;
-        Vector3 desiredPos = player.position + offset * zoom;
-        Vector3 smoothedPos = Vector3.Lerp(transform.position, desiredPos, smoothSpeed * Time.deltaTime);
+        //Yaw and pitch control (and offset)
+        offset = Quaternion.AngleAxis(yawInput, Vector3.up) * Quaternion.AngleAxis(-pitchInput, Vector3.right) * offset;
 
+        //Smoothing
+        Vector3 desiredPos = player.position + offset * zoom;
+        Vector3 smoothedPos = Vector3.MoveTowards(transform.position, desiredPos, smoothSpeed * Time.deltaTime);
+
+        //Camera position
         transform.position = smoothedPos;
         transform.LookAt(player.position);
     }

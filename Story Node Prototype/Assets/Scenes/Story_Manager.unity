@@ -358,12 +358,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a6beaa11e30aa14f93109bf59db5336, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 2024245276}
-  zoom: 2
+  player: {fileID: 2024245276}
+  smoothSpeed: 10
   zoomSpeed: 4
-  yawSpeed: 100
+  yawSpeed: 50
   maxZoom: 4
   minZoom: 0.2
+  zoom: 2
   offsetAmounts: {x: 0, y: 4, z: -6.5}
 --- !u!1001 &250540850
 Prefab:
