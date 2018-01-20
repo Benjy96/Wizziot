@@ -17,8 +17,13 @@ public class PlayerController : MonoBehaviour {
     }
 
     // ---- Book-keeping Fields ----- //    //Convenience properties and variables, plus variables that do not need saved.
+    //Player MODE
+    //TODO: Use state machine when needed
+    //private enum PlayerState { Normal, Combat, Conversing, Dead }
+    //PlayerState State;  
+        
     //Interaction
-    private TargetType currentTarget;   //State machine to hold player's targeting status for if/switches
+    private TargetType currentTargetType;   //State machine to hold player's targeting status for if/switches
     private Targetable interactionTarget;
     private InteractableNPC interactableNPC;
     //TODO: Add items
@@ -109,6 +114,7 @@ public class PlayerController : MonoBehaviour {
             StoryManager.Instance.CloseConversation();
         }
 
+        //TARGET OPERATION (LMB)
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
@@ -120,26 +126,35 @@ public class PlayerController : MonoBehaviour {
                 //If within range
                 if ((pointHit.transform.position - transform.position).sqrMagnitude < playerState.sqrMaxTargetDistance)
                 {
-                    switch (pointHit.transform.GetComponent<Targetable>().targetType)
-                    {
-                        case TargetType.Story:
-                            if (interactionTarget != null)
-                            {
-                                targetIndicator.enabled = false;
-                            }
-                            interactionTarget = pointHit.transform.GetComponent<InteractableNPC>();
-                            targetIndicator.transform.SetParent(interactionTarget.transform);
-                            targetIndicator.transform.position = interactionTarget.transform.position + new Vector3(0f, interactionTarget.transform.localScale.y * 5);
-                            targetIndicator.enabled = true;
-                            //TARGET STATE
-                            currentTarget = TargetType.Story;
-                            break;
 
-                        default:
-                            Debug.Log("None");
-                            targetIndicator.enabled = false;
-                            currentTarget = TargetType.Null;
-                            break;
+                    if (pointHit.transform.GetComponent<Targetable>() != null)  
+                    {
+                        currentTargetType = pointHit.transform.GetComponent<Targetable>().targetType;
+                        switch (currentTargetType)
+                        {
+                            case TargetType.Item:
+                                //TODO: Add item targeting code
+                                break;
+
+                            case TargetType.Enemy:
+                                //TODO: Add enemy targeting code
+                                break;
+
+                            case TargetType.Story:
+                                if (interactionTarget != null)
+                                {
+                                    targetIndicator.enabled = false;
+                                }
+                                interactionTarget = pointHit.transform.GetComponent<InteractableNPC>();
+                                targetIndicator.transform.SetParent(interactionTarget.transform);
+                                targetIndicator.transform.position = interactionTarget.transform.position + new Vector3(0f, interactionTarget.transform.localScale.y * 5);
+                                targetIndicator.enabled = true;
+                                break;
+
+                            default:
+                                targetIndicator.enabled = false;
+                                break;
+                        }
                     }
                 }
             }

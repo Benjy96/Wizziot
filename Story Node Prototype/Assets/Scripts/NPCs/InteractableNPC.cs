@@ -11,8 +11,7 @@ public abstract class InteractableNPC : Targetable {
     // ----- CONFIGURATION VARIABLES ----- //
     protected static PlayerController player;
     protected static StoryManager storyManager;
-
-    new TargetType targetType = TargetType.Story;
+    protected static new TargetType targetType = TargetType.Story;
 
     public string inkPath = "";
     
