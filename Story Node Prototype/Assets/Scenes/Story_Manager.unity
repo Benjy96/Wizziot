@@ -363,6 +363,8 @@ MonoBehaviour:
   cameraSpeed: 5
   maxZoom: 4
   minZoom: 0.2
+  maxLockedZoom: 5
+  minLockedZoom: -5.5
   zoom: 2
   offsetAmounts: {x: 0, y: 4, z: -6.5}
 --- !u!1001 &250540850

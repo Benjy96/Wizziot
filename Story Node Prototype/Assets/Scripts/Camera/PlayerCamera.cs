@@ -7,12 +7,16 @@ public class PlayerCamera : MonoBehaviour {
 
     public float smoothSpeed;
     public float cameraSpeed;
+
     public float maxZoom;
     public float minZoom;
+    public float maxLockedZoom;
+    public float minLockedZoom;
 
     public float zoom;
     public Vector3 offsetAmounts;
 
+    private Vector3 startPos;
     private Vector3 offset;    
     private float yawInput = 0f;
     private float pitchInput = 0f;
@@ -24,6 +28,7 @@ public class PlayerCamera : MonoBehaviour {
     {
         State = CameraMode.Follow;
         offset = new Vector3(offsetAmounts.x, offsetAmounts.y, offsetAmounts.z);
+        startPos = transform.localPosition;
     }
 
     private void Update()
@@ -31,21 +36,30 @@ public class PlayerCamera : MonoBehaviour {
         //Switch Camera Mode on "alt" keypress
         if (Input.GetKeyDown(KeyCode.LeftAlt))
         {
-            Debug.Log("hi");
             if (State == CameraMode.Follow)
             {
+                Debug.Log("Camera: Look Mode");
                 State = CameraMode.Look;
             }
             else
             {
+                Debug.Log("Camera: Following");
                 State = CameraMode.Follow;
             }
         }
 
-        
         //Zoom
-        zoom -= Input.GetAxis("Mouse ScrollWheel") * cameraSpeed;
-        zoom = Mathf.Clamp(zoom, minZoom, maxZoom);
+        switch (State)
+        {
+            case CameraMode.Follow:
+                zoom -= Input.GetAxis("Mouse ScrollWheel") * cameraSpeed;
+                zoom = Mathf.Clamp(zoom, minLockedZoom, maxLockedZoom);
+                break;
+            case CameraMode.Look:
+                zoom -= Input.GetAxis("Mouse ScrollWheel") * cameraSpeed;
+                zoom = Mathf.Clamp(zoom, minZoom, maxZoom);
+                break;
+        }
 
         //Yaw
         if (Input.GetMouseButton(1))
@@ -76,9 +90,16 @@ public class PlayerCamera : MonoBehaviour {
         switch (State)
         {
             case CameraMode.Follow:
-                //TODO: Add smoothing/zoom
-                //TODO: remove redundancy (mix zoom code after follow/look switch cases)
+                //TODO: Save positions between states to revert after switches
                 transform.SetParent(player);
+                //need a constant value to evaluate against (for the zoomed result values)
+                float y = startPos.y + (zoom / .8f);
+                float z = startPos.z - (zoom / .5f);
+
+                //Using local space since parented to player
+                desiredPos = new Vector3(startPos.x, y, z);
+                smoothedPos = Vector3.MoveTowards(transform.localPosition, desiredPos, smoothSpeed * Time.deltaTime);
+                transform.localPosition = desiredPos;
                 break;
 
             case CameraMode.Look:
