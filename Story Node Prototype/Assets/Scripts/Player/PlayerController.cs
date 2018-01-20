@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour {
     private Projector targetIndicator;
     private Camera cam;
 
+    //TODO: Put into a component
     //Lasers
     public GameObject destroyFX;
     public float fireRate = .25f;
@@ -164,8 +165,14 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    //Handle ALL keybinds - e.g. Gameplay Keybinds, Camera, etc...
     private void HandleKeyboardInput()
     {
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
+        {
+
+        }
+
         if (interactionTarget != null && interactionTarget.GetComponent<InteractableNPC>() != null) //If we have a target, allow possibility of starting a conversation
         {
             switch (Input.inputString)
