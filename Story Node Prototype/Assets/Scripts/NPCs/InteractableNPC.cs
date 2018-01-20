@@ -6,11 +6,13 @@ using UnityEngine.UI;
 /// <summary>
 /// All story NPCs - individuals (Bob, Ben) and clones (shopkeeps) alike - (that have dialogue in the Ink Script) inherit from this class
 /// </summary>
-public abstract class InteractableNPC : MonoBehaviour {
+public abstract class InteractableNPC : Targetable {
 
     // ----- CONFIGURATION VARIABLES ----- //
     protected static PlayerController player;
     protected static StoryManager storyManager;
+
+    new TargetType targetType = TargetType.Story;
 
     public string inkPath = "";
     

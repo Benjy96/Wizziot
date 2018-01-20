@@ -40,7 +40,7 @@ public class StoryDisplayManager : MonoBehaviour {
     {
         set
         {
-            float npcHeight = value.localScale.y * 2;
+            float npcHeight = value.localScale.y * 3;
             Vector3 newTextPosition = new Vector3(value.position.x, value.position.y + npcHeight, value.position.z);
 
             storyDisplayCanvas.transform.position = newTextPosition;

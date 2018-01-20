@@ -18,7 +18,11 @@ public class PlayerController : MonoBehaviour {
 
     // ---- Book-keeping Fields ----- //    //Convenience properties and variables, plus variables that do not need saved.
     //Interaction
-    private InteractableNPC interactingNPC;
+    private TargetType currentTarget;   //State machine to hold player's targeting status for if/switches
+    private Targetable interactionTarget;
+    private InteractableNPC interactableNPC;
+    //TODO: Add items
+    //TODO: Add enemies
     private Projector targetIndicator;
     private Camera cam;
 
@@ -59,7 +63,7 @@ public class PlayerController : MonoBehaviour {
 
     private void HandleShoot()  //TODO: could make this (and all abils) components - add them to player when u unlock the abil (and bind it to a key?)
     {
-        if (interactingNPC != null) //TODO: make so can't shoot story NPCs 
+        if (interactionTarget != null) //TODO: make so can't shoot story NPCs 
         {
             if (Input.GetKeyDown(KeyCode.Alpha1) && Time.time > nextFire)
             {
@@ -69,9 +73,9 @@ public class PlayerController : MonoBehaviour {
                 Vector3 rayOrigin = transform.position;
 
                 laserLine.SetPosition(0, rayOrigin);
-                laserLine.SetPosition(1, interactingNPC.transform.position);
-                Instantiate(destroyFX, interactingNPC.transform.position, Quaternion.identity);
-                Destroy(interactingNPC.gameObject); //TODO: remove <- not final implementation - destroys any nested components
+                laserLine.SetPosition(1, interactionTarget.transform.position);
+                Instantiate(destroyFX, interactionTarget.transform.position, Quaternion.identity);
+                Destroy(interactionTarget.gameObject); //TODO: remove <- not final implementation - destroys any nested components
             }
         }
     }
@@ -97,11 +101,11 @@ public class PlayerController : MonoBehaviour {
     private void HandleTargeting()
     {
         //Must be within 10 metres - using sqr values since getting root is expensive
-        if(interactingNPC != null && 
-            (interactingNPC.transform.position - transform.position).sqrMagnitude > playerState.sqrMaxTargetDistance)
+        if(interactionTarget != null && 
+            (interactionTarget.transform.position - transform.position).sqrMagnitude > playerState.sqrMaxTargetDistance)
         {
             targetIndicator.enabled = false;
-            interactingNPC = null;
+            interactionTarget = null;
             StoryManager.Instance.CloseConversation();
         }
 
@@ -110,24 +114,32 @@ public class PlayerController : MonoBehaviour {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit pointHit;
 
+            //Raycast
             if(Physics.Raycast(ray, out pointHit, 100f))    //If the raycast hits something within 100
             {
+                //If within range
                 if ((pointHit.transform.position - transform.position).sqrMagnitude < playerState.sqrMaxTargetDistance)
                 {
-                    if (pointHit.transform.GetComponent<InteractableNPC>())
+                    switch (pointHit.transform.GetComponent<Targetable>().targetType)
                     {
-                        if (interactingNPC != null)
-                        {
+                        case TargetType.Story:
+                            if (interactionTarget != null)
+                            {
+                                targetIndicator.enabled = false;
+                            }
+                            interactionTarget = pointHit.transform.GetComponent<InteractableNPC>();
+                            targetIndicator.transform.SetParent(interactionTarget.transform);
+                            targetIndicator.transform.position = interactionTarget.transform.position + new Vector3(0f, interactionTarget.transform.localScale.y * 5);
+                            targetIndicator.enabled = true;
+                            //TARGET STATE
+                            currentTarget = TargetType.Story;
+                            break;
+
+                        default:
+                            Debug.Log("None");
                             targetIndicator.enabled = false;
-                        }
-                        interactingNPC = pointHit.transform.GetComponent<InteractableNPC>();
-                        targetIndicator.transform.SetParent(interactingNPC.transform);
-                        targetIndicator.transform.position = interactingNPC.transform.position + new Vector3(0f, interactingNPC.transform.localScale.y * 5);
-                        targetIndicator.enabled = true;
-                    }
-                    else
-                    {
-                        targetIndicator.enabled = false;
+                            currentTarget = TargetType.Null;
+                            break;
                     }
                 }
             }
@@ -136,13 +148,13 @@ public class PlayerController : MonoBehaviour {
 
     private void HandleKeyboardInput()
     {
-        if (interactingNPC != null) //If we have a target, allow possibility of starting a conversation
+        if (interactionTarget != null && interactionTarget.GetComponent<InteractableNPC>() != null) //If we have a target, allow possibility of starting a conversation
         {
             switch (Input.inputString)
             {
                 case "f":
                     //Enter a conversation
-                    StoryManager.Instance.AttemptToConverse(interactingNPC);
+                    StoryManager.Instance.AttemptToConverse(interactionTarget.GetComponent<InteractableNPC>());
                     break;
             }
         }
@@ -150,7 +162,7 @@ public class PlayerController : MonoBehaviour {
 
     private void HandleConversationInput()
     {
-        if (interactingNPC != null)
+        if (interactionTarget != null)
         {
             int playerChoice;
             bool correctInput = int.TryParse(Input.inputString, out playerChoice);
