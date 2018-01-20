@@ -11,8 +11,8 @@ public class PlayerController : MonoBehaviour {
     [Serializable]
     public class PlayerStateData
     {
-        public float speed;
-        public float turnSpeed;
+        [Range(0, 10)] public float speed;
+        [Range(50, 150)] public float turnSpeed;
         [Range(0, 225)] public float sqrMaxTargetDistance;
     }
 
@@ -42,7 +42,6 @@ public class PlayerController : MonoBehaviour {
     {
         get { return playerState.speed; }
     }
-
     public float TurnSpeed
     {
         get { return playerState.turnSpeed; }
@@ -57,7 +56,6 @@ public class PlayerController : MonoBehaviour {
         nextFire = 0;
     }
 
-    // Update is called once per frame
     void Update () {
         HandleDirectionInput();
         HandleTargeting();
@@ -94,13 +92,18 @@ public class PlayerController : MonoBehaviour {
 
     private void HandleDirectionInput()
     {
-        Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));   //get our directions
-        Vector3 direction = input.normalized;   //normalize the direction (for when both are held at same time)
-        Vector3 velocity = direction * Speed * Time.deltaTime;  //get magnitude by multiplying by speed, then scale to time
-        Vector3 adjustedLook = Vector3.Lerp(transform.forward, direction, Time.deltaTime * TurnSpeed);
+        //Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));   //get our directions
+        //Vector3 direction = input.normalized;   //normalize the direction (for when both are held at same time)
+        //Vector3 velocity = direction * Speed * Time.deltaTime;  //get magnitude by multiplying by speed, then scale to time
+        //Vector3 adjustedLook = Vector3.Lerp(transform.forward, direction, Time.deltaTime * TurnSpeed);
 
-        transform.Translate(velocity, Space.World);
-        transform.LookAt(transform.position + adjustedLook);
+        //transform.Translate(velocity, Space.World);
+        //transform.LookAt(transform.position + adjustedLook);
+
+        float x = Input.GetAxis("Horizontal") * TurnSpeed * Time.deltaTime;
+        float z = Input.GetAxis("Vertical") * Speed * Time.deltaTime;
+        transform.Rotate(0, x, 0);
+        transform.Translate(0, 0, z);
     }
 
     private void HandleTargeting()
