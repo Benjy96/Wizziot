@@ -155,7 +155,7 @@ public class PlayerController : MonoBehaviour {
 
                 if(CODE < 100)
                 {
-
+                    //TODO: Put in the "story" input (e.g. "f") from above here
                 }
             }
         }

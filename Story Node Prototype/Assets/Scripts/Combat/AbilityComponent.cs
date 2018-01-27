@@ -126,5 +126,3 @@ public class AbilityComponent : MonoBehaviour {
     }
 #endregion
 }
-//Separate abilities between a large gap to act as a "code" difference
-public enum Abilities { Zap = 100, Confuse, Vortex = 150, Singularity, Heal = 200 }
