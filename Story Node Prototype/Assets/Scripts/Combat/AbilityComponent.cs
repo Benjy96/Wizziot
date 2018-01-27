@@ -37,7 +37,7 @@ public class AbilityComponent : MonoBehaviour {
     }
 
     //Kebyind & UI button accesses this from controller (Start @ 1 to correspond to player UI)
-    public void SelectAbility(Abilities choice/*using int for buttons - could do enum but no editor support*/)
+    public void SelectAbility(Abilities choice)
     {
         if (unlockedAbilities.Contains(choice))
         {
@@ -127,4 +127,4 @@ public class AbilityComponent : MonoBehaviour {
 #endregion
 }
 //Separate abilities between a large gap to act as a "code" difference
-public enum Abilities { Zap = 1, Confuse, Vortex = 50, Singularity }
+public enum Abilities { Zap = 100, Confuse, Vortex = 150, Singularity, Heal = 200 }

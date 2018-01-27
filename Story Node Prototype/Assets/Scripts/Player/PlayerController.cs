@@ -29,8 +29,6 @@ public class PlayerController : MonoBehaviour {
 
     //Interaction
     private Targetable target;
-    //TODO: Add items
-    //TODO: Add enemies
 
     public float Speed { get { return playerState.speed; } }
     public float TurnSpeed { get { return playerState.turnSpeed; } }
@@ -40,6 +38,15 @@ public class PlayerController : MonoBehaviour {
         abilityComponent = GetComponent<AbilityComponent>();
         targetIndicator = GetComponentInChildren<Projector>();
         cam = Camera.main;
+
+        //Default key bindings ( <Key, User's key binding i.e. ability used> )
+        keyBindings = new Dictionary<KeyCode, Abilities>
+        {
+            { KeyCode.Alpha1, Abilities.Zap },
+            { KeyCode.Alpha2, Abilities.Confuse },
+            { KeyCode.Alpha3, Abilities.Vortex },
+            { KeyCode.Alpha4, Abilities.Singularity }
+        };
     }
 
     void Update () {
@@ -80,7 +87,6 @@ public class PlayerController : MonoBehaviour {
                 //If within range
                 if ((pointHit.transform.position - transform.position).sqrMagnitude < playerState.sqrMaxTargetDistance)
                 {
-
                     if (pointHit.transform.GetComponent<Targetable>() != null)  
                     {
                         TargetType currentTargetType = pointHit.transform.GetComponent<Targetable>().targetType;
@@ -117,14 +123,31 @@ public class PlayerController : MonoBehaviour {
 
     private void HandleKeyboardInput()
     {
-        if (target != null && target.targetType == TargetType.Story) //If we have a target, allow possibility of starting a conversation
+        //Story Input
+        if (target != null && target.targetType == TargetType.Story) 
         {
             switch (Input.inputString)
             {
                 case "f":
-                    //Enter a conversation
                     StoryManager.Instance.AttemptToConverse(target.GetComponent<InteractableNPC>());
                     break;
+            }
+        }
+
+        //Ability Input
+        for (KeyCode i = KeyCode.A; i < KeyCode.Z; i++)
+        {
+            if (Input.GetKeyDown(i))
+            {
+
+                if ((int)keyBindings[i] < 100)
+                {
+                    UseInstantAbility(keyBindings[i]);
+                }
+                else if ((int)keyBindings[i] >= 100)
+                {
+                    UseAOEAbility(keyBindings[i]);
+                }
             }
         }
     }
@@ -145,6 +168,37 @@ public class PlayerController : MonoBehaviour {
             {
                 StoryManager.Instance.CloseConversation();
             }
+        }
+    }
+
+    private void UseInstantAbility(Abilities ability)
+    {
+        if (abilityComponent.SelectedAbility == ability)
+        {
+            if (target != null && target.tag.Equals("Enemy"))
+            {
+                abilityComponent.UseAbility(target.transform);
+            }
+            else
+            {
+                Debug.Log("Invalid target");
+            }
+        }
+        else
+        {
+            abilityComponent.SelectAbility(ability);
+        }
+    }
+
+    private void UseAOEAbility(Abilities ability)
+    {
+        if (abilityComponent.SelectedAbility == ability)
+        {
+            abilityComponent.UseAbility(target.transform);
+        }
+        else
+        {
+            abilityComponent.SelectAbility(ability);
         }
     }
 }
