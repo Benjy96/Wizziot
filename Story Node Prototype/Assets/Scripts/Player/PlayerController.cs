@@ -1,11 +1,16 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 public class PlayerController : MonoBehaviour {
 
+    // ----- Components ----- //
+    private AbilityComponent abilityComponent;
+    private Projector targetIndicator;
+    private Camera cam;
+
     // ----- State Variables ----- //
+    public Dictionary<KeyCode, Abilities> keyBindings;
     public PlayerStateData playerState; //Player state manages the player's current state, and will be saved (if the game supports saving).
 
     [Serializable]
@@ -21,27 +26,18 @@ public class PlayerController : MonoBehaviour {
     //TODO: Use state machine when needed
     //private enum PlayerState { Normal, Combat, Conversing, Dead }
     //PlayerState State;  
-        
+
     //Interaction
-    private TargetType currentTargetType;   //State machine to hold player's targeting status for if/switches
-    private Targetable interactionTarget;
-    private InteractableNPC interactableNPC;
+    private Targetable target;
     //TODO: Add items
     //TODO: Add enemies
-    private Projector targetIndicator;
-    private Camera cam;
 
-    public float Speed
-    {
-        get { return playerState.speed; }
-    }
-    public float TurnSpeed
-    {
-        get { return playerState.turnSpeed; }
-    }
+    public float Speed { get { return playerState.speed; } }
+    public float TurnSpeed { get { return playerState.turnSpeed; } }
 
     private void Awake()    //References & initialisation - Start is once scripts are definitely enabled - Awake the GOs are all enabled
     {
+        abilityComponent = GetComponent<AbilityComponent>();
         targetIndicator = GetComponentInChildren<Projector>();
         cam = Camera.main;
     }
@@ -64,11 +60,11 @@ public class PlayerController : MonoBehaviour {
     private void HandleTargeting()
     {
         //Must be within 10 metres - using sqr values since getting root is expensive
-        if(interactionTarget != null && 
-            (interactionTarget.transform.position - transform.position).sqrMagnitude > playerState.sqrMaxTargetDistance)
+        if(target != null && 
+            (target.transform.position - transform.position).sqrMagnitude > playerState.sqrMaxTargetDistance)
         {
             targetIndicator.enabled = false;
-            interactionTarget = null;
+            target = null;
             StoryManager.Instance.CloseConversation();
         }
 
@@ -79,7 +75,7 @@ public class PlayerController : MonoBehaviour {
             RaycastHit pointHit;
 
             //Raycast
-            if(Physics.Raycast(ray, out pointHit, 100f))    //If the raycast hits something within 100
+            if(Physics.Raycast(ray, out pointHit, 100f, LayerMask.GetMask("Object")))    //If the raycast hits something within 100
             {
                 //If within range
                 if ((pointHit.transform.position - transform.position).sqrMagnitude < playerState.sqrMaxTargetDistance)
@@ -87,7 +83,7 @@ public class PlayerController : MonoBehaviour {
 
                     if (pointHit.transform.GetComponent<Targetable>() != null)  
                     {
-                        currentTargetType = pointHit.transform.GetComponent<Targetable>().targetType;
+                        TargetType currentTargetType = pointHit.transform.GetComponent<Targetable>().targetType;
                         switch (currentTargetType)
                         {
                             case TargetType.Item:
@@ -99,13 +95,13 @@ public class PlayerController : MonoBehaviour {
                                 break;
 
                             case TargetType.Story:
-                                if (interactionTarget != null)
+                                if (currentTargetType == TargetType.Story)
                                 {
                                     targetIndicator.enabled = false;
                                 }
-                                interactionTarget = pointHit.transform.GetComponent<InteractableNPC>();
-                                targetIndicator.transform.SetParent(interactionTarget.transform);
-                                targetIndicator.transform.position = interactionTarget.transform.position + new Vector3(0f, interactionTarget.transform.localScale.y * 5);
+                                target = pointHit.transform.GetComponent<InteractableNPC>();
+                                targetIndicator.transform.SetParent(target.transform);
+                                targetIndicator.transform.position = target.transform.position + new Vector3(0f, target.transform.localScale.y * 5);
                                 targetIndicator.enabled = true;
                                 break;
 
@@ -119,21 +115,15 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    //Handle ALL keybinds - e.g. Gameplay Keybinds, Camera, etc...
     private void HandleKeyboardInput()
     {
-        if (Input.GetKeyDown(KeyCode.LeftAlt))
-        {
-
-        }
-
-        if (interactionTarget != null && interactionTarget.GetComponent<InteractableNPC>() != null) //If we have a target, allow possibility of starting a conversation
+        if (target != null && target.targetType == TargetType.Story) //If we have a target, allow possibility of starting a conversation
         {
             switch (Input.inputString)
             {
                 case "f":
                     //Enter a conversation
-                    StoryManager.Instance.AttemptToConverse(interactionTarget.GetComponent<InteractableNPC>());
+                    StoryManager.Instance.AttemptToConverse(target.GetComponent<InteractableNPC>());
                     break;
             }
         }
@@ -141,7 +131,8 @@ public class PlayerController : MonoBehaviour {
 
     private void HandleConversationInput()
     {
-        if (interactionTarget != null)
+        //If targeting a story npc, allow conversation input
+        if (target.targetType == TargetType.Story)
         {
             int playerChoice;
             bool correctInput = int.TryParse(Input.inputString, out playerChoice);

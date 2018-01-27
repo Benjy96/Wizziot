@@ -100,10 +100,11 @@ public class AbilityComponent : MonoBehaviour {
     private IEnumerator Confuse(Transform target)
     {
         Vector3 oppositeToPlayer = target.position - transform.position;
-        Enemy enemy = target.GetComponent<Enemy>();
-        enemy.Move(oppositeToPlayer);
+        Debug.Log("AbilityComponent.cs: Add enemy TYPE to confuse line 103");
+        //Enemy enemy = target.GetComponent<Enemy>();
+        //enemy.Move(oppositeToPlayer);
         yield return new WaitForSeconds(confuseDuration);
-        enemy.ResetDestination();
+        //enemy.ResetDestination();
     }
     #endregion
 
