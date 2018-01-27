@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 
 public class PlayerController : MonoBehaviour {
@@ -55,33 +53,6 @@ public class PlayerController : MonoBehaviour {
         HandleTargeting();
         HandleKeyboardInput();
         HandleConversationInput();
-        HandleShoot();
-    }
-
-    private void HandleShoot()  //TODO: could make this (and all abils) components - add them to player when u unlock the abil (and bind it to a key?)
-    {
-        if (interactingNPC != null) //TODO: make so can't shoot story NPCs 
-        {
-            if (Input.GetKeyDown(KeyCode.Alpha1) && Time.time > nextFire)
-            {
-                nextFire = Time.time + fireRate;
-                StartCoroutine(ShotEffect());
-
-                Vector3 rayOrigin = transform.position;
-
-                laserLine.SetPosition(0, rayOrigin);
-                laserLine.SetPosition(1, interactingNPC.transform.position);
-                Instantiate(destroyFX, interactingNPC.transform.position, Quaternion.identity);
-                Destroy(interactingNPC.gameObject); //TODO: remove <- not final implementation - destroys any nested components
-            }
-        }
-    }
-
-    private IEnumerator ShotEffect()
-    {
-        laserLine.enabled = true;
-        yield return spellDuration;
-        laserLine.enabled = false;
     }
 
     private void HandleDirectionInput()
