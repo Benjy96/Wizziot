@@ -31,14 +31,6 @@ public class PlayerController : MonoBehaviour {
     private Projector targetIndicator;
     private Camera cam;
 
-    //TODO: Put into a component
-    //Lasers
-    public GameObject destroyFX;
-    public float fireRate = .25f;
-    private LineRenderer laserLine;
-    private WaitForSeconds spellDuration = new WaitForSeconds(0.07f);
-    private float nextFire; //track time passed
-
     public float Speed
     {
         get { return playerState.speed; }
@@ -51,10 +43,7 @@ public class PlayerController : MonoBehaviour {
     private void Awake()    //References & initialisation - Start is once scripts are definitely enabled - Awake the GOs are all enabled
     {
         targetIndicator = GetComponentInChildren<Projector>();
-        laserLine = GetComponent<LineRenderer>();
         cam = Camera.main;
-
-        nextFire = 0;
     }
 
     void Update () {
@@ -62,45 +51,10 @@ public class PlayerController : MonoBehaviour {
         HandleTargeting();
         HandleKeyboardInput();
         HandleConversationInput();
-        //HandleShoot();
-    }
-
-    private void HandleShoot()  //TODO: could make this (and all abils) components - add them to player when u unlock the abil (and bind it to a key?)
-    {
-        if (interactionTarget != null) //TODO: make so can't shoot story NPCs 
-        {
-            if (Input.GetKeyDown(KeyCode.Alpha1) && Time.time > nextFire)
-            {
-                nextFire = Time.time + fireRate;
-                StartCoroutine(ShotEffect());
-
-                Vector3 rayOrigin = transform.position;
-
-                laserLine.SetPosition(0, rayOrigin);
-                laserLine.SetPosition(1, interactionTarget.transform.position);
-                Instantiate(destroyFX, interactionTarget.transform.position, Quaternion.identity);
-                Destroy(interactionTarget.gameObject); //TODO: remove <- not final implementation - destroys any nested components
-            }
-        }
-    }
-
-    private IEnumerator ShotEffect()
-    {
-        laserLine.enabled = true;
-        yield return spellDuration;
-        laserLine.enabled = false;
     }
 
     private void HandleDirectionInput()
     {
-        //Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));   //get our directions
-        //Vector3 direction = input.normalized;   //normalize the direction (for when both are held at same time)
-        //Vector3 velocity = direction * Speed * Time.deltaTime;  //get magnitude by multiplying by speed, then scale to time
-        //Vector3 adjustedLook = Vector3.Lerp(transform.forward, direction, Time.deltaTime * TurnSpeed);
-
-        //transform.Translate(velocity, Space.World);
-        //transform.LookAt(transform.position + adjustedLook);
-
         float x = Input.GetAxis("Horizontal") * TurnSpeed * Time.deltaTime;
         float z = Input.GetAxis("Vertical") * Speed * Time.deltaTime;
         transform.Rotate(0, x, 0);
