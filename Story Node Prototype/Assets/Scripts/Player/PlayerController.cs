@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour {
     private Camera cam;
 
     // ----- State Variables ----- //
-    public Dictionary<KeyCode, Abilities> keyBindings;
+    public Dictionary<KeyCode, object> allKeybinds;
     public PlayerStateData playerState; //Player state manages the player's current state, and will be saved (if the game supports saving).
 
     [Serializable]
@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour {
         cam = Camera.main;
 
         //Default key bindings ( <Key, User's key binding i.e. ability used> )
-        keyBindings = new Dictionary<KeyCode, Abilities>
+        allKeybinds = new Dictionary<KeyCode, object>
         {
             { KeyCode.Alpha1, Abilities.Zap },
             { KeyCode.Alpha2, Abilities.Confuse },
@@ -134,19 +134,28 @@ public class PlayerController : MonoBehaviour {
             }
         }
 
-        //Ability Input
+        //TODO: Make data class (utility) for input codes with method "Between()" to check validity
+        //TODO: Make list of CODES (abilities, story, UI, etc... and types to hold - e.g. enum for Abils..delegate for UI)
+        //Ability Input (Ability CODES: [100, 250] - 50 per type of ability)
         for (KeyCode i = KeyCode.A; i < KeyCode.Z; i++)
         {
             if (Input.GetKeyDown(i))
             {
-
-                if ((int)keyBindings[i] < 100)
+                int CODE = (int)allKeybinds[i];
+                //If within ABILITY INSTANT CODE range (Instant && Heal):
+                if ((CODE > 100 && CODE < 150) || (CODE > 200 && CODE <= 250))
                 {
-                    UseInstantAbility(keyBindings[i]);
+                    UseInstantAbility((Abilities)allKeybinds[i]);
                 }
-                else if ((int)keyBindings[i] >= 100)
+                //If within ABILITY AOE CODE range:
+                else if (CODE >= 150 && CODE <= 200)
                 {
-                    UseAOEAbility(keyBindings[i]);
+                    UseAOEAbility((Abilities)allKeybinds[i]);
+                }//else if [200:250], UseHealAbility
+
+                if(CODE < 100)
+                {
+
                 }
             }
         }
