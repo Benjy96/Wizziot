@@ -37,7 +37,9 @@ public class PlayerController : MonoBehaviour {
         abilityComponent = GetComponent<AbilityComponent>();
         targetIndicator = GetComponentInChildren<Projector>();
         cam = Camera.main;
-        
+
+        target = null;
+
         //TODO: Put all bindings in GameControls.cs
         //Abilities
         GameControls.allKeybinds.Add(KeyCode.Alpha1, new GameControls.KeybindAction(() => UseInstantAbility(Abilities.Zap)));
@@ -131,7 +133,14 @@ public class PlayerController : MonoBehaviour {
             KeyCode code = (KeyCode)i;
             if (Input.GetKeyDown(code) && GameControls.allKeybinds.ContainsKey(code))
             {
-                GameControls.allKeybinds[code]();
+                try
+                {
+                    GameControls.allKeybinds[code]();
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e.Message);
+                }
             }
         }
     }
