@@ -30,11 +30,9 @@ public class PlayerCamera : MonoBehaviour {
         transform.SetParent(player);
         offset = new Vector3(offsetAmounts.x, offsetAmounts.y, offsetAmounts.z);
         startPos = transform.localPosition;
-
-        GameControls.allKeybinds.Add(KeyCode.LeftAlt, SwitchCameraMode);
     }
 
-    private void SwitchCameraMode()
+    public void SwitchCameraMode()
     {
         //Switch Camera Mode on "alt" keypress
         if (Input.GetKeyDown(KeyCode.LeftAlt))
@@ -42,13 +40,13 @@ public class PlayerCamera : MonoBehaviour {
             if (State == CameraMode.Follow)
             {
                 Debug.Log("Camera: Look Mode");
-                transform.SetParent(null);
+                transform.SetParent(null, true);
                 State = CameraMode.Look;
             }
             else
             {
                 Debug.Log("Camera: Following");
-                transform.SetParent(player);
+                transform.SetParent(player, true);
                 startPos = transform.localPosition;
                 State = CameraMode.Follow;
             }

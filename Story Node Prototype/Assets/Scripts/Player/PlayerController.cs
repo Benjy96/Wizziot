@@ -37,14 +37,18 @@ public class PlayerController : MonoBehaviour {
         abilityComponent = GetComponent<AbilityComponent>();
         targetIndicator = GetComponentInChildren<Projector>();
         cam = Camera.main;
-
+        
+        //Abilities
         GameControls.allKeybinds.Add(KeyCode.Alpha1, new GameControls.KeybindAction(() => UseInstantAbility(Abilities.Zap)));
         GameControls.allKeybinds.Add(KeyCode.Alpha2, new GameControls.KeybindAction(() => UseInstantAbility(Abilities.Confuse)));
         GameControls.allKeybinds.Add(KeyCode.Alpha3, new GameControls.KeybindAction(() => UseAOEAbility(Abilities.Vortex)));
         GameControls.allKeybinds.Add(KeyCode.Alpha4, new GameControls.KeybindAction(() => UseAOEAbility(Abilities.Singularity)));
         GameControls.allKeybinds.Add(KeyCode.Alpha5, new GameControls.KeybindAction(() => UseInstantAbility(Abilities.Heal)));
+        //Story Manager
         GameControls.allKeybinds.Add(KeyCode.F, new GameControls.KeybindAction(() => StoryManager.Instance.AttemptToConverse(target.GetComponent<InteractableNPC>())));
         GameControls.allKeybinds.Add(KeyCode.Escape, new GameControls.KeybindAction(() => StoryManager.Instance.CloseConversation())); //TODO: event delegate with "close" methods subscribed
+        //Camera
+        GameControls.allKeybinds.Add(KeyCode.LeftAlt, cam.GetComponent<PlayerCamera>().SwitchCameraMode);
     }
 
     void Update () {
