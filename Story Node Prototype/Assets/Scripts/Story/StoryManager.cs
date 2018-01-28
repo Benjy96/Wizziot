@@ -23,11 +23,13 @@ public class StoryManager : MonoBehaviour {
     private string storyState_JSON;
 
     //Implementation Variables
+    public bool takeStoryInput = false;    //This variable is accessed concurrently
+
     private InteractableNPC conversationTarget;
     private IEnumerator ExitConversation;  //Prevents the coroutine closing the display if a new conversation has started within the disable UI time delay since last convo
     private bool storyDisplayActive = false;
     private bool storyChoiceDisplayActive = false;
-    private bool takeStoryInput = false;    //This variable is accessed concurrently
+    
 
     private void Awake()
     {
@@ -69,17 +71,20 @@ public class StoryManager : MonoBehaviour {
 
     public void AttemptToConverse(InteractableNPC targetNPC)
     {
-        StopCoroutine(ExitConversation);
-        ExitConversation = DisableStoryOnDelay();   //Resubscribe the variable, otherwise null once stopped
-        ResetStoryInterface();
-
-        //Find out if NPC has "anything to say"
-        conversationTarget = targetNPC;
-        scriptManager.StoryPosition = targetNPC.inkPath;
-
-        if (scriptManager.ContentAvailable)
+        if (targetNPC != null && targetNPC.targetType == TargetType.Story)
         {
-            Converse();
+            StopCoroutine(ExitConversation);
+            ExitConversation = DisableStoryOnDelay();   //Resubscribe the variable, otherwise null once stopped
+            ResetStoryInterface();
+
+            //Find out if NPC has "anything to say"
+            conversationTarget = targetNPC;
+            scriptManager.StoryPosition = targetNPC.inkPath;
+
+            if (scriptManager.ContentAvailable)
+            {
+                Converse();
+            }
         }
     }
 

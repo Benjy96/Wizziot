@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
@@ -10,7 +9,6 @@ public class PlayerController : MonoBehaviour {
     private Camera cam;
 
     // ----- State Variables ----- //
-    public Dictionary<KeyCode, object> allKeybinds;
     public PlayerStateData playerState; //Player state manages the player's current state, and will be saved (if the game supports saving).
 
     [Serializable]
@@ -39,14 +37,13 @@ public class PlayerController : MonoBehaviour {
         targetIndicator = GetComponentInChildren<Projector>();
         cam = Camera.main;
 
-        //Default key bindings ( <Key, User's key binding i.e. ability used> )
-        allKeybinds = new Dictionary<KeyCode, object>
-        {
-            { KeyCode.Alpha1, Abilities.Zap },
-            { KeyCode.Alpha2, Abilities.Confuse },
-            { KeyCode.Alpha3, Abilities.Vortex },
-            { KeyCode.Alpha4, Abilities.Singularity }
-        };
+        GameControls.allKeybinds.Add(KeyCode.Alpha1, new GameControls.KeybindAction(() => UseInstantAbility(Abilities.Zap)));
+        GameControls.allKeybinds.Add(KeyCode.Alpha2, new GameControls.KeybindAction(() => UseInstantAbility(Abilities.Confuse)));
+        GameControls.allKeybinds.Add(KeyCode.Alpha3, new GameControls.KeybindAction(() => UseInstantAbility(Abilities.Vortex)));
+        GameControls.allKeybinds.Add(KeyCode.Alpha4, new GameControls.KeybindAction(() => UseInstantAbility(Abilities.Singularity)));
+        GameControls.allKeybinds.Add(KeyCode.Alpha5, new GameControls.KeybindAction(() => UseInstantAbility(Abilities.Heal)));
+        GameControls.allKeybinds.Add(KeyCode.F, new GameControls.KeybindAction(() => StoryManager.Instance.AttemptToConverse(target.GetComponent<InteractableNPC>())));
+        GameControls.allKeybinds.Add(KeyCode.Escape, new GameControls.KeybindAction(() => StoryManager.Instance.CloseConversation()));
     }
 
     void Update () {
@@ -123,59 +120,27 @@ public class PlayerController : MonoBehaviour {
 
     private void HandleKeyboardInput()
     {
-        //Story Input
-        if (target != null && target.targetType == TargetType.Story) 
-        {
-            switch (Input.inputString)
-            {
-                case "f":
-                    StoryManager.Instance.AttemptToConverse(target.GetComponent<InteractableNPC>());
-                    break;
-            }
-        }
-
-        //TODO: Make data class (utility) for input codes with method "Between()" to check validity
-        //TODO: Make list of CODES (abilities, story, UI, etc... and types to hold - e.g. enum for Abils..delegate for UI)
-        //Ability Input (Ability CODES: [100, 250] - 50 per type of ability)
         for (KeyCode i = KeyCode.A; i < KeyCode.Z; i++)
         {
-            if (Input.GetKeyDown(i))
+            if (Input.GetKeyDown(i) && GameControls.allKeybinds.ContainsKey(i))
             {
-                int CODE = (int)allKeybinds[i];
-                //If within ABILITY INSTANT CODE range (Instant && Heal):
-                if ((CODE > 100 && CODE < 150) || (CODE > 200 && CODE <= 250))
-                {
-                    UseInstantAbility((Abilities)allKeybinds[i]);
-                }
-                //If within ABILITY AOE CODE range:
-                else if (CODE >= 150 && CODE <= 200)
-                {
-                    UseAOEAbility((Abilities)allKeybinds[i]);
-                }//else if [200:250], UseHealAbility
-
-                if(CODE < 100)
-                {
-                    //TODO: Put in the "story" input (e.g. "f") from above here
-                }
-            }
+                Invoke(GameControls.allKeybinds[i].ToString(), 0f);
+            }//GetKeyDown(i)
         }
     }
 
     private void HandleConversationInput()
     {
-        //If targeting a story npc, allow conversation input
-        if (target.targetType == TargetType.Story)
+        if (target != null)
         {
-            int playerChoice;
-            bool correctInput = int.TryParse(Input.inputString, out playerChoice);
-            if (correctInput)
+            if (StoryManager.Instance.takeStoryInput)
             {
-                StoryManager.Instance.Choice(playerChoice);
-            }
-
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                StoryManager.Instance.CloseConversation();
+                int playerChoice;
+                bool correctInput = int.TryParse(Input.inputString, out playerChoice);
+                if (correctInput)
+                {
+                    StoryManager.Instance.Choice(playerChoice);
+                }
             }
         }
     }
