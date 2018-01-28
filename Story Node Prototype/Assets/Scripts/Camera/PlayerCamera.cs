@@ -27,11 +27,14 @@ public class PlayerCamera : MonoBehaviour {
     private void Start()
     {
         State = CameraMode.Follow;
+        transform.SetParent(player);
         offset = new Vector3(offsetAmounts.x, offsetAmounts.y, offsetAmounts.z);
         startPos = transform.localPosition;
+
+        GameControls.allKeybinds.Add(KeyCode.LeftAlt, SwitchCameraMode);
     }
 
-    private void Update()
+    private void SwitchCameraMode()
     {
         //Switch Camera Mode on "alt" keypress
         if (Input.GetKeyDown(KeyCode.LeftAlt))
@@ -39,15 +42,21 @@ public class PlayerCamera : MonoBehaviour {
             if (State == CameraMode.Follow)
             {
                 Debug.Log("Camera: Look Mode");
+                transform.SetParent(null);
                 State = CameraMode.Look;
             }
             else
             {
                 Debug.Log("Camera: Following");
+                transform.SetParent(player);
+                startPos = transform.localPosition;
                 State = CameraMode.Follow;
             }
         }
+    }
 
+    private void Update()
+    {
         //Zoom
         switch (State)
         {
@@ -91,7 +100,6 @@ public class PlayerCamera : MonoBehaviour {
         {
             case CameraMode.Follow:
                 //TODO: Save positions between states to revert after switches
-                transform.SetParent(player);
                 //need a constant value to evaluate against (for the zoomed result values)
                 float y = startPos.y + (zoom / .8f);
                 float z = startPos.z - (zoom / .5f);
@@ -99,11 +107,10 @@ public class PlayerCamera : MonoBehaviour {
                 //Using local space since parented to player
                 desiredPos = new Vector3(startPos.x, y, z);
                 smoothedPos = Vector3.MoveTowards(transform.localPosition, desiredPos, smoothSpeed * Time.deltaTime);
-                transform.localPosition = desiredPos;
+                transform.localPosition = smoothedPos;
                 break;
 
             case CameraMode.Look:
-                transform.SetParent(null);
                 //Yaw and pitch control (and offset)
                 offset = Quaternion.AngleAxis(yawInput, Vector3.up) * Quaternion.AngleAxis(-pitchInput, Vector3.right) * offset;
 

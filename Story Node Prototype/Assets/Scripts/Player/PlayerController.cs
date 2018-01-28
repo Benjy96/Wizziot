@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
@@ -39,11 +40,11 @@ public class PlayerController : MonoBehaviour {
 
         GameControls.allKeybinds.Add(KeyCode.Alpha1, new GameControls.KeybindAction(() => UseInstantAbility(Abilities.Zap)));
         GameControls.allKeybinds.Add(KeyCode.Alpha2, new GameControls.KeybindAction(() => UseInstantAbility(Abilities.Confuse)));
-        GameControls.allKeybinds.Add(KeyCode.Alpha3, new GameControls.KeybindAction(() => UseInstantAbility(Abilities.Vortex)));
-        GameControls.allKeybinds.Add(KeyCode.Alpha4, new GameControls.KeybindAction(() => UseInstantAbility(Abilities.Singularity)));
+        GameControls.allKeybinds.Add(KeyCode.Alpha3, new GameControls.KeybindAction(() => UseAOEAbility(Abilities.Vortex)));
+        GameControls.allKeybinds.Add(KeyCode.Alpha4, new GameControls.KeybindAction(() => UseAOEAbility(Abilities.Singularity)));
         GameControls.allKeybinds.Add(KeyCode.Alpha5, new GameControls.KeybindAction(() => UseInstantAbility(Abilities.Heal)));
         GameControls.allKeybinds.Add(KeyCode.F, new GameControls.KeybindAction(() => StoryManager.Instance.AttemptToConverse(target.GetComponent<InteractableNPC>())));
-        GameControls.allKeybinds.Add(KeyCode.Escape, new GameControls.KeybindAction(() => StoryManager.Instance.CloseConversation()));
+        GameControls.allKeybinds.Add(KeyCode.Escape, new GameControls.KeybindAction(() => StoryManager.Instance.CloseConversation())); //TODO: event delegate with "close" methods subscribed
     }
 
     void Update () {
@@ -120,12 +121,13 @@ public class PlayerController : MonoBehaviour {
 
     private void HandleKeyboardInput()
     {
-        for (KeyCode i = KeyCode.A; i < KeyCode.Z; i++)
+        for (int i = 0; i < Enum.GetValues(typeof(KeyCode)).Cast<int>().Last(); i++)
         {
-            if (Input.GetKeyDown(i) && GameControls.allKeybinds.ContainsKey(i))
+            KeyCode code = (KeyCode)i;
+            if (Input.GetKeyDown(code) && GameControls.allKeybinds.ContainsKey(code))
             {
-                Invoke(GameControls.allKeybinds[i].ToString(), 0f);
-            }//GetKeyDown(i)
+                GameControls.allKeybinds[code]();
+            }
         }
     }
 
