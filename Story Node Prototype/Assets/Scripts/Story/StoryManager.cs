@@ -18,7 +18,7 @@ public class StoryManager : MonoBehaviour {
     private StoryInterfaceManager interfaceManager;
 
     //State Variables
-    private string gameDataFileName;
+    private string storyDataFileName;
     private string filepath;
     private string storyState_JSON;
 
@@ -44,8 +44,8 @@ public class StoryManager : MonoBehaviour {
         }
         DontDestroyOnLoad(gameObject);
 
-        gameDataFileName = "ink_wizziot.json";
-        filepath = Path.Combine(Application.streamingAssetsPath, gameDataFileName);
+        storyDataFileName = "ink_wizziot.json";
+        filepath = Path.Combine(Application.streamingAssetsPath, storyDataFileName);
 
         //Set up Coroutine to close story on a time delay
         ExitConversation = DisableStoryOnDelay();

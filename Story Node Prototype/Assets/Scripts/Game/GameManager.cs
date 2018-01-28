@@ -1,12 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.IO;
 using UnityEngine;
 
+//TODO: Use save / load prototype & Unity adventure game tutorial
 public class GameManager : MonoBehaviour {
 
     //Singleton & accessor
     private static GameManager _GameManager = null;
     public static GameManager Instance { get { return _GameManager; } }
+
+    private string gameDataFileName;
+    private string filepath;
 
     private void Awake()
     {
@@ -20,15 +23,24 @@ public class GameManager : MonoBehaviour {
             Destroy(gameObject);
         }
         DontDestroyOnLoad(gameObject);
+
+        gameDataFileName = "wizziot.json";
+        filepath = Path.Combine(Application.streamingAssetsPath, gameDataFileName);
     }
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    void LoadGame()
+    {
+        StoryManager.Instance.LoadStory();
+    }
+
+    void SaveGame()
+    {
+        StoryManager.Instance.SaveStory();
+        //Save game state data
+    }
+
+    void ExitGame()
+    {
+
+    }
 }
