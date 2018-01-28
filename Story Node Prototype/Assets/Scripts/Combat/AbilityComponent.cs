@@ -106,7 +106,7 @@ public class AbilityComponent : MonoBehaviour {
         yield return new WaitForSeconds(confuseDuration);
         //enemy.ResetDestination();
     }
-    #endregion
+#endregion
 
 #region AoE Implementation
     private void AoE(GameObject spellPrefab)

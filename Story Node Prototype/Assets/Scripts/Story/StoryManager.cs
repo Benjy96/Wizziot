@@ -22,14 +22,14 @@ public class StoryManager : MonoBehaviour {
     private string filepath;
     private string storyState_JSON;
 
-    //Implementation Variables
-    public bool takeStoryInput = false;    //This variable is accessed concurrently
+    public bool StoryInputEnabled { get { return takeStoryInput; } }
 
+    //Implementation Variables
     private InteractableNPC conversationTarget;
-    private IEnumerator ExitConversation;  //Prevents the coroutine closing the display if a new conversation has started within the disable UI time delay since last convo
+    private IEnumerator ExitConversation;
     private bool storyDisplayActive = false;
     private bool storyChoiceDisplayActive = false;
-    
+    private bool takeStoryInput = false;
 
     private void Awake()
     {

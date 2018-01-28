@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour {
         targetIndicator = GetComponentInChildren<Projector>();
         cam = Camera.main;
         
+        //TODO: Put all bindings in GameControls.cs
         //Abilities
         GameControls.allKeybinds.Add(KeyCode.Alpha1, new GameControls.KeybindAction(() => UseInstantAbility(Abilities.Zap)));
         GameControls.allKeybinds.Add(KeyCode.Alpha2, new GameControls.KeybindAction(() => UseInstantAbility(Abilities.Confuse)));
@@ -139,7 +140,7 @@ public class PlayerController : MonoBehaviour {
     {
         if (target != null)
         {
-            if (StoryManager.Instance.takeStoryInput)
+            if (StoryManager.Instance.StoryInputEnabled)
             {
                 int playerChoice;
                 bool correctInput = int.TryParse(Input.inputString, out playerChoice);
@@ -174,7 +175,7 @@ public class PlayerController : MonoBehaviour {
     {
         if (abilityComponent.SelectedAbility == ability)
         {
-            abilityComponent.UseAbility(target.transform);
+            abilityComponent.UseAbility(null);
         }
         else
         {
