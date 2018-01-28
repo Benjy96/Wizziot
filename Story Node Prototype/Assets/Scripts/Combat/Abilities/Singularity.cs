@@ -36,20 +36,22 @@ public class Singularity : MonoBehaviour {
             rb.mass = singularityMass;
 
             //Get all items in range
-            //TODO: Add ONLY specific layers and items - don't get things like walls, floor, etc...
             //TODO: CONSTANT addition? e.g. add items to list in update instead of only once?
                 //Maybe as an upgraded singularity - e.g. instead of initial, continual singularity additions
             neighbourhood = Physics.OverlapSphere(transform.position, singularityRadius);
             foreach (Collider c in neighbourhood)
             {
-                Rigidbody temp;
-                //If not part of environment
-                if (!c.gameObject.layer.Equals("Environment"))
+                if (c != this)
                 {
-                    temp = c.GetComponent<Rigidbody>();
-                    if(temp != null)    //Safety check - incase tag forgotten
+                    Rigidbody temp;
+                    //If not part of environment
+                    if (c.gameObject.layer == LayerMask.NameToLayer("Object"))
                     {
-                        neighbourRbs.Add(c.GetComponent<Rigidbody>());
+                        temp = c.GetComponent<Rigidbody>();
+                        if (temp != null)    //Safety check - incase tag forgotten
+                        {
+                            neighbourRbs.Add(c.GetComponent<Rigidbody>());
+                        }
                     }
                 }
             }

@@ -40,14 +40,17 @@ public class Vortex : MonoBehaviour
             neighbourhood = Physics.OverlapSphere(transform.position, vortexRadius);
             foreach (Collider c in neighbourhood)
             {
-                Rigidbody temp;
-                //If not part of environment
-                if (!c.gameObject.layer.Equals("Environment"))
+                if (c != this)
                 {
-                    temp = c.GetComponent<Rigidbody>();
-                    if (temp != null)    //Safety check - incase tag forgotten
+                    Rigidbody temp;
+                    //If not part of environment
+                    if (c.gameObject.layer == LayerMask.NameToLayer("Object"))
                     {
-                        neighbourRbs.Add(c.GetComponent<Rigidbody>());
+                        temp = c.GetComponent<Rigidbody>();
+                        if (temp != null)    //Safety check - incase tag forgotten
+                        {
+                            neighbourRbs.Add(c.GetComponent<Rigidbody>());
+                        }
                     }
                 }
             }
