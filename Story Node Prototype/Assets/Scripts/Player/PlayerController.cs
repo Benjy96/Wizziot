@@ -42,14 +42,14 @@ public class PlayerController : MonoBehaviour {
 
         //TODO: Put all bindings in GameControls.cs
         //Abilities
-        GameControls.allKeybinds.Add(KeyCode.Alpha1, new GameControls.KeybindAction(() => UseInstantAbility(Abilities.Zap)));
-        GameControls.allKeybinds.Add(KeyCode.Alpha2, new GameControls.KeybindAction(() => UseInstantAbility(Abilities.Confuse)));
-        GameControls.allKeybinds.Add(KeyCode.Alpha3, new GameControls.KeybindAction(() => UseAOEAbility(Abilities.Vortex)));
-        GameControls.allKeybinds.Add(KeyCode.Alpha4, new GameControls.KeybindAction(() => UseAOEAbility(Abilities.Singularity)));
-        GameControls.allKeybinds.Add(KeyCode.Alpha5, new GameControls.KeybindAction(() => UseInstantAbility(Abilities.Heal)));
+        GameControls.allKeybinds.Add(KeyCode.Alpha1, new Action(() => UseInstantAbility(Abilities.Zap)));
+        GameControls.allKeybinds.Add(KeyCode.Alpha2, new Action(() => UseInstantAbility(Abilities.Confuse)));
+        GameControls.allKeybinds.Add(KeyCode.Alpha3, new Action(() => UseAOEAbility(Abilities.Vortex)));
+        GameControls.allKeybinds.Add(KeyCode.Alpha4, new Action(() => UseAOEAbility(Abilities.Singularity)));
+        GameControls.allKeybinds.Add(KeyCode.Alpha5, new Action(() => UseInstantAbility(Abilities.Heal)));
         //Story Manager
-        GameControls.allKeybinds.Add(KeyCode.F, new GameControls.KeybindAction(() => StoryManager.Instance.AttemptToConverse(target.GetComponent<InteractableNPC>())));
-        GameControls.allKeybinds.Add(KeyCode.Escape, new GameControls.KeybindAction(() => StoryManager.Instance.CloseConversation())); //TODO: event delegate with "close" methods subscribed
+        GameControls.allKeybinds.Add(KeyCode.F, new Action(() => StoryManager.Instance.AttemptToConverse(target.GetComponent<InteractableNPC>())));
+        GameControls.allKeybinds.Add(KeyCode.Escape, new Action(() => StoryManager.Instance.CloseConversation())); //TODO: event delegate with "close" methods subscribed
         //Camera
         GameControls.allKeybinds.Add(KeyCode.LeftAlt, cam.GetComponent<PlayerCamera>().SwitchCameraMode);
     }

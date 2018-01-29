@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameControls {
     // ----- Actions ----- //
-    public delegate void KeybindAction();
+    //public delegate void KeybindAction();   //Using instead of action because Action takes no params, custom delegate allows lambda expression with either no params or params
 
     //Default key bindings ( <Key, User's key binding i.e. ability used> )
-    public static Dictionary<KeyCode, KeybindAction> allKeybinds = new Dictionary<KeyCode, KeybindAction>();
+    public static Dictionary<KeyCode, Action> allKeybinds = new Dictionary<KeyCode, Action>();
 }
 
 //General Keybindings
