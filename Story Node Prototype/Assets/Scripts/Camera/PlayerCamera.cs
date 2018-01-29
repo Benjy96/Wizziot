@@ -37,18 +37,20 @@ public class PlayerCamera : MonoBehaviour {
         //Switch Camera Mode on "alt" keypress
         if (Input.GetKeyDown(KeyCode.LeftAlt))
         {
-            if (State == CameraMode.Follow)
+            switch (State)
             {
-                Debug.Log("Camera: Look Mode");
-                transform.SetParent(null, true);
-                State = CameraMode.Look;
-            }
-            else
-            {
-                Debug.Log("Camera: Following");
-                transform.SetParent(player, true);
-                startPos = transform.localPosition;
-                State = CameraMode.Follow;
+                case CameraMode.Follow:
+                    Debug.Log("Camera: Look Mode");
+                    transform.SetParent(null, true);
+                    State = CameraMode.Look;
+                    break;
+
+                case CameraMode.Look:
+                    Debug.Log("Camera: Following");
+                    transform.SetParent(player, true);
+                    startPos = transform.localPosition;
+                    State = CameraMode.Follow;
+                    break;
             }
         }
     }
@@ -72,18 +74,11 @@ public class PlayerCamera : MonoBehaviour {
         if (Input.GetMouseButton(1))
         {
             yawInput = Input.GetAxis("Mouse X") * cameraSpeed;
-        }
-        else
-        {
-            yawInput = 0f;
-        }
-
-        if (Input.GetMouseButton(1))
-        {
             pitchInput = Input.GetAxis("Mouse Y") * cameraSpeed;
         }
         else
         {
+            yawInput = 0f;
             pitchInput = 0f;
         }
     }
