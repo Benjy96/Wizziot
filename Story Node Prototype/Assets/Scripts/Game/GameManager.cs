@@ -1,15 +1,29 @@
 ﻿using System.IO;
 using UnityEngine;
 
-//TODO: Use save / load prototype & Unity adventure game tutorial
 public class GameManager : MonoBehaviour {
 
     //Singleton & accessor
     private static GameManager _GameManager = null;
     public static GameManager Instance { get { return _GameManager; } }
 
-    private string gameDataFileName;
-    private string filepath;
+    public bool encryptGameSave = false;
+
+    public string StorySaveFileName { get { return "wizziot_story.json"; } }
+    public string GameSaveFile
+    {
+        get
+        {
+            if (encryptGameSave)
+            {
+                return Path.Combine(Application.streamingAssetsPath, "wizziot.dat");
+            }
+            else
+            {
+                return Path.Combine(Application.streamingAssetsPath, "wizziot.json");
+            }
+        }
+    }
 
     private void Awake()
     {
@@ -23,9 +37,6 @@ public class GameManager : MonoBehaviour {
             Destroy(gameObject);
         }
         DontDestroyOnLoad(gameObject);
-
-        gameDataFileName = "wizziot.json";
-        filepath = Path.Combine(Application.streamingAssetsPath, gameDataFileName);
     }
 
     void LoadGame()

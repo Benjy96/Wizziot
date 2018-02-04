@@ -18,7 +18,7 @@ public class StoryManager : MonoBehaviour {
     private StoryInterfaceManager interfaceManager;
 
     //State Variables
-    private string storyDataFileName;
+    private string storyDataFileName = GameManager.Instance.StorySaveFileName;
     private string filepath;
     private string storyState_JSON;
 
