@@ -1,15 +1,15 @@
 ﻿using System.IO;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour {
-
+public class GameManager : MonoBehaviour
+{
     //Singleton & accessor
     private static GameManager _GameManager = null;
     public static GameManager Instance { get { return _GameManager; } }
 
     public bool encryptGameSave = false;
 
-    public string StorySaveFileName { get { return "wizziot_story.json"; } }
+    public string StorySaveFileName { get { return "ink_wizziot.json"; } }
     public string GameSaveFile
     {
         get

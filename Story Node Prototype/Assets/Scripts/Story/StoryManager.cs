@@ -18,7 +18,7 @@ public class StoryManager : MonoBehaviour {
     private StoryInterfaceManager interfaceManager;
 
     //State Variables
-    private string storyDataFileName = GameManager.Instance.StorySaveFileName;
+    private string storyDataFileName;
     private string filepath;
     private string storyState_JSON;
 
@@ -44,9 +44,6 @@ public class StoryManager : MonoBehaviour {
         }
         DontDestroyOnLoad(gameObject);
 
-        storyDataFileName = "ink_wizziot.json";
-        filepath = Path.Combine(Application.streamingAssetsPath, storyDataFileName);
-
         //Set up Coroutine to close story on a time delay
         ExitConversation = DisableStoryOnDelay();
 
@@ -54,6 +51,12 @@ public class StoryManager : MonoBehaviour {
         scriptManager = GetComponent<StoryScriptManager>();
         displayManager = GetComponent<StoryDisplayManager>();
         interfaceManager = GetComponent<StoryInterfaceManager>();
+    }
+
+    private void Start()
+    {
+        storyDataFileName = GameManager.Instance.StorySaveFileName; //Needs to be in Start since Awake the scripts are still initializing and in random order
+        filepath = Path.Combine(Application.streamingAssetsPath, storyDataFileName);
     }
 
     #region Interface
