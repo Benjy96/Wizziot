@@ -6,10 +6,12 @@ public class Vortex : MonoBehaviour
 { 
     public static float G = Singularity.G;  //GameManager.G or StatManager.G in final
 
-    public bool yoyoMode = true; 
+    public bool yoyoMode = true;
+
+    public WaitForSeconds yoyoDuration = new WaitForSeconds(1f);
     public float vortexMass = 500f;
     public float vortexRadius = 5f;     //This values only used for INITIAL neighbours - can use update method for continuos assignments
-    public float duration = 5f;
+    public float vortexDuration = 5f;
 
     private bool vortexForming = false;
     private bool vortexRepulsing = false;
@@ -40,7 +42,7 @@ public class Vortex : MonoBehaviour
             neighbourhood = Physics.OverlapSphere(transform.position, vortexRadius);
             foreach (Collider c in neighbourhood)
             {
-                if (c != this)
+                if (c != gameObject.GetComponent<Collider>())
                 {
                     Rigidbody temp;
                     //If not part of environment
@@ -64,53 +66,62 @@ public class Vortex : MonoBehaviour
     {
         if (vortexRepulsing)
         {
+            StartCoroutine(Yoyo());
             foreach (Rigidbody body in neighbourRbs)
             {
-                Repulse(body);
+                ApplyVortex(body);
             }
         }
     }
 
     //Alternating repulsion/attraction (can add another variable to enable/disable this)
-    private void Repulse(Rigidbody toAffect)
+    private void ApplyVortex(Rigidbody toAffect)
     {
-        Vector3 direction;
         //Default behaviour is the else (repulse) if yoyoMode not enabled
         if (attractStep && yoyoMode)
         {
-            direction = rb.position - toAffect.position;
-
-            float distance = Mathf.Clamp(direction.magnitude, 0.001f, float.MaxValue);
-
-            //Calculate Gravitational attraction force based on masses and G
-            float forceMagnitude = G * ((rb.mass * toAffect.mass));
-
-            //Apply force t object
-            Vector3 force = direction.normalized * forceMagnitude;
-            toAffect.AddForce(force);
+            Attract(toAffect);
         }
         else 
         {
-            direction = -(rb.position - toAffect.position);
-            //Makes them go up (less emphasis put on x and z direction - y is maintained)
-            direction.x *= .5f;
-            direction.z *= .5f;
-
-            float distance = Mathf.Clamp(direction.magnitude, 0.001f, float.MaxValue);
-
-            //Calculate Gravitational attraction force based on masses and G
-            float forceMagnitude = G * ((rb.mass * toAffect.mass) / Mathf.Pow(distance, 2));
-
-            //Apply force t object
-            Vector3 force = direction.normalized * forceMagnitude;
-            toAffect.AddForce(force);
+            Repulse(toAffect);
         }
-        StartCoroutine(Yoyo());
+    }
+
+    private void Attract(Rigidbody toAffect, float modifier = 1)
+    {
+        Vector3 direction = rb.position - toAffect.position;
+
+        float distance = Mathf.Clamp(direction.magnitude, 0.001f, float.MaxValue);
+
+        //Calculate Gravitational attraction force based on masses and G
+        float forceMagnitude = G * ((rb.mass * toAffect.mass));
+
+        //Apply force t object
+        Vector3 force = direction.normalized * forceMagnitude;
+        toAffect.AddForce(force * modifier);
+    }
+
+    private void Repulse(Rigidbody toAffect)
+    {
+        Vector3 direction = -(rb.position - toAffect.position);
+        //Makes them go up (less emphasis put on x and z direction - y is maintained)
+        direction.x *= .5f;
+        direction.z *= .5f;
+
+        float distance = Mathf.Clamp(direction.magnitude, 0.001f, float.MaxValue);
+
+        //Calculate Gravitational attraction force based on masses and G
+        float forceMagnitude = G * ((rb.mass * toAffect.mass) / Mathf.Pow(distance, 2));
+
+        //Apply force t object
+        Vector3 force = direction.normalized * forceMagnitude;
+        toAffect.AddForce(force);
     }
 
     private IEnumerator Yoyo()
     {
-        yield return new WaitForSeconds(.5f);
+        yield return yoyoDuration;
         if (attractStep)
         {
             attractStep = false;
@@ -125,9 +136,10 @@ public class Vortex : MonoBehaviour
     {
         Debug.Log("Starting");
         vortexRepulsing = true;
-        yield return new WaitForSeconds(duration);
+        yield return new WaitForSeconds(vortexDuration);
         Debug.Log("Ending");
         vortexRepulsing = false;
+
 
         //Destroy object
         Destroy(gameObject);
