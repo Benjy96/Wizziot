@@ -140,7 +140,6 @@ public class Vortex : MonoBehaviour
         Debug.Log("Ending");
         vortexRepulsing = false;
 
-
         //Destroy object
         Destroy(gameObject);
     }

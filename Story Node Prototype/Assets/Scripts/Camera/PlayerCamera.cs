@@ -6,17 +6,18 @@ public class PlayerCamera : MonoBehaviour {
     public Transform player;
 
     public float smoothSpeed;
-    public float cameraSpeed;
+    public float cameraSpeed = 5f;
+    public float zoomSpeed = 2f;
 
+    public float maxLockedZoom = 1.7f;
     public float maxZoom;
     public float minZoom;
-    public float maxLockedZoom;
-    public float minLockedZoom;
 
     public float zoom;
     public Vector3 offsetAmounts;
 
     private Vector3 startPos;
+    private Quaternion startRotation;
     private Vector3 offset;    
     private float yawInput = 0f;
     private float pitchInput = 0f;
@@ -30,6 +31,7 @@ public class PlayerCamera : MonoBehaviour {
         transform.SetParent(player);
         offset = new Vector3(offsetAmounts.x, offsetAmounts.y, offsetAmounts.z);
         startPos = transform.localPosition;
+        startRotation = transform.localRotation;
     }
 
     public void SwitchCameraMode()
@@ -48,7 +50,8 @@ public class PlayerCamera : MonoBehaviour {
                 case CameraMode.Look:
                     Debug.Log("Camera: Following");
                     transform.SetParent(player, true);
-                    startPos = transform.localPosition;
+                    transform.localPosition = startPos;
+                    transform.localRotation = startRotation;
                     State = CameraMode.Follow;
                     break;
             }
@@ -61,11 +64,11 @@ public class PlayerCamera : MonoBehaviour {
         switch (State)
         {
             case CameraMode.Follow:
-                zoom -= Input.GetAxis("Mouse ScrollWheel") * cameraSpeed;
-                zoom = Mathf.Clamp(zoom, minLockedZoom, maxLockedZoom);
+                zoom -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
+                zoom = Mathf.Clamp(zoom, minZoom, maxLockedZoom);
                 break;
             case CameraMode.Look:
-                zoom -= Input.GetAxis("Mouse ScrollWheel") * cameraSpeed;
+                zoom -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
                 zoom = Mathf.Clamp(zoom, minZoom, maxZoom);
                 break;
         }
@@ -94,11 +97,7 @@ public class PlayerCamera : MonoBehaviour {
             case CameraMode.Follow:
                 //TODO: Save positions between states to revert after switches
                 //need a constant value to evaluate against (for the zoomed result values)
-                float y = startPos.y + (zoom / .8f);
-                float z = startPos.z - (zoom / .5f);
-
-                //Using local space since parented to player
-                desiredPos = new Vector3(startPos.x, y, z);
+                desiredPos = startPos * zoom;
                 smoothedPos = Vector3.MoveTowards(transform.localPosition, desiredPos, smoothSpeed * Time.deltaTime);
                 transform.localPosition = smoothedPos;
                 break;
