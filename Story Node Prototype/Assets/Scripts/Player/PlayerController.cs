@@ -98,7 +98,9 @@ public class PlayerController : MonoBehaviour {
                         switch (currentTargetType)
                         {
                             case TargetType.Item:
-                                //TODO: Add item targeting code
+                                target = pointHit.transform.GetComponent<Item>();
+                                PositionTargetIndicator();
+                                Debug.Log("Targeting " + target.name);
                                 break;
 
                             case TargetType.Enemy:
@@ -106,14 +108,8 @@ public class PlayerController : MonoBehaviour {
                                 break;
 
                             case TargetType.Story:
-                                if (currentTargetType == TargetType.Story)
-                                {
-                                    targetIndicator.enabled = false;
-                                }
                                 target = pointHit.transform.GetComponent<InteractableNPC>();
-                                targetIndicator.transform.SetParent(target.transform);
-                                targetIndicator.transform.position = target.transform.position + new Vector3(0f, target.transform.localScale.y * 5);
-                                targetIndicator.enabled = true;
+                                PositionTargetIndicator();
                                 break;
 
                             default:
@@ -190,5 +186,12 @@ public class PlayerController : MonoBehaviour {
         {
             abilityComponent.SelectAbility(ability);
         }
+    }
+
+    private void PositionTargetIndicator()
+    {
+        targetIndicator.transform.SetParent(target.transform);
+        targetIndicator.transform.position = target.transform.position + new Vector3(0f, target.transform.localScale.y * 5);
+        targetIndicator.enabled = true;
     }
 }

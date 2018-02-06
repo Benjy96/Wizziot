@@ -1,9 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-
-/// <summary>
+﻿/// <summary>
 /// All story NPCs - individuals (Bob, Ben) and clones (shopkeeps) alike - (that have dialogue in the Ink Script) inherit from this class
 /// </summary>
 public abstract class InteractableNPC : Targetable {
