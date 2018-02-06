@@ -2,8 +2,6 @@
 
 public class Item : Targetable {
 
-    private Transform player;
-
     public float interactionRadius = 5f;
 
     new public string name = "New item";
@@ -16,8 +14,6 @@ public class Item : Targetable {
 
     public void PickUp(Transform player)
     {
-        this.player = player;
-
         if((player.transform.position - transform.position).sqrMagnitude < interactionRadius)
         {
             Inventory.Instance.Add(this);

@@ -11,35 +11,20 @@ public class PlayerController : MonoBehaviour {
     private AbilityComponent abilityComponent;
     private Projector targetIndicator;
     private Camera cam;
-
-    // ----- State Variables ----- //
-    public PlayerStateData playerState; //Player state manages the player's current state, and will be saved (if the game supports saving).
-
-    [Serializable]
-    public class PlayerStateData
-    {
-        [Range(0, 10)] public float speed;
-        [Range(50, 150)] public float turnSpeed;
-        [Range(0, 225)] public float sqrMaxTargetDistance;
-    }
-
-    // ---- Book-keeping Fields ----- //    //Convenience properties and variables, plus variables that do not need saved.
-    //Player MODE
-    //TODO: Use state machine when needed
-    //private enum PlayerState { Normal, Combat, Conversing, Dead }
-    //PlayerState State;  
+    private PlayerStats playerStats;
 
     //Interaction
     private Targetable target;
 
-    public float Speed { get { return playerState.speed; } }
-    public float TurnSpeed { get { return playerState.turnSpeed; } }
+    public float Speed { get { return playerStats.speed; } }
+    public float TurnSpeed { get { return playerStats.turnSpeed; } }
 
     private void Awake()    //References & initialisation - Start is once scripts are definitely enabled - Awake the GOs are all enabled
     {
         abilityComponent = GetComponent<AbilityComponent>();
         targetIndicator = GetComponentInChildren<Projector>();
         cam = Camera.main;
+        playerStats = GetComponent<PlayerStats>();
 
         target = null;
 
@@ -77,7 +62,7 @@ public class PlayerController : MonoBehaviour {
     {
         //Must be within 10 metres - using sqr values since getting root is expensive
         if(target != null && 
-            (target.transform.position - transform.position).sqrMagnitude > playerState.sqrMaxTargetDistance)
+            (target.transform.position - transform.position).sqrMagnitude > playerStats.sqrMaxTargetDistance)
         {
             targetIndicator.enabled = false;
             target = null;
@@ -94,7 +79,7 @@ public class PlayerController : MonoBehaviour {
             if(Physics.Raycast(ray, out pointHit, 100f, LayerMask.GetMask("Object")))    //If the raycast hits something within 100
             {
                 //If within range
-                if ((pointHit.transform.position - transform.position).sqrMagnitude < playerState.sqrMaxTargetDistance)
+                if ((pointHit.transform.position - transform.position).sqrMagnitude < playerStats.sqrMaxTargetDistance)
                 {
                     if (pointHit.transform.GetComponent<Targetable>() != null)  
                     {
