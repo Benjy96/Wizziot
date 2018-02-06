@@ -5,5 +5,4 @@ public class ItemAttributes : ScriptableObject {
 
     new public string name = "New item";
     public Sprite icon = null;
-
 }

@@ -18,4 +18,9 @@ public class Item : Targetable {
             Destroy(gameObject);
         }
     }
+
+    public virtual void Use()
+    {
+        Debug.Log("Attempting to use " + itemAttributes.name);
+    }
 }

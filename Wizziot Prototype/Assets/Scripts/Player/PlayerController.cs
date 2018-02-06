@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
     // ----- Components ----- //
+    public GameObject inventoryUI;
+
     private StoryManager storyManager = StoryManager.Instance;
     private AbilityComponent abilityComponent;
     private Projector targetIndicator;
@@ -53,6 +55,7 @@ public class PlayerController : MonoBehaviour {
         GameControls.allKeybinds.Add(KeyCode.Escape, new Action(() => StoryManager.Instance.CloseConversation())); //TODO: event delegate with "close" methods subscribed
         //Camera
         GameControls.allKeybinds.Add(KeyCode.LeftAlt, cam.GetComponent<PlayerCamera>().SwitchCameraMode);
+        GameControls.allKeybinds.Add(KeyCode.I, new Action(() => inventoryUI.gameObject.SetActive(!inventoryUI.activeSelf)));
     }
 
     void Update () {

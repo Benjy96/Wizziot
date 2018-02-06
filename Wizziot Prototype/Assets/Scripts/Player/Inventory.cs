@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour {
@@ -6,8 +7,7 @@ public class Inventory : MonoBehaviour {
     private static Inventory _Inventory;
     public static Inventory Instance { get { return _Inventory; } }
 
-    public delegate void OnItemChanged();
-    public OnItemChanged onItemChanged;
+    public Action onItemChanged;
 
     public List<Item> items = new List<Item>();
     public int space = 20;
