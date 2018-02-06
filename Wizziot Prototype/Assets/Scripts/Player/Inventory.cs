@@ -6,7 +6,10 @@ public class Inventory : MonoBehaviour {
     private static Inventory _Inventory;
     public static Inventory Instance { get { return _Inventory; } }
 
-    public List<Targetable> items = new List<Targetable>();
+    public delegate void OnItemChanged();
+    public OnItemChanged onItemChanged;
+
+    public List<Item> items = new List<Item>();
     public int space = 20;
 
     private void Awake()
@@ -35,6 +38,7 @@ public class Inventory : MonoBehaviour {
             else
             {
                 items.Add(item);
+                if(onItemChanged != null) onItemChanged.Invoke();
                 return true;
             }
         }
@@ -49,6 +53,7 @@ public class Inventory : MonoBehaviour {
         if (items.Contains(item))
         {
             items.Remove(item);
+            if (onItemChanged != null) onItemChanged.Invoke();
             return true;
         }
         else

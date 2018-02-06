@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Name: BlockCoin
   m_EditorClassIdentifier: 
   name: BlockCoin
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 827c9cd4a3943534f909ac6473e17288, type: 3}

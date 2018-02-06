@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
     // ----- Components ----- //
+    private StoryManager storyManager = StoryManager.Instance;
     private AbilityComponent abilityComponent;
     private Projector targetIndicator;
     private Camera cam;
@@ -48,7 +49,7 @@ public class PlayerController : MonoBehaviour {
         GameControls.allKeybinds.Add(KeyCode.Alpha4, new Action(() => UseAOEAbility(Abilities.Singularity)));
         GameControls.allKeybinds.Add(KeyCode.Alpha5, new Action(() => UseInstantAbility(Abilities.Heal)));
         //Story Manager
-        GameControls.allKeybinds.Add(KeyCode.F, new Action(() => StoryManager.Instance.AttemptToConverse(target.GetComponent<InteractableNPC>())));
+        GameControls.allKeybinds.Add(KeyCode.F, Interact);
         GameControls.allKeybinds.Add(KeyCode.Escape, new Action(() => StoryManager.Instance.CloseConversation())); //TODO: event delegate with "close" methods subscribed
         //Camera
         GameControls.allKeybinds.Add(KeyCode.LeftAlt, cam.GetComponent<PlayerCamera>().SwitchCameraMode);
@@ -99,7 +100,7 @@ public class PlayerController : MonoBehaviour {
                         {
                             case TargetType.Item:
                                 target = pointHit.transform.GetComponent<Item>();
-                                PositionTargetIndicator();
+                                SetTargetIndicatorPos();
                                 break;
 
                             case TargetType.Enemy:
@@ -108,7 +109,7 @@ public class PlayerController : MonoBehaviour {
 
                             case TargetType.Story:
                                 target = pointHit.transform.GetComponent<InteractableNPC>();
-                                PositionTargetIndicator();
+                                SetTargetIndicatorPos();
                                 break;
 
                             default:
@@ -187,10 +188,29 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    private void PositionTargetIndicator()
+    private void SetTargetIndicatorPos()
     {
         targetIndicator.transform.SetParent(target.transform);
         targetIndicator.transform.position = target.transform.position + new Vector3(0f, target.transform.localScale.y * 5);
         targetIndicator.enabled = true;
+    }
+
+    private void Interact()
+    {
+        switch (target.targetType)
+        {
+            case TargetType.Item:
+                target.GetComponent<Item>().PickUp(transform);
+                break;
+
+            case TargetType.Story:
+                storyManager.AttemptToConverse((InteractableNPC) target);
+                break;
+
+            default:
+                Debug.Log(target.targetType + " is not handled");
+                break;
+        }
+
     }
 }
