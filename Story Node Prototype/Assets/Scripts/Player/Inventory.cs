@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour {
@@ -24,7 +23,7 @@ public class Inventory : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
     }
 
-    public bool Add(Targetable item)
+    public bool Add(Item item)
     {
         if(item.targetType == TargetType.Item)
         {
@@ -38,6 +37,19 @@ public class Inventory : MonoBehaviour {
                 items.Add(item);
                 return true;
             }
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool Remove(Item item)
+    {
+        if (items.Contains(item))
+        {
+            items.Remove(item);
+            return true;
         }
         else
         {

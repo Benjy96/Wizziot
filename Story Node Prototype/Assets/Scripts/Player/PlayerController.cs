@@ -100,7 +100,6 @@ public class PlayerController : MonoBehaviour {
                             case TargetType.Item:
                                 target = pointHit.transform.GetComponent<Item>();
                                 PositionTargetIndicator();
-                                Debug.Log("Targeting " + target.name);
                                 break;
 
                             case TargetType.Enemy:
