@@ -5,7 +5,6 @@ public class Item : Targetable {
     private Transform player;
 
     public float interactionRadius = 5f;
-    public ItemAttributes itemAttributes;
 
     new public string name = "New item";
     public Sprite icon = null;
@@ -30,8 +29,7 @@ public class Item : Targetable {
 
     public virtual void Use()
     {
-        Debug.Log("Attempting to use " + itemAttributes.name);
-        gameObject.transform.position = player.position;
+        Inventory.Instance.Remove(this);
         gameObject.transform.SetParent(null);
         gameObject.SetActive(true);
     }
