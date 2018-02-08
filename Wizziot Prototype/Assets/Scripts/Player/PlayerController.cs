@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour {
     private AbilityComponent abilityComponent;
     private Projector targetIndicator;
     private Camera cam;
-    private PlayerStats playerStats;
+    private EntityStats playerStats;
 
     //Interaction
     private Targetable target;
@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour {
         abilityComponent = GetComponent<AbilityComponent>();
         targetIndicator = GetComponentInChildren<Projector>();
         cam = Camera.main;
-        playerStats = GetComponent<PlayerStats>();
+        playerStats = GetComponent<EntityStats>();
 
         target = null;
 
@@ -145,6 +145,7 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    //TODO: Put these methods into abil component and make public (interface) for use in keybinds
     private void UseInstantAbility(Abilities ability)
     {
         if (abilityComponent.SelectedAbility == ability)

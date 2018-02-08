@@ -107,4 +107,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetType: 1
   interactionRadius: 5
-  itemAttributes: {fileID: 11400000, guid: db923919016d23548b43d3f4aae918e1, type: 2}
+  name: New item
+  icon: {fileID: 21300000, guid: eb5f6e2757c821940b69cf1456f7865a, type: 3}

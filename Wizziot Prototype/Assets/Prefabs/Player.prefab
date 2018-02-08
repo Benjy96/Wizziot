@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4253239760578642}
   - component: {fileID: 114232869456884162}
   - component: {fileID: 114205869762454452}
-  - component: {fileID: 114137266070078046}
+  - component: {fileID: 114436509492767312}
   - component: {fileID: 33984999312761298}
   - component: {fileID: 65068491791960126}
   - component: {fileID: 23370093231177938}
@@ -143,21 +143,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114137266070078046
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1458570314575524}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3022bf4b7e1abb24abacbeee6af1b7e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  speed: 5
-  turnSpeed: 100
-  sqrMaxTargetDistance: 225
 --- !u!114 &114205869762454452
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -190,6 +175,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryUI: {fileID: 0}
+--- !u!114 &114436509492767312
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1458570314575524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9fab411d5bac80408e8e2ba6118653e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  maxStamina: 100
+  speed: 6.84
+  turnSpeed: 99.3
+  sqrMaxTargetDistance: 225
+  damageModifier:
+    baseValue: 0
+  mitigateChance:
+    baseValue: 0
+  damageReduction:
+    baseValue: 0
 --- !u!119 &119116383463515920
 Projector:
   m_ObjectHideFlags: 1
