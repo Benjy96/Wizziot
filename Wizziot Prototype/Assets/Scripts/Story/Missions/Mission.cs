@@ -1,12 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 //TODO: Research generics to make a mission class/classes
 
-[CreateAssetMenu(fileName = "New Mission", menuName = "Missions/New Mission")]
+[CreateAssetMenu(fileName = "Standard Mission", menuName = "Missions/Standard Mission")]
 public class Mission : ScriptableObject {
 
     bool completed = false;
-
     new public string name = "";
-    public Vector3 waypoint;
+    public Stack<Mission> missionStages;
 }
