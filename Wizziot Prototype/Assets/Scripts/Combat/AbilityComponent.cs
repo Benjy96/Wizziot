@@ -8,7 +8,7 @@ using UnityEngine;
 public class AbilityComponent : MonoBehaviour {
 
     //Ability State Data
-    public Abilities SelectedAbility;
+    [HideInInspector] public Abilities SelectedAbility;
     public List<Abilities> unlockedAbilities;
 
     //AoE Variables

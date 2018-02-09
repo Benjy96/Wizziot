@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 4212554981147484}
   - component: {fileID: 114667065209656976}
   - component: {fileID: 114986181408483760}
+  - component: {fileID: 114792908412176066}
   - component: {fileID: 33171637944474046}
   - component: {fileID: 135430337262968196}
   - component: {fileID: 23952319093175682}
@@ -70,7 +71,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1967363257081838}
   m_LocalRotation: {x: -0, y: -0.60623014, z: -0, w: 0.79528934}
-  m_LocalPosition: {x: -9.95, y: 0.5, z: -4.69}
+  m_LocalPosition: {x: -1.26, y: 0.5, z: -1.54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4108263866267530}
@@ -194,6 +195,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetType: 2
+--- !u!114 &114792908412176066
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1967363257081838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bde55fc75bddd784cb33cbea0d9a58fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SelectedAbility: 0
+  unlockedAbilities: 32000000
+  aimingDisc: {fileID: 4019791227191684, guid: 31faa8d85dd7c824bac358c123afb1e3, type: 2}
+  fireRate: 0.25
+  confuseDuration: 3
+  vortexPrefab: {fileID: 1893987604404780, guid: c41f338f3e10fb74ca9f81ce1b665355,
+    type: 2}
+  singularityPrefab: {fileID: 1134084517704520, guid: 217668003b71cfa4e9928e20f2b247f5,
+    type: 2}
 --- !u!114 &114986181408483760
 MonoBehaviour:
   m_ObjectHideFlags: 1
