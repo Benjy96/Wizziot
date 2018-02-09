@@ -7,7 +7,7 @@ public class KillMission : Mission {
     public List<Enemy> killTypes;
     public int killsRequired;
 
-    public bool RegisterKill(Enemy enemy)
+    public override bool UpdateMission(Targetable enemy)
     {
         foreach (Enemy x in killTypes)
         {

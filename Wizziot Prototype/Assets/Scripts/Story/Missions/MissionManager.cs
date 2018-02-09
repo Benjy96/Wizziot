@@ -37,7 +37,7 @@ public class MissionManager : MonoBehaviour {
 
         foreach (KillMission killMission in missions)
         {
-            killMission.RegisterKill(enemy);
+            killMission.UpdateMission(enemy);
         }
     }
 

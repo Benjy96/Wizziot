@@ -28,4 +28,10 @@ public class Mission : ScriptableObject {
             //missionManager.CurrentMission(x).SetStep(additionalMissionStages[count];
         }
     }
+
+    public virtual bool UpdateMission(Targetable target)
+    {
+        Debug.Log("Update the mission progress");
+        return false;   //Not completed
+    }
 }
