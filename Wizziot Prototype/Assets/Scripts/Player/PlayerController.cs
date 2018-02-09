@@ -30,17 +30,17 @@ public class PlayerController : MonoBehaviour {
 
         //TODO: Put all bindings in GameControls.cs
         //Abilities
-        GameControls.allKeybinds.Add(KeyCode.Alpha1, new Action(() => UseInstantAbility(Abilities.Zap)));
-        GameControls.allKeybinds.Add(KeyCode.Alpha2, new Action(() => UseInstantAbility(Abilities.Confuse)));
-        GameControls.allKeybinds.Add(KeyCode.Alpha3, new Action(() => UseAOEAbility(Abilities.Vortex)));
-        GameControls.allKeybinds.Add(KeyCode.Alpha4, new Action(() => UseAOEAbility(Abilities.Singularity)));
-        GameControls.allKeybinds.Add(KeyCode.Alpha5, new Action(() => UseInstantAbility(Abilities.Heal)));
+        GameMetaInfo.allKeybinds.Add(KeyCode.Alpha1, new Action(() => UseInstantAbility(Abilities.Zap)));
+        GameMetaInfo.allKeybinds.Add(KeyCode.Alpha2, new Action(() => UseInstantAbility(Abilities.Confuse)));
+        GameMetaInfo.allKeybinds.Add(KeyCode.Alpha3, new Action(() => UseAOEAbility(Abilities.Vortex)));
+        GameMetaInfo.allKeybinds.Add(KeyCode.Alpha4, new Action(() => UseAOEAbility(Abilities.Singularity)));
+        GameMetaInfo.allKeybinds.Add(KeyCode.Alpha5, new Action(() => UseInstantAbility(Abilities.Heal)));
         //Story Manager
-        GameControls.allKeybinds.Add(KeyCode.F, Interact);
-        GameControls.allKeybinds.Add(KeyCode.Escape, new Action(() => StoryManager.Instance.CloseConversation())); //TODO: event delegate with "close" methods subscribed
+        GameMetaInfo.allKeybinds.Add(KeyCode.F, Interact);
+        GameMetaInfo.allKeybinds.Add(KeyCode.Escape, new Action(() => StoryManager.Instance.CloseConversation())); //TODO: event delegate with "close" methods subscribed
         //Camera
-        GameControls.allKeybinds.Add(KeyCode.LeftAlt, cam.GetComponent<PlayerCamera>().SwitchCameraMode);
-        GameControls.allKeybinds.Add(KeyCode.I, new Action(() => inventoryUI.gameObject.SetActive(!inventoryUI.activeSelf)));
+        GameMetaInfo.allKeybinds.Add(KeyCode.LeftAlt, cam.GetComponent<PlayerCamera>().SwitchCameraMode);
+        GameMetaInfo.allKeybinds.Add(KeyCode.I, new Action(() => inventoryUI.gameObject.SetActive(!inventoryUI.activeSelf)));
     }
 
     void Update () {
@@ -115,11 +115,11 @@ public class PlayerController : MonoBehaviour {
         for (int i = 0; i < Enum.GetValues(typeof(KeyCode)).Cast<int>().Last(); i++)
         {
             KeyCode code = (KeyCode)i;
-            if (Input.GetKeyDown(code) && GameControls.allKeybinds.ContainsKey(code))
+            if (Input.GetKeyDown(code) && GameMetaInfo.allKeybinds.ContainsKey(code))
             {
                 try
                 {
-                    GameControls.allKeybinds[code]();
+                    GameMetaInfo.allKeybinds[code]();
                 }
                 catch (Exception e)
                 {

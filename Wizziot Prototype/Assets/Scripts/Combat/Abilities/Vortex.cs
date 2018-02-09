@@ -46,7 +46,7 @@ public class Vortex : MonoBehaviour
                 {
                     Rigidbody temp;
                     //If not part of environment
-                    if (c.gameObject.layer == LayerMask.NameToLayer("Environment"))
+                    if (c.gameObject.layer == LayerMask.NameToLayer(GameMetaInfo._AFFECTABLE_OBJECT_LAYER_NAME))
                     {
                         temp = c.GetComponent<Rigidbody>();
                         if (temp != null)    //Safety check - incase tag forgotten
@@ -66,6 +66,7 @@ public class Vortex : MonoBehaviour
     {
         if (vortexRepulsing)
         {
+            //TODO: Disable movement component of affected NPCs while active & re-enable
             StartCoroutine(Yoyo());
             foreach (Rigidbody body in neighbourRbs)
             {

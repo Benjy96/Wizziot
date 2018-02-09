@@ -6,6 +6,7 @@ TagManager:
   tags:
   - StoryManager
   - InteractableNPC
+  - Enemy
   layers:
   - Default
   - TransparentFX
