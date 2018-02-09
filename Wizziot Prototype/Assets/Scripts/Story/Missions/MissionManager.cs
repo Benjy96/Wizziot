@@ -31,14 +31,13 @@ public class MissionManager : MonoBehaviour {
 
     //TODO: Watch brackeys combat/enemies and events to see if events would be more applicable than inventory style system
     //Who calls this? In enemy Die() method? Player Controller?
-    public void RegisterKill(Targetable t)
+    public void RegisterKill(Enemy enemy)
     {
         List<Mission> missions = activeMissions.FindAll(x => x is Mission);
 
-        foreach (Mission mission in missions)
+        foreach (KillMission killMission in missions)
         {
-            //mission.UpdateKillAmount();    <- use event? //mission.UpdateKillAmount.Invoke() ?
-            //UpdateKillAmount increment kill and check if finished
+            killMission.RegisterKill(enemy);
         }
     }
 
