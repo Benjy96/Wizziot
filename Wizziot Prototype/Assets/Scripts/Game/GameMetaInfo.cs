@@ -11,12 +11,13 @@ public class GameMetaInfo {
 
     public static string _AFFECTABLE_OBJECT_LAYER_NAME { get { return "Object"; } }
     public static string _IMMOVABLE_OBJECT_LAYER_NAME { get { return "Environment"; } }
+
+    public static Difficulty _GAME_DIFFICULTY = Difficulty.Normal;
 }
 
-//General Keybindings
-public enum General
+public enum Difficulty
 {
-    CameraMode = 0, Converse, Escape, Inventory, Map, Menu, Skills
+    Easy, Normal, Hard, Suicidal
 }
 
 //Separate abilities between a large gap to act as a "code" difference

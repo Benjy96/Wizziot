@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Name: Standard Mission
   m_EditorClassIdentifier: 
   name: 
+  additionalMissionStages: []

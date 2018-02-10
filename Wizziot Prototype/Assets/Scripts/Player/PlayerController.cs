@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour {
     private AbilityComponent abilityComponent;
     private Projector targetIndicator;
     private Camera cam;
-    private EntityStats playerStats;
+    private PlayerStats playerStats;
 
     //Interaction
     private Targetable target;
@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour {
         abilityComponent = GetComponent<AbilityComponent>();
         targetIndicator = GetComponentInChildren<Projector>();
         cam = Camera.main;
-        playerStats = GetComponent<EntityStats>();
+        playerStats = GetComponent<PlayerStats>();
 
         target = null;
 

@@ -8,8 +8,6 @@ public class EntityStats : MonoBehaviour {
     public int maxStamina = 100;
     public int CurrentStamina { get; private set; }
 
-    [Range(0, 10)] public float speed;
-    [Range(50, 150)] public float turnSpeed;
     [Range(0, 225)] public float sqrMaxTargetDistance;
 
     public float damageModifier;
@@ -37,6 +35,6 @@ public class EntityStats : MonoBehaviour {
 
     public virtual void Die()
     {
-
+        Debug.Log("Override Death method");
     }
 }

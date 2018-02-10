@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -6,6 +7,8 @@ public class GameManager : MonoBehaviour
     //Singleton & accessor
     private static GameManager _GameManager = null;
     public static GameManager Instance { get { return _GameManager; } }
+
+    public event Action OnDifficultyChanged;
 
     public bool encryptGameSave = false;
 
@@ -53,5 +56,10 @@ public class GameManager : MonoBehaviour
     void ExitGame()
     {
 
+    }
+
+    public void ChangeDifficulty()
+    {
+        OnDifficultyChanged.Invoke();
     }
 }
