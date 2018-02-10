@@ -58,8 +58,13 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void ChangeDifficulty()
+    //Assuming param is from a button (e.g. menu - buttons are ints)
+    public void ChangeDifficulty(int difficulty)
     {
+        //Adjust static difficulty tracker variable
+        difficulty -= 1;
+        GameMetaInfo._GAME_DIFFICULTY = (Difficulty)difficulty;
+        //Inform interested parties (scripts that use difficulty to modify their stats, etc.)
         OnDifficultyChanged.Invoke();
     }
 }
