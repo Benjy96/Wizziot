@@ -19,6 +19,7 @@ public class Enemy : Targetable {
     protected NavMeshAgent navAgent;
     protected AbilityComponent abilityComponent;
 
+    protected State state;
     protected Transform destination;
     protected Transform target;
 
@@ -42,4 +43,14 @@ public class Enemy : Targetable {
     {
         if (player == null) player = PlayerManager.Instance.player;
 	}
+
+    protected void Update()
+    {
+        state.Execute();
+    }
+
+    protected void ChangeState(State newState)
+    {
+        state = newState;
+    }
 }

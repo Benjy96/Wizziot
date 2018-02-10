@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4019791227191684}
   - component: {fileID: 33853566793025188}
   - component: {fileID: 23776893107661754}
+  - component: {fileID: 114946425182030298}
   m_Layer: 0
   m_Name: NPC Aiming Disc
   m_TagString: Untagged
@@ -80,3 +81,14 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1383982654289596}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &114946425182030298
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1383982654289596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a1e68bafcb3444280383db0ec1ccbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

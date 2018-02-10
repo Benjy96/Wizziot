@@ -4,13 +4,10 @@ using UnityEngine;
 
 public class NPCAim : MonoBehaviour {
 
+    Transform player;
+
 	// Use this for initialization
 	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+        player = PlayerManager.Instance.player.GetComponent<Transform>();
 	}
 }
