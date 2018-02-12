@@ -22,11 +22,11 @@ GameObject:
   - component: {fileID: 114232869456884162}
   - component: {fileID: 114205869762454452}
   - component: {fileID: 114462109773808440}
+  - component: {fileID: 120412263001359320}
   - component: {fileID: 33984999312761298}
   - component: {fileID: 65068491791960126}
   - component: {fileID: 23370093231177938}
   - component: {fileID: 54694654279500918}
-  - component: {fileID: 120412263001359320}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -188,12 +188,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   maxStamina: 100
-  speed: 6
-  turnSpeed: 100
   sqrMaxTargetDistance: 225
   damageModifier: 0
   mitigateChance: 0
   damageReduction: 0
+  speed: 6
+  turnSpeed: 100
 --- !u!119 &119116383463515920
 Projector:
   m_ObjectHideFlags: 1

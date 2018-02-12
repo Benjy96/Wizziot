@@ -25,7 +25,13 @@ public class Enemy : Targetable {
 
     protected void OnEnable()
     {
-        GameManager.Instance.OnDifficultyChanged += UpdateDifficulty;
+        //Need to spawn enemy at runtime for this to now throw a null ref exception
+        //GameManager.Instance.OnDifficultyChanged += UpdateDifficulty;
+    }
+
+    private void OnDisable()
+    {
+        //GameManager.Instance.OnDifficultyChanged -= UpdateDifficulty;
     }
 
     protected void UpdateDifficulty()
@@ -46,7 +52,7 @@ public class Enemy : Targetable {
 
     protected void Update()
     {
-        state.Execute();
+        //state.Execute();
     }
 
     protected void ChangeState(State newState)

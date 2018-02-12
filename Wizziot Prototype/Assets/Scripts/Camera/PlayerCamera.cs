@@ -14,7 +14,6 @@ public class PlayerCamera : MonoBehaviour {
     public float minZoom;
 
     public float zoom;
-    public Vector3 offsetAmounts;
 
     private Vector3 startPos;
     private Quaternion startRotation;
@@ -29,7 +28,7 @@ public class PlayerCamera : MonoBehaviour {
     {
         State = CameraMode.Follow;
         transform.SetParent(player);
-        offset = new Vector3(offsetAmounts.x, offsetAmounts.y, offsetAmounts.z);
+        offset = transform.position;
         startPos = transform.localPosition;
         startRotation = transform.localRotation;
     }
@@ -67,6 +66,7 @@ public class PlayerCamera : MonoBehaviour {
                 zoom -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
                 zoom = Mathf.Clamp(zoom, minZoom, maxLockedZoom);
                 break;
+
             case CameraMode.Look:
                 zoom -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
                 zoom = Mathf.Clamp(zoom, minZoom, maxZoom);
@@ -90,16 +90,12 @@ public class PlayerCamera : MonoBehaviour {
     private void LateUpdate()
     {
         Vector3 desiredPos;
-        Vector3 smoothedPos;
 
         switch (State)
         {
             case CameraMode.Follow:
-                //TODO: Save positions between states to revert after switches
-                //need a constant value to evaluate against (for the zoomed result values)
                 desiredPos = startPos * zoom;
-                smoothedPos = Vector3.MoveTowards(transform.localPosition, desiredPos, smoothSpeed * Time.deltaTime);
-                transform.localPosition = smoothedPos;
+                transform.localPosition = Vector3.Lerp(transform.localPosition, desiredPos, smoothSpeed * Time.deltaTime);
                 break;
 
             case CameraMode.Look:
@@ -110,10 +106,9 @@ public class PlayerCamera : MonoBehaviour {
                 desiredPos = player.position + offset * zoom;
                 //Max camera pitch
                 desiredPos.y = Mathf.Clamp(desiredPos.y, 2f, 15f);
-                smoothedPos = Vector3.MoveTowards(transform.position, desiredPos, smoothSpeed * Time.deltaTime);
 
                 //Camera position
-                transform.position = smoothedPos;
+                transform.localPosition = Vector3.Lerp(transform.localPosition, desiredPos, smoothSpeed * Time.deltaTime);
                 transform.LookAt(player.position);
                 break;
         }
