@@ -10,6 +10,20 @@ using UnityEngine;
 /// The extent to which each emotion is influenced is then affected by weight values.
 /// 
 /// TL;DR - This class is the logic that determines what behaviour an AI undertakes. If it's angry, then the "angry state" will execute.
+/// 
+/// What is the difference between this and a Finite State Machine?
+/// In an FSM, you enter into a State based upon a limited set of conditions. With the Emotional State Machine, any number of external factors can influence the state you enter!
+/// Instead of switching state based upon an internal check, any number of external factors (may not even be in game yet!) can influence the state of the agent!
+/// Basically, the ESM responds to (unknown) external influences, versus a limited number of hard-coded true/false checks pre-runtime.
+/// 
+/// An example:
+/// FSM: if(playerNear()) changeState(new RunState());
+///     With the above architecture, to match the ESM, you would need hundreds of "if" checks, which you would need to create methods for, as well as think up
+/// 
+/// ESM: agent.Influence(Emotion.Anger, .4f);   //This shows how any external factor can 
+///     With the ESM architecture, you don't need to write every possible check beforehand, but can add influences to the game as you go along throughout development
+///     e.g. Add a boulder falling, and in its OnTriggerEnter method, access all nearby enemies and call Influence(Emotion.Fear, 1f);
+///     If it were an FSM, you would add the boulder, then need to remember to add a check in code like: if(boulderFell() && closeTo(boulder)) changeState(new RunState());
 /// </summary>
 public class EmotionChip : MonoBehaviour {
 
