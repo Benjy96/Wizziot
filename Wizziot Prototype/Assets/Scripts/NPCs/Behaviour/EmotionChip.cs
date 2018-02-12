@@ -83,15 +83,15 @@ public class EmotionChip : MonoBehaviour {
             case Emotion.Calm:
                 switch (intent)
                 {
-                    case Emotion.Calm:
-                        agentEmotions[intent] += amount * trust;
+                    case Emotion.Calm:  //If actor intends to calm the agent, do it scaled by a factor of the agent's trust
+                        agentEmotions[intent] += amount * trust;    
                         break;
 
-                    case Emotion.Anger:
+                    case Emotion.Anger: //If actor intends to scare or anger enemy, anger/scare them, but reduced by a factor of their trust (harder to anger/scare if calm)
                     case Emotion.Fear:
                         foreach (KeyValuePair<Emotion, float> agentEmotion in agentEmotions)
                         {
-                            if (agentEmotion.Key != disposition) agentEmotions[agentEmotion.Key] -= amount * trust;
+                            if (agentEmotion.Key != disposition) agentEmotions[agentEmotion.Key] += amount / trust;
                         }
                             break;
                 }
@@ -101,16 +101,16 @@ public class EmotionChip : MonoBehaviour {
             case Emotion.Anger:
                 switch (intent)
                 {
-                    case Emotion.Calm:
-                        agentEmotions[intent] += amount / irascibility;
+                    case Emotion.Calm:  //If actor intends to calm the enemy, calm them, but reduce by a factor of their irascibility
+                        agentEmotions[intent] += amount / irascibility; 
                         break;
 
-                    case Emotion.Anger:
-                        agentEmotions[intent] += amount * irascibility;
+                    case Emotion.Anger: //If actor intends to anger the enemy, increase the intent by a factor of their irascibility
+                        agentEmotions[intent] += amount * irascibility; 
                         break;
 
-                    case Emotion.Fear:
-                        agentEmotions[Emotion.Anger] += amount;
+                    case Emotion.Fear:  //If actor intends to scare enemy, simply anger the agent
+                        agentEmotions[Emotion.Anger] += amount; 
                         break;
                 }
                 break;
@@ -119,16 +119,16 @@ public class EmotionChip : MonoBehaviour {
             case Emotion.Fear:
                 switch (intent)
                 {
-                    case Emotion.Calm:
-                        agentEmotions[intent] += amount / cowardice;
+                    case Emotion.Calm:  //If actor intends to calm the enemy, calm them, but reduce it in relation to the agent's cowardice
+                        agentEmotions[intent] += amount / cowardice;    
                         break;
 
-                    case Emotion.Anger:
-                        agentEmotions[intent] += amount / cowardice;
+                    case Emotion.Anger: //If actor intends to anger the enemy, anger them, but anger them slowly in relation to cowardice
+                        agentEmotions[intent] += amount / cowardice;    
                         break;
 
-                    case Emotion.Fear:
-                        agentEmotions[intent] += amount * cowardice;
+                    case Emotion.Fear:  //If actor intends to scare enemy, scare them by a factor of the intent and cowardice
+                        agentEmotions[intent] += amount * cowardice;    
                         break;
                 }
                 break;
@@ -151,7 +151,6 @@ public class EmotionChip : MonoBehaviour {
             agentEmotions[enemyEmotion.Key] = agentEmotions[enemyEmotion.Key] / totalValue;
         }
     }
-
 }
 
 public enum Emotion { Calm, Anger, Fear }
