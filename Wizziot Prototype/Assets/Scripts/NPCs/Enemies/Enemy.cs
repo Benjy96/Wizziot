@@ -14,7 +14,7 @@ public class Enemy : Targetable {
 
     protected static GameObject player;
 
-    protected Difficulty gameDifficulty = GameMetaInfo._GAME_DIFFICULTY;
+    protected static Difficulty gameDifficulty = GameMetaInfo._GAME_DIFFICULTY;
 
     protected NavMeshAgent navAgent;
     protected AbilityComponent abilityComponent;

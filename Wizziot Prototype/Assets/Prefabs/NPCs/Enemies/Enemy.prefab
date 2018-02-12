@@ -39,13 +39,12 @@ GameObject:
   - component: {fileID: 4212554981147484}
   - component: {fileID: 114667065209656976}
   - component: {fileID: 114792908412176066}
-  - component: {fileID: 114415739335445996}
   - component: {fileID: 114164407006037506}
   - component: {fileID: 195700673612654074}
+  - component: {fileID: 54602758527950376}
   - component: {fileID: 33171637944474046}
   - component: {fileID: 135430337262968196}
   - component: {fileID: 23952319093175682}
-  - component: {fileID: 54602758527950376}
   m_Layer: 9
   m_Name: Enemy
   m_TagString: Enemy
@@ -198,23 +197,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   maxStamina: 100
-  speed: 0
-  turnSpeed: 0
-  sqrMaxTargetDistance: 0
+  sqrMaxTargetDistance: 225
   damageModifier: 0
   mitigateChance: 0
   damageReduction: 0
---- !u!114 &114415739335445996
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1967363257081838}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee72a0d9903fe804293976b584c1afcb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114667065209656976
 MonoBehaviour:
   m_ObjectHideFlags: 1
