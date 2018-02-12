@@ -3,6 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A variant of a finite state machine... The EMOTIONAL State Machine (ESM)
+/// Each agent with an emotion chip has an emotional disposition. 
+/// External factors can influence this agent's emotions; the way in which each emotion is affected differs between emotional dispositions. 
+/// The extent to which each emotion differs is then affected by weight values.
+/// </summary>
 public class EmotionChip : MonoBehaviour {
 
     //Disposition changes how influencing factors affect the agent
@@ -17,6 +23,11 @@ public class EmotionChip : MonoBehaviour {
     public float trust = 2f; //Calm weighting
     public float irascibility = 2f; //Anger weighting
     public float cowardice = 2f;    //Fear weighting
+
+    //TODO: Verify whether single states or whether actual GOALS (FSM v GOAP)
+    public State calmGoal;
+    public State angryGoal;
+    public State scaredGoal;
 
     private void Awake()
     {
