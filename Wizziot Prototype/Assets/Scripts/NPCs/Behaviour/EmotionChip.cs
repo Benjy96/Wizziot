@@ -43,12 +43,11 @@ public class EmotionChip : MonoBehaviour {
     public float irascibility = 1f; //Anger weighting
     public float cowardice = 1f;    //Fear weighting
 
-    private bool notInThisState;
-    private bool alreadyExecuting;
+    [SerializeField] private State currentState;
 
-    public State currentState;
+    //TODO: Would make sense to make "State Objects" "Goals", e.g. Goal: Suicide -> has a list of "State" classes that it goes through
     public State calmGoal;
-    //public State angryGoal;
+    public State angryGoal;
     public State scaredGoal;
 
     /// <summary>
@@ -77,12 +76,11 @@ public class EmotionChip : MonoBehaviour {
         }
         else if (agentEmotions[Emotion.Anger] > reluctance)
         {
-          //  angryGoal.Execute(agent);
+            TakeAction(angryGoal, agent);
         }
         else if (agentEmotions[Emotion.Fear] > reluctance)
         {
-            Debug.Log("Taking scared action...");
-            TakeAction(scaredGoal, agent);
+            TakeAction(scaredGoal, agent);  //This is where goals come in -> each state could lead to next (in them or abstract above). e.g. run, but if fear too high, kill self
         }
 
         //Step 2. Tend towards disposition
@@ -91,18 +89,17 @@ public class EmotionChip : MonoBehaviour {
         {
             if (key == disposition)
             {
-                agentEmotions[key] = Mathf.Lerp(agentEmotions[key], 1f, Time.deltaTime);
+                agentEmotions[key] = Mathf.Lerp(agentEmotions[key], 1f, Time.deltaTime * reluctance);   //more reluctant NPCs return to their disposition at a faster rate (reluctance weight)
             }
             else
             {
-                agentEmotions[key] = Mathf.Lerp(agentEmotions[key], 0f, Time.deltaTime);
+                agentEmotions[key] = Mathf.Lerp(agentEmotions[key], 0f, Time.deltaTime * reluctance);
             }
         }
-        Debug.Log("Fear: " + agentEmotions[Emotion.Fear]);
-        Debug.Log("Calm: " + agentEmotions[Emotion.Calm]);
         ScaleEmotions();
     }
 
+    //TODO: "MAY" need "lock" statement for concurrency, but I don't think it's needed. If state changes it doesn't matter, code will run on anyway.
     /// <summary>
     /// This method provides a way in which to influence this agent's emotional state
     /// </summary>
@@ -209,16 +206,15 @@ public class EmotionChip : MonoBehaviour {
 
     private void TakeAction(State goal, Enemy agent)
     {
-        //if not in current state, set it up
+        //if not in any state or specified state, set it up (enter/construct)
         if (currentState == null || currentState.GetType() != goal.GetType())
         {
             currentState = goal.CreateState(agent);
-            notInThisState = true;
         }
 
         currentState.Execute();
     }
-#endregion
+    #endregion
 }
 
 public enum Emotion { Calm, Anger, Fear }

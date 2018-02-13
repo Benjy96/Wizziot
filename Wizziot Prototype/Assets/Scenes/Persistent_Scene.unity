@@ -4604,10 +4604,10 @@ MonoBehaviour:
   enemiesSpawned: []
   enemyPrefab: {fileID: 1967363257081838, guid: ffda47dcd015b5d42822cee50b149c07,
     type: 2}
-  spawnAmount: 2
-  spawnRadius: 5
+  spawnAmount: 5
+  spawnRadius: 10
   spawnDelay: 0.1
-  neighbourDistance: 5
+  neighbourDistance: 10
   collisionDistance: 0
 --- !u!4 &1585093215
 Transform:
@@ -5388,6 +5388,10 @@ Prefab:
     - target: {fileID: 4972388501212062, guid: bd05844043ec1c24db76ec9977867554, type: 2}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1615661566601068, guid: bd05844043ec1c24db76ec9977867554, type: 2}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bd05844043ec1c24db76ec9977867554, type: 2}

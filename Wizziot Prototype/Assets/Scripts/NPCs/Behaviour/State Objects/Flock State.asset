@@ -14,5 +14,5 @@ MonoBehaviour:
   collisionAvoidanceWeight: 2
   velocityMatchingWeight: 0.25
   flockCenteringWeight: 0.2
-  attractionWeight: 2
+  attractionWeight: 200
   repulsionWeight: 2

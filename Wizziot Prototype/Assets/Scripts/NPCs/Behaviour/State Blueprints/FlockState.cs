@@ -2,7 +2,9 @@
 
 [CreateAssetMenu(fileName = "Flock State", menuName = "States/Flock")]
 [RequireComponent(typeof(NeighbourhoodTracker))]
-public class FlockState : State {   
+public class FlockState : State {   //TODO: make an "anti-flock" state based upon emotional goal (e.g. make SO for scared goal, this one for angry goal)
+
+    //TODO: May need to remove navagent
 
     private GameObject target;  //TODO: Change who assigns this
     public float collisionAvoidanceWeight = 2f;
@@ -16,7 +18,7 @@ public class FlockState : State {
 
     protected override State EnterState(Enemy owner)
     {
-        target = PlayerManager.Instance.player; //TODO: Change this
+        target = PlayerManager.Instance.player; //TODO: Change assignment
         this.owner = owner;
         neighbourhood = owner.GetComponent<NeighbourhoodTracker>();
         spawn = owner.Spawn;
@@ -24,11 +26,11 @@ public class FlockState : State {
     }
 
     //TODO: Add Behaviour for when player out of range
+    //TODO: Fix up vector calculations (magnitude) for using a nav mesh v just vectors from Boids
     public override void Execute()
     {
-        float agentSpeed = owner.navAgent.speed;
-        //TODO: Implement direction using spawner / neighbourhood attributes, & owner navmesh
-        Vector3 vel = owner.navAgent.destination;
+        //Vector3 vel = owner.navAgent.destination;
+        Vector3 vel = owner.Velocity;
 
         //Collision avoidance - avoid neighbours that are too close
         Vector3 velAvoid = Vector3.zero;
@@ -36,33 +38,23 @@ public class FlockState : State {
         if (tooClosePos != Vector3.zero)
         {
             velAvoid = owner.Position - tooClosePos;   //turn away
-            velAvoid.Normalize();
-            velAvoid *= agentSpeed;
         }
 
         //Velocity Matching - match velocity of neighbors
         Vector3 velAlign = neighbourhood.AvgVel;
-        if (velAlign != Vector3.zero)
-        {
-            velAlign.Normalize();
-            velAlign *= agentSpeed;
-        }
 
         //Flock centering - move towards center of local neighbors
         Vector3 velCenter = neighbourhood.AvgPos;
         if (velCenter != Vector3.zero)
         {
             velCenter -= owner.Position;    //look to center
-            velCenter.Normalize();  //direction vector
-            velCenter *= agentSpeed;  //set dir magnitude
         }
 
         //Attraction
-        Vector3 delta = target.transform.position - owner.Position;    //Agent to attractor vector
+        Vector3 attractDelta = target.transform.position - owner.Position;    //Agent to attractor vector
         //TODO: Use emotion for attraction? Could create a reverse flock for running away when scared
         //Attract if target is within targeting distance
-        bool attracted = (delta.sqrMagnitude < owner.stats.sqrMaxTargetDistance);   //Decide whether to be attracted based on NPC sight distance
-        Vector3 velAttract = delta.normalized * agentSpeed;   //go in direction of attractor at a velocity
+        bool attracted = (attractDelta.sqrMagnitude < owner.stats.sqrMaxTargetDistance);   //If distance less than max target distance, NPC attracted to target
 
         //Apply ALL velocities - the weighting will help influence how much of an impact "influence" each has. Each vector has an affect since vel is assigned and used each time
         float fdt = Time.fixedDeltaTime;
@@ -82,25 +74,22 @@ public class FlockState : State {
                 vel = Vector3.Lerp(vel, velCenter, flockCenteringWeight * fdt);
             }
 
-            if (velAttract != Vector3.zero) //If we need to go towards target
+            if (attractDelta != Vector3.zero) //If we need to go towards target
             {
                 if (attracted)  //if distance from attractor is big enough
                 {
-                    //lerp from current vector (vel and dir) to *required* attractor vector (vel and dir)
-                    vel = Vector3.Lerp(vel, velAttract, attractionWeight * fdt);
+                    vel = Vector3.Lerp(vel, attractDelta, attractionWeight * fdt);
                 }
                 else
                 {   //go away from attractor
-                    vel = Vector3.Lerp(vel, -velAttract, repulsionWeight * fdt);
+                    vel = Vector3.Lerp(vel, -attractDelta, repulsionWeight * fdt);
                 }
             }
         }
-
-        //Set velocity using above calculations
-        vel = vel.normalized * agentSpeed;    //update vel velocity after direction has been lerped
-        //owner.Velocity = vel;   //Set actual gameobject's velocity vector
-        owner.navAgent.SetDestination(vel);
-
+        owner.rBody.AddForce(vel);
+        //owner.Velocity = vel;
+        Debug.Log(vel);
+        //owner.navAgent.SetDestination(vel);
         owner.transform.LookAt(target.transform);
     }
 

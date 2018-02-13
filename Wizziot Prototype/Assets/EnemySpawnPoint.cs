@@ -25,7 +25,7 @@ public class EnemySpawnPoint : MonoBehaviour {
             largestTransformSize = enemyPrefab.transform.localScale.z;
         }
 
-        collisionDistance = largestTransformSize * 2f;
+        collisionDistance = largestTransformSize * 1.5f;
 
         enemiesSpawned = new List<Enemy>();
         InstantiateEnemy();
