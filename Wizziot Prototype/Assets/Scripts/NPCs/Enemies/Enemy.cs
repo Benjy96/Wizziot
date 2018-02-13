@@ -16,10 +16,11 @@ public class Enemy : Targetable {
     protected static GameObject player;
     protected static Difficulty gameDifficulty;
 
-    protected EmotionChip emotionChip;
-    protected NavMeshAgent navAgent;
-    protected AbilityComponent abilityComponent;
-    protected Rigidbody rBody;
+    public EmotionChip emotionChip;
+    public NavMeshAgent navAgent;
+    public AbilityComponent abilityComponent;
+    public Rigidbody rBody;
+    public EntityStats stats;
 
     protected EnemySpawnPoint home;
     protected Transform destination;
@@ -31,8 +32,7 @@ public class Enemy : Targetable {
         set { home = value; transform.SetParent(value.transform); }
     }
     public Vector3 Position { get { return transform.position; } }
-    public Vector3 Velocity { get { return rBody.velocity; } }
-    public Rigidbody RigidBody { get { return rBody; } }
+    public Vector3 Velocity { get { return rBody.velocity; } set { rBody.velocity = value; } }
 
     protected void OnEnable()
     {
@@ -56,6 +56,7 @@ public class Enemy : Targetable {
         navAgent = GetComponent<NavMeshAgent>();
         abilityComponent = GetComponent<AbilityComponent>();
         rBody = GetComponent<Rigidbody>();
+        stats = GetComponent<EntityStats>();
     }
 
     protected void Start () //Scripts initialised
@@ -66,7 +67,7 @@ public class Enemy : Targetable {
         emotionChip.ScaleEmotionWeights(gameDifficulty);
     }
 
-    protected void Update()
+    protected void FixedUpdate()
     {
         emotionChip.Execute(this);
     }

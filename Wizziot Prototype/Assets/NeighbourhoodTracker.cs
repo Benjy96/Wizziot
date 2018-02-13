@@ -48,6 +48,9 @@ class NeighbourhoodTracker : MonoBehaviour
             Vector3 avg = Vector3.zero;
             Vector3 delta;
             int nearCount = 0;
+
+            if (neighbours.Count == 0) return avg;
+
             for (int i = 0; i < neighbours.Count; i++)
             {
                 delta = neighbours[i].Position - transform.position;
@@ -63,9 +66,14 @@ class NeighbourhoodTracker : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void Awake()
     {
         neighbours = new List<Enemy>();
+    }
+
+    private void Start()
+    {
+        spawn = GetComponent<Enemy>().Spawn;
         sphereCol = GetComponent<SphereCollider>();
         sphereCol.radius = spawn.neighbourDistance / 2;
     }

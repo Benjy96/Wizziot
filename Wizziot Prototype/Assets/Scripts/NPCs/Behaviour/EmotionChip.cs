@@ -43,8 +43,10 @@ public class EmotionChip : MonoBehaviour {
     public float irascibility = 1f; //Anger weighting
     public float cowardice = 1f;    //Fear weighting
 
-    //TODO: Verify whether single states or whether actual GOALS (FSM v GOAP)
-    //public State calmGoal;
+    private bool inState;
+
+    public State currentState;
+    public State calmGoal;
     //public State angryGoal;
     //public State scaredGoal;
 
@@ -70,8 +72,13 @@ public class EmotionChip : MonoBehaviour {
         //Step 1. Execute current emotional goal
         if (agentEmotions[Emotion.Calm] > reluctance)
         {
-            //if(not in state) calmGoal.EnterState(agent);
-            //else calmGoal.Execute(agent);
+            if (!inState)
+            {
+                currentState = calmGoal.EnterState(agent);
+                inState = true;
+            }
+
+            currentState.Execute();
         }
         else if (agentEmotions[Emotion.Anger] > reluctance)
         {

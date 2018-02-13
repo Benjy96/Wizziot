@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class EnemySpawnPoint : MonoBehaviour {
 
-    public EnemySpawnPoint spawnPoint;  //Reference to self
-
     public List<Enemy> enemiesSpawned;  //Hold reference to all enemies spawned at this point
 
     public GameObject enemyPrefab;  //TODO: Make list for spawning multiple types   //TODO: Research factory design pattern ?
@@ -17,8 +15,6 @@ public class EnemySpawnPoint : MonoBehaviour {
 
     private void Awake()
     {
-        spawnPoint = this;
-
         float largestTransformSize = 0f;
         if(enemyPrefab.transform.localScale.x > enemyPrefab.transform.localScale.z)
         {
@@ -37,7 +33,10 @@ public class EnemySpawnPoint : MonoBehaviour {
 
     public void InstantiateEnemy()
     {
-        GameObject e = Instantiate(enemyPrefab);
+        GameObject e = Instantiate(enemyPrefab, 
+            new Vector3(Random.Range(0f, neighbourDistance), 0f, Random.Range(0f, neighbourDistance)), 
+            Quaternion.identity);
+
         Enemy enemy = e.GetComponent<Enemy>();
 
         enemy.Spawn = this;
