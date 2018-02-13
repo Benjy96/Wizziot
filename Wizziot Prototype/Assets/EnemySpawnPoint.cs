@@ -9,7 +9,6 @@ public class EnemySpawnPoint : MonoBehaviour {
     public int spawnAmount = 10;
     public float spawnRadius = 50f;
     public float spawnDelay = 0.1f;
-    public float neighbourDistance = 5f;
 
     [HideInInspector] public float collisionDistance;
 
@@ -25,7 +24,7 @@ public class EnemySpawnPoint : MonoBehaviour {
             largestTransformSize = enemyPrefab.transform.localScale.z;
         }
 
-        collisionDistance = largestTransformSize * 1.5f;
+        collisionDistance = largestTransformSize / 1.5f;
 
         enemiesSpawned = new List<Enemy>();
         InstantiateEnemy();
@@ -34,7 +33,7 @@ public class EnemySpawnPoint : MonoBehaviour {
     public void InstantiateEnemy()
     {
         GameObject e = Instantiate(enemyPrefab, 
-            new Vector3(Random.Range(0f, neighbourDistance), 0f, Random.Range(0f, neighbourDistance)), 
+            new Vector3(Random.Range(0f, spawnRadius), 0f, Random.Range(0f, spawnRadius)), 
             Quaternion.identity);
 
         Enemy enemy = e.GetComponent<Enemy>();

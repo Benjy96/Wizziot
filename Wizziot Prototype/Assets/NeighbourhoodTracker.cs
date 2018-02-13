@@ -75,13 +75,6 @@ public class NeighbourhoodTracker : MonoBehaviour
     private void Start()
     {
         Spawn = GetComponent<Enemy>().Spawn;
-        sphereCol = GetComponent<SphereCollider>();
-        sphereCol.radius = Spawn.neighbourDistance / 2;
-    }
-
-    private void FixedUpdate()
-    {
-        if (sphereCol.radius != Spawn.neighbourDistance / 2) sphereCol.radius = Spawn.neighbourDistance / 2;
     }
 
     //Add enemy to neighbourhood on trigger collision

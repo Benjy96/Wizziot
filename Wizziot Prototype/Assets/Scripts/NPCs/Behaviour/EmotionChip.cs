@@ -74,11 +74,13 @@ public class EmotionChip : MonoBehaviour {
         {
             TakeAction(calmGoal, agent);
         }
-        else if (agentEmotions[Emotion.Anger] > reluctance)
+
+        if (agentEmotions[Emotion.Anger] > reluctance)
         {
             TakeAction(angryGoal, agent);
         }
-        else if (agentEmotions[Emotion.Fear] > reluctance)
+
+        if (agentEmotions[Emotion.Fear] > reluctance)
         {
             TakeAction(scaredGoal, agent);  //This is where goals come in -> each state could lead to next (in them or abstract above). e.g. run, but if fear too high, kill self
         }
@@ -89,17 +91,16 @@ public class EmotionChip : MonoBehaviour {
         {
             if (key == disposition)
             {
-                agentEmotions[key] = Mathf.Lerp(agentEmotions[key], 1f, Time.deltaTime * reluctance);   //more reluctant NPCs return to their disposition at a faster rate (reluctance weight)
+                agentEmotions[key] = Mathf.Lerp(agentEmotions[key], 1f, Time.fixedDeltaTime / 10f);   //more reluctant NPCs return to their disposition at a faster rate (reluctance weight)
             }
             else
             {
-                agentEmotions[key] = Mathf.Lerp(agentEmotions[key], 0f, Time.deltaTime * reluctance);
+                agentEmotions[key] = Mathf.Lerp(agentEmotions[key], 0f, Time.fixedDeltaTime / 10f);
             }
         }
         ScaleEmotions();
     }
 
-    //TODO: "MAY" need "lock" statement for concurrency, but I don't think it's needed. If state changes it doesn't matter, code will run on anyway.
     /// <summary>
     /// This method provides a way in which to influence this agent's emotional state
     /// </summary>
@@ -206,7 +207,13 @@ public class EmotionChip : MonoBehaviour {
 
     private void TakeAction(State goal, Enemy agent)
     {
-        //if not in any state or specified state, set it up (enter/construct)
+        //If changing state, and state isn't null, exit the current state
+        if (currentState != null && goal.GetType() != currentState.GetType())
+        {
+            currentState.ExitState();
+        }
+
+        //If not in any state or specified state, set it up (enter/construct)
         if (currentState == null || currentState.GetType() != goal.GetType())
         {
             currentState = goal.CreateState(agent);

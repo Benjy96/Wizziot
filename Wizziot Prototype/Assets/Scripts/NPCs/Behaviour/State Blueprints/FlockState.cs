@@ -5,8 +5,6 @@
 public class FlockState : State {   //TODO: make an "anti-flock" state based upon emotional goal (e.g. make SO for scared goal, this one for angry goal)
 
     //TODO: May need to remove navagent
-
-    private GameObject target;  //TODO: Change who assigns this
     public float collisionAvoidanceWeight = 2f;
     public float velocityMatchingWeight = 0.25f;
     public float flockCenteringWeight = 0.2f;
@@ -18,7 +16,6 @@ public class FlockState : State {   //TODO: make an "anti-flock" state based upo
 
     protected override State EnterState(Enemy owner)
     {
-        target = PlayerManager.Instance.player; //TODO: Change assignment
         this.owner = owner;
         neighbourhood = owner.GetComponent<NeighbourhoodTracker>();
         spawn = owner.Spawn;
@@ -29,8 +26,8 @@ public class FlockState : State {   //TODO: make an "anti-flock" state based upo
     //TODO: Fix up vector calculations (magnitude) for using a nav mesh v just vectors from Boids
     public override void Execute()
     {
-        //Vector3 vel = owner.navAgent.destination;
-        Vector3 vel = owner.Velocity;
+        Transform target = owner.target;
+        Vector3 vel = owner.navAgent.destination;
 
         //Collision avoidance - avoid neighbours that are too close
         Vector3 velAvoid = Vector3.zero;
@@ -54,16 +51,17 @@ public class FlockState : State {   //TODO: make an "anti-flock" state based upo
         Vector3 attractDelta = target.transform.position - owner.Position;    //Agent to attractor vector
         //TODO: Use emotion for attraction? Could create a reverse flock for running away when scared
         //Attract if target is within targeting distance
-        bool attracted = (attractDelta.sqrMagnitude < owner.stats.sqrMaxTargetDistance);   //If distance less than max target distance, NPC attracted to target
+        //TODO: Create a stopping distance
+        bool attracted = (attractDelta.sqrMagnitude < owner.stats.sqrMaxTargetDistance && owner.navAgent.stoppingDistance < attractDelta.magnitude);   //If distance less than max target distance, NPC attracted to target
 
         //Apply ALL velocities - the weighting will help influence how much of an impact "influence" each has. Each vector has an affect since vel is assigned and used each time
         float fdt = Time.fixedDeltaTime;
-        if (velAvoid != Vector3.zero)    //if we need to do avoidance
-        {
-            vel = Vector3.Lerp(vel, velAvoid, collisionAvoidanceWeight * fdt);
-        }
-        else //else do normal movements
-        {
+       // if (velAvoid != Vector3.zero)    //if we need to do avoidance
+      //  {
+        //    vel = Vector3.Lerp(vel, velAvoid, collisionAvoidanceWeight * fdt);
+       // }
+       // else //else do normal movements
+       // {
             if (velAlign != Vector3.zero)   //If we need to align
             {
                 vel = Vector3.Lerp(vel, velAlign, velocityMatchingWeight * fdt);
@@ -85,16 +83,9 @@ public class FlockState : State {   //TODO: make an "anti-flock" state based upo
                     vel = Vector3.Lerp(vel, -attractDelta, repulsionWeight * fdt);
                 }
             }
-        }
-        owner.rBody.AddForce(vel);
-        //owner.Velocity = vel;
-        Debug.Log(vel);
-        //owner.navAgent.SetDestination(vel);
+       // }
+        //owner.rBody.AddForce(vel);
+        owner.navAgent.SetDestination(vel);
         owner.transform.LookAt(target.transform);
-    }
-
-    public override void ExitState()
-    {
-        base.ExitState();
     }
 }

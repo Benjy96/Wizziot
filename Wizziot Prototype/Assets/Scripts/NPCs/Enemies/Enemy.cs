@@ -24,7 +24,6 @@ public class Enemy : Targetable {
     public NeighbourhoodTracker neighbourhoodTracker;
 
     protected EnemySpawnPoint home;
-    protected Transform destination;
 
     public Transform target;
 
@@ -66,6 +65,8 @@ public class Enemy : Targetable {
     {
         if (player == null) player = PlayerManager.Instance.player;
         if (gameDifficulty != GameMetaInfo._GAME_DIFFICULTY) gameDifficulty = GameMetaInfo._GAME_DIFFICULTY;
+
+        target = player.transform;
 
         emotionChip.ScaleEmotionWeights(gameDifficulty);
     }
