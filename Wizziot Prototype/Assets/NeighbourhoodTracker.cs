@@ -2,12 +2,12 @@
 using UnityEngine;
 
 //This class keeps track of nearby Enemies (agents)
-class NeighbourhoodTracker : MonoBehaviour
+public class NeighbourhoodTracker : MonoBehaviour
 {
     public EnemySpawnPoint Spawn { get { return spawnPoint; } set { spawnPoint = value; } }
+    public List<Enemy> neighbours;
 
     private EnemySpawnPoint spawnPoint;
-    private List<Enemy> neighbours;
     private SphereCollider sphereCol;
 
     public Vector3 AvgPos
@@ -16,7 +16,6 @@ class NeighbourhoodTracker : MonoBehaviour
         {
             Vector3 avg = Vector3.zero;
             if (neighbours.Count == 0) return avg;
-            neighbours.RemoveAll(x => x == null);
 
             for (int i = 0; i < neighbours.Count; i++)
             {
@@ -33,7 +32,6 @@ class NeighbourhoodTracker : MonoBehaviour
         {
             Vector3 avg = Vector3.zero;
             if (neighbours.Count == 0) return avg;
-            neighbours.RemoveAll(x => x == null);
 
             for (int i = 0; i < neighbours.Count; i++)
             {
@@ -53,7 +51,6 @@ class NeighbourhoodTracker : MonoBehaviour
             int nearCount = 0;
 
             if (neighbours.Count == 0) return avg;
-            neighbours.RemoveAll(x => x == null);
 
             for (int i = 0; i < neighbours.Count; i++)
             {

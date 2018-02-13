@@ -12,11 +12,15 @@ public class SuicideState : State {
 
     public override void Execute()
     {
+        ExitState();
         Destroy(owner.gameObject);
     }
 
     public override void ExitState()
     {
-        base.ExitState();
+        foreach (Enemy e in owner.neighbourhoodTracker.neighbours)
+        {
+            e.neighbourhoodTracker.neighbours.Remove(owner);
+        }
     }
 }

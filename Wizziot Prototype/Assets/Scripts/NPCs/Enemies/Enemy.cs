@@ -21,6 +21,7 @@ public class Enemy : Targetable {
     public AbilityComponent abilityComponent;
     public Rigidbody rBody;
     public EntityStats stats;
+    public NeighbourhoodTracker neighbourhoodTracker;
 
     protected EnemySpawnPoint home;
     protected Transform destination;
@@ -58,6 +59,7 @@ public class Enemy : Targetable {
         abilityComponent = GetComponent<AbilityComponent>();
         rBody = GetComponent<Rigidbody>();
         stats = GetComponent<EntityStats>();
+        neighbourhoodTracker = GetComponent<NeighbourhoodTracker>();
     }
 
     protected void Start () //Scripts initialised
