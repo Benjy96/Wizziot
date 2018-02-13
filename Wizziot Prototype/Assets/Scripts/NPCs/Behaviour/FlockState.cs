@@ -2,10 +2,9 @@
 
 [CreateAssetMenu(fileName = "Flock State", menuName = "States/Flock")]
 [RequireComponent(typeof(NeighbourhoodTracker))]
-public class FlockState : State {   //TODO: Only 1 of thes ebetween 2 FUCKING NPCS BECAUSE IT'S A FUCKING ASSET
+public class FlockState : State {   
 
-    //TODO: Assign to diff script?
-    private GameObject target;
+    private GameObject target;  //TODO: Change who assigns this
     public float collisionAvoidanceWeight = 2f;
     public float velocityMatchingWeight = 0.25f;
     public float flockCenteringWeight = 0.2f;
@@ -33,7 +32,6 @@ public class FlockState : State {   //TODO: Only 1 of thes ebetween 2 FUCKING NP
 
     public override void Execute()
     {
-        Debug.Log(this.GetInstanceID());
         float agentSpeed = owner.navAgent.speed;
         //TODO: Implement direction using spawner / neighbourhood attributes, & owner navmesh
         Vector3 vel = owner.navAgent.destination;
@@ -67,6 +65,7 @@ public class FlockState : State {   //TODO: Only 1 of thes ebetween 2 FUCKING NP
 
         //Attraction
         Vector3 delta = target.transform.position - owner.Position;    //Agent to attractor vector
+        //TODO: Use emotion for attraction? Could create a reverse flock for running away when scared
         //Attract if target is within targeting distance
         bool attracted = (delta.sqrMagnitude < owner.stats.sqrMaxTargetDistance);   //Decide whether to be attracted based on NPC sight distance
         Vector3 velAttract = delta.normalized * agentSpeed;   //go in direction of attractor at a velocity
@@ -103,15 +102,12 @@ public class FlockState : State {   //TODO: Only 1 of thes ebetween 2 FUCKING NP
             }
         }
 
-        Debug.Log(attracted);
-
         //Set velocity using above calculations
         vel = vel.normalized * agentSpeed;    //update vel velocity after direction has been lerped
         //owner.Velocity = vel;   //Set actual gameobject's velocity vector
         owner.navAgent.SetDestination(vel);
-        
-        Debug.Log("Target pos " + target.transform.position);
-        Debug.Log("Dest Vel: " + vel);
+
+        owner.transform.LookAt(target.transform);
     }
 
     public override void ExitState()
