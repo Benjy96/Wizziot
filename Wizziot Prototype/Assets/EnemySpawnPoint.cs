@@ -45,4 +45,18 @@ public class EnemySpawnPoint : MonoBehaviour {
 
         if (enemiesSpawned.Count < spawnAmount) Invoke("InstantiateEnemy", spawnDelay);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+            //TODO: Go more in depth on target selection behaviours
+            //Maybe entering enemy spawn zone alerts them?
+            //Or instead each enemy checks range?
+            //Maybe alerted as a whole but don't approach until near enough
+                //Can we tie in emotions? YES - increase target distance based upon emotion
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+
+    }
 }

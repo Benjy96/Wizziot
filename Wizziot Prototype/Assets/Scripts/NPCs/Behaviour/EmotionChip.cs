@@ -74,7 +74,7 @@ public class EmotionChip : MonoBehaviour {
         {
             if (!inState)
             {
-                currentState = calmGoal.EnterState(agent);
+                currentState = calmGoal.CreateState(agent);
                 inState = true;
             }
 

@@ -16,20 +16,16 @@ public class FlockState : State {
 
     private Enemy owner;
 
-    public override State EnterState(Enemy owner)
+    protected override State EnterState(Enemy owner)
     {
-        return CreateInstance<FlockState>().SetupState(owner);
-    }
-
-    protected override State SetupState(Enemy owner)
-    {
-        target = PlayerManager.Instance.player;
+        target = PlayerManager.Instance.player; //TODO: Change this
         this.owner = owner;
         neighbourhood = owner.GetComponent<NeighbourhoodTracker>();
         spawn = owner.Spawn;
         return this;
     }
 
+    //TODO: Add Behaviour for when player out of range
     public override void Execute()
     {
         float agentSpeed = owner.navAgent.speed;

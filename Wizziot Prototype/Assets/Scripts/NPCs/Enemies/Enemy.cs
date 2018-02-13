@@ -24,7 +24,8 @@ public class Enemy : Targetable {
 
     protected EnemySpawnPoint home;
     protected Transform destination;
-    protected Transform target;
+
+    public Transform target;
 
     public EnemySpawnPoint Spawn
     {
