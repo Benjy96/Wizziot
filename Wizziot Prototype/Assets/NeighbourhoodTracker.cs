@@ -42,31 +42,6 @@ public class NeighbourhoodTracker : MonoBehaviour
         }
     }
 
-    public Vector3 AvgTooClosePos
-    {
-        get
-        {
-            Vector3 avg = Vector3.zero;
-            Vector3 delta;
-            int nearCount = 0;
-
-            if (neighbours.Count == 0) return avg;
-
-            for (int i = 0; i < neighbours.Count; i++)
-            {
-                delta = neighbours[i].Position - transform.position;
-                if (delta.magnitude <= spawnPoint.collisionDistance)
-                {
-                    avg += neighbours[i].Position;
-                    nearCount++;
-                }
-            }
-            if (nearCount == 0) return avg;
-            avg /= nearCount;
-            return avg;
-        }
-    }
-
     private void Awake()
     {
         neighbours = new List<Enemy>();

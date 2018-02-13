@@ -13,7 +13,6 @@ public class State : ScriptableObject {
     public State CreateState(Enemy owner)
     {
         State newState = (State)Instantiate(Resources.Load("State Objects/" + GetType().Name));
-        //State newState = (State)CreateInstance(GetType().Name);
         return newState.EnterState(owner);
     }
 
