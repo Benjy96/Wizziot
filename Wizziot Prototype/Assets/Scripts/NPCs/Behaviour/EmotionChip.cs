@@ -91,7 +91,7 @@ public class EmotionChip : MonoBehaviour {
         {
             if (key == disposition)
             {
-                agentEmotions[key] = Mathf.Lerp(agentEmotions[key], 1f, Time.fixedDeltaTime / 10f);   //more reluctant NPCs return to their disposition at a faster rate (reluctance weight)
+                agentEmotions[key] = Mathf.Lerp(agentEmotions[key], 1f, Time.fixedDeltaTime / 10f);   //Approx 10 seconds to return to disposition (assuming no external influences)
             }
             else
             {

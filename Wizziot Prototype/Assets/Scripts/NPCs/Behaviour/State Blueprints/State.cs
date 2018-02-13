@@ -12,7 +12,8 @@ public class State : ScriptableObject {
     /// <returns></returns>
     public State CreateState(Enemy owner)
     {
-        State newState = (State)CreateInstance(GetType().Name);
+        State newState = (State)Instantiate(Resources.Load("State Objects/Flock State"));
+        //State newState = (State)CreateInstance(GetType().Name);
         return newState.EnterState(owner);
     }
 

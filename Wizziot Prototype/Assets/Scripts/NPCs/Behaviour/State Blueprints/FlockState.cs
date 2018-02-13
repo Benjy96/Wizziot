@@ -8,7 +8,7 @@ public class FlockState : State {   //TODO: make an "anti-flock" state based upo
     public float collisionAvoidanceWeight = 2f;
     public float velocityMatchingWeight = 0.25f;
     public float flockCenteringWeight = 0.2f;
-    public float attractionWeight = 2f;
+    public float attractionWeight = 10f;
     public float repulsionWeight = 2f;
 
     private NeighbourhoodTracker neighbourhood;
@@ -26,6 +26,7 @@ public class FlockState : State {   //TODO: make an "anti-flock" state based upo
     //TODO: Fix up vector calculations (magnitude) for using a nav mesh v just vectors from Boids
     public override void Execute()
     {
+        Debug.Log(attractionWeight);
         Transform target = owner.target;
         Vector3 vel = owner.navAgent.destination;
 
