@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Suicide State", menuName = "States/Suicide")]
+[CreateAssetMenu(fileName = "SuicideState", menuName = "States/Suicide")]
 public class SuicideState : State {
 
     protected override State EnterState(Enemy owner)

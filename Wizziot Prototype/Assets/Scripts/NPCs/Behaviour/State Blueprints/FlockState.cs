@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "Flock State", menuName = "States/Flock")]
+[CreateAssetMenu(fileName = "FlockState", menuName = "States/Flock")]
 [RequireComponent(typeof(NeighbourhoodTracker))]
 public class FlockState : State {   //TODO: make an "anti-flock" state based upon emotional goal (e.g. make SO for scared goal, this one for angry goal)
 
