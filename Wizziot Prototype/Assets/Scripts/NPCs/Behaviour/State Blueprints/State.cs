@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class State : ScriptableObject {
 
+    protected Enemy owner;
+
     /// <summary>
     /// Used to create a Scriptable Object instance
     /// </summary>
@@ -21,8 +23,8 @@ public class State : ScriptableObject {
     /// <returns></returns>
     protected virtual State EnterState(Enemy owner)
     {
-        Debug.Log("EnterState(): Implement a Constructor entry method for the state");
-        return null;
+        this.owner = owner;
+        return this;
     }
 
     /// <summary>

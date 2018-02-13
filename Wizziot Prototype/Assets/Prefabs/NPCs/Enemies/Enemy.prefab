@@ -232,6 +232,7 @@ MonoBehaviour:
   cowardice: 1
   currentState: {fileID: 0}
   calmGoal: {fileID: 11400000, guid: c51c7ff56621af84d850105bf0193487, type: 2}
+  scaredGoal: {fileID: 11400000, guid: 69a6f096fd7b4384f9aa59881370ca25, type: 2}
 --- !u!114 &114667065209656976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -249,6 +250,7 @@ MonoBehaviour:
   abilityComponent: {fileID: 0}
   rBody: {fileID: 0}
   stats: {fileID: 0}
+  target: {fileID: 0}
 --- !u!114 &114792908412176066
 MonoBehaviour:
   m_ObjectHideFlags: 1

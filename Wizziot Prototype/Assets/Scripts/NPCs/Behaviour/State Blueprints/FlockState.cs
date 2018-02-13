@@ -14,8 +14,6 @@ public class FlockState : State {
     private NeighbourhoodTracker neighbourhood;
     private EnemySpawnPoint spawn;
 
-    private Enemy owner;
-
     protected override State EnterState(Enemy owner)
     {
         target = PlayerManager.Instance.player; //TODO: Change this

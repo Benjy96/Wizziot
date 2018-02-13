@@ -43,12 +43,13 @@ public class EmotionChip : MonoBehaviour {
     public float irascibility = 1f; //Anger weighting
     public float cowardice = 1f;    //Fear weighting
 
-    private bool inState;
+    private bool notInThisState;
+    private bool alreadyExecuting;
 
     public State currentState;
     public State calmGoal;
     //public State angryGoal;
-    //public State scaredGoal;
+    public State scaredGoal;
 
     /// <summary>
     /// As difficulty increases, enemy NPCs gain confidence.
@@ -72,13 +73,7 @@ public class EmotionChip : MonoBehaviour {
         //Step 1. Execute current emotional goal
         if (agentEmotions[Emotion.Calm] > reluctance)
         {
-            if (!inState)
-            {
-                currentState = calmGoal.CreateState(agent);
-                inState = true;
-            }
-
-            currentState.Execute();
+            TakeAction(calmGoal, agent);
         }
         else if (agentEmotions[Emotion.Anger] > reluctance)
         {
@@ -86,7 +81,8 @@ public class EmotionChip : MonoBehaviour {
         }
         else if (agentEmotions[Emotion.Fear] > reluctance)
         {
-          //  scaredGoal.Execute(agent);
+            Debug.Log("Taking scared action...");
+            TakeAction(scaredGoal, agent);
         }
 
         //Step 2. Tend towards disposition
@@ -102,6 +98,9 @@ public class EmotionChip : MonoBehaviour {
                 agentEmotions[key] = Mathf.Lerp(agentEmotions[key], 0f, Time.deltaTime);
             }
         }
+        Debug.Log("Fear: " + agentEmotions[Emotion.Fear]);
+        Debug.Log("Calm: " + agentEmotions[Emotion.Calm]);
+        ScaleEmotions();
     }
 
     /// <summary>
@@ -206,6 +205,18 @@ public class EmotionChip : MonoBehaviour {
         {
             agentEmotions[key] = agentEmotions[key] / totalValue;
         }
+    }
+
+    private void TakeAction(State goal, Enemy agent)
+    {
+        //if not in current state, set it up
+        if (currentState == null || currentState.GetType() != goal.GetType())
+        {
+            currentState = goal.CreateState(agent);
+            notInThisState = true;
+        }
+
+        currentState.Execute();
     }
 #endregion
 }

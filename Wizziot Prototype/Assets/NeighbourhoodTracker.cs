@@ -16,6 +16,7 @@ class NeighbourhoodTracker : MonoBehaviour
         {
             Vector3 avg = Vector3.zero;
             if (neighbours.Count == 0) return avg;
+            neighbours.RemoveAll(x => x == null);
 
             for (int i = 0; i < neighbours.Count; i++)
             {
@@ -32,6 +33,7 @@ class NeighbourhoodTracker : MonoBehaviour
         {
             Vector3 avg = Vector3.zero;
             if (neighbours.Count == 0) return avg;
+            neighbours.RemoveAll(x => x == null);
 
             for (int i = 0; i < neighbours.Count; i++)
             {
@@ -51,6 +53,7 @@ class NeighbourhoodTracker : MonoBehaviour
             int nearCount = 0;
 
             if (neighbours.Count == 0) return avg;
+            neighbours.RemoveAll(x => x == null);
 
             for (int i = 0; i < neighbours.Count; i++)
             {
