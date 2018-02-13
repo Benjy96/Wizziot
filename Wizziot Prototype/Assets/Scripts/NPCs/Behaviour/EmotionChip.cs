@@ -56,7 +56,7 @@ public class EmotionChip : MonoBehaviour {
     /// <param name="difficulty">The difficulty you wish to set this agent to</param>
     public void ScaleEmotionWeights(Difficulty difficulty)
     {
-        int difficultyFactor = (int)difficulty + 1; //Easy == 1, Normal == 2
+        int difficultyFactor = (int)difficulty; //Easy == 0, Normal == 1
 
         trust /= difficultyFactor;
         irascibility *= difficultyFactor;

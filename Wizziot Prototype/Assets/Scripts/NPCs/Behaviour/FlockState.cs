@@ -2,13 +2,10 @@
 
 [CreateAssetMenu(fileName = "Flock State", menuName = "States/Flock")]
 [RequireComponent(typeof(NeighbourhoodTracker))]
-public class FlockState : State {
-
-    //How close to get to target
-    [Range(0f, 1f)] public float closenessToTarget = 1f;
+public class FlockState : State {   //TODO: Only 1 of thes ebetween 2 FUCKING NPCS BECAUSE IT'S A FUCKING ASSET
 
     //TODO: Assign to diff script?
-    public GameObject target;
+    private GameObject target;
     public float collisionAvoidanceWeight = 2f;
     public float velocityMatchingWeight = 0.25f;
     public float flockCenteringWeight = 0.2f;
@@ -22,6 +19,12 @@ public class FlockState : State {
 
     public override State EnterState(Enemy owner)
     {
+        return CreateInstance<FlockState>().SetupState(owner);
+    }
+
+    protected override State SetupState(Enemy owner)
+    {
+        target = PlayerManager.Instance.player;
         this.owner = owner;
         neighbourhood = owner.GetComponent<NeighbourhoodTracker>();
         spawn = owner.Spawn;
@@ -30,11 +33,12 @@ public class FlockState : State {
 
     public override void Execute()
     {
+        Debug.Log(this.GetInstanceID());
         float agentSpeed = owner.navAgent.speed;
         //TODO: Implement direction using spawner / neighbourhood attributes, & owner navmesh
-        Vector3 vel = owner.Velocity;
+        Vector3 vel = owner.navAgent.destination;
 
-        //Collision avoidance - avoid neighbors that are too close
+        //Collision avoidance - avoid neighbours that are too close
         Vector3 velAvoid = Vector3.zero;
         Vector3 tooClosePos = neighbourhood.AvgTooClosePos;
         if (tooClosePos != Vector3.zero)
@@ -63,7 +67,8 @@ public class FlockState : State {
 
         //Attraction
         Vector3 delta = target.transform.position - owner.Position;    //Agent to attractor vector
-        bool attracted = (delta.sqrMagnitude > (owner.stats.sqrMaxTargetDistance * closenessToTarget));   //Decide whether to be attracted based on NPC sight distance (currently half is optimum)
+        //Attract if target is within targeting distance
+        bool attracted = (delta.sqrMagnitude < owner.stats.sqrMaxTargetDistance);   //Decide whether to be attracted based on NPC sight distance
         Vector3 velAttract = delta.normalized * agentSpeed;   //go in direction of attractor at a velocity
 
         //Apply ALL velocities - the weighting will help influence how much of an impact "influence" each has. Each vector has an affect since vel is assigned and used each time
@@ -98,9 +103,19 @@ public class FlockState : State {
             }
         }
 
+        Debug.Log(attracted);
+
         //Set velocity using above calculations
         vel = vel.normalized * agentSpeed;    //update vel velocity after direction has been lerped
         //owner.Velocity = vel;   //Set actual gameobject's velocity vector
         owner.navAgent.SetDestination(vel);
+        
+        Debug.Log("Target pos " + target.transform.position);
+        Debug.Log("Dest Vel: " + vel);
+    }
+
+    public override void ExitState()
+    {
+        base.ExitState();
     }
 }

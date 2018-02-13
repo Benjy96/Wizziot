@@ -4,8 +4,9 @@ using UnityEngine;
 //This class keeps track of nearby Enemies (agents)
 class NeighbourhoodTracker : MonoBehaviour
 {
-    public EnemySpawnPoint spawn;
+    public EnemySpawnPoint Spawn { get { return spawnPoint; } set { spawnPoint = value; } }
 
+    private EnemySpawnPoint spawnPoint;
     private List<Enemy> neighbours;
     private SphereCollider sphereCol;
 
@@ -54,7 +55,7 @@ class NeighbourhoodTracker : MonoBehaviour
             for (int i = 0; i < neighbours.Count; i++)
             {
                 delta = neighbours[i].Position - transform.position;
-                if (delta.magnitude <= spawn.collisionDistance)
+                if (delta.magnitude <= spawnPoint.collisionDistance)
                 {
                     avg += neighbours[i].Position;
                     nearCount++;
@@ -73,14 +74,14 @@ class NeighbourhoodTracker : MonoBehaviour
 
     private void Start()
     {
-        spawn = GetComponent<Enemy>().Spawn;
+        Spawn = GetComponent<Enemy>().Spawn;
         sphereCol = GetComponent<SphereCollider>();
-        sphereCol.radius = spawn.neighbourDistance / 2;
+        sphereCol.radius = Spawn.neighbourDistance / 2;
     }
 
     private void FixedUpdate()
     {
-        if (sphereCol.radius != spawn.neighbourDistance / 2) sphereCol.radius = spawn.neighbourDistance / 2;
+        if (sphereCol.radius != Spawn.neighbourDistance / 2) sphereCol.radius = Spawn.neighbourDistance / 2;
     }
 
     //Add enemy to neighbourhood on trigger collision

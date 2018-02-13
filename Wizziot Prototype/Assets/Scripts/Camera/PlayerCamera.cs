@@ -94,6 +94,7 @@ public class PlayerCamera : MonoBehaviour {
         switch (State)
         {
             case CameraMode.Follow:
+                //TODO: Rotate camera around player's position
                 desiredPos = startPos * zoom;
                 transform.localPosition = Vector3.Lerp(transform.localPosition, desiredPos, smoothSpeed * Time.deltaTime);
                 break;

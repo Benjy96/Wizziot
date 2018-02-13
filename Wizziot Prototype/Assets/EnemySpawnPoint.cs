@@ -9,9 +9,9 @@ public class EnemySpawnPoint : MonoBehaviour {
     public int spawnAmount = 10;
     public float spawnRadius = 50f;
     public float spawnDelay = 0.1f;
-
     public float neighbourDistance = 5f;
-    public float collisionDistance;
+
+    [HideInInspector] public float collisionDistance;
 
     private void Awake()
     {

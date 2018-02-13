@@ -11,8 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6a22dd48ed78a84c861fbfc0fad3b15, type: 3}
   m_Name: Flock State
   m_EditorClassIdentifier: 
-  closenessToTarget: 1
-  target: {fileID: 1458570314575524, guid: 0e6afb90b2ea6fb4391ecd6b4a9f34a2, type: 2}
+  closenessToTarget: 0.05
   collisionAvoidanceWeight: 2
   velocityMatchingWeight: 0.25
   flockCenteringWeight: 0.2
