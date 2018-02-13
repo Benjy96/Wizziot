@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
-public class State : MonoBehaviour {
+public class State : ScriptableObject {
 
-    public void Execute(Enemy owner)
+    public virtual void Execute(Enemy owner)
     {
-
+        Debug.Log("State.Execute(): Override this method");
     }
 }

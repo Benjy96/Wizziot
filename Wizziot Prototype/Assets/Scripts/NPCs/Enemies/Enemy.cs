@@ -49,6 +49,8 @@ public class Enemy : Targetable {
     {
         if (player == null) player = PlayerManager.Instance.player;
         if (gameDifficulty != GameMetaInfo._GAME_DIFFICULTY) gameDifficulty = GameMetaInfo._GAME_DIFFICULTY;
+
+        emotionChip.ScaleEmotionWeights(gameDifficulty);
     }
 
     protected void Update()

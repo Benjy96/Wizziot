@@ -18,7 +18,7 @@ using UnityEngine;
 /// FSM: if(playerNear()) changeState(new RunState());
 ///     With the above architecture, to match the ESM, you would need hundreds of "if" checks, which you would need to create methods for, as well as design in advance
 /// 
-/// ESM: agent.Influence(Emotion.Anger, .4f);   //This shows how any external factor can 
+/// ESM: agent.Influence(Emotion.Anger, .4f);   //This shows how any external factor can affect state
 ///     With the ESM architecture, you don't need to write every possible check beforehand, but can add influences to the game as you go along throughout development
 ///     e.g. Add a boulder falling, and in its OnTriggerEnter method, access all nearby enemies and call Influence(Emotion.Fear, 1f);
 ///     If it were an FSM, you would add the boulder, then need to remember to add a check in code like: if(boulderFell() && closeTo(boulder)) changeState(new RunState());
@@ -28,7 +28,7 @@ using UnityEngine;
 ///     
 /// TL;DR - This class contains the logic/attributes that determine what behaviour an AI undertakes. If it's angry, then the "angry state" will execute.
 /// </summary>
-public class EmotionChip {
+public class EmotionChip : MonoBehaviour {
 
     //Disposition changes how influencing factors affect the agent
     public Emotion disposition = Emotion.Calm;
@@ -39,24 +39,26 @@ public class EmotionChip {
     //The agent's emotional state(s)
     public Dictionary<Emotion, float> agentEmotions = new Dictionary<Emotion, float>();
 
-    public float trust = 2f; //Calm weighting
-    public float irascibility = 2f; //Anger weighting
-    public float cowardice = 2f;    //Fear weighting
+    public float trust = 1f; //Calm weighting
+    public float irascibility = 1f; //Anger weighting
+    public float cowardice = 1f;    //Fear weighting
 
     //TODO: Verify whether single states or whether actual GOALS (FSM v GOAP)
-    public State calmGoal;
-    public State angryGoal;
-    public State scaredGoal;
+    //public State calmGoal;
+    //public State angryGoal;
+    //public State scaredGoal;
 
     /// <summary>
     /// As difficulty increases, enemy NPCs gain confidence.
     /// </summary>
     /// <param name="difficulty">The difficulty you wish to set this agent to</param>
-    public void SetEmotionWeights(Difficulty difficulty)
+    public void ScaleEmotionWeights(Difficulty difficulty)
     {
-        trust /= (int)difficulty;
-        irascibility *= (int)difficulty;
-        cowardice /= (int)difficulty;
+        int difficultyFactor = (int)difficulty + 1; //Easy == 1, Normal == 2
+
+        trust /= difficultyFactor;
+        irascibility *= difficultyFactor;
+        cowardice /= difficultyFactor;
     }
 
     /// <summary>
@@ -68,29 +70,28 @@ public class EmotionChip {
         //Step 1. Execute current emotional goal
         if (agentEmotions[Emotion.Calm] > reluctance)
         {
-            //TODO: "List" of scared actions with costs and goal fulfillments? Like in GOAP
-            calmGoal.Execute(agent);
+           // calmGoal.Execute(agent);
         }
         else if (agentEmotions[Emotion.Anger] > reluctance)
         {
-            angryGoal.Execute(agent);
+          //  angryGoal.Execute(agent);
         }
         else if (agentEmotions[Emotion.Fear] > reluctance)
         {
-            scaredGoal.Execute(agent);
+          //  scaredGoal.Execute(agent);
         }
 
         //Step 2. Tend towards disposition
-        foreach (KeyValuePair<Emotion, float> agentEmotionPair in agentEmotions)
+        List<Emotion> emotions = new List<Emotion>(agentEmotions.Keys);
+        foreach (Emotion key in emotions)
         {
-            //If disposition, tend towards max, else tend towards minimum
-            if (agentEmotionPair.Key == disposition)
+            if (key == disposition)
             {
-                agentEmotions[agentEmotionPair.Key] = Mathf.Lerp(agentEmotions[disposition], 1f, Time.deltaTime);
+                agentEmotions[key] = Mathf.Lerp(agentEmotions[key], 1f, Time.deltaTime);
             }
             else
             {
-                agentEmotions[agentEmotionPair.Key] = Mathf.Lerp(agentEmotions[agentEmotionPair.Key], 0f, Time.deltaTime);
+                agentEmotions[key] = Mathf.Lerp(agentEmotions[key], 0f, Time.deltaTime);
             }
         }
     }
@@ -192,9 +193,10 @@ public class EmotionChip {
             totalValue += agentEmotionPair.Value;
         }
 
-        foreach (KeyValuePair<Emotion, float> agentEmotionPair in agentEmotions)
+        List<Emotion> emotions = new List<Emotion>(agentEmotions.Keys);
+        foreach (Emotion key in emotions)
         {
-            agentEmotions[agentEmotionPair.Key] = agentEmotions[agentEmotionPair.Key] / totalValue;
+            agentEmotions[key] = agentEmotions[key] / totalValue;
         }
     }
 #endregion
