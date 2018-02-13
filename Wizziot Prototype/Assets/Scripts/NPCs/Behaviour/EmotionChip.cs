@@ -70,7 +70,8 @@ public class EmotionChip : MonoBehaviour {
         //Step 1. Execute current emotional goal
         if (agentEmotions[Emotion.Calm] > reluctance)
         {
-           // calmGoal.Execute(agent);
+            //if(not in state) calmGoal.EnterState(agent);
+            //else calmGoal.Execute(agent);
         }
         else if (agentEmotions[Emotion.Anger] > reluctance)
         {
