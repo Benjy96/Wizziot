@@ -13,19 +13,18 @@ using UnityEngine.AI;
 public class Enemy : Targetable {
 
     protected static GameObject player;
+    protected static Difficulty gameDifficulty;
 
-    protected static Difficulty gameDifficulty = GameMetaInfo._GAME_DIFFICULTY;
-
+    protected EmotionChip emotionChip;
     protected NavMeshAgent navAgent;
     protected AbilityComponent abilityComponent;
 
-    protected State state;
     protected Transform destination;
     protected Transform target;
 
     protected void OnEnable()
     {
-        //Need to spawn enemy at runtime for this to now throw a null ref exception
+        //Need to spawn enemy at runtime for this to not throw a null ref exception
         //GameManager.Instance.OnDifficultyChanged += UpdateDifficulty;
     }
 
@@ -41,6 +40,7 @@ public class Enemy : Targetable {
 
     protected void Awake()  //Object initialised
     {
+        emotionChip = GetComponent<EmotionChip>();
         navAgent = GetComponent<NavMeshAgent>();
         abilityComponent = GetComponent<AbilityComponent>();
     }
@@ -48,15 +48,11 @@ public class Enemy : Targetable {
     protected void Start () //Scripts initialised
     {
         if (player == null) player = PlayerManager.Instance.player;
-	}
+        if (gameDifficulty != GameMetaInfo._GAME_DIFFICULTY) gameDifficulty = GameMetaInfo._GAME_DIFFICULTY;
+    }
 
     protected void Update()
     {
-        //state.Execute();
-    }
-
-    protected void ChangeState(State newState)
-    {
-        state = newState;
+        emotionChip.Execute(this);
     }
 }

@@ -28,7 +28,7 @@ using UnityEngine;
 ///     
 /// TL;DR - This class contains the logic/attributes that determine what behaviour an AI undertakes. If it's angry, then the "angry state" will execute.
 /// </summary>
-public class EmotionChip : MonoBehaviour {
+public class EmotionChip {
 
     //Disposition changes how influencing factors affect the agent
     public Emotion disposition = Emotion.Calm;
@@ -47,6 +47,53 @@ public class EmotionChip : MonoBehaviour {
     public State calmGoal;
     public State angryGoal;
     public State scaredGoal;
+
+    /// <summary>
+    /// As difficulty increases, enemy NPCs gain confidence.
+    /// </summary>
+    /// <param name="difficulty">The difficulty you wish to set this agent to</param>
+    public void SetEmotionWeights(Difficulty difficulty)
+    {
+        trust /= (int)difficulty;
+        irascibility *= (int)difficulty;
+        cowardice /= (int)difficulty;
+    }
+
+    /// <summary>
+    /// Like a Finite State Machine, this method executes state behaviours.
+    /// </summary>
+    /// <param name="agent">The owner of this emotion chip</param>
+    public void Execute(Enemy agent)
+    {
+        //Step 1. Execute current emotional goal
+        if (agentEmotions[Emotion.Calm] > reluctance)
+        {
+            //TODO: "List" of scared actions with costs and goal fulfillments? Like in GOAP
+            calmGoal.Execute(agent);
+        }
+        else if (agentEmotions[Emotion.Anger] > reluctance)
+        {
+            angryGoal.Execute(agent);
+        }
+        else if (agentEmotions[Emotion.Fear] > reluctance)
+        {
+            scaredGoal.Execute(agent);
+        }
+
+        //Step 2. Tend towards disposition
+        foreach (KeyValuePair<Emotion, float> agentEmotionPair in agentEmotions)
+        {
+            //If disposition, tend towards max, else tend towards minimum
+            if (agentEmotionPair.Key == disposition)
+            {
+                agentEmotions[agentEmotionPair.Key] = Mathf.Lerp(agentEmotions[disposition], 1f, Time.deltaTime);
+            }
+            else
+            {
+                agentEmotions[agentEmotionPair.Key] = Mathf.Lerp(agentEmotions[agentEmotionPair.Key], 0f, Time.deltaTime);
+            }
+        }
+    }
 
     /// <summary>
     /// This method provides a way in which to influence this agent's emotional state
@@ -134,40 +181,6 @@ public class EmotionChip : MonoBehaviour {
             }
         }
     }
-
-    private void Update()
-    {
-        //Step 1. Execute current emotional goal
-        if (agentEmotions[Emotion.Calm] > reluctance)
-        {
-            //TODO: "List" of scared actions with costs and goal fulfillments? Like in GOAP
-            calmGoal.Execute(this);
-        }
-        else if (agentEmotions[Emotion.Anger] > reluctance)
-        {
-            angryGoal.Execute(this);
-        }
-        else if (agentEmotions[Emotion.Fear] > reluctance)
-        {
-            scaredGoal.Execute(this);
-        }
-
-        //Step 2. Tend towards disposition
-        foreach (KeyValuePair<Emotion, float> agentEmotionPair in agentEmotions)
-        {
-            //If disposition, tend towards max, else tend towards minimum
-            if (agentEmotionPair.Key == disposition)
-            {
-                agentEmotions[agentEmotionPair.Key] = Mathf.Lerp(agentEmotions[disposition], 1f, Time.deltaTime);
-            }
-            else
-            {
-                agentEmotions[agentEmotionPair.Key] = Mathf.Lerp(agentEmotions[agentEmotionPair.Key], 0f, Time.deltaTime);
-            }
-        }
-    }
-
-    
 
     //Scale the emotions to be within the range [0:1]
     private void ScaleEmotions()

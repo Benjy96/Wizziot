@@ -2,7 +2,7 @@
 
 public class State : MonoBehaviour {
 
-    public void Execute()
+    public void Execute(Enemy owner)
     {
 
     }

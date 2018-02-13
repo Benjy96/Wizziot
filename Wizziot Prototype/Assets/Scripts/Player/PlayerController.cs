@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour {
     // ----- Components ----- //
     public GameObject inventoryUI;
 
-    private StoryManager storyManager = StoryManager.Instance;
+    private StoryManager storyManager;
     private AbilityComponent abilityComponent;
     private Projector targetIndicator;
     private Camera cam;
@@ -43,7 +43,12 @@ public class PlayerController : MonoBehaviour {
         GameMetaInfo.allKeybinds.Add(KeyCode.I, new Action(() => inventoryUI.gameObject.SetActive(!inventoryUI.activeSelf)));
     }
 
-    void Update () {
+    private void Start()
+    {
+        storyManager = StoryManager.Instance;
+    }
+
+    private void Update () {
         HandleDirectionInput();
         HandleTargeting();
         HandleKeyboardInput();
@@ -124,6 +129,7 @@ public class PlayerController : MonoBehaviour {
                 catch (Exception e)
                 {
                     Debug.Log(e.Message);
+                    Debug.Log(e.StackTrace);
                 }
             }
         }
@@ -193,6 +199,7 @@ public class PlayerController : MonoBehaviour {
                 break;
 
             case TargetType.Story:
+                Debug.Log(target.name);
                 storyManager.AttemptToConverse((InteractableNPC) target);
                 break;
 

@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 23756626440842906}
   - component: {fileID: 114663951765115494}
   - component: {fileID: 114823869058487346}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sphere NPC
   m_TagString: InteractableNPC
   m_Icon: {fileID: 0}

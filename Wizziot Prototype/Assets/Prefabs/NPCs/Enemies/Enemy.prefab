@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 4212554981147484}
   - component: {fileID: 114667065209656976}
   - component: {fileID: 114792908412176066}
+  - component: {fileID: 114653254589682158}
   - component: {fileID: 114164407006037506}
   - component: {fileID: 195700673612654074}
   - component: {fileID: 54602758527950376}
@@ -201,6 +202,25 @@ MonoBehaviour:
   damageModifier: 0
   mitigateChance: 0
   damageReduction: 0
+--- !u!114 &114653254589682158
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1967363257081838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dee817f5e39bf184180df4a1339914af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  disposition: 0
+  reluctance: 0.5
+  trust: 2
+  irascibility: 2
+  cowardice: 2
+  calmGoal: {fileID: 0}
+  angryGoal: {fileID: 0}
+  scaredGoal: {fileID: 0}
 --- !u!114 &114667065209656976
 MonoBehaviour:
   m_ObjectHideFlags: 1
