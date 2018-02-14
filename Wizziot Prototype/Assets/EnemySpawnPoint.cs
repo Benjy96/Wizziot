@@ -7,10 +7,11 @@ public class EnemySpawnPoint : MonoBehaviour {
 
     public GameObject enemyPrefab;  //TODO: Make list for spawning multiple types   //TODO: Research factory design pattern ?
     public int spawnAmount = 10;
-    public float spawnRadius = 50f;
+    public float spawnRadius = 10f;
     public float spawnDelay = 0.1f;
 
-    [HideInInspector] public float collisionDistance;
+    public List<Vector3> spawnAreaWaypoints;
+    private List<Vector3> availableSpawnPoints;
 
     private void Awake()
     {
@@ -24,17 +25,50 @@ public class EnemySpawnPoint : MonoBehaviour {
             largestTransformSize = enemyPrefab.transform.localScale.z;
         }
 
-        collisionDistance = largestTransformSize / 1.5f;
+        spawnAreaWaypoints = new List<Vector3>(spawnAmount * 2);
+        availableSpawnPoints = new List<Vector3>(spawnAmount * 2);
 
         enemiesSpawned = new List<Enemy>();
+
+        GenerateWaypoints();
         InstantiateEnemy();
+    }
+
+    private void GenerateWaypoints()
+    {
+        int safetyCounter = 0;
+
+        while(spawnAreaWaypoints.Count != spawnAreaWaypoints.Capacity)
+        {
+            safetyCounter++;
+            if (safetyCounter >= spawnRadius * spawnRadius) break;
+
+            Vector3 randomWaypoint = new Vector3(Random.Range(0f, spawnRadius), 0f, Random.Range(0f, spawnRadius));
+            //enemyPrefab.transform.localScale.magnitude
+            Collider[] colliders = Physics.OverlapSphere(randomWaypoint, 1f, LayerMask.GetMask("Environment"));
+            if (colliders.Length == 0 && !spawnAreaWaypoints.Contains(randomWaypoint))
+            {
+                Debug.Log("Adding waypoint");
+                spawnAreaWaypoints.Add(randomWaypoint);
+                availableSpawnPoints.Add(randomWaypoint);
+                //TODO: Add not reached destination timer
+            }
+        }
     }
 
     public void InstantiateEnemy()
     {
+        int randomIndex = Random.Range(0, availableSpawnPoints.Count);
+
+        Debug.Log(randomIndex);
+
         GameObject e = Instantiate(enemyPrefab, 
-            new Vector3(Random.Range(0f, spawnRadius), 0f, Random.Range(0f, spawnRadius)), 
+            availableSpawnPoints[randomIndex], 
             Quaternion.identity);
+
+        Debug.Log(availableSpawnPoints[0]);
+
+        availableSpawnPoints.RemoveAt(randomIndex);
 
         Enemy enemy = e.GetComponent<Enemy>();
 
@@ -43,19 +77,5 @@ public class EnemySpawnPoint : MonoBehaviour {
         enemiesSpawned.Add(enemy);
 
         if (enemiesSpawned.Count < spawnAmount) Invoke("InstantiateEnemy", spawnDelay);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-            //TODO: Go more in depth on target selection behaviours
-            //Maybe entering enemy spawn zone alerts them?
-            //Or instead each enemy checks range?
-            //Maybe alerted as a whole but don't approach until near enough
-                //Can we tie in emotions? YES - increase target distance based upon emotion
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-
     }
 }

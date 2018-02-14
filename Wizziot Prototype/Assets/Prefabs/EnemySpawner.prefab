@@ -51,7 +51,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 30, y: 10, z: 30}
+  m_Size: {x: 20, y: 10, z: 20}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114227188130123050
 MonoBehaviour:
@@ -67,7 +67,7 @@ MonoBehaviour:
   enemiesSpawned: []
   enemyPrefab: {fileID: 1967363257081838, guid: ffda47dcd015b5d42822cee50b149c07,
     type: 2}
-  spawnAmount: 5
-  spawnRadius: 10
+  spawnAmount: 1
+  spawnRadius: 20
   spawnDelay: 0.1
   collisionDistance: 0

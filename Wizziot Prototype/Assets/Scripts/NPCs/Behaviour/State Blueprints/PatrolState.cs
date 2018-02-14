@@ -18,4 +18,10 @@ public class PatrolState : State {
     {
         base.ExitState();
     }
+
+    public static Vector3 PickLocation(Enemy owner)
+    {
+        int randomIndex = (int)Random.Range(0f, owner.Spawn.spawnAreaWaypoints.Count);
+        return owner.Spawn.spawnAreaWaypoints[randomIndex];
+    }
 }

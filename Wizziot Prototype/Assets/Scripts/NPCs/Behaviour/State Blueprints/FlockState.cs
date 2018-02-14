@@ -17,6 +17,7 @@ public class FlockState : State {   //TODO: make an "anti-flock" state based upo
 
     private NeighbourhoodTracker neighbourhood;
     private EnemySpawnPoint spawn;
+    private Transform target;
 
     protected override State EnterState(Enemy owner)
     {
@@ -33,7 +34,7 @@ public class FlockState : State {   //TODO: make an "anti-flock" state based upo
     //TODO: Add Behaviour for when player out of range
     public override void Execute()
     {
-        Transform target = SetTarget();
+        target = SelectTarget();
         if (target != null)
         {
             Debug.Log("Targeting: " + target.name);
@@ -76,12 +77,21 @@ public class FlockState : State {   //TODO: make an "anti-flock" state based upo
                     vel = Vector3.Lerp(vel, attractDelta, attractionWeight * fdt);
                 }
             }
-            owner.navAgent.SetDestination(vel);
-            FaceTarget(target);
+            MoveTo(vel);
+        }
+        else
+        {
+            Debug.Log("Patrolling");
+            if(owner.navAgent.remainingDistance <= owner.navAgent.stoppingDistance)
+            {
+                Debug.Log("Picking new co-ordinates");
+                int randomIndex = Random.Range(0, owner.Spawn.spawnAreaWaypoints.Count);
+                MoveTo(owner.Spawn.spawnAreaWaypoints[randomIndex]);
+            }
         }
     }
 
-    private Transform SetTarget()
+    private Transform SelectTarget()
     {
         GameObject targetGO = null;
         Transform target = null;
@@ -93,11 +103,17 @@ public class FlockState : State {   //TODO: make an "anti-flock" state based upo
         return target;
     }
 
-    private void FaceTarget(Transform target)
+    private void FaceTarget(Vector3 target)
     {
-        Vector3 direction = target.position - owner.Position;
+        Vector3 direction = target - owner.Position;
         direction = direction.normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
         owner.transform.rotation = Quaternion.Slerp(owner.transform.rotation, lookRotation, Time.fixedDeltaTime * 5f);
+    }
+
+    private void MoveTo(Vector3 vector)
+    {
+        owner.navAgent.SetDestination(vector);
+        FaceTarget(vector);
     }
 }

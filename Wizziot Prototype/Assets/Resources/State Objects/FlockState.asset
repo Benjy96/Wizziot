@@ -13,7 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   primaryTarget: {fileID: 1458570314575524, guid: 0e6afb90b2ea6fb4391ecd6b4a9f34a2,
     type: 2}
-  secondaryTarget: {fileID: 0}
+  secondaryTarget: {fileID: 1134084517704520, guid: 217668003b71cfa4e9928e20f2b247f5,
+    type: 2}
   velocityMatchingWeight: 0.25
   flockCenteringWeight: 0.2
   attractionWeight: 2

@@ -42,18 +42,18 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    void LoadGame()
+    public void LoadGame()
     {
         StoryManager.Instance.LoadStory();
     }
 
-    void SaveGame()
+    public void SaveGame()
     {
         StoryManager.Instance.SaveStory();
         //Save game state data
     }
 
-    void ExitGame()
+    public void ExitGame()
     {
 
     }
