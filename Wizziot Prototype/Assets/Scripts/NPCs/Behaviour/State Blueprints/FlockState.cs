@@ -24,8 +24,8 @@ public class FlockState : State {   //TODO: make an "anti-flock" state based upo
         neighbourhood = owner.GetComponent<NeighbourhoodTracker>();
         spawn = owner.Spawn;
 
-        neighbourhood.TrackObject(primaryTarget);
-        neighbourhood.TrackObject(secondaryTarget);
+        neighbourhood.RegisterInterest(primaryTarget);
+        neighbourhood.RegisterInterest(secondaryTarget);
 
         return this;
     }
@@ -36,6 +36,7 @@ public class FlockState : State {   //TODO: make an "anti-flock" state based upo
         Transform target = SetTarget();
         if (target != null)
         {
+            Debug.Log("Targeting: " + target.name);
             //Get current velocity - going to be modified
             Vector3 vel = owner.navAgent.destination;
 
@@ -53,7 +54,7 @@ public class FlockState : State {   //TODO: make an "anti-flock" state based upo
             Vector3 attractDelta = target.position - owner.Position;    //Agent to attractor vector
 
             //Attract if target is within targeting distance
-            bool attracted = (attractDelta.sqrMagnitude < owner.stats.sqrMaxTargetDistance && owner.navAgent.stoppingDistance < attractDelta.magnitude);   //If distance less than max target distance, NPC attracted to target
+            bool attracted = (owner.navAgent.stoppingDistance < attractDelta.magnitude);   //If distance less than max target distance, NPC attracted to target
 
             //Apply ALL velocities - the weighting will help influence how much of an impact "influence" each has. Each vector has an affect since vel is assigned and used each time
             float fdt = Time.fixedDeltaTime;
@@ -74,20 +75,14 @@ public class FlockState : State {   //TODO: make an "anti-flock" state based upo
                 {
                     vel = Vector3.Lerp(vel, attractDelta, attractionWeight * fdt);
                 }
-                else
-                {   //go away from attractor
-                    vel = Vector3.Lerp(vel, -attractDelta, repulsionWeight * fdt);  //TODO: Secondary target & secondary target allocation
-                }
             }
             owner.navAgent.SetDestination(vel);
-            owner.transform.LookAt(target);
+            FaceTarget(target);
         }
     }
 
     private Transform SetTarget()
     {
-        //TODO: Track target
-        //Collider[] colliders = Physics.OverlapSphere(owner.Position, owner.stats.sqrMaxTargetDistance);
         GameObject targetGO = null;
         Transform target = null;
 
@@ -96,5 +91,13 @@ public class FlockState : State {   //TODO: make an "anti-flock" state based upo
         if (targetGO != null) target = targetGO.transform;
 
         return target;
+    }
+
+    private void FaceTarget(Transform target)
+    {
+        Vector3 direction = target.position - owner.Position;
+        direction = direction.normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
+        owner.transform.rotation = Quaternion.Slerp(owner.transform.rotation, lookRotation, Time.fixedDeltaTime * 5f);
     }
 }

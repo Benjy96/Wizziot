@@ -94,7 +94,7 @@ public class NeighbourhoodTracker : MonoBehaviour
     }
 
     //Using dictionary to register object references that are able to be tracked - O(1) access time
-    public void TrackObject(GameObject gameObject)
+    public void RegisterInterest(GameObject gameObject)
     {
         secondaryNeighbours.Add(gameObject.name, null);
     }
