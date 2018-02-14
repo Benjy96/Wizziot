@@ -13,6 +13,8 @@ public class Vortex : MonoBehaviour
     public float vortexRadius = 5f;     //This values only used for INITIAL neighbours - can use update method for continuos assignments
     public float vortexDuration = 5f;
 
+    public GameObject vortexEffectPrefab;
+
     private bool vortexForming = false;
     private bool vortexRepulsing = false;
     private Collider[] neighbourhood;
@@ -31,6 +33,8 @@ public class Vortex : MonoBehaviour
     //Once landed on/impacted a surface:
     private void OnCollisionEnter(Collision collision)
     {
+        CreateVortexEffect();
+
         if (!vortexForming)
         {
             //Prevents a secondary collision process if singularity hits 2 objects
@@ -143,5 +147,10 @@ public class Vortex : MonoBehaviour
 
         //Destroy object
         Destroy(gameObject);
+    }
+
+    private void CreateVortexEffect()
+    {
+        vortexEffectPrefab = Instantiate(vortexEffectPrefab, transform.position, Quaternion.identity, gameObject.transform);
     }
 }

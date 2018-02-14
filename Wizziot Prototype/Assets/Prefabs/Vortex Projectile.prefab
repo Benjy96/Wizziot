@@ -112,7 +112,9 @@ MonoBehaviour:
   yoyoMode: 1
   vortexMass: 500
   vortexRadius: 5
-  duration: 5
+  vortexDuration: 5
+  vortexEffectPrefab: {fileID: 1919913695092184, guid: 1e00a4340f4ae8a4b8253da4ffaa7c82,
+    type: 2}
 --- !u!135 &135703370279472162
 SphereCollider:
   m_ObjectHideFlags: 1

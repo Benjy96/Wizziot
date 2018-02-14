@@ -6,7 +6,7 @@ public class Aim : MonoBehaviour {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit pointHit;
 
-        if (Physics.Raycast(ray, out pointHit, 100f, LayerMask.GetMask("Environment")))
+        if (Physics.Raycast(ray, out pointHit, 100f, LayerMask.GetMask("Ground")))
         {
             transform.position = pointHit.point;
         }

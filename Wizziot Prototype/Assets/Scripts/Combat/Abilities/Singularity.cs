@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//TODO: Research physics layers (to affect only certain types) - or use user defined? e.g. item enum
+//TODO: Add Parent class for vortex/singularity shared variables and methods
 public class Singularity : MonoBehaviour {
 
     public static float G = 0.5f;
@@ -11,10 +11,15 @@ public class Singularity : MonoBehaviour {
     public float singularityRadius = 5f;
     public float duration = 5f;
 
+    public GameObject singularityEffectPrefab;
+
     private bool singularityForming = false;
     private bool singularityAttracting = false;
     private Collider[] neighbourhood;
     private List<Rigidbody> neighbourRbs;
+
+    private Vector3 startPos;
+    private bool raiseObject;
 
     private Rigidbody rb;
 
@@ -27,6 +32,9 @@ public class Singularity : MonoBehaviour {
     //Once landed on/impacted a surface:
     private void OnCollisionEnter(Collision collision)
     {
+        //e.g. this could be a base.OnCollissionEnter();
+        CreateSingularityEffect();
+
         if (!singularityForming)
         {
             //Prevents a secondary collision process if singularity hits 2 objects
@@ -63,6 +71,8 @@ public class Singularity : MonoBehaviour {
 
     private void FixedUpdate()
     {
+        
+
         if (singularityAttracting)
         {
             //TODO: Disable movement component of affected NPCs while active
@@ -97,5 +107,10 @@ public class Singularity : MonoBehaviour {
 
         //Destroy object
         Destroy(gameObject);
+    }
+
+    private void CreateSingularityEffect()
+    {
+        singularityEffectPrefab = Instantiate(singularityEffectPrefab, transform.position, Quaternion.identity, gameObject.transform);
     }
 }
