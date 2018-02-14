@@ -19,16 +19,17 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4972388501212062}
+  - component: {fileID: 114176260486268072}
+  - component: {fileID: 114139397320928606}
   - component: {fileID: 33745388379875340}
   - component: {fileID: 65134271439423514}
   - component: {fileID: 23642227512447754}
-  - component: {fileID: 114176260486268072}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: BlockCoin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &4972388501212062
 Transform:
@@ -37,8 +38,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1615661566601068}
   m_LocalRotation: {x: -0, y: 0.36324388, z: -0, w: 0.93169415}
-  m_LocalPosition: {x: -541.31, y: -220, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -3.3099976, y: 0.5, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -89,11 +90,24 @@ BoxCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1615661566601068}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114139397320928606
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1615661566601068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43acf6a64efce1f4499b84a31289d6e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bobSpeed: 6
+  bobRange: 0.05
 --- !u!114 &114176260486268072
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -107,5 +121,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetType: 1
   interactionRadius: 5
-  name: New item
+  name: BlockCoin
   icon: {fileID: 21300000, guid: eb5f6e2757c821940b69cf1456f7865a, type: 3}
