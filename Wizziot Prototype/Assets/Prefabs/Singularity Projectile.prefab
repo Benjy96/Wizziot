@@ -109,7 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecacd0d1fc1f2864bbda6615e393d63e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  singularityMass: 5000
+  singularityMass: 500
   singularityRadius: 10
   duration: 5
   singularityEffectPrefab: {fileID: 1919913695092184, guid: a20dcb1c04d35ff4c9908309b16c6e6f,
