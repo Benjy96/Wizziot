@@ -33,7 +33,10 @@ public class EmotionChip : MonoBehaviour {
     //Disposition changes how influencing factors affect the agent
     public Emotion disposition = Emotion.Calm;
 
-    //How likely an emotional agent is to change their behaviour
+    /// <summary>
+    /// How likely an emotional agent is to change their behaviour from external influences. Also affects rate at which agent tends towards their disposition.
+    /// Reluctance == .1: Time to revert to disposition (from 0) == 11s || Reluctance == .9: Time to revert to disposition (from 0) == 28s
+    /// </summary>
     [Range(0.1f, 0.9f)] public float reluctance = 0.5f;
 
     //The agent's emotional state(s)
@@ -91,11 +94,11 @@ public class EmotionChip : MonoBehaviour {
         {
             if (key == disposition)
             {
-                agentEmotions[key] = Mathf.Lerp(agentEmotions[key], 1f, Time.fixedDeltaTime / 10f);   //Approx 10 seconds to return to disposition (assuming no external influences)
+                agentEmotions[key] = Mathf.Lerp(agentEmotions[key], 1f, Time.fixedDeltaTime / (10f / reluctance));   //Approx 10 seconds to return to disposition (assuming no external influences)
             }
             else
             {
-                agentEmotions[key] = Mathf.Lerp(agentEmotions[key], 0f, Time.fixedDeltaTime / 10f);
+                agentEmotions[key] = Mathf.Lerp(agentEmotions[key], 0f, Time.fixedDeltaTime / (10f / reluctance));
             }
         }
         ScaleEmotions();
