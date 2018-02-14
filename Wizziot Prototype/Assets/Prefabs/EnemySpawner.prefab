@@ -20,7 +20,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4649071720386150}
   - component: {fileID: 114227188130123050}
-  - component: {fileID: 65328249989554000}
   m_Layer: 0
   m_Name: EnemySpawner
   m_TagString: Untagged
@@ -41,18 +40,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &65328249989554000
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1667744843981164}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 20, y: 10, z: 20}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114227188130123050
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -67,7 +54,7 @@ MonoBehaviour:
   enemiesSpawned: []
   enemyPrefab: {fileID: 1967363257081838, guid: ffda47dcd015b5d42822cee50b149c07,
     type: 2}
-  spawnAmount: 1
+  spawnAmount: 3
   spawnRadius: 20
   spawnDelay: 0.1
-  collisionDistance: 0
+  spawnAreaWaypoints: []

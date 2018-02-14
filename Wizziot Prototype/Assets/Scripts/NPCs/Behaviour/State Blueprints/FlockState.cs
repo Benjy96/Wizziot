@@ -31,53 +31,12 @@ public class FlockState : State {   //TODO: make an "anti-flock" state based upo
         return this;
     }
 
-    //TODO: Add Behaviour for when player out of range
     public override void Execute()
     {
         target = SelectTarget();
         if (target != null)
         {
-            Debug.Log("Targeting: " + target.name);
-            //Get current velocity - going to be modified
-            Vector3 vel = owner.navAgent.destination;
-
-            //Velocity Matching - match velocity of neighbors
-            Vector3 velAlign = neighbourhood.AvgVel;
-
-            //Flock centering - move towards center of local neighbors
-            Vector3 velCenter = neighbourhood.AvgPos;
-            if (velCenter != Vector3.zero)
-            {
-                velCenter -= owner.Position;    //look to center
-            }
-
-            //Attraction
-            Vector3 attractDelta = target.position - owner.Position;    //Agent to attractor vector
-
-            //Attract if target is within targeting distance
-            bool attracted = (owner.navAgent.stoppingDistance < attractDelta.magnitude);   //If distance less than max target distance, NPC attracted to target
-
-            //Apply ALL velocities - the weighting will help influence how much of an impact "influence" each has. Each vector has an affect since vel is assigned and used each time
-            float fdt = Time.fixedDeltaTime;
-
-            if (velAlign != Vector3.zero)   //If we need to align
-            {
-                vel = Vector3.Lerp(vel, velAlign, velocityMatchingWeight * fdt);
-            }
-
-            if (velCenter != Vector3.zero)  //If we need to center
-            {
-                vel = Vector3.Lerp(vel, velCenter, flockCenteringWeight * fdt);
-            }
-
-            if (attractDelta != Vector3.zero) //If we need to go towards target
-            {
-                if (attracted)  //if distance from attractor is big enough
-                {
-                    vel = Vector3.Lerp(vel, attractDelta, attractionWeight * fdt);
-                }
-            }
-            MoveTo(vel);
+            MoveTo(target.position);
         }
         else
         {
@@ -87,6 +46,7 @@ public class FlockState : State {   //TODO: make an "anti-flock" state based upo
                 Debug.Log("Picking new co-ordinates");
                 int randomIndex = Random.Range(0, owner.Spawn.spawnAreaWaypoints.Count);
                 MoveTo(owner.Spawn.spawnAreaWaypoints[randomIndex]);
+                //TODO: Add not reached destination timer
             }
         }
     }
@@ -108,12 +68,12 @@ public class FlockState : State {   //TODO: make an "anti-flock" state based upo
         Vector3 direction = target - owner.Position;
         direction = direction.normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
-        owner.transform.rotation = Quaternion.Slerp(owner.transform.rotation, lookRotation, Time.fixedDeltaTime * 5f);
+        owner.transform.rotation = Quaternion.Slerp(owner.transform.rotation, lookRotation, Time.fixedDeltaTime * 10f);
     }
 
-    private void MoveTo(Vector3 vector)
+    private void MoveTo(Vector3 target)
     {
-        owner.navAgent.SetDestination(vector);
-        FaceTarget(vector);
+        owner.navAgent.destination = target;
+        FaceTarget(target);
     }
 }
