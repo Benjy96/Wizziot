@@ -1,14 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 //This class keeps track of nearby Enemies (agents)
 public class NeighbourhoodTracker : MonoBehaviour
 {
-    public EnemySpawnPoint Spawn { get { return spawnPoint; } set { spawnPoint = value; } }
     public List<Enemy> neighbours;
+
+    public Dictionary<string, GameObject> secondaryNeighbours;
 
     private EnemySpawnPoint spawnPoint;
     private SphereCollider sphereCol;
+
+    public float TrackingRadius { get { return sphereCol.radius; } set { sphereCol.radius = value; } }
 
     public Vector3 AvgPos
     {
@@ -45,11 +49,9 @@ public class NeighbourhoodTracker : MonoBehaviour
     private void Awake()
     {
         neighbours = new List<Enemy>();
-    }
+        secondaryNeighbours = new Dictionary<string, GameObject>();
 
-    private void Start()
-    {
-        Spawn = GetComponent<Enemy>().Spawn;
+        sphereCol = GetComponent<SphereCollider>();
     }
 
     //Add enemy to neighbourhood on trigger collision
@@ -61,7 +63,13 @@ public class NeighbourhoodTracker : MonoBehaviour
             if (neighbours.IndexOf(e) == -1)
             {
                 neighbours.Add(e);
+                return;
             }
+        }
+
+        if (secondaryNeighbours.ContainsKey(other.name))
+        {
+            secondaryNeighbours[other.name] = other.gameObject;
         }
     }
 
@@ -75,5 +83,32 @@ public class NeighbourhoodTracker : MonoBehaviour
                 neighbours.Remove(e);
             }
         }
+
+        if (secondaryNeighbours.ContainsKey(other.name))
+        {
+            if (secondaryNeighbours[other.name] != null)
+            {
+                secondaryNeighbours[other.name] = null;
+            }
+        }
+    }
+
+    //Using dictionary to register object references that are able to be tracked - O(1) access time
+    public void TrackObject(GameObject gameObject)
+    {
+        secondaryNeighbours.Add(gameObject.name, null);
+    }
+
+    public GameObject RetrieveTrackedObject(GameObject gameObject)
+    {
+        if (secondaryNeighbours.ContainsKey(gameObject.name))
+        {
+            if(secondaryNeighbours[gameObject.name] != null)
+            {
+                return secondaryNeighbours[gameObject.name];
+            }
+        }
+
+        return null;
     }
 }

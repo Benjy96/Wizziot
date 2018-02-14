@@ -16,6 +16,13 @@ public class Enemy : Targetable {
     protected static GameObject player;
     protected static Difficulty gameDifficulty;
 
+    protected EnemySpawnPoint home;
+
+    public Transform target;
+
+    private float maxTargetDistance;
+    
+    //Components
     public EmotionChip emotionChip;
     public NavMeshAgent navAgent;
     public AbilityComponent abilityComponent;
@@ -23,10 +30,7 @@ public class Enemy : Targetable {
     public EntityStats stats;
     public NeighbourhoodTracker neighbourhoodTracker;
 
-    protected EnemySpawnPoint home;
-
-    public Transform target;
-
+    //Properties
     public EnemySpawnPoint Spawn
     {
         get { return home; }
@@ -34,10 +38,10 @@ public class Enemy : Targetable {
     }
     public Vector3 Position { get { return transform.position; } }
     public Vector3 Velocity { get { return rBody.velocity; } set { rBody.velocity = value; } }
+    public float SightRange { get { return neighbourhoodTracker.TrackingRadius; } }
 
     protected void OnEnable()
     {
-        //Need to spawn enemy at runtime for this to not throw a null ref exception
         //GameManager.Instance.OnDifficultyChanged += UpdateDifficulty;
     }
 
@@ -48,7 +52,7 @@ public class Enemy : Targetable {
 
     protected void UpdateDifficulty()
     {
-        //stats.maxTargetDistance = (difficulty) * var;
+        Debug.Log("Difficulty update attempted: Modify Enemy Attributes Here");
     }
 
     protected void Awake()  //Object initialised
@@ -66,7 +70,7 @@ public class Enemy : Targetable {
         if (player == null) player = PlayerManager.Instance.player;
         if (gameDifficulty != GameMetaInfo._GAME_DIFFICULTY) gameDifficulty = GameMetaInfo._GAME_DIFFICULTY;
 
-        target = player.transform;
+        neighbourhoodTracker.TrackingRadius = Mathf.Sqrt(stats.sqrMaxTargetDistance);
 
         emotionChip.ScaleEmotionWeights(gameDifficulty);
     }

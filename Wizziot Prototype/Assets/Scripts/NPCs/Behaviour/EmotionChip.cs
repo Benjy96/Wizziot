@@ -47,7 +47,6 @@ public class EmotionChip : MonoBehaviour {
     public float cowardice = 1f;    //Fear weighting
 
     [SerializeField] private State currentState;
-    private bool currentGoalNotBeingAchieved;
 
     //TODO: Would make sense to make "State Objects" "Goals", e.g. Goal: Suicide -> has a list of "State" classes that it goes through
     public State calmState;
@@ -214,23 +213,14 @@ public class EmotionChip : MonoBehaviour {
     /// </summary>
     private void TakeAction(State goal, Enemy agent)
     {
-        //If changing state, and state isn't null, exit the current state
         if (currentState != null && goal.GetType() != currentState.GetType())
         {
             //ExitState() can tell the agent what to do next. If it is null, however, we simply do as directed by the emotional goal.
-            currentState = currentState.ExitState();
-            if (currentState != null)
-            {
-                currentGoalNotBeingAchieved = false;
-            }
-            else
-            {
-                currentGoalNotBeingAchieved = true;
-            }
+            currentState.ExitState();
         }
 
         //If not in any state or specified state, set it up (enter/construct) : OR : current state not same type as goal AND current goal not being worked on
-        if (currentState == null || (currentState.GetType() != goal.GetType() && currentGoalNotBeingAchieved))
+        if (currentState == null || currentState.GetType() != goal.GetType())
         {
             currentState = goal.CreateState(agent);
         }
