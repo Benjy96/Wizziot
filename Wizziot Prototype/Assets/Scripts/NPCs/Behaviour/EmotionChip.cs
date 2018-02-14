@@ -49,9 +49,9 @@ public class EmotionChip : MonoBehaviour {
     [SerializeField] private State currentState;
 
     //TODO: Would make sense to make "State Objects" "Goals", e.g. Goal: Suicide -> has a list of "State" classes that it goes through
-    public State calmGoal;
-    public State angryGoal;
-    public State scaredGoal;
+    public State calmState;
+    public State angryState;
+    public State scaredState;
 
     /// <summary>
     /// As difficulty increases, enemy NPCs gain confidence.
@@ -75,17 +75,17 @@ public class EmotionChip : MonoBehaviour {
         //Step 1. Execute current emotional goal
         if (agentEmotions[Emotion.Calm] > reluctance)
         {
-            TakeAction(calmGoal, agent);
+            TakeAction(calmState, agent);
         }
 
         if (agentEmotions[Emotion.Anger] > reluctance)
         {
-            TakeAction(angryGoal, agent);
+            TakeAction(angryState, agent);
         }
 
         if (agentEmotions[Emotion.Fear] > reluctance)
         {
-            TakeAction(scaredGoal, agent);  //This is where goals come in -> each state could lead to next (in them or abstract above). e.g. run, but if fear too high, kill self
+            TakeAction(scaredState, agent);  //This is where goals come in -> each state could lead to next (in them or abstract above). e.g. run, but if fear too high, kill self
         }
 
         //Step 2. Tend towards disposition
@@ -208,12 +208,15 @@ public class EmotionChip : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Handles State switching, execution, and exits
+    /// </summary>
     private void TakeAction(State goal, Enemy agent)
     {
         //If changing state, and state isn't null, exit the current state
         if (currentState != null && goal.GetType() != currentState.GetType())
         {
-            currentState.ExitState();
+            currentState = currentState.ExitState();
         }
 
         //If not in any state or specified state, set it up (enter/construct)

@@ -27,8 +27,9 @@ public class FlockState : State {   //TODO: make an "anti-flock" state based upo
     //TODO: Add Behaviour for when player out of range
     public override void Execute()
     {
-        Debug.Log(attractionWeight);
-        Transform target = owner.target;
+        Transform target = SetTarget();
+
+        //Get current velocity - going to be modified
         Vector3 vel = owner.navAgent.destination;
 
         //Velocity Matching - match velocity of neighbors
@@ -73,5 +74,14 @@ public class FlockState : State {   //TODO: make an "anti-flock" state based upo
         }
         owner.navAgent.SetDestination(vel);
         owner.transform.LookAt(target.transform);
+    }
+
+    private Transform SetTarget()
+    {
+        //Acquire Target Destination
+        Transform target = owner.target;
+        if (target == null) target = secondaryTarget.transform;
+
+        return target;
     }
 }

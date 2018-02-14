@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class State : ScriptableObject {
 
+    protected State defaultState;   //What to do if the selected state cannot be fulfilled
+
     protected Enemy owner;
 
     /// <summary>
@@ -36,10 +38,12 @@ public class State : ScriptableObject {
     }
 
     /// <summary>
-    /// Use to gracefully exit a state - e.g. stop Coroutines, etc.
+    /// Use to gracefully exit a state - e.g. stop Coroutines, etc. Returns a state to enter next if needed.
     /// </summary>
-    public virtual void ExitState()
+    /// <returns>The next state to enter (only return this if the current state has failed and needs to "default"</returns>
+    public virtual State ExitState()
     {
         Debug.Log("ExitState() acts as a kind of Destructor for the state");
+        return null;
     }
 }
