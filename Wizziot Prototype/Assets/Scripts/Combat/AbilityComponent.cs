@@ -65,18 +65,7 @@ public class AbilityComponent : MonoBehaviour {
     {
         SetTarget(target);
 
-        if (GameMetaInfo._Is_Instant_Ability(SelectedAbility))
-        {
-            UseInstantAbility(SelectedAbility, target);
-        }
-        else if (GameMetaInfo._Is_AoE_Ability(SelectedAbility))
-        {
-            UseAOEAbility(SelectedAbility);
-        }
-        else if (GameMetaInfo._Is_Defense_Ability(SelectedAbility))
-        {
-            UseInstantAbility(SelectedAbility, target);
-        }
+        UseAbility();
     }
 
     //Player interface
@@ -86,13 +75,13 @@ public class AbilityComponent : MonoBehaviour {
 
         if (SelectedAbility == ability)
         {
-            if (target != null)
+            if (currentTarget != null)
             {
                 UseAbility();
             }
             else
             {
-                Debug.Log("Invalid target: " + target.name);
+                Debug.Log("Invalid target: " + currentTarget.name);
             }
         }
         else
@@ -158,8 +147,13 @@ public class AbilityComponent : MonoBehaviour {
         if(zapTargeter.target != currentTarget) zapTargeter.target = currentTarget;
         zapParticles.time = 0;
         zapParticles.Play(true);
-        if (targetRB != null) targetRB.AddForce((currentTarget.position - transform.position).normalized * 5f);
+        if (targetRB != null)
+        {
+            targetRB.AddForce(currentTarget.position - transform.position);
+        }
+
         yield return zapEffectDuration;
+
         zapParticles.Stop(true);
     }
 

@@ -93,23 +93,21 @@ public class PlayerController : MonoBehaviour {
                         {
                             case TargetType.Item:
                                 target = pointHit.transform.GetComponent<Item>();
-                                SetTargetIndicatorPos();
+                                SetTargetIndicatorPos(true);
                                 break;
 
                             case TargetType.Enemy:
                                 target = pointHit.transform.GetComponent<Enemy>();
-                                SetTargetIndicatorPos();
+                                SetTargetIndicatorPos(true);
                                 break;
 
                             case TargetType.Story:
                                 target = pointHit.transform.GetComponent<InteractableNPC>();
-                                SetTargetIndicatorPos();
+                                SetTargetIndicatorPos(true);
                                 break;
 
                             default:
-                                targetIndicator.enabled = false;
-                                targetIndicator.transform.position = transform.position;
-                                target.transform.SetParent(transform);
+                                SetTargetIndicatorPos(false);
                                 break;
                         }
                     }
@@ -154,10 +152,21 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    private void SetTargetIndicatorPos()
+    private void SetTargetIndicatorPos(bool aboveTarget)
     {
+        float height;
+
+        if (aboveTarget)
+        {
+            height = target.transform.localScale.y * 5;
+        }
+        else
+        {
+            height = 0;
+        }
+
         targetIndicator.transform.SetParent(target.transform);
-        targetIndicator.transform.position = target.transform.position + new Vector3(0f, target.transform.localScale.y * 5);
+        targetIndicator.transform.position = target.transform.position + new Vector3(0f, height);
         targetIndicator.enabled = true;
     }
 
