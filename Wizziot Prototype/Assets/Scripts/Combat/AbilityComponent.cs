@@ -15,11 +15,12 @@ public class AbilityComponent : MonoBehaviour {
     public Transform aimingDisc;
     private bool aiming = false;
     private Transform instantiatedAimingDisc;
-    
+
     //ZAP REQUIRED VARIABLES
     public float fireRate = .25f;
-    private LineRenderer laserLine;
-    private WaitForSeconds spellDuration = new WaitForSeconds(0.07f);
+    public GameObject zapSource;
+    private particleAttractorLinear zapTargeter;
+    private WaitForSeconds spellDuration = new WaitForSeconds(1f);
     private float nextFire; //track time passed
 
     //CONFUSE VARIABLES
@@ -33,7 +34,7 @@ public class AbilityComponent : MonoBehaviour {
 
     private void Awake()
     {
-        laserLine = GetComponentInChildren<LineRenderer>();
+        zapTargeter = zapSource.GetComponentInChildren<particleAttractorLinear>();
     }
 
     //Kebyind & UI button accesses this from controller (Start @ 1 to correspond to player UI)
@@ -77,22 +78,20 @@ public class AbilityComponent : MonoBehaviour {
             if (Time.time > nextFire)
             {
                 nextFire = Time.time + fireRate;
-                StartCoroutine(ShotEffect());
+                StartCoroutine(ShotEffect(target));
 
-                Vector3 rayOrigin = transform.position;
-
-                laserLine.SetPosition(0, rayOrigin);
-                laserLine.SetPosition(1, target.transform.position);
-                Destroy(target.gameObject); //TODO: Research death effects - e.g. instantiate smaller blocks & engage a particle system
+                //Destroy(target.gameObject); //TODO: Research death effects - e.g. instantiate smaller blocks & engage a particle system
             }
         }
     }
 
-    private IEnumerator ShotEffect()
+    private IEnumerator ShotEffect(Transform target)
     {
-        laserLine.enabled = true;
+        zapSource.gameObject.SetActive(true);
+        zapTargeter.target = target;
         yield return spellDuration;
-        laserLine.enabled = false;
+        zapTargeter.target = null;
+        zapSource.gameObject.SetActive(false);
     }
     #endregion
 

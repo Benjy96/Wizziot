@@ -11,6 +11,7 @@ public class GameMetaInfo {
 
     public static string _AFFECTABLE_OBJECT_LAYER_NAME { get { return "Object"; } }
     public static string _IMMOVABLE_OBJECT_LAYER_NAME { get { return "Environment"; } }
+    public static string _GROUND_WALKABLE_LAYER_NAME { get { return "Ground"; } }
 
     public static Difficulty _GAME_DIFFICULTY = Difficulty.Normal;
 }

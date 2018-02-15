@@ -97,7 +97,8 @@ public class PlayerController : MonoBehaviour {
                                 break;
 
                             case TargetType.Enemy:
-                                //TODO: Add enemy targeting code
+                                target = pointHit.transform.GetComponent<Enemy>();
+                                SetTargetIndicatorPos();
                                 break;
 
                             case TargetType.Story:
@@ -125,6 +126,8 @@ public class PlayerController : MonoBehaviour {
                 try
                 {
                     GameMetaInfo.allKeybinds[code]();
+                    Debug.Log("Processing this code: " + code);
+                    Debug.Log("Getting this value: " + GameMetaInfo.allKeybinds[code]);
                 }
                 catch (Exception e)
                 {
@@ -156,13 +159,13 @@ public class PlayerController : MonoBehaviour {
     {
         if (abilityComponent.SelectedAbility == ability)
         {
-            if (target != null && target.tag.Equals("Enemy"))
+            if (target != null && target.gameObject.layer == LayerMask.NameToLayer(GameMetaInfo._AFFECTABLE_OBJECT_LAYER_NAME))
             {
                 abilityComponent.UseAbility(target.transform);
             }
             else
             {
-                Debug.Log("Invalid target");
+                Debug.Log("Invalid target: " + target.name);
             }
         }
         else
