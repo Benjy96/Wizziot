@@ -30,11 +30,11 @@ public class PlayerController : MonoBehaviour {
 
         //TODO: Put all bindings in GameControls.cs
         //Abilities
-        GameMetaInfo.allKeybinds.Add(KeyCode.Alpha1, new Action(() => UseInstantAbility(Abilities.Zap)));
-        GameMetaInfo.allKeybinds.Add(KeyCode.Alpha2, new Action(() => UseInstantAbility(Abilities.Confuse)));
-        GameMetaInfo.allKeybinds.Add(KeyCode.Alpha3, new Action(() => UseAOEAbility(Abilities.Vortex)));
-        GameMetaInfo.allKeybinds.Add(KeyCode.Alpha4, new Action(() => UseAOEAbility(Abilities.Singularity)));
-        GameMetaInfo.allKeybinds.Add(KeyCode.Alpha5, new Action(() => UseInstantAbility(Abilities.Heal)));
+        GameMetaInfo.allKeybinds.Add(KeyCode.Alpha1, new Action(() => abilityComponent.UseInstantAbility(Abilities.Zap, target.transform)));
+        GameMetaInfo.allKeybinds.Add(KeyCode.Alpha2, new Action(() => abilityComponent.UseInstantAbility(Abilities.Confuse, target.transform)));
+        GameMetaInfo.allKeybinds.Add(KeyCode.Alpha3, new Action(() => abilityComponent.UseAOEAbility(Abilities.Vortex)));
+        GameMetaInfo.allKeybinds.Add(KeyCode.Alpha4, new Action(() => abilityComponent.UseAOEAbility(Abilities.Singularity)));
+        GameMetaInfo.allKeybinds.Add(KeyCode.Alpha5, new Action(() => abilityComponent.UseInstantAbility(Abilities.Heal, target.transform)));
         //General
         GameMetaInfo.allKeybinds.Add(KeyCode.F, Interact);
         GameMetaInfo.allKeybinds.Add(KeyCode.Escape, new Action(() => StoryManager.Instance.CloseConversation())); //TODO: every ui subscribe to manager to close upon esc -> then menu
@@ -151,38 +151,6 @@ public class PlayerController : MonoBehaviour {
                     StoryManager.Instance.Choice(playerChoice);
                 }
             }
-        }
-    }
-
-    //TODO: Put these methods into abil component and make public (interface) for use in keybinds
-    private void UseInstantAbility(Abilities ability)
-    {
-        if (abilityComponent.SelectedAbility == ability)
-        {
-            if (target != null && (target.tag.Equals(GameMetaInfo._TAG_SHOOTABLE_BY_PLAYER)))   //TODO: || Object layer for when adding instants that can affect environment
-            {
-                abilityComponent.UseAbility(target.transform);
-            }
-            else
-            {
-                Debug.Log("Invalid target: " + target.name);
-            }
-        }
-        else
-        {
-            abilityComponent.SelectAbility(ability);
-        }
-    }
-
-    private void UseAOEAbility(Abilities ability)
-    {
-        if (abilityComponent.SelectedAbility == ability)
-        {
-            abilityComponent.UseAbility(null);
-        }
-        else
-        {
-            abilityComponent.SelectAbility(ability);
         }
     }
 

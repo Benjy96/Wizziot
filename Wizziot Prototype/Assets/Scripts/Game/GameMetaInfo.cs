@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameMetaInfo {
@@ -18,6 +19,51 @@ public class GameMetaInfo {
     public static string _TAG_SHOOTABLE_BY_PLAYER { get { return "Enemy"; } }
     public static string _TAG_SHOOTABLE_BY_NPC { get { return "Player"; } }
 
+    //Ability Contracts & Verification
+    public static int _INSTANT_ABILITY_CODE { get { return Enum.GetValues(typeof(Abilities)).Cast<int>().First(); } }
+    public static int _AREA_ABILITY_CODE { get { return Enum.GetValues(typeof(Abilities)).Cast<int>().First() + 50;  } }
+    public static int _DEFENSE_ABILITY_CODE { get { return Enum.GetValues(typeof(Abilities)).Cast<int>().First() + 100; } }
+
+    public static bool _Is_Instant_Ability(Abilities ability)
+    {
+        int abilityCode = (int)ability;
+        if (abilityCode >= _INSTANT_ABILITY_CODE && abilityCode < _AREA_ABILITY_CODE)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public static bool _Is_AoE_Ability(Abilities ability)
+    {
+        int abilityCode = (int)ability;
+        if (abilityCode >= _AREA_ABILITY_CODE && abilityCode < _DEFENSE_ABILITY_CODE)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public static bool _Is_Defense_Ability(Abilities ability)
+    {
+        int abilityCode = (int)ability;
+        if (abilityCode >= _DEFENSE_ABILITY_CODE)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    //Difficulty
     public static Difficulty _GAME_DIFFICULTY = Difficulty.Normal;
 }
 
@@ -33,4 +79,3 @@ public enum Abilities
     Vortex = 100, Singularity,
     Heal = 150
 }
-

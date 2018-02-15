@@ -19,8 +19,6 @@ public class Enemy : Targetable {
     protected EnemySpawnPoint home;
 
     public Transform target;
-
-    private float maxTargetDistance;
     
     //Components
     public EmotionChip emotionChip;
@@ -78,5 +76,44 @@ public class Enemy : Targetable {
     protected void FixedUpdate()
     {
         emotionChip.Execute(this);
+    }
+
+    // ----- NAVIGATION ----- //
+
+    public void MoveTo(Vector3 target)
+    {
+        if (navAgent != null)
+        {
+            navAgent.destination = target;
+        }
+        else
+        {
+            Vector3 direction = target - Position;
+            direction = direction.normalized;
+            float ownerSpeed = stats.speed;
+
+            Velocity = direction * ownerSpeed;
+        }
+        FaceTarget(target);
+    }
+
+    public void FaceTarget(Vector3 target)
+    {
+        Vector3 direction = target - Position;
+        direction = direction.normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.fixedDeltaTime * 10f);
+    }
+
+    public bool DestinationReached()
+    {
+        if(navAgent != null)
+        {
+            return navAgent.remainingDistance <= (navAgent.stoppingDistance + (navAgent.stoppingDistance / 2));
+        }
+        else
+        {
+            return (target.position - Position).sqrMagnitude <= transform.localScale.sqrMagnitude;
+        }
     }
 }

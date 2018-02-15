@@ -2,22 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//TODO: Restrict spell usage based on durations - e.g. need a cooldown for confuse at least confuse duration? Maybe only for single enemies?
-//TODO: Fix potential bug - if object destroyed while AoE trying to manipulate it, it gives an error
-    //Maybe just use constantly updating neighbourhood - check boids example
+//TODO: Determine WHERE the target is passed in & who does the type checking
 public class AbilityComponent : MonoBehaviour {
 
     //Ability State Data
     [HideInInspector] public Abilities SelectedAbility;
     public List<Abilities> unlockedAbilities;
 
-    private Enemy playerTarget;
-    private PlayerController enemyTarget;
+    private string hostileTagName;
 
-    [Header("Ability Type Fire Rates")]
-    public float instantFireRate = 1f;
-    public float areaFireRate = 10f;
-    private WaitForSeconds abilityRate;
+    [Header("Ability Cooldown")]
+    public float globalCooldown = 1f;   //Standard cooldown - to prevent too many abil uses, going to use "Stamina" from stat system
+    private float globalCooldownFinishTime; //Used to track global cooldown
 
     [Header("AoE Ability Related")]
     public Transform aimingDisc;
@@ -27,11 +23,11 @@ public class AbilityComponent : MonoBehaviour {
     [Header("Zap")]
     public GameObject zapSource;
     private particleAttractorLinear zapTargeter;
-    private WaitForSeconds spellDuration = new WaitForSeconds(.5f);
-    private float nextFire; //track time passed
-
+    private WaitForSeconds zapEffectDuration = new WaitForSeconds(.5f);
+    
     [Header("Confuse")]
     public float confuseDuration = 3f;
+    private float confuseFinishTime;    //Used to track when confuse debuff will wear off - needs separate cooldown tracker (other than global)
 
     [Header("Vortex")]
     public GameObject vortexPrefab;
@@ -44,52 +40,115 @@ public class AbilityComponent : MonoBehaviour {
         zapTargeter = zapSource.GetComponentInChildren<particleAttractorLinear>();
     }
 
+    private void Start()
+    {
+        if (GetComponent<PlayerController>() != null)
+        {
+            hostileTagName = GameMetaInfo._TAG_SHOOTABLE_BY_PLAYER;
+        }
+        else
+        {
+            hostileTagName = GameMetaInfo._TAG_SHOOTABLE_BY_NPC;
+        }
+    }
+
     //Kebyind & UI button accesses this from controller (Start @ 1 to correspond to player UI)
     public void SelectAbility(Abilities choice)
     {
         if (unlockedAbilities.Contains(choice))
         {
             SelectedAbility = choice;
-            Debug.Log("Set selected ability to: " + SelectedAbility);
         }
     }
 
-    //maybe change fire rate to controller script - stats will affect - abstracts it
-    //Player Calls this from controller - abstracted so NPCs can use!! (UseAbility is a function)
-	public void UseAbility(Transform target)
+    //AI Interface
+    public void UseSelected(Transform target)
     {
-        switch (SelectedAbility)
+        if (GameMetaInfo._Is_Instant_Ability(SelectedAbility))
         {
-            case Abilities.Zap:
-                Zap(target);
-                break;
-
-            case Abilities.Confuse:
-                StartCoroutine(Confuse(target));
-                break;
-
-            case Abilities.Vortex:
-                AoE(vortexPrefab);
-                break;
-
-            case Abilities.Singularity:
-                AoE(singularityPrefab);
-                break;
+            UseInstantAbility(SelectedAbility, target);
+        }
+        else if (GameMetaInfo._Is_AoE_Ability(SelectedAbility))
+        {
+            UseAOEAbility(SelectedAbility);
+        }
+        else if (GameMetaInfo._Is_Defense_Ability(SelectedAbility))
+        {
+            UseInstantAbility(SelectedAbility, target);
         }
     }
 
-#region Zap Implementation
+    //Player interface
+    public void UseInstantAbility(Abilities ability, Transform target)
+    {
+        if (SelectedAbility == ability)
+        {
+            if (target != null && (target.tag.Equals(hostileTagName)))   //TODO: || Object layer for when adding instants that can affect environment
+            {
+                UseAbility(target.transform);
+            }
+            else
+            {
+                Debug.Log("Invalid target: " + target.name);
+            }
+        }
+        else
+        {
+            SelectAbility(ability);
+        }
+    }
+
+    //Player interface
+    public void UseAOEAbility(Abilities ability)
+    {
+        if (SelectedAbility == ability)
+        {
+            UseAbility(null);
+        }
+        else
+        {
+            SelectAbility(ability);
+        }
+    }
+
+    // ----- IMPLEMENTATION ----- //
+
+    private void UseAbility(Transform target)
+    {
+        if (Time.time > globalCooldownFinishTime)
+        {
+            switch (SelectedAbility)
+            {
+                case Abilities.Zap:
+                    Zap(target);
+                    break;
+
+                case Abilities.Confuse:
+                    StartCoroutine(Confuse(target));
+                    break;
+
+                case Abilities.Vortex:
+                    AoE(vortexPrefab);
+                    break;
+
+                case Abilities.Singularity:
+                    AoE(singularityPrefab);
+                    break;
+            }
+            globalCooldownFinishTime = Time.time + globalCooldown;
+        }
+        else
+        {
+            Debug.Log("On cooldown...");
+        }
+    }
+
+    #region Zap Implementation
     private void Zap(Transform target)  
     {
-        if (target != null) //TODO: make so can't shoot story NPCs 
+        if (target != null)
         {
-            if (Time.time > nextFire)
-            {
-                nextFire = Time.time + instantFireRate;
-                StartCoroutine(ShotEffect(target));
-
-                //Destroy(target.gameObject); //TODO: Research death effects - e.g. instantiate smaller blocks & engage a particle system
-            }
+            StartCoroutine(ShotEffect(target));
         }
     }
 
@@ -97,20 +156,31 @@ public class AbilityComponent : MonoBehaviour {
     {
         zapSource.gameObject.SetActive(true);
         zapTargeter.target = target;
-        yield return spellDuration;
+        yield return zapEffectDuration;
         zapTargeter.target = null;
         zapSource.gameObject.SetActive(false);
     }
     #endregion
 
-#region Confuse Implementation
+    #region Confuse Implementation
     private IEnumerator Confuse(Transform target)
     {
-        yield return new WaitForSeconds(confuseDuration);
+        //Check if previous confuse debuff has worn off
+        if (Time.time > confuseFinishTime)
+        {
+            //Enable effect
+            yield return new WaitForSeconds(confuseDuration);
+            //Disable effect
+            confuseFinishTime = Time.time + confuseDuration;
+        }
+        else
+        {
+            Debug.Log("Target is already confused!");
+        }
     }
-#endregion
+    #endregion
 
-#region AoE Implementation
+    #region AoE Implementation
     private void AoE(GameObject spellPrefab)
     {
         if (aiming == false)
@@ -126,5 +196,5 @@ public class AbilityComponent : MonoBehaviour {
             aiming = false;
         }
     }
-#endregion
+    #endregion
 }

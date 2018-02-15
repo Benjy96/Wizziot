@@ -4,23 +4,12 @@
 [RequireComponent(typeof(NeighbourhoodTracker))]
 public class FollowState : State {   
 
-    public GameObject primaryTarget;
     public GameObject secondaryTarget;  
 
-    private NeighbourhoodTracker neighbourhood;
-    private EnemySpawnPoint spawn;
-    private Transform target;
-
     protected override State EnterState(Enemy owner)
-    {
-        this.owner = owner;
-        neighbourhood = owner.GetComponent<NeighbourhoodTracker>();
-        spawn = owner.Spawn;
-
-        neighbourhood.RegisterInterest(primaryTarget);
+    {   
         neighbourhood.RegisterInterest(secondaryTarget);
-
-        return this;
+        return base.EnterState(owner);
     }
 
     public override void Execute()
@@ -28,12 +17,19 @@ public class FollowState : State {
         target = SelectTarget();
         if (target != null)
         {
-            MoveTo(target.position);
+            owner.MoveTo(target.position);
         }
         else
         {
-            Patrol();
+            Search();
         }
+    }
+
+    public override void ExitState()
+    {
+        neighbourhood.RemoveInterest(secondaryTarget);
+        owner.target = target;
+        base.ExitState();
     }
 
     private Transform SelectTarget()
@@ -48,35 +44,8 @@ public class FollowState : State {
         return target;
     }
 
-    protected void MoveTo(Vector3 target)
+    private void Search()
     {
-        owner.navAgent.destination = target;
-        FaceTarget(target);
-    }
-
-    protected void Patrol()
-    {
-        Debug.Log("Patrolling");
-        if (TargetReached())
-        {
-            Debug.Log("Picking new co-ordinates");
-            int randomIndex = Random.Range(0, owner.Spawn.spawnAreaWaypoints.Count);
-            MoveTo(owner.Spawn.spawnAreaWaypoints[randomIndex]);
-            //TODO: Add not reached destination timer
-        }
-    }
-
-    protected bool TargetReached()
-    {
-        return owner.navAgent.remainingDistance <= (owner.navAgent.stoppingDistance + (owner.navAgent.stoppingDistance / 2));
-    }
-
-
-    protected void FaceTarget(Vector3 target)
-    {
-        Vector3 direction = target - owner.Position;
-        direction = direction.normalized;
-        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
-        owner.transform.rotation = Quaternion.Slerp(owner.transform.rotation, lookRotation, Time.fixedDeltaTime * 10f);
+        Debug.Log("Implement Search method");
     }
 }

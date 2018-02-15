@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PatrolState : State {
 
@@ -11,7 +9,7 @@ public class PatrolState : State {
 
     public override void Execute()
     {
-        base.Execute();
+        Patrol();
     }
 
     public override void ExitState()
@@ -19,9 +17,12 @@ public class PatrolState : State {
         base.ExitState();
     }
 
-    public static Vector3 PickLocation(Enemy owner)
+    private void Patrol()
     {
-        int randomIndex = (int)Random.Range(0f, owner.Spawn.spawnAreaWaypoints.Count);
-        return owner.Spawn.spawnAreaWaypoints[randomIndex];
+        if (owner.DestinationReached())
+        {
+            int randomIndex = Random.Range(0, owner.Spawn.spawnAreaWaypoints.Count);
+            owner.MoveTo(owner.Spawn.spawnAreaWaypoints[randomIndex]);
+        }
     }
 }

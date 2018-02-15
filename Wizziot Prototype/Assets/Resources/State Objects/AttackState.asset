@@ -8,6 +8,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2584d28d3ed72240a33233b0e5011dd, type: 3}
-  m_Name: u wot mate state
+  m_Script: {fileID: 11500000, guid: 06217d2870fb76a4da993594e972090b, type: 3}
+  m_Name: AttackState
   m_EditorClassIdentifier: 

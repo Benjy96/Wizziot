@@ -9,7 +9,6 @@ public class NeighbourhoodTracker : MonoBehaviour
 
     public Dictionary<string, GameObject> secondaryNeighbours;
 
-    private EnemySpawnPoint spawnPoint;
     private SphereCollider sphereCol;
 
     public float TrackingRadius { get { return sphereCol.radius; } set { sphereCol.radius = value; } }
@@ -97,6 +96,14 @@ public class NeighbourhoodTracker : MonoBehaviour
     public void RegisterInterest(GameObject gameObject)
     {
         secondaryNeighbours.Add(gameObject.name, null);
+    }
+
+    public void RemoveInterest(GameObject gameObject)
+    {
+        if (secondaryNeighbours.ContainsKey(gameObject.name))
+        {
+            secondaryNeighbours.Remove(gameObject.name);
+        }
     }
 
     public GameObject RetrieveTrackedObject(GameObject gameObject)

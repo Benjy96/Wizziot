@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class State : ScriptableObject {
 
-    protected Enemy owner;
+    public GameObject interestedIn;
+    public bool hostileToInterest;
 
+    protected Enemy owner;
+    protected EnemySpawnPoint spawn;
+    protected NeighbourhoodTracker neighbourhood;
+
+    protected Transform target;
+    
     /// <summary>
     /// Used to create a Scriptable Object instance
     /// </summary>
@@ -25,6 +32,11 @@ public class State : ScriptableObject {
     protected virtual State EnterState(Enemy owner)
     {
         this.owner = owner;
+        spawn = owner.Spawn;
+        neighbourhood = owner.neighbourhoodTracker;
+
+        neighbourhood.RegisterInterest(interestedIn);
+        
         return this;
     }
 
@@ -33,16 +45,15 @@ public class State : ScriptableObject {
     /// </summary>
     public virtual void Execute()
     {
-        Debug.Log("State.Execute(): Add state behaviour here. Use fallbackBehaviour.Execute() if your state's conditions fail.");
+        Debug.Log("State.Execute(): Add state behaviour here.");
     }
 
     /// <summary>
-    /// Use to gracefully exit a state - e.g. stop Coroutines, etc...
+    /// Use to gracefully exit a state, remove interest, references, subscriptions - e.g. stop Coroutines, etc...
     /// </summary>
     /// <returns>The next state to enter. Returning null (by default) means the next State will be handled by the EmotionChip</returns>
     public virtual void ExitState()
     {
-        Debug.Log("Return a new State if you wish to switch to a new state directly from within another state");
+        neighbourhood.RemoveInterest(interestedIn);
     }
-
 }

@@ -296,6 +296,8 @@ MonoBehaviour:
   damageModifier: 0
   mitigateChance: 0
   damageReduction: 0
+  speed: 0
+  turnSpeed: 0
 --- !u!114 &114220245209035952
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -320,15 +322,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dee817f5e39bf184180df4a1339914af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  disposition: 0
+  disposition: 1
   reluctance: 0.5
   trust: 1
   irascibility: 1
   cowardice: 1
   currentState: {fileID: 0}
   calmState: {fileID: 11400000, guid: c51c7ff56621af84d850105bf0193487, type: 2}
-  angryState: {fileID: 11400000, guid: c51c7ff56621af84d850105bf0193487, type: 2}
-  scaredState: {fileID: 11400000, guid: a54cf375e548cde4582961c146495190, type: 2}
+  angryState: {fileID: 11400000, guid: 2671af7d1b75043488af752041d221c4, type: 2}
+  scaredState: {fileID: 11400000, guid: 69a6f096fd7b4384f9aa59881370ca25, type: 2}
 --- !u!114 &114667065209656976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -361,8 +363,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SelectedAbility: 0
   unlockedAbilities: 32000000
-  instantFireRate: 0.5
-  areaFireRate: 10
+  globalCooldown: 1
   aimingDisc: {fileID: 4019791227191684, guid: 31faa8d85dd7c824bac358c123afb1e3, type: 2}
   zapSource: {fileID: 1247003542369760}
   confuseDuration: 3

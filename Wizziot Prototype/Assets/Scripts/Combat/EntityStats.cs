@@ -14,6 +14,9 @@ public class EntityStats : MonoBehaviour {
     public float mitigateChance;
     public float damageReduction;
 
+    [Range(0, 10)] public float speed;
+    [Range(50, 150)] public float turnSpeed;
+
     public void Damage(float amount)
     {
         if(Random.Range(0, 100) > mitigateChance)
