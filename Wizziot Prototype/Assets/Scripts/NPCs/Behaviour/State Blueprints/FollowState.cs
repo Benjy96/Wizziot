@@ -4,14 +4,6 @@
 [RequireComponent(typeof(NeighbourhoodTracker))]
 public class FollowState : State {   
 
-    public GameObject secondaryTarget;  
-
-    protected override State EnterState(Enemy owner)
-    {   
-        neighbourhood.RegisterInterest(secondaryTarget);
-        return base.EnterState(owner);
-    }
-
     public override void Execute()
     {
         target = SelectTarget();
@@ -27,7 +19,6 @@ public class FollowState : State {
 
     public override void ExitState()
     {
-        neighbourhood.RemoveInterest(secondaryTarget);
         owner.target = target;
         base.ExitState();
     }
@@ -38,7 +29,7 @@ public class FollowState : State {
         Transform target = null;
 
         targetGO = neighbourhood.RetrieveTrackedObject(interestedIn);
-        if (targetGO == null) targetGO = neighbourhood.RetrieveTrackedObject(secondaryTarget);
+        if (targetGO == null) targetGO = neighbourhood.RetrieveTrackedObject(secondaryInterest);
         if (targetGO != null) target = targetGO.transform;
 
         return target;

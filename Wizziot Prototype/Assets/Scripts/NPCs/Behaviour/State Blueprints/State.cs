@@ -3,7 +3,8 @@
 public class State : ScriptableObject {
 
     public GameObject interestedIn;
-    public bool hostileToInterest;
+    public GameObject secondaryInterest;
+    public bool hostileToInterests;
 
     protected Enemy owner;
     protected EnemySpawnPoint spawn;
@@ -34,7 +35,8 @@ public class State : ScriptableObject {
         neighbourhood = owner.neighbourhoodTracker;
 
         neighbourhood.RegisterInterest(interestedIn);
-        
+        neighbourhood.RegisterInterest(secondaryInterest);
+
         return this;
     }
 
@@ -53,6 +55,7 @@ public class State : ScriptableObject {
     public virtual void ExitState()
     {
         neighbourhood.RemoveInterest(interestedIn);
+        neighbourhood.RemoveInterest(secondaryInterest);
     }
 
     protected virtual Transform SelectTarget()

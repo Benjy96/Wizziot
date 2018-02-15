@@ -8,7 +8,8 @@ public class AbilityComponent : MonoBehaviour {
     [HideInInspector] public Abilities SelectedAbility;
     public List<Abilities> unlockedAbilities;
 
-    private string hostileTagName;
+    private Transform currentTarget;
+    private Rigidbody targetRB;
 
     [Header("Ability Cooldown")]
     public float globalCooldown = 1f;   //Standard cooldown - to prevent too many abil uses, going to use "Stamina" from stat system
@@ -21,6 +22,7 @@ public class AbilityComponent : MonoBehaviour {
 
     [Header("Zap")]
     public GameObject zapSource;
+    private ParticleSystem zapParticles;
     private particleAttractorLinear zapTargeter;
     private WaitForSeconds zapEffectDuration = new WaitForSeconds(.5f);
     
@@ -37,6 +39,16 @@ public class AbilityComponent : MonoBehaviour {
     private void Awake()
     {
         zapTargeter = zapSource.GetComponentInChildren<particleAttractorLinear>();
+        zapParticles = zapSource.GetComponent<ParticleSystem>();
+    }
+
+    private void SetTarget(Transform target)
+    {
+        if (currentTarget != target)
+        {
+            currentTarget = target;
+            targetRB = target.GetComponent<Rigidbody>();
+        }
     }
 
     //Kebyind & UI button accesses this from controller (Start @ 1 to correspond to player UI)
@@ -51,6 +63,8 @@ public class AbilityComponent : MonoBehaviour {
     //AI Interface
     public void UseSelected(Transform target)
     {
+        SetTarget(target);
+
         if (GameMetaInfo._Is_Instant_Ability(SelectedAbility))
         {
             UseInstantAbility(SelectedAbility, target);
@@ -68,11 +82,13 @@ public class AbilityComponent : MonoBehaviour {
     //Player interface
     public void UseInstantAbility(Abilities ability, Transform target)
     {
+        SetTarget(target);
+
         if (SelectedAbility == ability)
         {
             if (target != null)
             {
-                UseAbility(target.transform);
+                UseAbility();
             }
             else
             {
@@ -90,7 +106,7 @@ public class AbilityComponent : MonoBehaviour {
     {
         if (SelectedAbility == ability)
         {
-            UseAbility(null);
+            UseAbility();
         }
         else
         {
@@ -99,18 +115,18 @@ public class AbilityComponent : MonoBehaviour {
     }
 
     #region Implementation
-    private void UseAbility(Transform target)
+    private void UseAbility()
     {
         if (Time.time > globalCooldownFinishTime)
         {
             switch (SelectedAbility)
             {
                 case Abilities.Zap:
-                    Zap(target);
+                    Zap();
                     break;
 
                 case Abilities.Confuse:
-                    StartCoroutine(Confuse(target));
+                    StartCoroutine(Confuse());
                     break;
 
                 case Abilities.Vortex:
@@ -129,29 +145,31 @@ public class AbilityComponent : MonoBehaviour {
         }
     }
 
-    private void Zap(Transform target)  
+    private void Zap()  
     {
-        if (target != null)
+        if (currentTarget != null)
         {
-            StartCoroutine(ShotEffect(target));
+            StartCoroutine(ShotEffect());
         }
     }
 
-    private IEnumerator ShotEffect(Transform target)
+    private IEnumerator ShotEffect()
     {
-        zapSource.gameObject.SetActive(true);
-        zapTargeter.target = target;
+        if(zapTargeter.target != currentTarget) zapTargeter.target = currentTarget;
+        zapParticles.time = 0;
+        zapParticles.Play(true);
+        if (targetRB != null) targetRB.AddForce((currentTarget.position - transform.position).normalized * 5f);
         yield return zapEffectDuration;
-        zapTargeter.target = null;
-        zapSource.gameObject.SetActive(false);
+        zapParticles.Stop(true);
     }
 
-    private IEnumerator Confuse(Transform target)
+    private IEnumerator Confuse()
     {
         //Check if previous confuse debuff has worn off
         if (Time.time > confuseFinishTime)
         {
             //Enable effect
+            //currentTarget.
             yield return new WaitForSeconds(confuseDuration);
             //Disable effect
             confuseFinishTime = Time.time + confuseDuration;

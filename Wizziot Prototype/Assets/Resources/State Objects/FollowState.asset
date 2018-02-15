@@ -11,7 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6a22dd48ed78a84c861fbfc0fad3b15, type: 3}
   m_Name: FollowState
   m_EditorClassIdentifier: 
-  primaryTarget: {fileID: 1458570314575524, guid: 0e6afb90b2ea6fb4391ecd6b4a9f34a2,
+  interestedIn: {fileID: 1458570314575524, guid: 0e6afb90b2ea6fb4391ecd6b4a9f34a2,
     type: 2}
-  secondaryTarget: {fileID: 1134084517704520, guid: 217668003b71cfa4e9928e20f2b247f5,
+  secondaryInterest: {fileID: 1667744843981164, guid: 6bba16423bada83449bf7c78d2f23384,
     type: 2}
+  hostileToInterests: 0

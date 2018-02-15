@@ -40,7 +40,7 @@ public class AttackState : State {
     {
         if (target == null) return false;
 
-        if (target.name == interestedIn.name && !hostileToInterest) return false;
+        if (target.name == interestedIn.name && !hostileToInterests) return false;
         
         if (target.tag.Equals(GameMetaInfo._TAG_SHOOTABLE_BY_NPC))
         {

@@ -94,12 +94,19 @@ public class NeighbourhoodTracker : MonoBehaviour
     //Using dictionary to register object references that are able to be tracked - O(1) access time
     public void RegisterInterest(GameObject gameObject)
     {
-        secondaryNeighbours.Add(gameObject.name, null);
+        if (gameObject == null) return;
+
+        if (!secondaryNeighbours.ContainsKey(gameObject.name))
+        {
+            secondaryNeighbours.Add(gameObject.name, null);
+        }
     }
 
     //Call this method when a State is being exited
     public void RemoveInterest(GameObject gameObject)
     {
+        if (gameObject == null) return;
+
         if (secondaryNeighbours.ContainsKey(gameObject.name))
         {
             secondaryNeighbours.Remove(gameObject.name);
@@ -113,6 +120,8 @@ public class NeighbourhoodTracker : MonoBehaviour
     /// <returns>Returns a reference to the game object in the scene</returns>
     public GameObject RetrieveTrackedObject(GameObject gameObject)
     {
+        if (gameObject == null) return null;
+
         if (secondaryNeighbours.ContainsKey(gameObject.name))
         {
             if(secondaryNeighbours[gameObject.name] != null)
