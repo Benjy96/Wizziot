@@ -11,29 +11,32 @@ public class AbilityComponent : MonoBehaviour {
     [HideInInspector] public Abilities SelectedAbility;
     public List<Abilities> unlockedAbilities;
 
-    public float instantFireRate = 0.5f;
-    public float AoEFireRate = 10f;
+    private Enemy playerTarget;
+    private PlayerController enemyTarget;
+
+    [Header("Ability Type Fire Rates")]
+    public float instantFireRate = 1f;
+    public float areaFireRate = 10f;
     private WaitForSeconds abilityRate;
 
-    //AoE Variables
+    [Header("AoE Ability Related")]
     public Transform aimingDisc;
     private bool aiming = false;
     private Transform instantiatedAimingDisc;
 
-    //ZAP REQUIRED VARIABLES
-    public float fireRate = .25f;
+    [Header("Zap")]
     public GameObject zapSource;
     private particleAttractorLinear zapTargeter;
     private WaitForSeconds spellDuration = new WaitForSeconds(.5f);
     private float nextFire; //track time passed
 
-    //CONFUSE VARIABLES
+    [Header("Confuse")]
     public float confuseDuration = 3f;
 
-    //VORTEX VARIABLES
+    [Header("Vortex")]
     public GameObject vortexPrefab;
 
-    //SINGULARITY VARIABLES
+    [Header("Singularity")]
     public GameObject singularityPrefab;
 
     private void Awake()
@@ -55,6 +58,16 @@ public class AbilityComponent : MonoBehaviour {
     //Player Calls this from controller - abstracted so NPCs can use!! (UseAbility is a function)
 	public IEnumerator UseAbility(Transform target)
     {
+        if (target.tag.Equals("Player"))
+        {
+            enemyTarget = GetComponent<PlayerController>();
+        }
+        else
+        {
+            Enemy e = target.GetComponent<Enemy>();
+            if (e != null) playerTarget = e;
+        }
+
         switch (SelectedAbility)
         {
             case Abilities.Zap:
@@ -69,25 +82,25 @@ public class AbilityComponent : MonoBehaviour {
 
             case Abilities.Vortex:
                 AoE(vortexPrefab);
-                abilityRate = new WaitForSeconds(AoEFireRate);
+                abilityRate = new WaitForSeconds(areaFireRate);
                 break;
 
             case Abilities.Singularity:
                 AoE(singularityPrefab);
-                abilityRate = new WaitForSeconds(AoEFireRate);
+                abilityRate = new WaitForSeconds(areaFireRate);
                 break;
         }
         yield return abilityRate;
     }
 
 #region Zap Implementation
-    private void Zap(Transform target)  //TODO: could make this (and all abils) components - add them to player when u unlock the abil (and bind it to a key?)
+    private void Zap(Transform target)  
     {
         if (target != null) //TODO: make so can't shoot story NPCs 
         {
             if (Time.time > nextFire)
             {
-                nextFire = Time.time + fireRate;
+                nextFire = Time.time + instantFireRate;
                 StartCoroutine(ShotEffect(target));
 
                 //Destroy(target.gameObject); //TODO: Research death effects - e.g. instantiate smaller blocks & engage a particle system
@@ -108,12 +121,7 @@ public class AbilityComponent : MonoBehaviour {
 #region Confuse Implementation
     private IEnumerator Confuse(Transform target)
     {
-        Vector3 oppositeToPlayer = target.position - transform.position;
-        Debug.Log("AbilityComponent.cs: Add enemy TYPE to confuse line 103");
-        //Enemy enemy = target.GetComponent<Enemy>();
-        //enemy.Move(oppositeToPlayer);
         yield return new WaitForSeconds(confuseDuration);
-        //enemy.ResetDestination();
     }
 #endregion
 

@@ -7,11 +7,6 @@ public class FollowState : State {
     public GameObject primaryTarget;
     public GameObject secondaryTarget;  
 
-    public float velocityMatchingWeight = 0.25f;
-    public float flockCenteringWeight = 0.2f;
-    public float attractionWeight = 2f;
-    public float repulsionWeight = 2f;
-
     private NeighbourhoodTracker neighbourhood;
     private EnemySpawnPoint spawn;
     private Transform target;

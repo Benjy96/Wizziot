@@ -53,7 +53,7 @@ public class Singularity : MonoBehaviour {
                 {
                     Rigidbody temp;
                     //If not part of environment
-                    if (c.gameObject.layer == LayerMask.NameToLayer(GameMetaInfo._AFFECTABLE_OBJECT_LAYER_NAME))
+                    if (c.gameObject.layer == LayerMask.NameToLayer(GameMetaInfo._LAYER_AFFECTABLE_OBJECT))
                     {
                         temp = c.GetComponent<Rigidbody>();
                         if (temp != null)    //Safety check - incase tag forgotten

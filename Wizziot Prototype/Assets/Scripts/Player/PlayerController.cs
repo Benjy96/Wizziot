@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour {
         GameMetaInfo.allKeybinds.Add(KeyCode.Alpha5, new Action(() => UseInstantAbility(Abilities.Heal)));
         //Story Manager
         GameMetaInfo.allKeybinds.Add(KeyCode.F, Interact);
-        GameMetaInfo.allKeybinds.Add(KeyCode.Escape, new Action(() => StoryManager.Instance.CloseConversation())); //TODO: event delegate with "close" methods subscribed
+        GameMetaInfo.allKeybinds.Add(KeyCode.Escape, new Action(() => StoryManager.Instance.CloseConversation())); //TODO: every ui subscribe to manager to close upon esc -> then menu
         //Camera
         GameMetaInfo.allKeybinds.Add(KeyCode.LeftAlt, cam.GetComponent<PlayerCamera>().SwitchCameraMode);
         GameMetaInfo.allKeybinds.Add(KeyCode.I, new Action(() => inventoryUI.gameObject.SetActive(!inventoryUI.activeSelf)));
@@ -108,6 +108,8 @@ public class PlayerController : MonoBehaviour {
 
                             default:
                                 targetIndicator.enabled = false;
+                                targetIndicator.transform.position = transform.position;
+                                target.transform.SetParent(transform);
                                 break;
                         }
                     }
@@ -126,8 +128,6 @@ public class PlayerController : MonoBehaviour {
                 try
                 {
                     GameMetaInfo.allKeybinds[code]();
-                    Debug.Log("Processing this code: " + code);
-                    Debug.Log("Getting this value: " + GameMetaInfo.allKeybinds[code]);
                 }
                 catch (Exception e)
                 {
@@ -159,7 +159,7 @@ public class PlayerController : MonoBehaviour {
     {
         if (abilityComponent.SelectedAbility == ability)
         {
-            if (target != null && target.gameObject.layer == LayerMask.NameToLayer(GameMetaInfo._AFFECTABLE_OBJECT_LAYER_NAME))
+            if (target != null && (target.tag.Equals(GameMetaInfo._TAG_SHOOTABLE_BY_PLAYER)))   //TODO: || Object layer for when adding instants that can affect environment
             {
                 StartCoroutine(abilityComponent.UseAbility(target.transform));
             }
@@ -210,6 +210,5 @@ public class PlayerController : MonoBehaviour {
                 Debug.Log(target.targetType + " is not handled");
                 break;
         }
-
     }
 }
