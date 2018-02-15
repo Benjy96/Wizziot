@@ -8,8 +8,8 @@ public class AttackState : State {
 
     protected override State EnterState(Enemy owner)
     {
-        target = owner.target;
         abilComponent = owner.abilityComponent;
+        //abilComponent.globalCooldown = owner.stats.
 
         return base.EnterState(owner);
     }
@@ -21,14 +21,32 @@ public class AttackState : State {
 
         abilComponent.SelectAbility(ability);
 
-        if ((target.position - owner.Position).sqrMagnitude < owner.stats.sqrMaxTargetDistance)
+        target = SelectTarget();
+        if (HostileToCurrentTarget())
         {
-            abilComponent.UseSelected(target);
+            if ((target.position - owner.Position).sqrMagnitude < owner.stats.sqrMaxTargetDistance)
+            {
+                abilComponent.UseSelected(target);  //TODO: Make UseSelected a bool - successful hits can inspire enemy (influence emotionchip)
+            }
         }
     }
 
     public override void ExitState()
     {
         base.ExitState();
+    }
+
+    private bool HostileToCurrentTarget()
+    {
+        if (target == null) return false;
+
+        if (target.name == interestedIn.name && !hostileToInterest) return false;
+        
+        if (target.tag.Equals(GameMetaInfo._TAG_SHOOTABLE_BY_NPC))
+        {
+            return true;
+        }
+
+        return false;
     }
 }

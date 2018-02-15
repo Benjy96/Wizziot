@@ -11,3 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06217d2870fb76a4da993594e972090b, type: 3}
   m_Name: AttackState
   m_EditorClassIdentifier: 
+  interestedIn: {fileID: 1458570314575524, guid: 0e6afb90b2ea6fb4391ecd6b4a9f34a2,
+    type: 2}
+  hostileToInterest: 1

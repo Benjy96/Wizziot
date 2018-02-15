@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class State : ScriptableObject {
 
@@ -55,5 +53,19 @@ public class State : ScriptableObject {
     public virtual void ExitState()
     {
         neighbourhood.RemoveInterest(interestedIn);
+    }
+
+    protected virtual Transform SelectTarget()
+    {
+        GameObject targetGO = null;
+        Transform target = null;
+
+        targetGO = neighbourhood.RetrieveTrackedObject(interestedIn);
+
+        if (targetGO != null) target = targetGO.transform;
+
+        if (target == null) target = owner.target;
+
+        return target;
     }
 }

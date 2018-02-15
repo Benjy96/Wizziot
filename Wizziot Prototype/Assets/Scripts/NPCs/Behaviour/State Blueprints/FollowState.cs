@@ -32,12 +32,12 @@ public class FollowState : State {
         base.ExitState();
     }
 
-    private Transform SelectTarget()
+    protected override Transform SelectTarget()
     {
         GameObject targetGO = null;
         Transform target = null;
 
-        targetGO = neighbourhood.RetrieveTrackedObject(primaryTarget);
+        targetGO = neighbourhood.RetrieveTrackedObject(interestedIn);
         if (targetGO == null) targetGO = neighbourhood.RetrieveTrackedObject(secondaryTarget);
         if (targetGO != null) target = targetGO.transform;
 

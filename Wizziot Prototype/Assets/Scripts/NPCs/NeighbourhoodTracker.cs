@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 //This class keeps track of nearby Enemies (agents)
@@ -98,6 +97,7 @@ public class NeighbourhoodTracker : MonoBehaviour
         secondaryNeighbours.Add(gameObject.name, null);
     }
 
+    //Call this method when a State is being exited
     public void RemoveInterest(GameObject gameObject)
     {
         if (secondaryNeighbours.ContainsKey(gameObject.name))
@@ -106,6 +106,11 @@ public class NeighbourhoodTracker : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Retrieve a GameObject that has been registered as interesting if it is within the agent's neighbourhood
+    /// </summary>
+    /// <param name="gameObject">The type of object you wish to locate in this neighbourhood</param>
+    /// <returns>Returns a reference to the game object in the scene</returns>
     public GameObject RetrieveTrackedObject(GameObject gameObject)
     {
         if (secondaryNeighbours.ContainsKey(gameObject.name))

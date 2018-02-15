@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//TODO: Determine WHERE the target is passed in & who does the type checking
 public class AbilityComponent : MonoBehaviour {
 
     //Ability State Data
@@ -40,18 +39,6 @@ public class AbilityComponent : MonoBehaviour {
         zapTargeter = zapSource.GetComponentInChildren<particleAttractorLinear>();
     }
 
-    private void Start()
-    {
-        if (GetComponent<PlayerController>() != null)
-        {
-            hostileTagName = GameMetaInfo._TAG_SHOOTABLE_BY_PLAYER;
-        }
-        else
-        {
-            hostileTagName = GameMetaInfo._TAG_SHOOTABLE_BY_NPC;
-        }
-    }
-
     //Kebyind & UI button accesses this from controller (Start @ 1 to correspond to player UI)
     public void SelectAbility(Abilities choice)
     {
@@ -83,7 +70,7 @@ public class AbilityComponent : MonoBehaviour {
     {
         if (SelectedAbility == ability)
         {
-            if (target != null && (target.tag.Equals(hostileTagName)))   //TODO: || Object layer for when adding instants that can affect environment
+            if (target != null)
             {
                 UseAbility(target.transform);
             }
@@ -111,8 +98,7 @@ public class AbilityComponent : MonoBehaviour {
         }
     }
 
-    // ----- IMPLEMENTATION ----- //
-
+    #region Implementation
     private void UseAbility(Transform target)
     {
         if (Time.time > globalCooldownFinishTime)
@@ -143,7 +129,6 @@ public class AbilityComponent : MonoBehaviour {
         }
     }
 
-    #region Zap Implementation
     private void Zap(Transform target)  
     {
         if (target != null)
@@ -160,9 +145,7 @@ public class AbilityComponent : MonoBehaviour {
         zapTargeter.target = null;
         zapSource.gameObject.SetActive(false);
     }
-    #endregion
 
-    #region Confuse Implementation
     private IEnumerator Confuse(Transform target)
     {
         //Check if previous confuse debuff has worn off
@@ -178,9 +161,7 @@ public class AbilityComponent : MonoBehaviour {
             Debug.Log("Target is already confused!");
         }
     }
-    #endregion
 
-    #region AoE Implementation
     private void AoE(GameObject spellPrefab)
     {
         if (aiming == false)
