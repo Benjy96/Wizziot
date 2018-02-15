@@ -32,14 +32,7 @@ public class FollowState : State {
         }
         else
         {
-            Debug.Log("Patrolling");
-            if(owner.navAgent.remainingDistance <= owner.navAgent.stoppingDistance)
-            {
-                Debug.Log("Picking new co-ordinates");
-                int randomIndex = Random.Range(0, owner.Spawn.spawnAreaWaypoints.Count);
-                MoveTo(owner.Spawn.spawnAreaWaypoints[randomIndex]);
-                //TODO: Add not reached destination timer
-            }
+            Patrol();
         }
     }
 
@@ -55,17 +48,35 @@ public class FollowState : State {
         return target;
     }
 
-    private void FaceTarget(Vector3 target)
+    protected void MoveTo(Vector3 target)
+    {
+        owner.navAgent.destination = target;
+        FaceTarget(target);
+    }
+
+    protected void Patrol()
+    {
+        Debug.Log("Patrolling");
+        if (TargetReached())
+        {
+            Debug.Log("Picking new co-ordinates");
+            int randomIndex = Random.Range(0, owner.Spawn.spawnAreaWaypoints.Count);
+            MoveTo(owner.Spawn.spawnAreaWaypoints[randomIndex]);
+            //TODO: Add not reached destination timer
+        }
+    }
+
+    protected bool TargetReached()
+    {
+        return owner.navAgent.remainingDistance <= (owner.navAgent.stoppingDistance + (owner.navAgent.stoppingDistance / 2));
+    }
+
+
+    protected void FaceTarget(Vector3 target)
     {
         Vector3 direction = target - owner.Position;
         direction = direction.normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
         owner.transform.rotation = Quaternion.Slerp(owner.transform.rotation, lookRotation, Time.fixedDeltaTime * 10f);
-    }
-
-    private void MoveTo(Vector3 target)
-    {
-        owner.navAgent.destination = target;
-        FaceTarget(target);
     }
 }

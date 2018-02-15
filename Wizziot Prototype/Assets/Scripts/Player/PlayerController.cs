@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour {
         GameMetaInfo.allKeybinds.Add(KeyCode.Alpha3, new Action(() => UseAOEAbility(Abilities.Vortex)));
         GameMetaInfo.allKeybinds.Add(KeyCode.Alpha4, new Action(() => UseAOEAbility(Abilities.Singularity)));
         GameMetaInfo.allKeybinds.Add(KeyCode.Alpha5, new Action(() => UseInstantAbility(Abilities.Heal)));
-        //Story Manager
+        //General
         GameMetaInfo.allKeybinds.Add(KeyCode.F, Interact);
         GameMetaInfo.allKeybinds.Add(KeyCode.Escape, new Action(() => StoryManager.Instance.CloseConversation())); //TODO: every ui subscribe to manager to close upon esc -> then menu
         //Camera
@@ -161,7 +161,7 @@ public class PlayerController : MonoBehaviour {
         {
             if (target != null && (target.tag.Equals(GameMetaInfo._TAG_SHOOTABLE_BY_PLAYER)))   //TODO: || Object layer for when adding instants that can affect environment
             {
-                StartCoroutine(abilityComponent.UseAbility(target.transform));
+                abilityComponent.UseAbility(target.transform);
             }
             else
             {
@@ -178,7 +178,7 @@ public class PlayerController : MonoBehaviour {
     {
         if (abilityComponent.SelectedAbility == ability)
         {
-            StartCoroutine(abilityComponent.UseAbility(null));
+            abilityComponent.UseAbility(null);
         }
         else
         {

@@ -56,41 +56,26 @@ public class AbilityComponent : MonoBehaviour {
 
     //maybe change fire rate to controller script - stats will affect - abstracts it
     //Player Calls this from controller - abstracted so NPCs can use!! (UseAbility is a function)
-	public IEnumerator UseAbility(Transform target)
+	public void UseAbility(Transform target)
     {
-        if (target.tag.Equals("Player"))
-        {
-            enemyTarget = GetComponent<PlayerController>();
-        }
-        else
-        {
-            Enemy e = target.GetComponent<Enemy>();
-            if (e != null) playerTarget = e;
-        }
-
         switch (SelectedAbility)
         {
             case Abilities.Zap:
                 Zap(target);
-                abilityRate = new WaitForSeconds(instantFireRate);
                 break;
 
             case Abilities.Confuse:
                 StartCoroutine(Confuse(target));
-                abilityRate = new WaitForSeconds(instantFireRate);
                 break;
 
             case Abilities.Vortex:
                 AoE(vortexPrefab);
-                abilityRate = new WaitForSeconds(areaFireRate);
                 break;
 
             case Abilities.Singularity:
                 AoE(singularityPrefab);
-                abilityRate = new WaitForSeconds(areaFireRate);
                 break;
         }
-        yield return abilityRate;
     }
 
 #region Zap Implementation

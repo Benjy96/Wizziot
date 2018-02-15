@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+//TODO: ScriptableObject?
+//TODO: Equippable item / State modifiers
+//TODO: Collider items e.g. coins
 public class Item : Targetable {
 
     public float interactionRadius = 5f;
@@ -12,7 +15,7 @@ public class Item : Targetable {
         interactionRadius *= interactionRadius;
     }
 
-    public void PickUp(Transform player)
+    public virtual void PickUp(Transform player)
     {
         if((player.transform.position - transform.position).sqrMagnitude < interactionRadius)
         {

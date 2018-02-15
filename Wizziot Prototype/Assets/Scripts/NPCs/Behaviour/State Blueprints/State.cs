@@ -13,7 +13,7 @@ public class State : ScriptableObject {
     /// <returns></returns>
     public State CreateState(Enemy owner)
     {
-        State newState = (State)Instantiate(Resources.Load("State Objects/" + GetType().Name));
+        State newState = (State)Instantiate(Resources.Load("State Objects/" + name));
         return newState.EnterState(owner);
     }
 
@@ -29,7 +29,7 @@ public class State : ScriptableObject {
     }
 
     /// <summary>
-    /// Agent accesses this method, which then uses a private implementation
+    /// Agent accesses this method, which then uses a private implementation.
     /// </summary>
     public virtual void Execute()
     {
@@ -44,4 +44,5 @@ public class State : ScriptableObject {
     {
         Debug.Log("Return a new State if you wish to switch to a new state directly from within another state");
     }
+
 }
