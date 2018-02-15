@@ -11,6 +11,10 @@ public class AbilityComponent : MonoBehaviour {
     [HideInInspector] public Abilities SelectedAbility;
     public List<Abilities> unlockedAbilities;
 
+    public float instantFireRate = 0.5f;
+    public float AoEFireRate = 10f;
+    private WaitForSeconds abilityRate;
+
     //AoE Variables
     public Transform aimingDisc;
     private bool aiming = false;
@@ -20,7 +24,7 @@ public class AbilityComponent : MonoBehaviour {
     public float fireRate = .25f;
     public GameObject zapSource;
     private particleAttractorLinear zapTargeter;
-    private WaitForSeconds spellDuration = new WaitForSeconds(1f);
+    private WaitForSeconds spellDuration = new WaitForSeconds(.5f);
     private float nextFire; //track time passed
 
     //CONFUSE VARIABLES
@@ -47,27 +51,33 @@ public class AbilityComponent : MonoBehaviour {
         }
     }
 
+    //maybe change fire rate to controller script - stats will affect - abstracts it
     //Player Calls this from controller - abstracted so NPCs can use!! (UseAbility is a function)
-	public void UseAbility(Transform target)
+	public IEnumerator UseAbility(Transform target)
     {
         switch (SelectedAbility)
         {
             case Abilities.Zap:
                 Zap(target);
+                abilityRate = new WaitForSeconds(instantFireRate);
                 break;
 
             case Abilities.Confuse:
                 StartCoroutine(Confuse(target));
+                abilityRate = new WaitForSeconds(instantFireRate);
                 break;
 
             case Abilities.Vortex:
                 AoE(vortexPrefab);
+                abilityRate = new WaitForSeconds(AoEFireRate);
                 break;
 
             case Abilities.Singularity:
                 AoE(singularityPrefab);
+                abilityRate = new WaitForSeconds(AoEFireRate);
                 break;
         }
+        yield return abilityRate;
     }
 
 #region Zap Implementation

@@ -161,7 +161,7 @@ public class PlayerController : MonoBehaviour {
         {
             if (target != null && target.gameObject.layer == LayerMask.NameToLayer(GameMetaInfo._AFFECTABLE_OBJECT_LAYER_NAME))
             {
-                abilityComponent.UseAbility(target.transform);
+                StartCoroutine(abilityComponent.UseAbility(target.transform));
             }
             else
             {
@@ -178,7 +178,7 @@ public class PlayerController : MonoBehaviour {
     {
         if (abilityComponent.SelectedAbility == ability)
         {
-            abilityComponent.UseAbility(null);
+            StartCoroutine(abilityComponent.UseAbility(null));
         }
         else
         {

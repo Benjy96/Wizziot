@@ -1,14 +1,11 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "FlockState", menuName = "States/Flock")]
+[CreateAssetMenu(fileName = "FollowState", menuName = "States/Follow")]
 [RequireComponent(typeof(NeighbourhoodTracker))]
-public class FlockState : State {   //TODO: make an "anti-flock" state based upon emotional goal (e.g. make SO for scared goal, this one for angry goal)
+public class FollowState : State {   
 
     public GameObject primaryTarget;
     public GameObject secondaryTarget;  
-    //Notes: Area detection || Spawner: Keep list of references to all "Objects" within collider radius which can be a target
-    //Or use above variable as Prefab for the target TYPE - then do FindObjectOfType<secondaryTarget>() within RADIUS (collider)
-    //public GameObject[] potentialTargets; //if(checkArea(potentialTargets[i]) secondaryTarget = checkArea(potentialTargets[i]);
 
     public float velocityMatchingWeight = 0.25f;
     public float flockCenteringWeight = 0.2f;
