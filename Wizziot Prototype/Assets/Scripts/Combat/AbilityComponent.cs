@@ -63,16 +63,19 @@ public class AbilityComponent : MonoBehaviour {
         }
     }
 
-    //AI Interface
-    public void UseSelected(Transform target)
+    /// <summary>
+    /// AI Should use this interface method to attack
+    /// </summary>
+    /// <param name="target">Target if one is selected. Null if not</param>
+    /// <returns>Returns true when damage can be applied to the target's stats (once the attack has been executed)</returns>
+    public bool UseSelected(Transform target)
     {
         SetTarget(target);
-
-        UseAbility();
+        return UseAbility();
     }
 
     //Player interface
-    public void UseInstantAbility(Abilities ability, Transform target)
+    public void UseInstantAbility(Abilities ability, Transform target)  //TODO; make bool for player?
     {
         SetTarget(target);
 
@@ -94,7 +97,7 @@ public class AbilityComponent : MonoBehaviour {
     }
 
     //Player interface
-    public void UseAOEAbility(Abilities ability)
+    public void UseAOEAbility(Abilities ability)    //TODO: make bool for player?
     {
         if (SelectedAbility == ability)
         {
@@ -107,7 +110,7 @@ public class AbilityComponent : MonoBehaviour {
     }
 
     #region Implementation
-    private void UseAbility()
+    private bool UseAbility()
     {
         if (Time.time > globalCooldownFinishTime)
         {
@@ -130,10 +133,12 @@ public class AbilityComponent : MonoBehaviour {
                     break;
             }
             globalCooldownFinishTime = Time.time + globalCooldown;
+            return true;
         }
         else
         {
             Debug.Log("On cooldown...");
+            return false;
         }
     }
 

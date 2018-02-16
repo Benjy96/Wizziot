@@ -113,6 +113,10 @@ public class PlayerController : MonoBehaviour {
                     }
                 }
             }
+            else
+            {
+                SetTargetIndicatorPos(false);
+            }
         }
     }
 
@@ -159,15 +163,18 @@ public class PlayerController : MonoBehaviour {
         if (aboveTarget)
         {
             height = target.transform.localScale.y * 5;
+
+            targetIndicator.transform.SetParent(target.transform);
+            targetIndicator.transform.position = target.transform.position + new Vector3(0f, height);
+            targetIndicator.enabled = true;
         }
         else
         {
-            height = 0;
+            target = null;
+            targetIndicator.transform.SetParent(transform);
+            targetIndicator.transform.position = transform.position;
+            targetIndicator.enabled = false;
         }
-
-        targetIndicator.transform.SetParent(target.transform);
-        targetIndicator.transform.position = target.transform.position + new Vector3(0f, height);
-        targetIndicator.enabled = true;
     }
 
     private void Interact()

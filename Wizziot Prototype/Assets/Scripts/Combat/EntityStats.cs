@@ -27,41 +27,29 @@ public class EntityStats : MonoBehaviour {
     {
         CurrentHealth = maxHealth;
         CurrentStamina = maxStamina;
+        //TODO: Set stats according to difficulty if NPC - OR do it from enemy parent class
     }
 
     //TODO: Make a link method in Enemy.cs to connect abil component and stats - this is really messy
-    public bool Damage(Abilities abilityUsed)
+    //TODO: Finish implementing methods to take damage
+    public void Damage(Abilities abilityUsed)
     {
         float amount = 0f;
 
         if (GameMetaInfo._Is_Instant_Ability(abilityUsed))
         {
-            if (CanUseAbility(abilityUsed))
-            {
-                CurrentStamina = Mathf.Clamp(CurrentStamina -= instantAbilityCost, 0, maxStamina);
-                amount = instantAbilityCost * damageModifier;
-            }
+            amount = instantAbilityCost - (instantAbilityCost * damageReduction);
         }
         else if (GameMetaInfo._Is_AoE_Ability(abilityUsed))
         {
-            if (CanUseAbility(abilityUsed))
-            {
-                CurrentStamina = Mathf.Clamp(CurrentStamina -= aoeAbilityCost, 0, maxStamina);
-            }
+            amount = aoeAbilityCost * damageModifier;
         }
         else if (GameMetaInfo._Is_Defense_Ability(abilityUsed))
         {
-            if (CanUseAbility(abilityUsed))
-            {
-                CurrentStamina = Mathf.Clamp(CurrentStamina -= defenseAbilityCost, 0, maxStamina);
-            }
-        }
-        else
-        {
-            return false;
+            amount = defenseAbilityCost * damageModifier;
         }
 
-        if (Random.Range(0f, 1f) > mitigateChance)
+        if (Random.Range(0f, 1f) < mitigateChance)
         {
             Debug.Log(transform.name + " mitigated the attack");
         }
@@ -69,22 +57,22 @@ public class EntityStats : MonoBehaviour {
         {   //Damage reduction reduces damage amount by a % value (itself)
             amount = amount - (amount * damageReduction);
             CurrentHealth -= Mathf.RoundToInt(amount);
+            Debug.Log(CurrentHealth);
         }
 
         if(CurrentHealth <= 0)
         {
             Die();
         }
-
-        return true;
     }
 
     public virtual void Die()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+        //TODO: End game / respawn - use game manager
     }
 
-    private bool CanUseAbility(Abilities abil)
+    public bool CanUseAbility(Abilities abil)
     {
         if (GameMetaInfo._Is_Instant_Ability(abil))
         {

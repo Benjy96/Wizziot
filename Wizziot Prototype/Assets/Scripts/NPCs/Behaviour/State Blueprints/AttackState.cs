@@ -5,6 +5,7 @@
 public class AttackState : State {
 
     private AbilityComponent abilComponent;
+    private PlayerStats playerStats;
 
     protected override State EnterState(Enemy owner)
     {
@@ -21,14 +22,20 @@ public class AttackState : State {
 
         abilComponent.SelectAbility(ability);
 
-        target = SelectTarget();
+        Transform newTarget = SelectTarget();
+        if(newTarget != target)
+        {
+            target = newTarget;
+            playerStats = target.GetComponent<PlayerStats>();
+        }
+
         if (target != null)
         {
             if (HostileToCurrentTarget())
             {
                 if ((target.position - owner.Position).sqrMagnitude < owner.stats.sqrMaxTargetDistance)
                 {
-                    if(owner.stats.Damage(ability)) abilComponent.UseSelected(target);  //TODO: Make UseSelected a bool - successful hits can inspire enemy (influence emotionchip)
+                    if(abilComponent.UseSelected(target)) playerStats.Damage(ability);
                 }
             }
             owner.FaceTarget(target.position);
