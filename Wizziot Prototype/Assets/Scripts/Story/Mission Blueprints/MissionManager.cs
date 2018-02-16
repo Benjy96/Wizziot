@@ -9,10 +9,15 @@ public class MissionManager : MonoBehaviour {
     private static MissionManager _MissionManager;
     public static MissionManager Instance { get { return _MissionManager; } }
 
+    public MissionUI missionUI;
+
+    public GameObject waypointPrefab;
+
     public List<Mission> activeMissions;
     public int maxMissions = 3;
 
-    public Action onMissionCompleted; 
+    public Action onMissionCompleted;
+    public Action onMissionAdded;   //update UI etc
 
     private void Awake()
     {
@@ -27,6 +32,22 @@ public class MissionManager : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
 
         activeMissions = new List<Mission>(maxMissions);
+    }
+
+    public void GrantMission(Mission mission)
+    {
+        Mission grantedMission = mission.CreateMission();
+
+        //TODO: Change to dict -> if contains(mission.name) - using SOs and need to differentiate missions
+        if (!activeMissions.Contains(grantedMission) && activeMissions.Count < maxMissions)
+        {
+            activeMissions.Add(grantedMission);
+            Instantiate(waypointPrefab, mission.location, Quaternion.Euler(-90f, 0f, 0f));
+            missionUI.SetMissionText(mission);  //TODO: Change to dynamic UI AND event
+
+            //ACTIVATE UI
+            //if (onMissionAdded != null) onMissionAdded.Invoke();
+        }
     }
 
     //TODO: Watch brackeys combat/enemies and events to see if events would be more applicable than inventory style system

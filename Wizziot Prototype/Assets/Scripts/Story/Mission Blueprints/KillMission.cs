@@ -11,7 +11,7 @@ public class KillMission : Mission {
     {
         foreach (Enemy x in killTypes)
         {
-            if(x.GetType() == enemy.GetType())
+            if(x.GetType() == enemy.GetType() && (location - x.transform.position).sqrMagnitude < locationRadius)
             {
                 killsRequired -= 1;
                 if (killsRequired == 0) CompleteMission();

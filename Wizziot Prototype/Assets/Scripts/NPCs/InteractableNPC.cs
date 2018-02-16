@@ -8,6 +8,7 @@ public abstract class InteractableNPC : Targetable {
     protected static StoryManager storyManager;
 
     public string inkPath = "";
+    public Mission mission;
     
     // ----- ABSTRACT METHODS ----- //
     protected abstract void RegisterExternalFunctions(); //Bind functions that correlate to ink in here

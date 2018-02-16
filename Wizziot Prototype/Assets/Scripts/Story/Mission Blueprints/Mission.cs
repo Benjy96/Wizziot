@@ -8,9 +8,17 @@ public class Mission : ScriptableObject {
 
     MissionManager missionManager = MissionManager.Instance;
 
-    bool completed = false;
-    new public string name = "";
     public Mission[] additionalMissionStages;
+    public Vector3 location;
+    public float locationRadius;
+
+    protected bool completed = false;
+
+    public Mission CreateMission()
+    {
+        Mission newMission = (Mission)Instantiate(Resources.Load("Mission Objects/" + name));
+        return newMission;
+    }
 
     public virtual void CompleteMission()
     {

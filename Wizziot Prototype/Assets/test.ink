@@ -5,6 +5,7 @@ VAR DEBUG = true
 
 EXTERNAL SpherePushOff()
 EXTERNAL CubePushOff()
+EXTERNAL GrantMission()
 
 //LIST can be used for FLAGS or STATE MACHINES
 //Flags: Events e.g. have met Gordon
@@ -73,6 +74,11 @@ LIST SphereState = (unmolested), annoyed
 "I have some wares, if you'd like to take a look..."
 *   [No, thanks.] // * choices can be used in a "state way" - ink tracks if seen
     "Alright, kid."
+*   [Do you need anything done?]
+    "Hmm, there are a few hooligan spheres nearby. They're driving customers away. I'd pay to be rid of them."
+    * * [Ok, I'll do it]
+        "Thank you!"
+        {GrantMission()}
 +   ->
     "You look familiar..."
 - -> DONE
@@ -82,4 +88,7 @@ LIST SphereState = (unmolested), annoyed
 ~ return 
 
 == function CubePushOff ==
+~ return
+
+== function GrantMission ==
 ~ return
