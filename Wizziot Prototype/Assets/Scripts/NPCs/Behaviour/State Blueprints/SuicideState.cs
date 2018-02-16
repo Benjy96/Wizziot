@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "SuicideState", menuName = "States/Suicide")]
 public class SuicideState : State {
 
+    public string lastWords;
+
     protected override State EnterState(Enemy owner)
     {
         return base.EnterState(owner);
@@ -12,6 +14,7 @@ public class SuicideState : State {
 
     public override void Execute()
     {
+        Debug.Log(lastWords);
         ExitState();
         Destroy(owner.gameObject);
     }

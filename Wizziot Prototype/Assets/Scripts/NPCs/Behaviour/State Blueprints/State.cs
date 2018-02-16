@@ -45,7 +45,7 @@ public class State : ScriptableObject {
     /// </summary>
     public virtual void Execute()
     {
-        Debug.Log("State.Execute(): Add state behaviour here.");
+        Debug.Log("State.Execute(): Add State Behaviour Here");
     }
 
     /// <summary>

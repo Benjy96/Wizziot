@@ -13,4 +13,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interestedIn: {fileID: 1458570314575524, guid: 0e6afb90b2ea6fb4391ecd6b4a9f34a2,
     type: 2}
-  hostileToInterest: 1
+  secondaryInterest: {fileID: 0}
+  hostileToInterests: 1

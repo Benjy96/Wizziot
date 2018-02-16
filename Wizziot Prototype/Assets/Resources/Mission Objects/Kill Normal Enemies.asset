@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: Kill Normal Enemies
   m_EditorClassIdentifier: 
   name: Kill Normal Enemies
+  additionalMissionStages: []
   killTypes:
   - {fileID: 114667065209656976, guid: ffda47dcd015b5d42822cee50b149c07, type: 2}
   killsRequired: 10

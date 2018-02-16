@@ -11,3 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2584d28d3ed72240a33233b0e5011dd, type: 3}
   m_Name: SuicideState
   m_EditorClassIdentifier: 
+  interestedIn: {fileID: 0}
+  secondaryInterest: {fileID: 0}
+  hostileToInterests: 0
+  lastWords: Goodbye, cruel world!

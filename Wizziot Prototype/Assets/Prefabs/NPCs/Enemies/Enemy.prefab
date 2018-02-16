@@ -366,6 +366,7 @@ MonoBehaviour:
   globalCooldown: 1
   aimingDisc: {fileID: 4019791227191684, guid: 31faa8d85dd7c824bac358c123afb1e3, type: 2}
   zapSource: {fileID: 1247003542369760}
+  zapForce: 0
   confuseDuration: 3
   vortexPrefab: {fileID: 1893987604404780, guid: c41f338f3e10fb74ca9f81ce1b665355,
     type: 2}

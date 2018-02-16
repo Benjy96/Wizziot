@@ -249,8 +249,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SelectedAbility: 0
   unlockedAbilities: 32000000330000006400000065000000
+  globalCooldown: 1
   aimingDisc: {fileID: 4692180556801494, guid: 44e75b50b1e131e49b4a6ff407a6be7a, type: 2}
-  fireRate: 0.25
   zapSource: {fileID: 1774377020049598}
   confuseDuration: 3
   vortexPrefab: {fileID: 1893987604404780, guid: c41f338f3e10fb74ca9f81ce1b665355,
@@ -295,10 +295,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   maxStamina: 100
-  sqrMaxTargetDistance: 225
+  instantAbilityCost: 10
+  aoeAbilityCost: 30
+  defenseAbilityCost: 40
+  magicKnockbackForce: 0
   damageModifier: 0
   mitigateChance: 0
   damageReduction: 0
+  sqrMaxTargetDistance: 225
   speed: 6
   turnSpeed: 100
 --- !u!119 &119116383463515920

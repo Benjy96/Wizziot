@@ -22,12 +22,16 @@ public class AttackState : State {
         abilComponent.SelectAbility(ability);
 
         target = SelectTarget();
-        if (HostileToCurrentTarget())
+        if (target != null)
         {
-            if ((target.position - owner.Position).sqrMagnitude < owner.stats.sqrMaxTargetDistance)
+            if (HostileToCurrentTarget())
             {
-                abilComponent.UseSelected(target);  //TODO: Make UseSelected a bool - successful hits can inspire enemy (influence emotionchip)
+                if ((target.position - owner.Position).sqrMagnitude < owner.stats.sqrMaxTargetDistance)
+                {
+                    if(owner.stats.Damage(ability)) abilComponent.UseSelected(target);  //TODO: Make UseSelected a bool - successful hits can inspire enemy (influence emotionchip)
+                }
             }
+            owner.FaceTarget(target.position);
         }
     }
 

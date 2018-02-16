@@ -3,10 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-//TODO: AI Code <- Use enemy as parent / controller for behaviour (use a motor component and ability component - this class is the brain)
-//TODO: Create movement component
-//TODO: Create NPC aim component (e.g. track towards player with varying speed/accuracy depending on difficult)
-
 /// <summary>
 /// Inheritance is equivalent to interactableNPC. e.g.:  Targetable <- InteractableNPC <- (StoryNPCS) || Targetable <- Enemy <- (EnemyNPCs)
 /// An enemy is going to be ANYTHING you can attack. As well as enemy NPCs, it may be animals, etc...
@@ -40,17 +36,12 @@ public class Enemy : Targetable {
 
     protected void OnEnable()
     {
-        //GameManager.Instance.OnDifficultyChanged += UpdateDifficulty;
+        //GameManager.Instance.OnDifficultyChanged += SetStats;
     }
 
     private void OnDisable()
     {
-        //GameManager.Instance.OnDifficultyChanged -= UpdateDifficulty;
-    }
-
-    protected void UpdateDifficulty()
-    {
-        Debug.Log("Difficulty update attempted: Modify Enemy Attributes Here");
+        //GameManager.Instance.OnDifficultyChanged -= SetStats;
     }
 
     protected void Awake()  //Object initialised
@@ -66,16 +57,25 @@ public class Enemy : Targetable {
     protected void Start () //Scripts initialised
     {
         if (player == null) player = PlayerManager.Instance.player;
-        if (gameDifficulty != GameMetaInfo._GAME_DIFFICULTY) gameDifficulty = GameMetaInfo._GAME_DIFFICULTY;
 
-        neighbourhoodTracker.TrackingRadius = Mathf.Sqrt(stats.sqrMaxTargetDistance);
-
-        emotionChip.ScaleEmotionWeights(gameDifficulty);
+        SetStats();
     }
 
     protected void FixedUpdate()
     {
         emotionChip.Execute(this);
+    }
+
+    // ----- COMPONENTs & SET-UP ----- //
+    private void SetStats() //Use as a SetDifficulty() method as well - modify stats and components based upon gameDifficulty
+    {
+        gameDifficulty = GameMetaInfo._GAME_DIFFICULTY;
+
+        neighbourhoodTracker.TrackingRadius = Mathf.Sqrt(stats.sqrMaxTargetDistance);
+
+        abilityComponent.KnockbackForce = stats.magicKnockbackForce;
+
+        emotionChip.ScaleEmotionWeights(gameDifficulty);
     }
 
     // ----- NAVIGATION ----- //
