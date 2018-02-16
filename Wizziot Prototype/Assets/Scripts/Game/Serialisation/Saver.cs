@@ -2,7 +2,6 @@
 using Newtonsoft.Json.Bson;
 using System.IO;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Saver : MonoBehaviour
 {

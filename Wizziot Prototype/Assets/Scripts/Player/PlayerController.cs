@@ -81,14 +81,19 @@ public class PlayerController : MonoBehaviour {
             RaycastHit pointHit;
 
             //Raycast
-            if(Physics.Raycast(ray, out pointHit, 100f, LayerMask.GetMask("Object")))    //If the raycast hits something within 100
+            if(Physics.Raycast(ray, out pointHit, 100f, LayerMask.GetMask("Object"), QueryTriggerInteraction.Ignore))    //If the raycast hits something within 100
             {
                 //If within range
                 if ((pointHit.transform.position - transform.position).sqrMagnitude < playerStats.sqrMaxTargetDistance)
                 {
                     if (pointHit.transform.GetComponent<Targetable>() != null)  
                     {
-                        TargetType currentTargetType = pointHit.transform.GetComponent<Targetable>().targetType;
+                        Targetable t = pointHit.transform.GetComponent<Targetable>();
+                        if (t == null) t = pointHit.transform.GetComponentInParent<Targetable>();
+                        if (t == null) return;
+
+                        TargetType currentTargetType = t.targetType;
+                        
                         switch (currentTargetType)
                         {
                             case TargetType.Item:
