@@ -109,7 +109,7 @@ public class Enemy : Targetable {
     {
         if(navAgent != null)
         {
-            return navAgent.remainingDistance <= (navAgent.stoppingDistance + (navAgent.stoppingDistance / 2));
+            return navAgent.remainingDistance <= (navAgent.stoppingDistance);
         }
         else
         {

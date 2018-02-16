@@ -41,6 +41,7 @@ public class EmotionChip : MonoBehaviour {
 
     //The agent's emotional state(s)
     public Dictionary<Emotion, float> agentEmotions = new Dictionary<Emotion, float>();
+    private List<Emotion> emotionKeys;  //for iterating over dictionary when modifying it
 
     public float trust = 1f; //Calm weighting
     public float irascibility = 1f; //Anger weighting
@@ -52,6 +53,25 @@ public class EmotionChip : MonoBehaviour {
     public State calmState;
     public State angryState;
     public State scaredState;
+
+    private void Awake()
+    {
+        //Store each emotion type in a state variable
+        foreach (Emotion emotion in Enum.GetValues(typeof(Emotion)))
+        {
+            //Set the agent's most powerful emotion equal to their disposition
+            if (emotion == disposition)
+            {
+                agentEmotions.Add(emotion, 1f);
+            }
+            else
+            {
+                agentEmotions.Add(emotion, 0f);
+            }
+        }
+        //List for iterating over emotions
+        emotionKeys = new List<Emotion>(agentEmotions.Keys);
+    }
 
     /// <summary>
     /// As difficulty increases, enemy NPCs gain confidence.
@@ -89,8 +109,7 @@ public class EmotionChip : MonoBehaviour {
         }
 
         //Step 2. Tend towards disposition
-        List<Emotion> emotions = new List<Emotion>(agentEmotions.Keys);
-        foreach (Emotion key in emotions)
+        foreach (Emotion key in emotionKeys)
         {
             if (key == disposition)
             {
@@ -112,7 +131,8 @@ public class EmotionChip : MonoBehaviour {
     public void Influence(Emotion intent, float amount)
     {
         amount = Mathf.Clamp(amount, 0f, 1f);
-
+        
+        //TODO: Balancing
         //Influence the NPC by the external factor's intent differently, based upon this agent's emotional disposition
         switch (disposition)
         {
@@ -126,10 +146,8 @@ public class EmotionChip : MonoBehaviour {
 
                     case Emotion.Anger: //If actor intends to scare or anger enemy, anger/scare them, but reduced by a factor of their trust (harder to anger/scare if calm)
                     case Emotion.Fear:
-                        foreach (KeyValuePair<Emotion, float> agentEmotion in agentEmotions)
-                        {
-                            if (agentEmotion.Key != disposition) agentEmotions[agentEmotion.Key] += amount / trust;
-                        }
+                        agentEmotions[Emotion.Calm] -= amount / trust;  //TODO: Source of why I want to balance
+                        agentEmotions[intent] += amount / trust;
                         break;
                 }
                 break;
@@ -174,23 +192,6 @@ public class EmotionChip : MonoBehaviour {
     }
 
     #region Implementation
-    private void Awake()
-    {
-        //Store each emotion type in a state variable
-        foreach (Emotion emotion in Enum.GetValues(typeof(Emotion)))
-        {
-            //Set the agent's most powerful emotion equal to their disposition
-            if(emotion == disposition)
-            {
-                agentEmotions.Add(emotion, 1f);
-            }
-            else
-            {
-                agentEmotions.Add(emotion, 0f);
-            }
-        }
-    }
-
     //Scale the emotions to be within the range [0:1]
     private void ScaleEmotions()
     {

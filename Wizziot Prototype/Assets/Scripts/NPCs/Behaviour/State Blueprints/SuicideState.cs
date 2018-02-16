@@ -7,6 +7,9 @@ public class SuicideState : State {
 
     public string lastWords;
 
+    private bool suicidal;
+    private bool reachedFinalDestination;
+
     protected override State EnterState(Enemy owner)
     {
         return base.EnterState(owner);
@@ -15,8 +18,23 @@ public class SuicideState : State {
     public override void Execute()
     {
         Debug.Log(lastWords);
-        ExitState();
-        Destroy(owner.gameObject);
+        if (!suicidal)
+        {
+            suicidal = true;
+            int randomIndex = Random.Range(0, owner.Spawn.spawnAreaWaypoints.Count);
+            owner.MoveTo(owner.Spawn.spawnAreaWaypoints[randomIndex]);
+        }
+
+        if (owner.DestinationReached())
+        {
+            reachedFinalDestination = true;
+        }
+
+        if (reachedFinalDestination)
+        {
+            ExitState();
+            Destroy(owner.gameObject);
+        }
     }
 
     public override void ExitState()

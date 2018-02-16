@@ -171,7 +171,12 @@ public class AbilityComponent : MonoBehaviour {
         if (Time.time > confuseFinishTime)
         {
             //Enable effect
-            //currentTarget.
+            EmotionChip e = currentTarget.GetComponent<EmotionChip>();
+            if(e != null)
+            {
+                Debug.Log("Influencing with confuse...");
+                e.Influence(Emotion.Fear, .5f); //TODO: Where to set strength of influence? Stats? Factor of powers? Level?
+            }
             yield return new WaitForSeconds(confuseDuration);
             //Disable effect
             confuseFinishTime = Time.time + confuseDuration;

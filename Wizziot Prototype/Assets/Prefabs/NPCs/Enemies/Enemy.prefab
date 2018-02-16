@@ -357,7 +357,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   disposition: 0
-  reluctance: 0.5
+  reluctance: 0.25
   trust: 1
   irascibility: 1
   cowardice: 1
