@@ -5,12 +5,14 @@ using UnityEngine;
 public class EntityStats : MonoBehaviour {
 
     public int maxHealth = 100;
-    public int CurrentHealth { get; private set; }
+    public int CurrentHealth { get { return currentHealth; } private set { currentHealth = value; } }
     private int currentHealth;
 
     public int maxStamina = 100;
-    public int CurrentStamina { get; private set; }
+    public int CurrentStamina { get { return currentStamina; } private set { currentStamina = value; } }
     private int currentStamina;
+
+    public List<Stat> entityStats;
 
     public Dictionary<Stats, Stat> statModifiers;
     public float baseStatModifier = 1f;
@@ -32,6 +34,24 @@ public class EntityStats : MonoBehaviour {
             Stat newStat = new Stat(stat, baseStatModifier);
             statModifiers.Add(newStat.StatType, newStat);
         }
+
+        ApplyStatModifiers();
+    }
+
+    //TODO: How can we remove the explicitness of this programming?
+    //Need a way to store the variables and modifiers
+    //Perhaps an enum of Stats and StatsModifiers
+        //Prob is not every stat applies to everything - would need to be mapped
+    private void ApplyStatModifiers()
+    {
+        //See Stat.cs - can loop through enums instead of explicit
+
+        //Apply Modifiers
+        maxHealth *= (int)statModifiers[Stats.MaxHealthModifier].StatValue;
+        maxStamina *= (int)statModifiers[Stats.MaxHealthModifier].StatValue;
+        sqrMaxTargetDistance *= statModifiers[Stats.SightRange].StatValue;
+        speed *= statModifiers[Stats.MovementSpeed].StatValue;
+        turnSpeed *= statModifiers[Stats.MovementSpeed].StatValue;
     }
 
     private void Start()
