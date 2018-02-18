@@ -807,7 +807,6 @@ GameObject:
   - component: {fileID: 201661368}
   - component: {fileID: 201661367}
   - component: {fileID: 201661366}
-  - component: {fileID: 201661365}
   - component: {fileID: 201661370}
   m_Layer: 0
   m_Name: Main Camera
@@ -816,13 +815,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &201661365
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 201661364}
-  m_Enabled: 1
 --- !u!124 &201661366
 Behaviour:
   m_ObjectHideFlags: 0
@@ -3599,6 +3591,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114176260486268072, guid: bd05844043ec1c24db76ec9977867554,
+        type: 2}
+      propertyPath: collisionPickup
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bd05844043ec1c24db76ec9977867554, type: 2}
   m_IsPrefabParent: 0
@@ -6191,6 +6188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc1b0ef9dd650e34d972d9a2eef789ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sounds: []
 --- !u!1 &2099498463
 GameObject:
   m_ObjectHideFlags: 0

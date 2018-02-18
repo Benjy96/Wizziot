@@ -9,11 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8aeeb188642b88645929862131006b01, type: 3}
-  m_Name: Get Rid of Nuisance
+  m_Name: Earn Some Milk Money
   m_EditorClassIdentifier: 
   additionalMissionStages: []
-  location: {x: 30, y: 0, z: 0}
-  locationRadius: 10
-  killTypes:
-  - {fileID: 114667065209656976, guid: ffda47dcd015b5d42822cee50b149c07, type: 2}
-  killsRequired: 1
+  location: {x: 0, y: 0, z: -20}
+  locationRadius: 0
+  killTypes: []
+  killsRequired: 0

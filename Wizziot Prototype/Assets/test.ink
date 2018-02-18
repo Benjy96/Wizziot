@@ -3,9 +3,15 @@ VAR DEBUG = true
 -> cube.interact
 }
 
+// ----- STORY NPC MISSIONS ----- //
 EXTERNAL SpherePushOff()
+
+//Ink Missions are EXPLICIT - we can't make them "generic" like "GrantMission()"
+//Unfortunate but expected, since ink script is a specified STORY
+//For "generic" missions, I can grant using purely Unity functions
 EXTERNAL CubePushOff()
-EXTERNAL GrantMission()
+EXTERNAL CubeRevenge()
+// ----- /STORY NPC MISSIONS ----- //
 
 //LIST can be used for FLAGS or STATE MACHINES
 //Flags: Events e.g. have met Gordon
@@ -62,6 +68,7 @@ LIST SphereState = (unmolested), annoyed
                         "Oh, uh... you should probably leave."
                     +++++ ["Of course."]
                         "Tell me when it's done, I have some milk money left over."
+                        {CubeRevenge()}
                 ++++ ["Nevermind."]
         ++ ["What's his problem?]
             "I don't know, but I think I'm gonna tell my mum."
@@ -69,26 +76,11 @@ LIST SphereState = (unmolested), annoyed
                 "Screw you."
 -   -> DONE
 
-=== shop_keeper ===
-= interact
-"I have some wares, if you'd like to take a look..."
-*   [No, thanks.] // * choices can be used in a "state way" - ink tracks if seen
-    "Alright, kid."
-*   [Do you need anything done?]
-    "Hmm, there are a few hooligan spheres nearby. They're driving customers away. I'd pay to be rid of them."
-    * * [Ok, I'll do it]
-        "Thank you!"
-        {GrantMission()}
-+   ->
-    "You look familiar..."
-- -> DONE
-
-
 == function SpherePushOff ==
 ~ return 
 
 == function CubePushOff ==
 ~ return
 
-== function GrantMission ==
+==function CubeRevenge ==
 ~ return

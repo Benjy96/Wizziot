@@ -19,12 +19,12 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4667188627092958}
+  - component: {fileID: 114400301308988532}
+  - component: {fileID: 114121620741074714}
   - component: {fileID: 33768113776096118}
   - component: {fileID: 136141885671147836}
   - component: {fileID: 23959949924640072}
-  - component: {fileID: 114400301308988532}
-  - component: {fileID: 114121620741074714}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Capsule NPC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1515367592789010}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.467869, y: -4.650193, z: 8.086201}
+  m_LocalPosition: {x: 4.9, y: -4.650193, z: 8.086201}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -109,6 +109,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetType: 3
   inkPath: shop_keeper.interact
+  mission: {fileID: 11400000, guid: 096445c2d5ef87340a68a5bbe515ada7, type: 2}
 --- !u!136 &136141885671147836
 CapsuleCollider:
   m_ObjectHideFlags: 1

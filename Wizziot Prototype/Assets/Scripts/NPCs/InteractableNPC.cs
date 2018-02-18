@@ -9,9 +9,14 @@ public abstract class InteractableNPC : Targetable {
 
     public string inkPath = "";
     public Mission mission;
-    
-    // ----- ABSTRACT METHODS ----- //
-    protected abstract void RegisterExternalFunctions(); //Bind functions that correlate to ink in here
+
+    // ----- VIRTUAL METHODS ----- //
+    //Ok - missions are going to have to be done explicity (link ink - unity)
+    //Example: Interacble NPCs are characters: Bob.cs, Ben.cs, Sphere.cs
+    //Let's say each has 3 quests, we need to define these as externals in Ink if we want it granted through story
+    //We then Add those functions as externals in their scripts, so 3 missions means 3 functions to bind to ink
+    //Not too flexible, but it is flexible enough in that we can create Mission objects and modify the variables very easily.
+    protected abstract void RegisterExternalFunctions();
 
     // ----- METHODS ----- //
     protected void Start()  //Scripts & variables initialised
