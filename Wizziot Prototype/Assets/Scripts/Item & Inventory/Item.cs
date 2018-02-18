@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-//TODO: Equippable item / State modifiers
 public class Item : Targetable {
    
     new public string name = "New item";

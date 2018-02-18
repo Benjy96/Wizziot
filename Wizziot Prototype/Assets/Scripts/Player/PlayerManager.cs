@@ -37,7 +37,7 @@ public class PlayerManager : MonoBehaviour {
         foreach (Stat stat in stats)
         {
             //Set new stat value (apply modifier)
-            playerStats.entityStats[stat.StatType] = stat;
+            playerStats.statModifiers[stat.StatType] = stat;
         }
     }
 }

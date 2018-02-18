@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4972388501212062}
-  - component: {fileID: 114176260486268072}
+  - component: {fileID: 114929339644144818}
   - component: {fileID: 114139397320928606}
   - component: {fileID: 33745388379875340}
   - component: {fileID: 65134271439423514}
@@ -108,7 +108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bobSpeed: 6
   bobRange: 0.05
---- !u!114 &114176260486268072
+--- !u!114 &114929339644144818
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -116,10 +116,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1615661566601068}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 800f4cb5b55617547a6ab35ef5efe6f9, type: 3}
+  m_Script: {fileID: 11500000, guid: c94df6f0e67645c479b101c193917b18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetType: 1
-  interactionRadius: 5
-  name: BlockCoin
-  icon: {fileID: 21300000, guid: eb5f6e2757c821940b69cf1456f7865a, type: 3}

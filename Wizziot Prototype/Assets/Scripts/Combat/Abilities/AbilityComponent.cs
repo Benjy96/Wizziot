@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//TODO: Abil cost/dmg variables
+    //Needs linked to entity stats - which stored where?
+    //Stats relate to the entity - abil dmg / costs should be stored here
+        //BUT stats can then modify the values from here
 public class AbilityComponent : MonoBehaviour {
 
     //Ability State Data
