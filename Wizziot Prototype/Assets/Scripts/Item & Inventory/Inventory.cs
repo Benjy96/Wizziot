@@ -12,6 +12,8 @@ public class Inventory : MonoBehaviour {
     public List<Item> items = new List<Item>();
     public int space = 20;
 
+    private int coins;
+
     private void Awake()
     {
         //Singleton setup
@@ -59,6 +61,30 @@ public class Inventory : MonoBehaviour {
         else
         {
             return false;
+        }
+    }
+
+    public void AddCoins(int count)
+    {
+        if(count > 0)
+        {
+            coins += count;
+        }
+        else
+        {
+            RemoveCoins(count);
+        }
+    }
+
+    public void RemoveCoins(int count)
+    {
+        if(count < 0)
+        {
+            coins -= count;
+        }
+        else
+        {
+            AddCoins(count);
         }
     }
 }

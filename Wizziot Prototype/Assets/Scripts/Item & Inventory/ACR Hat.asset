@@ -9,7 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: efb670b7c1deeae49a99a3e8c49f4fe3, type: 3}
-  m_Name: New equipment
+  m_Name: ACR Hat
   m_EditorClassIdentifier: 
   slot: 0
-  modifiers: []
+  modifiers:
+  - stat: 0
+    value: 1.12

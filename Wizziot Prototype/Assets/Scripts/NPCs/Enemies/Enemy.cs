@@ -73,7 +73,8 @@ public class Enemy : Targetable {
 
         neighbourhoodTracker.TrackingRadius = Mathf.Sqrt(stats.sqrMaxTargetDistance);
 
-        abilityComponent.KnockbackForce = stats.magicKnockbackForce;
+        //TODO: Change to access the entityStats dict
+        abilityComponent.KnockbackForce = 0f;
 
         emotionChip.ScaleEmotionWeights(gameDifficulty);
     }

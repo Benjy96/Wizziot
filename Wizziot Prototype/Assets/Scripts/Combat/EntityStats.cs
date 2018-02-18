@@ -12,16 +12,7 @@ public class EntityStats : MonoBehaviour {
     public int CurrentStamina { get; private set; }
     private int currentStamina;
 
-    public Dictionary<Stats, Stat> stats;
-
-    public float instantAbilityCost = 10;
-    public float aoeAbilityCost = 30;
-    public float defenseAbilityCost = 40;
-
-    public float magicKnockbackForce = 0f;
-    public float damageModifier = 1f;
-    public float mitigateChance = .01f;
-    public float damageReduction = .05f;
+    public Dictionary<Stats, Stat> entityStats;
 
     [Range(0, 225)] public float sqrMaxTargetDistance;
     [Range(0, 10)] public float speed;
@@ -31,18 +22,20 @@ public class EntityStats : MonoBehaviour {
     {
         CurrentHealth = maxHealth;
         CurrentStamina = maxStamina;
-        //TODO: Set stats according to difficulty if NPC - OR do it from enemy parent class
+
+        entityStats = new Dictionary<Stats, Stat>();
+
+        //Create a Stat for every Stat type
+        foreach (Stats stat in Enum.GetValues(typeof(Stats)))
+        {
+            Stat newStat = new Stat(stat, 1f);
+            entityStats.Add(newStat.StatType, newStat);
+        }
     }
 
     private void Start()
     {
-        //TODO: Equipment and item stats, modifiers, and SOs
-        stats = new Dictionary<Stats, Stat>();
-
-        foreach (Stats stat in Enum.GetValues(typeof(Stats)))
-        {
-            stats.Add(stat, new Stat(1f));
-        }
+        //TODO: Apply differing stats depending on difficulty
     }
 
     //TODO: Make a link method in Enemy.cs to connect abil component and stats - this is really messy
@@ -85,6 +78,7 @@ public class EntityStats : MonoBehaviour {
     {
         gameObject.SetActive(false);
         //TODO: End game / respawn - use game manager
+        //TODO: Object pool AI
     }
 
     public bool CanUseAbility(Abilities abil)
@@ -109,23 +103,23 @@ public class EntityStats : MonoBehaviour {
 }
 
 // ----- STAT CLASS ----- //
-[System.Serializable]
+[Serializable]
 public class Stat
 {
-    //The stat that this stat "is"
-    public Stats stat;
-    //Range of 0 to 300%
-    [Range(0f, 3f)] public float value;
+    [SerializeField] private Stats stat; //The stat that this stat "is"
+    [SerializeField, Range(0f, 3f)] private float value;    //Range of 0 to 300%
 
-    public Stat(float baseValue)
+    public Stats StatType { get { return stat; } }
+    public float StatValue { get { return value; } }
+    
+    public Stat(Stats stat, float baseValue)
     {
-
+        this.stat = stat;
+        value = baseValue;
     }
 }
 
 public enum Stats
 {
-    AbilityCost_Area, AbilityCost_Defense, AbilityCost_Instant,
-    ActionCostReduction, DamageModifier, DamageReduction, MitigationChance, MaxHealthModifier, MaxStaminaModifier,
-    SightRange, MovementSpeed
+    ActionCostReduction, DamageModifier, DamageReduction,  MaxHealthModifier, MaxStaminaModifier, MitigationChance, SightRange, MovementSpeed
 }

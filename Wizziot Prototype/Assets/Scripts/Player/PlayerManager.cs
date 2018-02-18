@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class PlayerManager : MonoBehaviour {
 
@@ -6,6 +7,8 @@ public class PlayerManager : MonoBehaviour {
     public static PlayerManager Instance { get { return _PlayerManager; } }
 
     public GameObject player;
+
+    private PlayerStats playerStats;
 
     private void Awake()
     {
@@ -19,5 +22,22 @@ public class PlayerManager : MonoBehaviour {
             Destroy(gameObject);
         }
         DontDestroyOnLoad(gameObject);
+
+        playerStats = player.GetComponent<PlayerStats>();
+    }
+
+    //TODO: Maybe make a separate EquipmentManager?
+    /// <summary>
+    /// Equip an item and apply its modifiers to the player's stats
+    /// </summary>
+    /// <param name="stats">The modifiers you wish to apply</param>
+    public void EquipItem(List<Stat> stats)
+    {
+        //Get key
+        foreach (Stat stat in stats)
+        {
+            //Set new stat value (apply modifier)
+            playerStats.entityStats[stat.StatType] = stat;
+        }
     }
 }

@@ -37,6 +37,6 @@ public class FollowState : State {
 
     private void Search()
     {
-        Debug.Log("Implement Search method");
+
     }
 }
