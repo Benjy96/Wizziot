@@ -9,47 +9,46 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1615661566601068}
+  m_RootGameObject: {fileID: 1986077721385236}
   m_IsPrefabParent: 1
---- !u!1 &1615661566601068
+--- !u!1 &1986077721385236
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4972388501212062}
-  - component: {fileID: 114929339644144818}
-  - component: {fileID: 114139397320928606}
-  - component: {fileID: 33745388379875340}
-  - component: {fileID: 65134271439423514}
-  - component: {fileID: 23642227512447754}
-  m_Layer: 0
-  m_Name: BlockCoin
+  - component: {fileID: 4744176325004484}
+  - component: {fileID: 114144889220954598}
+  - component: {fileID: 33017829237684928}
+  - component: {fileID: 136971160037424388}
+  - component: {fileID: 23585706940523728}
+  m_Layer: 10
+  m_Name: Pancake Hat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 1
+  m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4972388501212062
+--- !u!4 &4744176325004484
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1615661566601068}
-  m_LocalRotation: {x: -0, y: 0.36324388, z: -0, w: 0.93169415}
-  m_LocalPosition: {x: -3.3099973, y: 0.5, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_GameObject: {fileID: 1986077721385236}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7, y: 0.1, z: -5}
+  m_LocalScale: {x: 2, y: 0.1, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 42.599003, z: 0}
---- !u!23 &23642227512447754
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &23585706940523728
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1615661566601068}
+  m_GameObject: {fileID: 1986077721385236}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -57,7 +56,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 57b8aeaab402a384a8ac9ccfb72d09bb, type: 2}
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -76,46 +75,38 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &33745388379875340
+--- !u!33 &33017829237684928
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1615661566601068}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!65 &65134271439423514
-BoxCollider:
+  m_GameObject: {fileID: 1986077721385236}
+  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &114144889220954598
+MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1615661566601068}
+  m_GameObject: {fileID: 1986077721385236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 800f4cb5b55617547a6ab35ef5efe6f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetType: 0
+  name: Pancake Hat
+  icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  equipment: {fileID: 11400000, guid: 1e6121a8431e4aa49a559355e1507b94, type: 2}
+--- !u!136 &136971160037424388
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1986077721385236}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114139397320928606
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1615661566601068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43acf6a64efce1f4499b84a31289d6e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bobSpeed: 6
-  bobRange: 0.05
---- !u!114 &114929339644144818
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1615661566601068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c94df6f0e67645c479b101c193917b18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

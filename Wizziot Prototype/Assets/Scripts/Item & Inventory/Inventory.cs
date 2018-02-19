@@ -64,6 +64,13 @@ public class Inventory : MonoBehaviour {
         }
     }
 
+    public void Drop(Item item)
+    {
+        Remove(item);
+        gameObject.transform.SetParent(null);
+        gameObject.SetActive(true);
+    }
+
     public void AddCoins(int count)
     {
         if(count > 0)

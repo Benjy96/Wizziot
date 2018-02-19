@@ -1,12 +1,17 @@
 ﻿using UnityEngine;
 
 public class Item : Targetable {
-   
+
     new public string name = "New item";
     public Sprite icon = null;
     public Equipment equipment;
 
     private float interactionRadius = 5f;
+
+    private void Awake()
+    {
+        targetType = TargetType.Item;
+    }
 
     private void Start()
     {
@@ -29,11 +34,11 @@ public class Item : Targetable {
     {
         if(equipment != null)
         {
-            PlayerManager.Instance.EquipItem(equipment.modifiers);
+            PlayerManager.Instance.EquipItem(this);
         }
-
-        Inventory.Instance.Remove(this);
-        gameObject.transform.SetParent(null);
-        gameObject.SetActive(true);
+        else
+        {
+            Inventory.Instance.Drop(this);
+        }
     }
 }
