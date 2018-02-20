@@ -134,6 +134,7 @@ public class PlayerController : MonoBehaviour {
             {
                 try
                 {
+                    //todo: check target ain't null? or do in the methods / prob for abilcomp methods
                     GameMetaInfo.allKeybinds[code]();
                 }
                 catch (Exception e)

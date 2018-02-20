@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//TODO: Abil cost/dmg variables
-    //Needs linked to entity stats - which stored where?
-    //Stats relate to the entity - abil dmg / costs should be stored here
-        //BUT stats can then modify the values from here
 public class AbilityComponent : MonoBehaviour {
+
+    private EntityStats stats;
 
     //Ability State Data
     [HideInInspector] public Abilities SelectedAbility;
@@ -45,6 +43,10 @@ public class AbilityComponent : MonoBehaviour {
 
     private void Awake()
     {
+        //Component for checking resources (can use ability or not)
+        stats = GetComponent<EntityStats>();
+        Debug.Assert(stats != null);
+
         zapTargeter = zapSource.GetComponentInChildren<particleAttractorLinear>();
         zapParticles = zapSource.GetComponent<ParticleSystem>();
     }
@@ -118,26 +120,34 @@ public class AbilityComponent : MonoBehaviour {
     {
         if (Time.time > globalCooldownFinishTime)
         {
-            switch (SelectedAbility)
+            if (stats.CanUseAbility(SelectedAbility))
             {
-                case Abilities.Zap:
-                    Zap();
-                    break;
+                switch (SelectedAbility)
+                {
+                    case Abilities.Zap:
+                        Zap();
+                        break;
 
-                case Abilities.Confuse:
-                    StartCoroutine(Confuse());
-                    break;
+                    case Abilities.Confuse:
+                        StartCoroutine(Confuse());
+                        break;
 
-                case Abilities.Vortex:
-                    AoE(vortexPrefab);
-                    break;
+                    case Abilities.Vortex:
+                        AoE(vortexPrefab);
+                        break;
 
-                case Abilities.Singularity:
-                    AoE(singularityPrefab);
-                    break;
+                    case Abilities.Singularity:
+                        AoE(singularityPrefab);
+                        break;
+                }
+                globalCooldownFinishTime = Time.time + globalCooldown;
+                return true;
             }
-            globalCooldownFinishTime = Time.time + globalCooldown;
-            return true;
+            else
+            {
+                Debug.Log("Not enough stamina");
+                return false;
+            }
         }
         else
         {

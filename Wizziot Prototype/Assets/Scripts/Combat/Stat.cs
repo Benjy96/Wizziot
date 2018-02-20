@@ -17,11 +17,6 @@ public class Stat
     }
 }
 
-//public enum NormalStats { Health, Stamina, SightRange, MovementSpeed }
-//public enum NormalModifiers { HealthModifier, StaminaModifier, SightRangeModifier, MovementSpeedModifier }
-
-//public enum XStats { ACR, Damage, DamageReduc, MitigationChance }
-
 public enum Stats
 {
     ActionCostReduction, DamageModifier, DamageReduction, MaxHealthModifier, MaxStaminaModifier, MitigationChance, SightRange, MovementSpeed

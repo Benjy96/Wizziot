@@ -15,3 +15,5 @@ MonoBehaviour:
   modifiers:
   - stat: 6
     value: 1.1
+  - stat: 7
+    value: 0.8
