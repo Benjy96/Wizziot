@@ -86,11 +86,13 @@ public class PlayerController : MonoBehaviour {
                 //If within range
                 if ((pointHit.transform.position - transform.position).sqrMagnitude < playerStats.sqrMaxTargetDistance)
                 {
+                    Debug.Log("here 1: " + pointHit);
                     if (pointHit.transform.GetComponent<Targetable>() != null)  
                     {
                         Targetable t = pointHit.transform.GetComponent<Targetable>();
                         if (t == null) t = pointHit.transform.GetComponentInParent<Targetable>();
                         if (t == null) return;
+                        Debug.Log("name: " + t.name);
 
                         TargetType currentTargetType = t.targetType;
                         

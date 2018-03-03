@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 public class MissionUIManager : MonoBehaviour {
 
@@ -8,14 +7,10 @@ public class MissionUIManager : MonoBehaviour {
     public Transform missionLog;
     public MissionUI[] missions;
 
-    //public Text missionTitle;
-    //public Text missionBody;
-    //public WaypointCompass compass; //TODO: Convert player pos - waypoint to 2D vector and rotate an arrow to direction
-
     private void Start()
     {
         missionManager = MissionManager.Instance;
-        missions = GetComponentsInChildren<MissionUI>();
+        missions = GetComponentsInChildren<MissionUI>(true);    //TODO: activate each slot
 
         missionManager.onActiveMissionsChanged += UpdateUI;
     }
@@ -25,18 +20,23 @@ public class MissionUIManager : MonoBehaviour {
         Debug.Log("Remove this method");
     }
 
+    /// <summary>
+    /// Go through every mission and add to the UI (re-arranging entire UI from scratch every time the event is called)
+    /// </summary>
     void UpdateUI()
     {
         for (int i = 0; i < missions.Length; i++)
         {
-            //if (i < inventory.items.Count)
-            //{
-            //    //missions[i].AddItem(inventory.items[i]);
-            //}
-            //else
-            //{
-            //    //missions[i].ClearSlot();
-            //}
+            //if num of missions not out of sync with mission UIs active
+            if(i < missionManager.activeMissions.Count)
+            {
+                missions[i].gameObject.SetActive(true);
+                missions[i].ActivateMission(missionManager.activeMissions[i]);
+            }
+            else
+            {
+                missions[i].gameObject.SetActive(false);
+            }
         }
     }
 }

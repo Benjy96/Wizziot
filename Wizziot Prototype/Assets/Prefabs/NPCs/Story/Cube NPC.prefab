@@ -20,10 +20,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4744336005825828}
   - component: {fileID: 114561652806853264}
+  - component: {fileID: 114954622721297350}
   - component: {fileID: 33629199142076080}
   - component: {fileID: 65151307317420062}
   - component: {fileID: 23696451895248492}
-  - component: {fileID: 114954622721297350}
   m_Layer: 10
   m_Name: Cube NPC
   m_TagString: InteractableNPC
@@ -38,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1497368662686156}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.222132, y: -5.150193, z: -0.17}
+  m_LocalPosition: {x: -9.222132, y: -5.150193, z: 7.1762013}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -53,6 +53,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -68,6 +69,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5

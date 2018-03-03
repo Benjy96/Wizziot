@@ -42,7 +42,6 @@ public class MissionManager : MonoBehaviour {
         {
             activeMissions.Add(grantedMission);
             Instantiate(waypointPrefab, mission.location, Quaternion.Euler(-90f, 0f, 0f));
-            missionUI.SetMissionText(mission);  //TODO: Change to dynamic UI AND event
 
             //ACTIVATE UI
             if (onActiveMissionsChanged != null) onActiveMissionsChanged.Invoke();
