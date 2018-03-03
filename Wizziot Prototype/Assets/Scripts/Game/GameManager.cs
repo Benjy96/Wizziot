@@ -50,12 +50,14 @@ public class GameManager : MonoBehaviour
     public void SaveGame()
     {
         StoryManager.Instance.SaveStory();
+        Saver.SaveGame(encryptGameSave);
+        Debug.Log("Saving story & game");
         //Save game state data
     }
 
     public void ExitGame()
     {
-
+        Debug.Log("Implement ExitGame()");
     }
 
     //Assuming param is from a button (e.g. menu - buttons are ints)

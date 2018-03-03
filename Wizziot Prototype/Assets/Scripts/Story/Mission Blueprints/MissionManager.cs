@@ -9,15 +9,14 @@ public class MissionManager : MonoBehaviour {
     private static MissionManager _MissionManager;
     public static MissionManager Instance { get { return _MissionManager; } }
 
-    public MissionUI missionUI;
+    public MissionUIManager missionUI;
 
     public GameObject waypointPrefab;
 
     public List<Mission> activeMissions;
     public int maxMissions = 3;
 
-    public Action onMissionCompleted;
-    public Action onMissionAdded;   //update UI etc
+    public Action onActiveMissionsChanged;   //update UI etc
 
     private void Awake()
     {
@@ -46,7 +45,7 @@ public class MissionManager : MonoBehaviour {
             missionUI.SetMissionText(mission);  //TODO: Change to dynamic UI AND event
 
             //ACTIVATE UI
-            //if (onMissionAdded != null) onMissionAdded.Invoke();
+            if (onActiveMissionsChanged != null) onActiveMissionsChanged.Invoke();
         }
     }
 

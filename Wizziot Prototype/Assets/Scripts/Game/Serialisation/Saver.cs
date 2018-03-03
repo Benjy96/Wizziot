@@ -40,6 +40,15 @@ public class Saver : MonoBehaviour
         SaveData save = new SaveData();
         GameObject[] scene = FindObjectsOfType<GameObject>();
 
+        Debug.Log("Saver.CreateSaveGame(): Create unique keys for the save key-value pairs");
+        Debug.Log("Quick and dirty example save: Name and Vector3 of all objects, no unique IDs");
+
+        //TODO: Save objects in game that needed to be saved here:
+        foreach (GameObject x in scene)
+        {
+            save.Save(x.name, x.transform.position);
+        }
+
         //Implement: loop through each gameobject and use the SaveData object to save whatever attributes we wish.
         //Need a unique key for each object - current method is to get scene name, then use name of game object & position.
 

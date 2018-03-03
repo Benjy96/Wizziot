@@ -113,10 +113,11 @@ public class EntityStats : MonoBehaviour {
     /// <summary>
     /// Used by self (controller or abil component) to attack other
     /// </summary>
-    /// <returns></returns>
+    /// <returns>True if you have enough stamina</returns>
     public bool CanUseAbility(Abilities ability)
     {
-        Debug.Log("In CanUseAbility()");
+        //TODO: Apply modifiers here? maybe an "out" float?
+        //Also where store standard dmg? In here?
         if(abilityCosts[ability] <= CurrentStamina)
         {
             CurrentStamina -= (int)abilityCosts[ability];

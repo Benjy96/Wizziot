@@ -11,6 +11,32 @@ using UnityEngine;
 [Serializable]
 public class SaveData
 {
+    public class Person
+    {
+        public string name;
+        public int age;
+
+        public Person(string a, int b)
+        {
+            name = a; age = b;
+        }
+    }
+
+    public Dictionary<string, Person> keyValueDatabase = new Dictionary<string, Person>();
+
+    public void Save(Person person)
+    {
+        keyValueDatabase[person.name] = new Person(person.name, person.age);
+    }
+
+
+
+
+
+
+
+
+
     //The reason we use generics is so that the class is truly acting as a BLUEPRINT. i.e. we create structures that can vary in type, and their methods work for each.
     [Serializable]
     public class SaveDictionary<T>

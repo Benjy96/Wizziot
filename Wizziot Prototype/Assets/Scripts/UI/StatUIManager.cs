@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StatUI : MonoBehaviour {
+public class StatUIManager : MonoBehaviour {
 
     public float health;
     public float stamina;
