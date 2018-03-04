@@ -22,14 +22,15 @@ public class MissionUI : MonoBehaviour {
         {
             //TODO: Change compass depending on camera position
 
-            Vector3 camPos = Camera.main.transform.position;
-            Vector3 playerPos = PlayerManager.Instance.player.transform.position;
+            Transform player = PlayerManager.Instance.player.GetComponent<Transform>();
+
+            Vector3 playerPos = player.position;
             Vector3 direction = (currentWaypoint - playerPos).normalized;
 
             //Unit circle trigonometry: https://www.khanacademy.org/math/algebra2/trig-functions/unit-circle-definition-of-trig-functions-alg2/a/trig-unit-circle-review
             //Get point on 2D unit circle
-            float hypoteneuse = Mathf.Sqrt((direction.x * direction.x) + (direction.z * direction.z));
-            float angle = Mathf.Acos(direction.z / hypoteneuse) * Mathf.Rad2Deg;
+            float hypoteneuse = Mathf.Sqrt((direction.x * direction.x) + (direction.z * direction.z));  //Used for trig (calculating angle - Cos = A/H)
+            float angle = Mathf.Acos(direction.z / hypoteneuse) * Mathf.Rad2Deg;    //Angle to waypoint
 
             Quaternion q = new Quaternion();
 

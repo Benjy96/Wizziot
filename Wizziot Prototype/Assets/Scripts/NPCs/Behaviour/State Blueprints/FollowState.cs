@@ -28,8 +28,8 @@ public class FollowState : State {
         GameObject targetGO = null;
         Transform target = null;
 
-        targetGO = neighbourhood.RetrieveTrackedObject(interestedIn);
-        if (targetGO == null) targetGO = neighbourhood.RetrieveTrackedObject(secondaryInterest);
+        targetGO = neighbourhoodTracker.RetrieveTrackedObject(interestedIn);
+        if (targetGO == null) targetGO = neighbourhoodTracker.RetrieveTrackedObject(secondaryInterest);
         if (targetGO != null) target = targetGO.transform;
 
         return target;
@@ -37,6 +37,6 @@ public class FollowState : State {
 
     private void Search()
     {
-
+        Debug.Log("Implement Search in FollowState");
     }
 }

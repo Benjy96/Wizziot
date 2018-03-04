@@ -5,6 +5,10 @@ using UnityEngine;
 public class NeighbourhoodTracker : MonoBehaviour
 {
     public List<Enemy> neighbours;
+    public List<Transform> obstacles;
+
+    public enum TrackType { Enemies, Obstacles }
+    public TrackType toTrack;
 
     public Dictionary<string, GameObject> secondaryNeighbours;
 
@@ -44,49 +48,97 @@ public class NeighbourhoodTracker : MonoBehaviour
         }
     }
 
+    public void TrackOtherEnemies()
+    {
+        toTrack = TrackType.Enemies;
+        obstacles.Clear();
+    }
+
+    public void TrackObstacles()
+    {
+        toTrack = TrackType.Obstacles;
+        neighbours.Clear();
+    }
+
     private void Awake()
     {
         neighbours = new List<Enemy>();
+        obstacles = new List<Transform>();
         secondaryNeighbours = new Dictionary<string, GameObject>();
 
         sphereCol = GetComponent<SphereCollider>();
+
+        toTrack = TrackType.Enemies;
     }
 
     //Add enemy to neighbourhood on trigger collision
     private void OnTriggerEnter(Collider other)
     {
-        Enemy e = other.GetComponent<Enemy>();
-        if (e != null)
+        if (toTrack == TrackType.Enemies)
         {
-            if (neighbours.IndexOf(e) == -1)
+            Enemy e = other.GetComponent<Enemy>();
+            if (e != null)
             {
-                neighbours.Add(e);
-                return;
+                if (neighbours.IndexOf(e) == -1)
+                {
+                    neighbours.Add(e);
+                    return;
+                }
+            }
+
+            if (secondaryNeighbours.ContainsKey(other.name))
+            {
+                secondaryNeighbours[other.name] = other.gameObject;
             }
         }
-
-        if (secondaryNeighbours.ContainsKey(other.name))
+        else
         {
-            secondaryNeighbours[other.name] = other.gameObject;
+            if (other.gameObject.layer.Equals(GameMetaInfo.LAYER_IMMOVABLE_OBJECT))
+            {
+                Transform t = other.GetComponent<Transform>();
+                if (t != null)
+                {
+                    if (obstacles.IndexOf(t) == -1)
+                    {
+                        obstacles.Add(t);
+                        return;
+                    }
+                }
+            } 
         }
+            
     }
 
     private void OnTriggerExit(Collider other)
     {
-        Enemy e = other.GetComponent<Enemy>();
-        if (e != null)
+        if (toTrack == TrackType.Enemies)
         {
-            if (neighbours.IndexOf(e) != -1)
+            Enemy e = other.GetComponent<Enemy>();
+            if (e != null)
             {
-                neighbours.Remove(e);
+                if (neighbours.IndexOf(e) != -1)
+                {
+                    neighbours.Remove(e);
+                }
+            }
+
+            if (secondaryNeighbours.ContainsKey(other.name))
+            {
+                if (secondaryNeighbours[other.name] != null)
+                {
+                    secondaryNeighbours[other.name] = null;
+                }
             }
         }
-
-        if (secondaryNeighbours.ContainsKey(other.name))
+        else
         {
-            if (secondaryNeighbours[other.name] != null)
+            Transform t = other.GetComponent<Transform>();
+            if (t != null)
             {
-                secondaryNeighbours[other.name] = null;
+                if (obstacles.IndexOf(t) != -1)
+                {
+                    obstacles.Remove(t);
+                }
             }
         }
     }

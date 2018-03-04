@@ -6,9 +6,11 @@ public class State : ScriptableObject {
     public GameObject secondaryInterest;
     public bool hostileToInterests;
 
+    public GameObject influencer;   //use this when influencing - could be good for WHO to hide from or attack
+
     protected Enemy owner;
     protected EnemySpawnPoint spawn;
-    protected NeighbourhoodTracker neighbourhood;
+    protected NeighbourhoodTracker neighbourhoodTracker;
 
     protected Transform target;
     
@@ -32,10 +34,10 @@ public class State : ScriptableObject {
     {
         this.owner = owner;
         spawn = owner.Spawn;
-        neighbourhood = owner.neighbourhoodTracker;
+        neighbourhoodTracker = owner.neighbourhoodTracker;
 
-        neighbourhood.RegisterInterest(interestedIn);
-        neighbourhood.RegisterInterest(secondaryInterest);
+        neighbourhoodTracker.RegisterInterest(interestedIn);
+        neighbourhoodTracker.RegisterInterest(secondaryInterest);
 
         return this;
     }
@@ -54,8 +56,8 @@ public class State : ScriptableObject {
     /// <returns>The next state to enter. Returning null (by default) means the next State will be handled by the EmotionChip</returns>
     public virtual void ExitState()
     {
-        neighbourhood.RemoveInterest(interestedIn);
-        neighbourhood.RemoveInterest(secondaryInterest);
+        neighbourhoodTracker.RemoveInterest(interestedIn);
+        neighbourhoodTracker.RemoveInterest(secondaryInterest);
     }
 
     protected virtual Transform SelectTarget()
@@ -63,7 +65,7 @@ public class State : ScriptableObject {
         GameObject targetGO = null;
         Transform target = null;
 
-        targetGO = neighbourhood.RetrieveTrackedObject(interestedIn);
+        targetGO = neighbourhoodTracker.RetrieveTrackedObject(interestedIn);
 
         if (targetGO != null) target = targetGO.transform;
 

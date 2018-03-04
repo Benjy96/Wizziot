@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//TODO: track biggest influencers and then make that the state's "influencer"
+
+
 /// <summary>
 /// A variant of a finite state machine... The EMOTIONAL State Machine (ESM)
 /// Each agent with an emotion chip has an emotional disposition. 

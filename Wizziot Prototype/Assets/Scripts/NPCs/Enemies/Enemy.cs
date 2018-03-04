@@ -34,6 +34,12 @@ public class Enemy : Targetable {
     public Vector3 Velocity { get { return rBody.velocity; } set { rBody.velocity = value; } }
     public float SightRange { get { return neighbourhoodTracker.TrackingRadius; } }
 
+    // -- Interface -- //
+    public void Influence(Emotion intent, float amount)
+    {
+        emotionChip.Influence(intent, amount);
+    }
+
     protected void OnEnable()
     {
         //GameManager.Instance.OnDifficultyChanged += SetStats;
