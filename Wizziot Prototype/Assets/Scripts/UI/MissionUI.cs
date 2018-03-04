@@ -22,6 +22,7 @@ public class MissionUI : MonoBehaviour {
         {
             //TODO: Change compass depending on camera position
 
+            Vector3 camPos = Camera.main.transform.position;
             Transform player = PlayerManager.Instance.player.GetComponent<Transform>();
 
             Vector3 playerPos = player.position;
@@ -34,14 +35,16 @@ public class MissionUI : MonoBehaviour {
 
             Quaternion q = new Quaternion();
 
+            float camAngle = player.rotation.eulerAngles.y;
+
             //Correct rotation (trig are repeating functions - need to flip the compass when on "other side" of waypoint)
             if(direction.x < 0)
             {
-                q = Quaternion.AngleAxis(angle, Vector3.forward);
+                q = Quaternion.AngleAxis(angle + camAngle, Vector3.forward);
             }
             else
             {
-                q = Quaternion.AngleAxis(-angle, Vector3.forward);
+                q = Quaternion.AngleAxis(-angle + camAngle, Vector3.forward);
             }
             
             compass.rotation = q;
