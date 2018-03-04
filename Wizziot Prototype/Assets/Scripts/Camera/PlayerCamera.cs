@@ -21,8 +21,8 @@ public class PlayerCamera : MonoBehaviour {
     private float yawInput = 0f;
     private float pitchInput = 0f;
 
-    private enum CameraMode { Follow, Look }
-    private CameraMode State;
+    public enum CameraMode { Follow, Look }
+    public static CameraMode State;
 
     private void Start()
     {
