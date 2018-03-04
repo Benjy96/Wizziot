@@ -20,9 +20,9 @@ public class MissionUI : MonoBehaviour {
     {
         if(currentWaypoint != null)
         {
-            //TODO: Fix - only accurate when player facing forward
+            //TODO: Change compass depending on camera position
 
-            //Vector3 camPos = Camera.main.transform.position;
+            Vector3 camPos = Camera.main.transform.position;
             Vector3 playerPos = PlayerManager.Instance.player.transform.position;
             Vector3 direction = (currentWaypoint - playerPos).normalized;
 
@@ -30,13 +30,20 @@ public class MissionUI : MonoBehaviour {
             //Get point on 2D unit circle
             float hypoteneuse = Mathf.Sqrt((direction.x * direction.x) + (direction.z * direction.z));
             float angle = Mathf.Acos(direction.z / hypoteneuse) * Mathf.Rad2Deg;
-            Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
 
+            Quaternion q = new Quaternion();
+
+            //Correct rotation (trig are repeating functions - need to flip the compass when on "other side" of waypoint)
+            if(direction.x < 0)
+            {
+                q = Quaternion.AngleAxis(angle, Vector3.forward);
+            }
+            else
+            {
+                q = Quaternion.AngleAxis(-angle, Vector3.forward);
+            }
+            
             compass.rotation = q;
-
-            //Rotate compass
-            //compass.transform.
-            //compass.gameObject.transform.Rotate(Vector3.up, angle);
         }
     }
 }
