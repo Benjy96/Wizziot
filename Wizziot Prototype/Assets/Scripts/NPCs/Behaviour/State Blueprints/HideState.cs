@@ -31,14 +31,14 @@ public class HideState : State {
         chaser = SelectTarget();
         if (chaser != null)
         {
-            Debug.Log("Hiding");
+            Debug.Log("Hiding from " + chaser.name);
             EntityStats eS = chaser.GetComponent<EntityStats>();
             if (eS != null) chaserSightDist = eS.sqrMaxTargetDistance;
             CalculateHideSpot();
         }
         else
         {
-            owner.Influence(Emotion.Calm, 0.2f * Time.deltaTime);
+            //owner.Influence(Emotion.Calm, 0.2f * Time.deltaTime);
         }
     }
 
@@ -48,12 +48,14 @@ public class HideState : State {
 
         if (CanSeeChaser())
         {
-            Debug.Log("Hiding");
+            Debug.Log("Can see chaser, hiding");
             //Check appropriate hide spots
             foreach (Transform pos in neighbourhoodTracker.obstacles) //List is already sorted, closest will be first!
             {
+                Debug.Log("Checking neighbourhood, pos found: " + pos.name);
                 if (PointHiddenFromChaser(pos.transform.position))
                 {
+                    Debug.Log("Point behind pos is hidden");
                     //Calculate spot
                     obstacle = pos;
                     Debug.Log("Obstacle:  " + obstacle);
@@ -61,24 +63,36 @@ public class HideState : State {
                     owner.MoveTo(newHideSpot);
                     break;
                 }
+                else
+                {
+                    Debug.Log("Behind pos not hidden");
+                }
+                //TODO: No obstacle
             }
         }
         else
         {
-            owner.Influence(Emotion.Calm, .2f);
+            //TODO: Obstacle null
+            //owner.Influence(Emotion.Calm, .2f);
             //Mirror enemy movement about obstacle
-            newHideSpot = CalculateHideSpot(obstacle, influencer);
-            owner.MoveTo(newHideSpot);
+            //newHideSpot = CalculateHideSpot(obstacle, influencer);
+            //owner.MoveTo(newHideSpot);
         }
     }
 
     private bool CanSeeChaser()
     {
-        Ray ray = new Ray(owner.Position, chaser.position);
+        Debug.Log("Chaser: " + chaser.name);
+        Ray ray = new Ray(owner.Position, (chaser.position - owner.Position).normalized);
         RaycastHit hit;
-        if(Physics.Raycast(ray, out hit, owner.SightRange, LayerMask.GetMask(GameMetaInfo._LAYER_AFFECTABLE_OBJECT)))
+        Debug.Log("sight range; " + owner.SightRange);
+        if(Physics.Raycast(ray, out hit, owner.SightRange, LayerMask.GetMask(GameMetaInfo._LAYER_AFFECTABLE_OBJECT), QueryTriggerInteraction.Ignore))
         {
             Debug.Log("Ray hit");
+            Debug.Log("hit transform tag; " + hit.transform.tag);
+            Debug.Log("hit transform tag; " + hit.transform.name);
+            Debug.Log("Chaser tag: " + chaser.tag + " hit tag; " + hit.transform.tag);
+            Debug.Log("bool " + hit.transform.tag.Equals(chaser.tag));
             if (hit.transform.tag.Equals(chaser.tag))
             {
                 Debug.Log("Can see: " + hit.transform.tag);

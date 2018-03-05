@@ -97,8 +97,12 @@ public class NeighbourhoodTracker : MonoBehaviour
         }
         else
         {
-            if (other.gameObject.layer.Equals(GameMetaInfo.LAYER_IMMOVABLE_OBJECT))
+            int layerMask = LayerMask.NameToLayer(GameMetaInfo.LAYER_IMMOVABLE_OBJECT);
+            Debug.Log("Trying to add " + other.name + " to obstacle list");
+            Debug.Log(other.gameObject.layer + " and " + layerMask);
+            if (other.gameObject.layer == layerMask)
             {
+                Debug.Log("Adding obstacle " + other.name + " to obstacle list");
                 Transform t = other.GetComponent<Transform>();
                 if (t != null)
                 {
