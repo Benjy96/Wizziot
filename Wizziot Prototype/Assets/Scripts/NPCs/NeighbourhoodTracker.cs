@@ -52,12 +52,14 @@ public class NeighbourhoodTracker : MonoBehaviour
     {
         toTrack = TrackType.Enemies;
         obstacles.Clear();
+        ScanForNearby();
     }
 
     public void TrackObstacles()
     {
         toTrack = TrackType.Obstacles;
         neighbours.Clear();
+        ScanForNearby();
     }
 
     private void Awake()
@@ -74,6 +76,13 @@ public class NeighbourhoodTracker : MonoBehaviour
     //Add enemy to neighbourhood on trigger collision
     private void OnTriggerEnter(Collider other)
     {
+        //Track interest
+        if (secondaryNeighbours.ContainsKey(other.name))
+        {
+            secondaryNeighbours[other.name] = other.gameObject;
+        }
+
+        //Track enemies, else environment
         if (toTrack == TrackType.Enemies)
         {
             Enemy e = other.GetComponent<Enemy>();
@@ -84,11 +93,6 @@ public class NeighbourhoodTracker : MonoBehaviour
                     neighbours.Add(e);
                     return;
                 }
-            }
-
-            if (secondaryNeighbours.ContainsKey(other.name))
-            {
-                secondaryNeighbours[other.name] = other.gameObject;
             }
         }
         else
@@ -106,11 +110,20 @@ public class NeighbourhoodTracker : MonoBehaviour
                 }
             } 
         }
-            
     }
 
     private void OnTriggerExit(Collider other)
     {
+        //Remove interest
+        if (secondaryNeighbours.ContainsKey(other.name))
+        {
+            if (secondaryNeighbours[other.name] != null)
+            {
+                secondaryNeighbours[other.name] = null;
+            }
+        }
+
+        //Remove enemies, else environment
         if (toTrack == TrackType.Enemies)
         {
             Enemy e = other.GetComponent<Enemy>();
@@ -119,14 +132,6 @@ public class NeighbourhoodTracker : MonoBehaviour
                 if (neighbours.IndexOf(e) != -1)
                 {
                     neighbours.Remove(e);
-                }
-            }
-
-            if (secondaryNeighbours.ContainsKey(other.name))
-            {
-                if (secondaryNeighbours[other.name] != null)
-                {
-                    secondaryNeighbours[other.name] = null;
                 }
             }
         }
@@ -183,5 +188,35 @@ public class NeighbourhoodTracker : MonoBehaviour
         }
 
         return null;
+    }
+
+    private void ScanForNearby()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, TrackingRadius);
+        foreach (Collider c in colliders)
+        {
+            if(toTrack == TrackType.Enemies)
+            {
+                Enemy e = c.GetComponent<Enemy>();
+                if (e != null)
+                {
+                    if (neighbours.IndexOf(e) != -1)
+                    {
+                        neighbours.Remove(e);
+                    }
+                }
+            }
+            else if(toTrack == TrackType.Obstacles)
+            {
+                Transform t = c.GetComponent<Transform>();
+                if (t != null)
+                {
+                    if (obstacles.IndexOf(t) != -1)
+                    {
+                        obstacles.Remove(t);
+                    }
+                }
+            }
+        }
     }
 }

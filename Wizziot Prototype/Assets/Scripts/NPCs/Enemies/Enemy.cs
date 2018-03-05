@@ -35,9 +35,14 @@ public class Enemy : Targetable {
     public float SightRange { get { return neighbourhoodTracker.TrackingRadius; } }
 
     // -- Interface -- //
+    public void Influence(GameObject influencer, Emotion intent, float amount)
+    {
+        emotionChip.Influence(influencer, intent, amount);
+    }
+
     public void Influence(Emotion intent, float amount)
     {
-        emotionChip.Influence(intent, amount);
+        emotionChip.Influence(null, intent, amount);
     }
 
     protected void OnEnable()

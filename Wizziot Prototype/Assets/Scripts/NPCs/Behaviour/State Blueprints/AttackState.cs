@@ -7,12 +7,9 @@ public class AttackState : State {
     private AbilityComponent abilComponent;
     private PlayerStats playerStats;
 
-    protected override State EnterState(Enemy owner)
+    protected override void EnterState(Enemy owner, GameObject lastInfluence)
     {
-        abilComponent = owner.abilityComponent;
-        //abilComponent.globalCooldown = owner.stats.
-
-        return base.EnterState(owner);
+        base.EnterState(owner, lastInfluence);
     }
 
     public override void Execute()

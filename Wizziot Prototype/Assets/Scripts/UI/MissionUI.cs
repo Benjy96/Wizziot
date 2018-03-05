@@ -43,15 +43,17 @@ public class MissionUI : MonoBehaviour {
             if (PlayerCamera.State == PlayerCamera.CameraMode.Follow)
             {
                 //Use this for rotating the compass DEPENDING on the player's rotation, rather than the world's
-                float camAngle = player.rotation.eulerAngles.y;
+                float playerFaceAngle = player.rotation.eulerAngles.y;
 
+                //Trig functions are repeating, so past 180 degrees we need to flip the angle
                 if (direction.x < 0)
                 {
-                    q = Quaternion.AngleAxis(angle + camAngle, Vector3.forward);
+                    //Depend upon the player's rotation, not the "forward" direction of the Unity scene (+ playerFaceAngle)
+                    q = Quaternion.AngleAxis(angle + playerFaceAngle, Vector3.forward);
                 }
                 else
                 {
-                    q = Quaternion.AngleAxis(-angle + camAngle, Vector3.forward);
+                    q = Quaternion.AngleAxis(-angle + playerFaceAngle, Vector3.forward);
                 }
             }
             else if (PlayerCamera.State == PlayerCamera.CameraMode.Look)

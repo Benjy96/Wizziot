@@ -6,7 +6,7 @@ public class State : ScriptableObject {
     public GameObject secondaryInterest;
     public bool hostileToInterests;
 
-    public GameObject influencer;   //use this when influencing - could be good for WHO to hide from or attack
+    [HideInInspector] public GameObject influencer;   //use this when influencing - could be good for WHO to hide from or attack
 
     protected Enemy owner;
     protected EnemySpawnPoint spawn;
@@ -19,10 +19,11 @@ public class State : ScriptableObject {
     /// </summary>
     /// <param name="owner">The agent attempting to create/use the specified state</param>
     /// <returns></returns>
-    public State CreateState(Enemy owner)
+    public State CreateState(Enemy owner, GameObject lastInfluence)
     {
         State newState = (State)Instantiate(Resources.Load("State Objects/" + name));
-        return newState.EnterState(owner);
+        newState.EnterState(owner, lastInfluence);
+        return newState;
     }
 
     /// <summary>
@@ -30,16 +31,16 @@ public class State : ScriptableObject {
     /// </summary>
     /// <param name="owner">The agent using this state</param>
     /// <returns></returns>
-    protected virtual State EnterState(Enemy owner)
+    protected virtual void EnterState(Enemy owner, GameObject lastInfluence)
     {
         this.owner = owner;
+        influencer = lastInfluence;
         spawn = owner.Spawn;
         neighbourhoodTracker = owner.neighbourhoodTracker;
 
+        neighbourhoodTracker.TrackOtherEnemies();
         neighbourhoodTracker.RegisterInterest(interestedIn);
         neighbourhoodTracker.RegisterInterest(secondaryInterest);
-
-        return this;
     }
 
     /// <summary>
@@ -62,15 +63,22 @@ public class State : ScriptableObject {
 
     protected virtual Transform SelectTarget()
     {
-        GameObject targetGO = null;
-        Transform target = null;
+        if (influencer != null && (influencer.transform.position - owner.Position).magnitude < owner.SightRange)
+        {
+            return influencer.transform;
+        }
+        else
+        {
+            GameObject targetGO = null;
+            Transform target = null;
 
-        targetGO = neighbourhoodTracker.RetrieveTrackedObject(interestedIn);
+            targetGO = neighbourhoodTracker.RetrieveTrackedObject(interestedIn);
 
-        if (targetGO != null) target = targetGO.transform;
+            if (targetGO != null) target = targetGO.transform;
 
-        if (target == null) target = owner.target;
+            if (target == null && owner.target != null) target = owner.target;
 
-        return target;
+            return target;
+        }
     }
 }

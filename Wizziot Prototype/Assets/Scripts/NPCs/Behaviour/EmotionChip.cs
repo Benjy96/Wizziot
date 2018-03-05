@@ -35,6 +35,7 @@ public class EmotionChip : MonoBehaviour {
 
     //Disposition changes how influencing factors affect the agent
     public Emotion disposition = Emotion.Calm;
+    private Emotion currentEmotionalState;
 
     /// <summary>
     /// How likely an emotional agent is to change their behaviour from external influences. Also affects rate at which agent tends towards their disposition.
@@ -49,6 +50,9 @@ public class EmotionChip : MonoBehaviour {
     public float trust = 1f; //Calm weighting
     public float irascibility = 1f; //Anger weighting
     public float cowardice = 1f;    //Fear weighting
+
+    private GameObject influencedBy;
+    public GameObject LastInfluence { get { return influencedBy; } set { influencedBy = value; } }
 
     [SerializeField] private State currentState;
 
@@ -98,16 +102,19 @@ public class EmotionChip : MonoBehaviour {
         //Step 1. Execute current emotional goal
         if (agentEmotions[Emotion.Calm] > reluctance)
         {
+            currentEmotionalState = Emotion.Calm;
             TakeAction(calmState, agent);
         }
 
         if (agentEmotions[Emotion.Anger] > reluctance)
         {
+            currentEmotionalState = Emotion.Anger;
             TakeAction(angryState, agent);
         }
 
         if (agentEmotions[Emotion.Fear] > reluctance)
         {
+            currentEmotionalState = Emotion.Fear;
             TakeAction(scaredState, agent);  //This is where goals come in -> each state could lead to next (in them or abstract above). e.g. run, but if fear too high, kill self
         }
 
@@ -126,6 +133,13 @@ public class EmotionChip : MonoBehaviour {
         ScaleEmotions();
     }
 
+    public void Influence(GameObject actor, Emotion intent, float amount)
+    {
+        Emotion emotionBeforeInfluence = currentEmotionalState;
+        Influence(intent, amount);
+        if (currentEmotionalState != emotionBeforeInfluence && actor != null) LastInfluence = actor;  //Set actor that changed current state to influence
+    }
+
     /// <summary>
     /// This method provides a way in which to influence this agent's emotional state
     /// </summary>
@@ -135,7 +149,6 @@ public class EmotionChip : MonoBehaviour {
     {
         amount = Mathf.Clamp(amount, 0f, 1f);
         
-        //TODO: Balancing
         //Influence the NPC by the external factor's intent differently, based upon this agent's emotional disposition
         switch (disposition)
         {
@@ -226,7 +239,7 @@ public class EmotionChip : MonoBehaviour {
         //If not in any state or specified state, set it up (enter/construct) : OR : current state not same type as goal AND current goal not being worked on
         if (currentState == null || currentState.GetType() != goal.GetType())
         {
-            currentState = goal.CreateState(agent);
+            currentState = goal.CreateState(agent, LastInfluence);
         }
 
         currentState.Execute();
