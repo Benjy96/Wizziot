@@ -6,7 +6,6 @@ public class HideState : State {
 
     private Transform chaser;
     private Vector3 newHideSpot;
-    private Transform obstacle;
     private float chaserSightDist;
 
     protected override void EnterState(Enemy owner, GameObject lastInfluence)
@@ -31,7 +30,6 @@ public class HideState : State {
         chaser = SelectTarget();
         if (chaser != null)
         {
-            Debug.Log("Hiding from " + chaser.name);
             EntityStats eS = chaser.GetComponent<EntityStats>();
             if (eS != null) chaserSightDist = eS.sqrMaxTargetDistance;
             CalculateHideSpot();
@@ -57,9 +55,7 @@ public class HideState : State {
                 {
                     Debug.Log("Point behind pos is hidden");
                     //Calculate spot
-                    obstacle = pos;
-                    Debug.Log("Obstacle:  " + obstacle);
-                    newHideSpot = CalculateHideSpot(obstacle, influencer);
+                    newHideSpot = CalculateHideSpot(pos, chaser);
                     owner.MoveTo(newHideSpot);
                     break;
                 }
@@ -82,17 +78,11 @@ public class HideState : State {
 
     private bool CanSeeChaser()
     {
-        Debug.Log("Chaser: " + chaser.name);
         Ray ray = new Ray(owner.Position, (chaser.position - owner.Position).normalized);
         RaycastHit hit;
-        Debug.Log("sight range; " + owner.SightRange);
-        if(Physics.Raycast(ray, out hit, owner.SightRange, LayerMask.GetMask(GameMetaInfo._LAYER_AFFECTABLE_OBJECT), QueryTriggerInteraction.Ignore))
+        //Racyast everything except affectable objects
+        if(Physics.Raycast(ray, out hit, owner.SightRange, LayerMask.GetMask("Default", GameMetaInfo._LAYER_IMMOVABLE_OBJECT), QueryTriggerInteraction.Ignore))
         {
-            Debug.Log("Ray hit");
-            Debug.Log("hit transform tag; " + hit.transform.tag);
-            Debug.Log("hit transform tag; " + hit.transform.name);
-            Debug.Log("Chaser tag: " + chaser.tag + " hit tag; " + hit.transform.tag);
-            Debug.Log("bool " + hit.transform.tag.Equals(chaser.tag));
             if (hit.transform.tag.Equals(chaser.tag))
             {
                 Debug.Log("Can see: " + hit.transform.tag);
@@ -111,28 +101,22 @@ public class HideState : State {
     {
         Ray ray = new Ray(owner.Position, chaser.position);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, chaserSightDist, LayerMask.GetMask(GameMetaInfo._LAYER_AFFECTABLE_OBJECT)))
+        if (Physics.Raycast(ray, out hit, chaserSightDist))
         {
-            if (hit.transform.tag.Equals(chaser.tag))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            Debug.Log("Chaser can't see point");
+            return true;
         }
         return false;
     }
 
-    private Vector3 CalculateHideSpot(Transform point, GameObject chaser)
+    private Vector3 CalculateHideSpot(Transform point, Transform chaser)
     {
-        Vector3 direction = (chaser.transform.position - point.position).normalized;
+        Vector3 direction = (point.position- chaser.position).normalized;
 
         float obstacleSizeX = point.transform.localScale.x;
         float obstacleSizeZ = point.transform.localScale.z;
         float biggest = (obstacleSizeX > obstacleSizeZ) ? obstacleSizeX : obstacleSizeZ;
-        Vector3 adjustedForObstacleSizePos = direction * biggest;
+        Vector3 adjustedForObstacleSizePos = point.transform.position + (direction * biggest);
 
         return adjustedForObstacleSizePos;
     }

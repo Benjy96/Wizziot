@@ -12,7 +12,7 @@ public class GameMetaInfo {
 
     //Layer Contracts
     public static string _LAYER_AFFECTABLE_OBJECT { get { return "Object"; } }
-    public static string LAYER_IMMOVABLE_OBJECT { get { return "Environment"; } }
+    public static string _LAYER_IMMOVABLE_OBJECT { get { return "Environment"; } }
     public static string _LAYER_GROUND_WALKABLE { get { return "Ground"; } }
 
     //Tag Contracts
