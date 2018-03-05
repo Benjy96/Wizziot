@@ -8,6 +8,8 @@ public class HideState : State {
     private Vector3 newHideSpot;
     private float chaserSightDist;
 
+    private Transform hideObstacle;
+
     protected override void EnterState(Enemy owner, GameObject lastInfluence)
     {
         base.EnterState(owner, lastInfluence);
@@ -48,6 +50,7 @@ public class HideState : State {
         {
             Debug.Log("Can see chaser, hiding");
             //Check appropriate hide spots
+            if (neighbourhoodTracker.obstacles == null) neighbourhoodTracker.ScanForNearby();
             foreach (Transform pos in neighbourhoodTracker.obstacles) //List is already sorted, closest will be first!
             {
                 Debug.Log("Checking neighbourhood, pos found: " + pos.name);
@@ -57,22 +60,20 @@ public class HideState : State {
                     //Calculate spot
                     newHideSpot = CalculateHideSpot(pos, chaser);
                     owner.MoveTo(newHideSpot);
+                    owner.FaceTarget(chaser.position);
+
+                    hideObstacle = pos;
                     break;
                 }
-                else
-                {
-                    Debug.Log("Behind pos not hidden");
-                }
-                //TODO: No obstacle
             }
         }
-        else
+        else if(hideObstacle != null)
         {
-            //TODO: Obstacle null
-            //owner.Influence(Emotion.Calm, .2f);
+            //TODO: timer - if enemy sees for too long, hide somewhere else (coroutine - for getting stuck, say on rocks)
+            owner.Influence(Emotion.Calm, .2f * Time.deltaTime);
             //Mirror enemy movement about obstacle
-            //newHideSpot = CalculateHideSpot(obstacle, influencer);
-            //owner.MoveTo(newHideSpot);
+            newHideSpot = CalculateHideSpot(hideObstacle, chaser);
+            owner.MoveTo(newHideSpot);
         }
     }
 
@@ -111,12 +112,12 @@ public class HideState : State {
 
     private Vector3 CalculateHideSpot(Transform point, Transform chaser)
     {
-        Vector3 direction = (point.position- chaser.position).normalized;
+        Vector3 direction = (point.position - chaser.position).normalized;
 
         float obstacleSizeX = point.transform.localScale.x;
         float obstacleSizeZ = point.transform.localScale.z;
         float biggest = (obstacleSizeX > obstacleSizeZ) ? obstacleSizeX : obstacleSizeZ;
-        Vector3 adjustedForObstacleSizePos = point.transform.position + (direction * biggest);
+        Vector3 adjustedForObstacleSizePos = point.transform.position + (direction * biggest / 2);
 
         return adjustedForObstacleSizePos;
     }

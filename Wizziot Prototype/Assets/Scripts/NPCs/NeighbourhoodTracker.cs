@@ -190,7 +190,7 @@ public class NeighbourhoodTracker : MonoBehaviour
         return null;
     }
 
-    private void ScanForNearby()
+    public void ScanForNearby()
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, TrackingRadius);
         foreach (Collider c in colliders)
