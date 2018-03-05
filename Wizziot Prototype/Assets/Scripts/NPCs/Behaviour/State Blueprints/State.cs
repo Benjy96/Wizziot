@@ -38,7 +38,6 @@ public class State : ScriptableObject {
         spawn = owner.Spawn;
         neighbourhoodTracker = owner.neighbourhoodTracker;
 
-        neighbourhoodTracker.TrackOtherEnemies();
         neighbourhoodTracker.RegisterInterest(interestedIn);
         neighbourhoodTracker.RegisterInterest(secondaryInterest);
     }

@@ -195,7 +195,12 @@ public class NeighbourhoodTracker : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(transform.position, TrackingRadius);
         foreach (Collider c in colliders)
         {
-            if(toTrack == TrackType.Enemies)
+            if (secondaryNeighbours.ContainsKey(c.name))
+            {
+                secondaryNeighbours[c.name] = c.gameObject;
+            }
+            
+            if (toTrack == TrackType.Enemies)
             {
                 Enemy e = c.GetComponent<Enemy>();
                 if (e != null)

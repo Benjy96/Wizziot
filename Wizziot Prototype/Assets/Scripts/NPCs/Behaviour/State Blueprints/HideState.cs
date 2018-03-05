@@ -78,9 +78,11 @@ public class HideState : State {
         RaycastHit hit;
         if(Physics.Raycast(ray, out hit, owner.SightRange, LayerMask.GetMask(GameMetaInfo._LAYER_AFFECTABLE_OBJECT)))
         {
+            Debug.Log("Ray hit");
             if (hit.transform.tag.Equals(chaser.tag))
             {
-                owner.Influence(Emotion.Fear, 0.5f);
+                Debug.Log("Can see: " + hit.transform.tag);
+                owner.Influence(Emotion.Fear, 1f);
                 return true;
             }
             else

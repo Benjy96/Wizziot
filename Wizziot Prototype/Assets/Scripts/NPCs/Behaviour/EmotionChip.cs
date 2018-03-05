@@ -38,10 +38,15 @@ public class EmotionChip : MonoBehaviour {
     private Emotion currentEmotionalState;
 
     /// <summary>
-    /// How likely an emotional agent is to change their behaviour from external influences. Also affects rate at which agent tends towards their disposition.
-    /// Reluctance == .1: Time to revert to disposition (from 0) == 11s || Reluctance == .9: Time to revert to disposition (from 0) == 28s
+    /// Rate at which agent tends towards their disposition. Higher reluctance takes longer to LERP to disposition.
+    /// With stability of 0.5: Reluctance == .1: Time to revert to disposition (from 0) == 11s || Reluctance == .9: Time to revert to disposition (from 0) == 28s
     /// </summary>
     [Range(0.1f, 0.9f)] public float reluctance = 0.5f;
+
+    /// <summary>
+    /// How easy it is for an enemy is to change their current emotional state. Higher value means it takes longer to change emotion.
+    /// </summary>
+    [Range(0.1f, 0.9f)] public float emotionalStability = 0.5f;
 
     //The agent's emotional state(s)
     public Dictionary<Emotion, float> agentEmotions = new Dictionary<Emotion, float>();
@@ -100,19 +105,19 @@ public class EmotionChip : MonoBehaviour {
     public void Execute(Enemy agent)
     {
         //Step 1. Execute current emotional goal
-        if (agentEmotions[Emotion.Calm] > reluctance)
+        if (agentEmotions[Emotion.Calm] > emotionalStability)
         {
             currentEmotionalState = Emotion.Calm;
             TakeAction(calmState, agent);
         }
 
-        if (agentEmotions[Emotion.Anger] > reluctance)
+        if (agentEmotions[Emotion.Anger] > emotionalStability)
         {
             currentEmotionalState = Emotion.Anger;
             TakeAction(angryState, agent);
         }
 
-        if (agentEmotions[Emotion.Fear] > reluctance)
+        if (agentEmotions[Emotion.Fear] > emotionalStability)
         {
             currentEmotionalState = Emotion.Fear;
             TakeAction(scaredState, agent);  //This is where goals come in -> each state could lead to next (in them or abstract above). e.g. run, but if fear too high, kill self
