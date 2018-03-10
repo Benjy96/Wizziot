@@ -40,11 +40,13 @@ public class EmotionChip : MonoBehaviour {
     /// <summary>
     /// Rate at which agent tends towards their disposition. Higher reluctance takes longer to LERP to disposition.
     /// With stability of 0.5: Reluctance == .1: Time to revert to disposition (from 0) == 11s || Reluctance == .9: Time to revert to disposition (from 0) == 28s
+    /// IS A WEIGHT.
     /// </summary>
     [Range(0.1f, 0.9f)] public float reluctance = 0.5f;
 
     /// <summary>
     /// How easy it is for an enemy is to change their current emotional state. Higher value means it takes longer to change emotion.
+    /// NOT A WEIGHT.
     /// </summary>
     [Range(0.1f, 0.9f)] public float emotionalStability = 0.5f;
 
@@ -65,6 +67,9 @@ public class EmotionChip : MonoBehaviour {
     public State calmState;
     public State angryState;
     public State scaredState;
+    public State fallbackState;   //fallback
+
+    [HideInInspector] public bool enraged;  //for fallback state
 
     private void Awake()
     {
@@ -104,40 +109,50 @@ public class EmotionChip : MonoBehaviour {
     /// <param name="agent">The owner of this emotion chip</param>
     public void Execute(Enemy agent)
     {
-        //Step 1. Execute current emotional goal
-        if (agentEmotions[Emotion.Calm] > emotionalStability)
+        if (enraged)
         {
-            currentEmotionalState = Emotion.Calm;
-            TakeAction(calmState, agent);
+            TakeAction(fallbackState, agent);
         }
-
-        if (agentEmotions[Emotion.Anger] > emotionalStability)
+        else
         {
-            currentEmotionalState = Emotion.Anger;
-            TakeAction(angryState, agent);
-        }
-
-        if (agentEmotions[Emotion.Fear] > emotionalStability)
-        {
-            currentEmotionalState = Emotion.Fear;
-            TakeAction(scaredState, agent);  //This is where goals come in -> each state could lead to next (in them or abstract above). e.g. run, but if fear too high, kill self
-        }
-
-        //Step 2. Tend towards disposition
-        foreach (Emotion key in emotionKeys)
-        {
-            if (key == disposition)
+            //Step 1. Execute current emotional goal
+            if (agentEmotions[Emotion.Calm] > emotionalStability)
             {
-                agentEmotions[key] = Mathf.Lerp(agentEmotions[key], 1f, Time.fixedDeltaTime / (10f / reluctance));   //Approx 10 seconds to return to disposition (assuming no external influences)
+                currentEmotionalState = Emotion.Calm;
+                TakeAction(calmState, agent);
             }
-            else
+
+            if (agentEmotions[Emotion.Anger] > emotionalStability)
             {
-                agentEmotions[key] = Mathf.Lerp(agentEmotions[key], 0f, Time.fixedDeltaTime / (10f / reluctance));
+                currentEmotionalState = Emotion.Anger;
+                TakeAction(angryState, agent);
             }
+
+            if (agentEmotions[Emotion.Fear] > emotionalStability)
+            {
+                currentEmotionalState = Emotion.Fear;
+                TakeAction(scaredState, agent);  //This is where goals come in -> each state could lead to next (in them or abstract above). e.g. run, but if fear too high, kill self
+            }
+
+            //Step 2. Tend towards disposition
+            foreach (Emotion key in emotionKeys)
+            {
+                if (key == disposition)
+                {
+                    agentEmotions[key] = Mathf.Lerp(agentEmotions[key], 1f, Time.fixedDeltaTime / (10f / reluctance));   //Approx 10 seconds to return to disposition (assuming no external influences)
+                }
+                else
+                {
+                    agentEmotions[key] = Mathf.Lerp(agentEmotions[key], 0f, Time.fixedDeltaTime / (10f / reluctance));
+                }
+            }
+            ScaleEmotions();
         }
-        ScaleEmotions();
     }
 
+    /// <summary>
+    /// Influence this agent's state - you may become their target!
+    /// </summary>
     public void Influence(GameObject actor, Emotion intent, float amount)
     {
         Emotion emotionBeforeInfluence = currentEmotionalState;
@@ -146,7 +161,7 @@ public class EmotionChip : MonoBehaviour {
     }
 
     /// <summary>
-    /// This method provides a way in which to influence this agent's emotional state
+    /// This method provides a way in which to influence this agent's emotional state - will not influence who the agent targets.
     /// </summary>
     /// <param name="intent">The way in which the actor intends to influence this agent</param>
     /// <param name="amount">How much to influence the agent's emotions in the range of 0 to 1</param>

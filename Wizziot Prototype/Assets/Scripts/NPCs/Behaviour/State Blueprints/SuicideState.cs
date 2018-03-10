@@ -10,7 +10,6 @@ public class SuicideState : State {
 
     public override void Execute()
     {
-        Debug.Log(lastWords);
         if (!suicidal)
         {
             suicidal = true;

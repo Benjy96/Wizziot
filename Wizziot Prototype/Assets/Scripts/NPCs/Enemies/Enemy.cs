@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 /// <summary>
@@ -35,6 +33,11 @@ public class Enemy : Targetable {
     public float SightRange { get { return neighbourhoodTracker.TrackingRadius; } }
 
     // -- Interface -- //
+    public void Enrage()
+    {
+        emotionChip.enraged = true; 
+    }
+
     public void Influence(GameObject influencer, Emotion intent, float amount)
     {
         emotionChip.Influence(influencer, intent, amount);
@@ -53,6 +56,7 @@ public class Enemy : Targetable {
     private void OnDisable()
     {
         //GameManager.Instance.OnDifficultyChanged -= SetStats;
+        Spawn.RemoveEnemy(this);
     }
 
     protected void Awake()  //Object initialised

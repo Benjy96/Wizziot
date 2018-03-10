@@ -63,8 +63,6 @@ public class EnemySpawnPoint : MonoBehaviour {
     {
         int randomIndex = Random.Range(0, availableSpawnPoints.Count);
 
-        Debug.Log(randomIndex);
-
         GameObject e = Instantiate(enemyPrefab, 
             availableSpawnPoints[randomIndex], 
             Quaternion.identity);
@@ -80,5 +78,10 @@ public class EnemySpawnPoint : MonoBehaviour {
         enemiesSpawned.Add(enemy);
 
         if (enemiesSpawned.Count < spawnAmount && availableSpawnPoints.Count > 0) Invoke("InstantiateEnemy", spawnDelay);
+    }
+
+    public void RemoveEnemy(Enemy e)
+    {
+        enemiesSpawned.Remove(e);
     }
 }

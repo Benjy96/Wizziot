@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "HideState", menuName = "States/Hide")]
 [RequireComponent(typeof(NeighbourhoodTracker))]
@@ -9,12 +10,14 @@ public class HideState : State {
     private float chaserSightDist;
 
     private Transform hideObstacle;
+    private float checkHiddenInterval;
 
     protected override void EnterState(Enemy owner, GameObject lastInfluence)
     {
         base.EnterState(owner, lastInfluence);
 
         neighbourhoodTracker.TrackObstacles();
+        checkHiddenInterval = Time.time + 10f;
     }
 
     /**
@@ -28,18 +31,30 @@ public class HideState : State {
     */
     public override void Execute()
     {
-        newHideSpot = Vector3.zero;
-        chaser = SelectTarget();
-        if (chaser != null)
+        newHideSpot = Vector3.forward;
+        chaser = SelectTarget();    //TODO: Last influencer
+
+        //If current hiding spot not letting us hide from player, re-evaluate
+        if (chaser != null && CanSeeChaser())
         {
+            if ((Time.deltaTime > checkHiddenInterval))
+            {
+                Debug.Log("Change hiding spot");
+                ChangeHidingSpot();
+                return;
+            }
+
             EntityStats eS = chaser.GetComponent<EntityStats>();
             if (eS != null) chaserSightDist = eS.sqrMaxTargetDistance;
             CalculateHideSpot();
         }
         else
         {
-            //owner.Influence(Emotion.Calm, 0.2f * Time.deltaTime);
+            owner.Influence(Emotion.Calm, .5f * Time.deltaTime);
         }
+
+        //If been trying to hide for a long time, and nowhere to hide, influence maximum fear
+        if (Time.time > checkHiddenInterval && VerifiedNoObstacles()) owner.Enrage();
     }
 
     private void CalculateHideSpot()
@@ -49,10 +64,9 @@ public class HideState : State {
         if (CanSeeChaser())
         {
             Debug.Log("Can see chaser, hiding");
-            //Check appropriate hide spots
-            if (neighbourhoodTracker.obstacles == null) neighbourhoodTracker.ScanForNearby();
             foreach (Transform pos in neighbourhoodTracker.obstacles) //List is already sorted, closest will be first!
             {
+                if (pos == hideObstacle) continue;
                 Debug.Log("Checking neighbourhood, pos found: " + pos.name);
                 if (PointHiddenFromChaser(pos.transform.position))
                 {
@@ -63,14 +77,14 @@ public class HideState : State {
                     owner.FaceTarget(chaser.position);
 
                     hideObstacle = pos;
+                    checkHiddenInterval = Time.time + 10f;
                     break;
                 }
             }
         }
         else if(hideObstacle != null)
         {
-            //TODO: timer - if enemy sees for too long, hide somewhere else (coroutine - for getting stuck, say on rocks)
-            owner.Influence(Emotion.Calm, .2f * Time.deltaTime);
+            owner.Influence(Emotion.Calm, .1f * Time.deltaTime);
             //Mirror enemy movement about obstacle
             newHideSpot = CalculateHideSpot(hideObstacle, chaser);
             owner.MoveTo(newHideSpot);
@@ -120,5 +134,49 @@ public class HideState : State {
         Vector3 adjustedForObstacleSizePos = point.transform.position + (direction * biggest / 2);
 
         return adjustedForObstacleSizePos;
+    }
+
+    private void ChangeHidingSpot()
+    {
+        Debug.Log("Removing bad hiding spot");
+        if (VerifiedNoObstacles())
+        {
+            owner.Enrage();
+        }
+        else
+        {
+            foreach (Transform pos in neighbourhoodTracker.obstacles)
+            {
+                if (pos == hideObstacle) continue;
+                if (PointHiddenFromChaser(pos.transform.position))
+                {
+                    Debug.Log("Point behind pos is hidden");
+                    //Calculate spot
+                    newHideSpot = CalculateHideSpot(pos, chaser);
+                    owner.MoveTo(newHideSpot);
+                    owner.FaceTarget(chaser.position);
+                    hideObstacle = pos;
+                    checkHiddenInterval = Time.time + 10f;
+                    break;
+                }
+            }
+        }
+    }
+
+    private bool VerifiedNoObstacles()
+    {
+        if(neighbourhoodTracker.obstacles.Count == 0)
+        {
+            neighbourhoodTracker.ScanForNearby();
+            if (neighbourhoodTracker.obstacles.Count == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return false;
     }
 }
