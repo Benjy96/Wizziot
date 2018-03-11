@@ -360,7 +360,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   disposition: 2
-  reluctance: 0.9
+  reluctance: 0.5
   emotionalStability: 0.5
   trust: 1
   irascibility: 1

@@ -32,7 +32,7 @@ public class AttackState : State {
             {
                 if ((target.position - owner.Position).sqrMagnitude < owner.stats.sqrMaxTargetDistance)
                 {
-                    if(abilComponent.UseSelected(target)) playerStats.Damage(1f);
+                    abilComponent.UseSelected(target);
                 }
             }
             owner.FaceTarget(target.position);

@@ -2,9 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Interface for using Abilities. Links with Entity Stats to handle stamina.
+/// </summary>
+[RequireComponent(typeof(EntityStats))]
 public class AbilityComponent : MonoBehaviour {
 
-    private EntityStats stats;
+    private EntityStats statComponent;
+    private EntityStats currentTargetStats;
 
     //Ability State Data
     [HideInInspector] public Abilities SelectedAbility;
@@ -43,21 +48,10 @@ public class AbilityComponent : MonoBehaviour {
 
     private void Awake()
     {
-        //Component for checking resources (can use ability or not)
-        stats = GetComponent<EntityStats>();
-        Debug.Assert(stats != null);
+        statComponent = GetComponent<EntityStats>();
 
         zapTargeter = zapSource.GetComponentInChildren<particleAttractorLinear>();
         zapParticles = zapSource.GetComponent<ParticleSystem>();
-    }
-
-    private void SetTarget(Transform target)
-    {
-        if (currentTarget != target)
-        {
-            currentTarget = target;
-            targetRB = target.GetComponent<Rigidbody>();
-        }
     }
 
     //Kebyind & UI button accesses this from controller (Start @ 1 to correspond to player UI)
@@ -74,10 +68,10 @@ public class AbilityComponent : MonoBehaviour {
     /// </summary>
     /// <param name="target">Target if one is selected. Null if not</param>
     /// <returns>Returns true when damage can be applied to the target's stats (once the attack has been executed)</returns>
-    public bool UseSelected(Transform target)
+    public void UseSelected(Transform target)
     {
         SetTarget(target);
-        return UseAbility();
+        UseAbility();
     }
 
     //Player interface
@@ -116,11 +110,23 @@ public class AbilityComponent : MonoBehaviour {
     }
 
     #region Implementation
+    private void SetTarget(Transform target)
+    {
+        if (currentTarget != target)
+        {
+            currentTarget = target;
+            currentTargetStats = currentTarget.GetComponent<EntityStats>();
+            targetRB = target.GetComponent<Rigidbody>();
+        }
+    }
+
     private bool UseAbility()
     {
+        float damageToDo = 0f;
+
         if (Time.time > globalCooldownFinishTime)
         {
-            if (stats.CanUseAbility(SelectedAbility))
+            if (statComponent.TryUseAbility(SelectedAbility, out damageToDo))
             {
                 switch (SelectedAbility)
                 {
@@ -140,20 +146,20 @@ public class AbilityComponent : MonoBehaviour {
                         AoE(singularityPrefab);
                         break;
                 }
-                globalCooldownFinishTime = Time.time + globalCooldown;
+                currentTargetStats.Damage(damageToDo);  //Damage the target
+                globalCooldownFinishTime = Time.time + globalCooldown;  //Handle global cooldown
                 return true;
             }
             else
             {
                 Debug.Log("Not enough stamina");
-                return false;
             }
         }
         else
         {
             Debug.Log("On cooldown...");
-            return false;
         }
+        return false;
     }
 
     private void Zap()  

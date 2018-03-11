@@ -111,22 +111,42 @@ public class EntityStats : MonoBehaviour {
     }
 
     /// <summary>
-    /// Used by self (controller or abil component) to attack other
+    /// Used by self (controller or abil component) to attack other. Will apply modifiers and return a damage amount to apply to other entity.
     /// </summary>
     /// <returns>True if you have enough stamina</returns>
-    public bool CanUseAbility(Abilities ability)
+    public bool TryUseAbility(Abilities ability, out float damage)
     {
-        //TODO: Apply modifiers here? maybe an "out" float?
-        //Also where store standard dmg? In here?
-        if(abilityCosts[ability] <= CurrentStamina)
+        if (abilityCosts[ability] <= CurrentStamina)
         {
-            CurrentStamina -= (int)abilityCosts[ability];
-            CurrentStamina = Mathf.Clamp(CurrentStamina, 0, maxStamina);
+            CurrentStamina = GetNewStaminaForUsingAbil(ability);
+            damage = CalculateAbilDamage(ability);
             return true;
         }
-        else
-        {
-            return false;
-        }
+
+        damage = 0f;
+        return false;
+    }
+
+    private float CalculateAbilDamage(Abilities ability)
+    {
+        float damage = 0f;
+        //Damage dependent upon NPC ability cost, health, and then damage modifier. Increase in health/Decreases in cost will increase the damage the NPC can do.
+        if (GameMetaInfo._Is_Instant_Ability(ability)) damage = maxHealth - instantAbilityCost;
+        else if (GameMetaInfo._Is_AoE_Ability(ability)) damage = maxHealth - areaAbilityCost;
+        else if (GameMetaInfo._Is_Defense_Ability(ability)) damage = maxHealth - defenseAbilityCost;
+        damage /= 2;
+
+        damage *= statModifiers[Stats.DamageModifier].StatValue;
+        return damage;
+    }
+
+    private int GetNewStaminaForUsingAbil(Abilities ability)
+    {
+        //Calculate Stamina to remove for using the ability
+        float staminaToReduceBy = abilityCosts[ability] * statModifiers[Stats.ActionCostReduction].StatValue;
+        CurrentStamina -= (int)staminaToReduceBy;
+        CurrentStamina = Mathf.Clamp(CurrentStamina, 0, maxStamina);
+
+        return CurrentStamina;
     }
 }
