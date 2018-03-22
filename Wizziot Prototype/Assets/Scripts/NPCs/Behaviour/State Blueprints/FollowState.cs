@@ -7,16 +7,12 @@ public class FollowState : State {
     public override void Execute()
     {
         target = SelectTarget();
-        if (target != null)
+        if (target != null && owner.CanSeeTarget(target))
         {
-            if (owner.CanSeeTarget(target))
-            {
-                owner.MoveTo(target.position);
-            }
+            owner.MoveTo(target.position);
         }
         else
         {
-            Debug.Log("Searching");
             Search();
         }
     }
@@ -41,7 +37,7 @@ public class FollowState : State {
 
     private void Search()
     {
-        Vector3 patrolPos = new Vector3(Mathf.Cos(Time.time), 0f, Mathf.Sin(Time.time));
+        Vector3 patrolPos = new Vector3(Mathf.Cos(Time.time), 0f, Mathf.Sin(Time.time)) * 10;
         owner.MoveTo(patrolPos);
     }
 }
