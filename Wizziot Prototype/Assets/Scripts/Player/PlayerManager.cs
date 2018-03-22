@@ -60,6 +60,60 @@ public class PlayerManager : MonoBehaviour {
             playerStats.statModifiers[stat.StatType] = stat;
         }
 
-        //TODO: Add to player model
+        //Add to player model
+        switch (newEquipment.slot)
+        {
+            case EquipmentSlot.Head:
+                EquipHead(item);
+                break;
+
+            case EquipmentSlot.Body:
+                EquipBody(item);
+                break;
+
+            case EquipmentSlot.Pendant:
+                EquipPendant(item);
+                break;
+
+            case EquipmentSlot.Weapon:
+                EquipWeapon(item);
+                break;
+        }
+    }
+
+    void EquipHead(Item item)
+    {
+        item.gameObject.SetActive(true);
+        item.transform.parent = player.transform;
+        item.transform.position = new Vector3(player.transform.position.x,
+            (player.transform.position.y + player.transform.localScale.y),
+            player.transform.position.z);
+    }
+
+    void EquipBody(Item item)
+    {
+        item.gameObject.SetActive(true);
+        item.transform.parent = player.transform;
+        item.transform.position = new Vector3(player.transform.position.x,
+            player.transform.position.y,
+            player.transform.position.z);
+    }
+
+    void EquipPendant(Item item)
+    {
+        item.gameObject.SetActive(true);
+        item.transform.parent = player.transform;
+        item.transform.position = new Vector3(player.transform.position.x,
+            (player.transform.position.y + player.transform.localScale.y),
+            player.transform.position.z);
+    }
+
+    void EquipWeapon(Item item)
+    {
+        item.gameObject.SetActive(true);
+        item.transform.parent = player.transform;
+        item.transform.position = new Vector3(player.transform.position.x,
+            (player.transform.position.y + player.transform.localScale.y),
+            player.transform.position.z);
     }
 }

@@ -12,7 +12,6 @@ public class StoryScriptManager : MonoBehaviour {
     // ----- INK RUNTIME ----- //
     [SerializeField] private Story inkStory;    //The story (ink story/script)
     [SerializeField] private TextAsset inkAsset;  //Compiled JSON asset
-    [SerializeField] private TextAsset savedAsset;  //Saved ink story state - choices, vars, lists, etc.
 
     private void Awake()
     {

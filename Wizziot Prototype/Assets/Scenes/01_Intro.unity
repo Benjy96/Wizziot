@@ -2815,8 +2815,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10e57303bb467954a95f476554b05a99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inkAsset: {fileID: 4900000, guid: 431cc3e6c720cbb4c9e9b80be1c4dea9, type: 3}
-  savedAsset: {fileID: 4900000, guid: 431cc3e6c720cbb4c9e9b80be1c4dea9, type: 3}
+  inkAsset: {fileID: 4900000, guid: 069e37ab2b8242e47b8376e4484657db, type: 3}
+  savedAsset: {fileID: 0}
 --- !u!4 &1045524741
 Transform:
   m_ObjectHideFlags: 0
