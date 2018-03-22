@@ -60,6 +60,11 @@ public class PlayerManager : MonoBehaviour {
             playerStats.statModifiers[stat.StatType] = stat;
         }
 
+        //Make item visible and enabled, disable collider
+        item.gameObject.SetActive(true);
+        Collider itemCollider = item.GetComponent<Collider>();
+        if (itemCollider != null) itemCollider.enabled = false;
+
         //Add to player model
         switch (newEquipment.slot)
         {
@@ -86,7 +91,6 @@ public class PlayerManager : MonoBehaviour {
     //TODO: make more complicated, needlessly
     void EquipHead(Item item)
     {
-        item.gameObject.SetActive(true);
         item.transform.parent = player.transform;
         item.transform.position = new Vector3(player.transform.position.x,
             (player.transform.position.y + player.transform.localScale.y),

@@ -132,4 +132,23 @@ public class Enemy : Targetable {
             return (target.position - Position).sqrMagnitude <= transform.localScale.sqrMagnitude;
         }
     }
+
+    public bool CanSeeTarget(Transform target)
+    {
+        Ray ray = new Ray(Position, (target.position - Position).normalized);
+        RaycastHit hit;
+        //Racyast everything except affectable objects
+        if (Physics.Raycast(ray, out hit, SightRange, LayerMask.GetMask("Default", GameMetaInfo._LAYER_IMMOVABLE_OBJECT), QueryTriggerInteraction.Ignore))
+        {
+            if (hit.transform.tag.Equals(target.tag))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return false;
+    }
 }

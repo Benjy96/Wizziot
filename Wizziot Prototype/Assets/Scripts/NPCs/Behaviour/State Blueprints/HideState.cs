@@ -35,7 +35,7 @@ public class HideState : State {
         chaser = SelectTarget();    //TODO: Last influencer
 
         //If current hiding spot not letting us hide from player, re-evaluate
-        if (chaser != null && CanSeeChaser())
+        if (chaser != null && owner.CanSeeTarget(chaser))
         {
             if ((Time.deltaTime > checkHiddenInterval))
             {
@@ -61,13 +61,14 @@ public class HideState : State {
     {
         Vector3 distance = Vector3.zero;
 
-        if (CanSeeChaser())
+        if (owner.CanSeeTarget(chaser))
         {
-            Debug.Log("Can see chaser, hiding");
+            owner.Influence(Emotion.Fear, 1f);
+            //Debug.Log("Can see chaser, hiding");
             foreach (Transform pos in neighbourhoodTracker.obstacles) //List is already sorted, closest will be first!
             {
                 if (pos == hideObstacle) continue;
-                Debug.Log("Checking neighbourhood, pos found: " + pos.name);
+                //Debug.Log("Checking neighbourhood, pos found: " + pos.name);
                 if (PointHiddenFromChaser(pos.transform.position))
                 {
                     Debug.Log("Point behind pos is hidden");
@@ -89,27 +90,6 @@ public class HideState : State {
             newHideSpot = CalculateHideSpot(hideObstacle, chaser);
             owner.MoveTo(newHideSpot);
         }
-    }
-
-    private bool CanSeeChaser()
-    {
-        Ray ray = new Ray(owner.Position, (chaser.position - owner.Position).normalized);
-        RaycastHit hit;
-        //Racyast everything except affectable objects
-        if(Physics.Raycast(ray, out hit, owner.SightRange, LayerMask.GetMask("Default", GameMetaInfo._LAYER_IMMOVABLE_OBJECT), QueryTriggerInteraction.Ignore))
-        {
-            if (hit.transform.tag.Equals(chaser.tag))
-            {
-                Debug.Log("Can see: " + hit.transform.tag);
-                owner.Influence(Emotion.Fear, 1f);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        return false;
     }
 
     private bool PointHiddenFromChaser(Vector3 point)

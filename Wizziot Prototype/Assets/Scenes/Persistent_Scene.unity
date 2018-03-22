@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 898406636}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.12974852, g: 0.35182875, b: 0.64056575, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -2498,7 +2498,7 @@ Prefab:
     - target: {fileID: 54694654279500918, guid: 0e6afb90b2ea6fb4391ecd6b4a9f34a2,
         type: 2}
       propertyPath: m_Mass
-      value: 10
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0e6afb90b2ea6fb4391ecd6b4a9f34a2, type: 2}
@@ -3644,7 +3644,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inkAsset: {fileID: 4900000, guid: 431cc3e6c720cbb4c9e9b80be1c4dea9, type: 3}
-  savedAsset: {fileID: 4900000, guid: 431cc3e6c720cbb4c9e9b80be1c4dea9, type: 3}
 --- !u!4 &1045524741
 Transform:
   m_ObjectHideFlags: 0
@@ -4839,6 +4838,11 @@ Prefab:
     - target: {fileID: 4744176325004484, guid: 5a4dd3cba68095c4ca9bac724b8b00a7, type: 2}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 136971160037424388, guid: 5a4dd3cba68095c4ca9bac724b8b00a7,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5a4dd3cba68095c4ca9bac724b8b00a7, type: 2}

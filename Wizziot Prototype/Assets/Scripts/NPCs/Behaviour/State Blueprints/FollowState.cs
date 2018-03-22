@@ -9,10 +9,14 @@ public class FollowState : State {
         target = SelectTarget();
         if (target != null)
         {
-            owner.MoveTo(target.position);
+            if (owner.CanSeeTarget(target))
+            {
+                owner.MoveTo(target.position);
+            }
         }
         else
         {
+            Debug.Log("Searching");
             Search();
         }
     }
@@ -37,6 +41,7 @@ public class FollowState : State {
 
     private void Search()
     {
-        Debug.Log("Implement Search in FollowState");
+        Vector3 patrolPos = new Vector3(Mathf.Cos(Time.time), 0f, Mathf.Sin(Time.time));
+        owner.MoveTo(patrolPos);
     }
 }
