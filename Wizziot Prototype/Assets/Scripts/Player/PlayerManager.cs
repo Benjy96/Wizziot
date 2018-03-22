@@ -79,8 +79,11 @@ public class PlayerManager : MonoBehaviour {
                 EquipWeapon(item);
                 break;
         }
+
+        playerStats.ApplyStatModifiers();
     }
 
+    //TODO: make more complicated, needlessly
     void EquipHead(Item item)
     {
         item.gameObject.SetActive(true);

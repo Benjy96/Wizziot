@@ -62,7 +62,7 @@ public class EntityStats : MonoBehaviour {
     }
 
     //TODO: Use difficulty setting to modify
-    private void ApplyStatModifiers()
+    public void ApplyStatModifiers()
     {
         //Apply Modifiers
         maxHealth *= (int)statModifiers[Stats.MaxHealthModifier].StatValue;
