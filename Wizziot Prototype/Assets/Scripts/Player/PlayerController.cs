@@ -47,9 +47,18 @@ public class PlayerController : MonoBehaviour {
         GameMetaInfo.allKeybinds.Add(KeyCode.I, new Action(() => inventoryUI.gameObject.SetActive(!inventoryUI.activeSelf)));
     }
 
+    //EVENT SUBSCRIPTIONS
     private void Start()
     {
         storyManager = StoryManager.Instance;
+        //EVENT SUBSCRIPTION
+        PlayerManager.Instance.onTargetDestroyed += ResetTarget;    //Delegate: Reset target indicator when target is destroyed
+    }
+
+    //UNSUBSCRIBE EVENTS
+    private void OnDisable()
+    {
+        PlayerManager.Instance.onTargetDestroyed -= ResetTarget;
     }
 
     private void Update () {
@@ -105,13 +114,11 @@ public class PlayerController : MonoBehaviour {
                 //If within range
                 if ((pointHit.transform.position - transform.position).sqrMagnitude < playerStats.sqrMaxTargetDistance)
                 {
-                    Debug.Log("here 1: " + pointHit);
                     if (pointHit.transform.GetComponent<Targetable>() != null)  
                     {
                         Targetable t = pointHit.transform.GetComponent<Targetable>();
                         if (t == null) t = pointHit.transform.GetComponentInParent<Targetable>();
                         if (t == null) return;
-                        Debug.Log("name: " + t.name);
 
                         TargetType currentTargetType = t.targetType;
                         
@@ -180,6 +187,11 @@ public class PlayerController : MonoBehaviour {
                 }
             }
         }
+    }
+
+    private void ResetTarget()
+    {
+        SetTargetIndicatorPos(false);
     }
 
     private void SetTargetIndicatorPos(bool aboveTarget)

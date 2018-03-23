@@ -10,6 +10,8 @@ public class PlayerManager : MonoBehaviour {
     public GameObject player;   //reference for runtime
     public Item[] equipped;
 
+    public Action onTargetDestroyed;    //for targeting, xp, etc...
+
     private PlayerStats playerStats;
 
     private void Awake()

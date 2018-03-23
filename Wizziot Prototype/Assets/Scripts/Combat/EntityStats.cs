@@ -27,8 +27,12 @@ public class EntityStats : MonoBehaviour {
     public float defaultModifierValue = 1f;
     public Dictionary<Stats, Stat> statModifiers;
 
+    public Action onDeath;
+
     private void Awake()
     {
+        onDeath += Die;
+
         CurrentHealth = maxHealth;
         CurrentStamina = maxStamina;
 
@@ -66,6 +70,19 @@ public class EntityStats : MonoBehaviour {
         if(CurrentStamina != maxStamina) CurrentStamina = Mathf.Lerp(CurrentStamina, maxStamina, Time.deltaTime / statModifiers[Stats.Fitness].StatValue);
     }
 
+    public virtual void Die()
+    {
+        Projector playerTarget = GetComponentInChildren<Projector>();
+        if(playerTarget != null)
+        {
+            if(PlayerManager.Instance.onTargetDestroyed != null) PlayerManager.Instance.onTargetDestroyed.Invoke();
+        }
+        gameObject.SetActive(false);
+
+        //TODO: End game / respawn - use game manager
+        //TODO: Object pool AI
+    }
+
     //TODO: Use difficulty setting to modify
     public void ApplyStatModifiers()
     {
@@ -100,19 +117,12 @@ public class EntityStats : MonoBehaviour {
         //3. Reduce health
         if (CurrentHealth <= 0)
         {
-            Die();
+            if (onDeath != null) onDeath.Invoke();
         }
         else
         {
             Mathf.Clamp(CurrentHealth, 0, maxHealth);
         }
-    }
-
-    public virtual void Die()
-    {
-        gameObject.SetActive(false);
-        //TODO: End game / respawn - use game manager
-        //TODO: Object pool AI
     }
 
     /// <summary>
