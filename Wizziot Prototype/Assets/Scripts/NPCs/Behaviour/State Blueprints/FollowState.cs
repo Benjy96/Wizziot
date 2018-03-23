@@ -37,6 +37,8 @@ public class FollowState : State {
 
     private void Search()
     {
+        //TODO: Patrol ABOUT spawn or the spawn's spawn points (e.g. x co-ord + offset after cos)
+        //TODO: Coroutine so only accept new cos/sin pos every odd number of seconds
         Vector3 patrolPos = new Vector3(Mathf.Cos(Time.time), 0f, Mathf.Sin(Time.time)) * 10;
         owner.MoveTo(patrolPos);
     }

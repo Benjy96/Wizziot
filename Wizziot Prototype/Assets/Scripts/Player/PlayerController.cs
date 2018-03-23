@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour {
         GameMetaInfo.allKeybinds.Add(KeyCode.Alpha5, new Action(() => abilityComponent.UseInstantAbility(Abilities.Heal, target.transform)));
         //General
         GameMetaInfo.allKeybinds.Add(KeyCode.F, Interact);
-        GameMetaInfo.allKeybinds.Add(KeyCode.Escape, new Action(() => StoryManager.Instance.CloseConversation())); //TODO: every ui subscribe to manager to close upon esc -> then menu
+        GameMetaInfo.allKeybinds.Add(KeyCode.Escape, new Action(() => ClearAndPauseGame())); //TODO: every ui subscribe to manager to close upon esc -> then menu
         //Camera
         GameMetaInfo.allKeybinds.Add(KeyCode.LeftAlt, cam.GetComponent<PlayerCamera>().SwitchCameraMode);
         GameMetaInfo.allKeybinds.Add(KeyCode.I, new Action(() => inventoryUI.gameObject.SetActive(!inventoryUI.activeSelf)));
@@ -53,6 +53,21 @@ public class PlayerController : MonoBehaviour {
         HandleTargeting();
         HandleKeyboardInput();
         HandleConversationInput();
+    }
+
+    private void ClearAndPauseGame()
+    {
+        //Clear story input on first press
+        if (StoryManager.Instance.StoryClosing == false && StoryManager.Instance.StoryInputEnabled)
+        {
+            StoryManager.Instance.CloseConversation();
+            return;
+        }
+        if (StoryManager.Instance.StoryInputEnabled == false)
+        {
+            PauseMenu pauseMenu = FindObjectOfType<PauseMenu>();
+            if(pauseMenu != null) pauseMenu.PauseGame();
+        }
     }
 
     private void HandleDirectionInput()

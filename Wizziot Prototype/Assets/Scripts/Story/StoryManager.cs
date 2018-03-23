@@ -23,10 +23,12 @@ public class StoryManager : MonoBehaviour {
     private string storyState_JSON;
 
     public bool StoryInputEnabled { get { return takeStoryInput; } }
+    public bool StoryClosing { get { return closingStory; } }
 
     //Implementation Variables
     private InteractableNPC conversationTarget;
     private IEnumerator ExitConversation;
+    private bool closingStory = false;
     private bool storyDisplayActive = false;
     private bool storyChoiceDisplayActive = false;
     private bool takeStoryInput = false;
@@ -219,9 +221,11 @@ public class StoryManager : MonoBehaviour {
    
     private IEnumerator DisableStoryOnDelay()
     {
+        closingStory = true;
         DisableInput();
         yield return new WaitForSeconds(5f);
         HideStory();
+        closingStory = false;
     }
     #endregion
 }
