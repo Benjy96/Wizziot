@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
+    // ----- References ----- //
+    private PauseMenu pauseMenu;
+
     // ----- Components ----- //
     public GameObject inventoryUI;
 
@@ -25,6 +28,7 @@ public class PlayerController : MonoBehaviour {
         targetIndicator = GetComponentInChildren<Projector>();
         cam = Camera.main;
         playerStats = GetComponent<PlayerStats>();
+        pauseMenu = FindObjectOfType<PauseMenu>();
 
         target = null;
 
@@ -37,7 +41,7 @@ public class PlayerController : MonoBehaviour {
         GameMetaInfo.allKeybinds.Add(KeyCode.Alpha5, new Action(() => abilityComponent.UseInstantAbility(Abilities.Heal, target.transform)));
         //General
         GameMetaInfo.allKeybinds.Add(KeyCode.F, Interact);
-        GameMetaInfo.allKeybinds.Add(KeyCode.Escape, new Action(() => ClearAndPauseGame())); //TODO: every ui subscribe to manager to close upon esc -> then menu
+        GameMetaInfo.allKeybinds.Add(KeyCode.Escape, new Action(() => ClearUIAndPause())); //TODO: every ui subscribe to manager to close upon esc -> then menu
         //Camera
         GameMetaInfo.allKeybinds.Add(KeyCode.LeftAlt, cam.GetComponent<PlayerCamera>().SwitchCameraMode);
         GameMetaInfo.allKeybinds.Add(KeyCode.I, new Action(() => inventoryUI.gameObject.SetActive(!inventoryUI.activeSelf)));
@@ -55,7 +59,7 @@ public class PlayerController : MonoBehaviour {
         HandleConversationInput();
     }
 
-    private void ClearAndPauseGame()
+    private void ClearUIAndPause()
     {
         //Clear story input on first press
         if (StoryManager.Instance.StoryClosing == false && StoryManager.Instance.StoryInputEnabled)
@@ -65,7 +69,7 @@ public class PlayerController : MonoBehaviour {
         }
         if (StoryManager.Instance.StoryInputEnabled == false)
         {
-            PauseMenu pauseMenu = FindObjectOfType<PauseMenu>();
+            
             if(pauseMenu != null) pauseMenu.PauseGame();
         }
     }
