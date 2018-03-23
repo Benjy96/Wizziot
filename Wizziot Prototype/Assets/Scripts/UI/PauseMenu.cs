@@ -34,7 +34,6 @@ public class PauseMenu : MonoBehaviour {
 
     public void SaveGame()
     {
-        Time.timeScale = 1f;
         GameManager.Instance.SaveGame();
     }
 

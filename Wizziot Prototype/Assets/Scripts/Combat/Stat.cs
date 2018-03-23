@@ -19,5 +19,5 @@ public class Stat
 
 public enum Stats
 {
-    ActionCostReduction, DamageModifier, DamageReduction, MaxHealthModifier, MaxStaminaModifier, MitigationChance, SightRange, MovementSpeed
+    ActionCostReduction, DamageModifier, DamageReduction, Fitness, MaxHealthModifier, MaxStaminaModifier, MitigationChance, SightRange, MovementSpeed
 }

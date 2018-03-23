@@ -10,8 +10,8 @@ public class EntityStats : MonoBehaviour {
     private int currentHealth;
 
     public int maxStamina = 100;
-    public int CurrentStamina { get { return currentStamina; } private set { currentStamina = value; } }
-    private int currentStamina;
+    public float CurrentStamina { get { return currentStamina; } private set { currentStamina = value; } }
+    private float currentStamina;
 
     [Range(0, 225)] public float sqrMaxTargetDistance;
     [Range(0, 10)] public float speed;
@@ -50,7 +50,7 @@ public class EntityStats : MonoBehaviour {
             }
         }
 
-        //Initialise Stat Modifiers and Values
+        //Initialise Stat Modifiers and Values - Stats Enum as key, Stat Class with type (Stats) and value - Default val: 1
         statModifiers = new Dictionary<Stats, Stat>();
         foreach (Stats stat in Enum.GetValues(typeof(Stats)))
         {
@@ -59,6 +59,11 @@ public class EntityStats : MonoBehaviour {
         }
 
         ApplyStatModifiers();
+    }
+
+    private void Update()
+    {
+        if(CurrentStamina != maxStamina) CurrentStamina = Mathf.Lerp(CurrentStamina, maxStamina, Time.deltaTime / statModifiers[Stats.Fitness].StatValue);
     }
 
     //TODO: Use difficulty setting to modify
@@ -140,7 +145,7 @@ public class EntityStats : MonoBehaviour {
         return damage;
     }
 
-    private int GetNewStaminaForUsingAbil(Abilities ability)
+    private float GetNewStaminaForUsingAbil(Abilities ability)
     {
         //Calculate Stamina to remove for using the ability
         float staminaToReduceBy = abilityCosts[ability] * statModifiers[Stats.ActionCostReduction].StatValue;

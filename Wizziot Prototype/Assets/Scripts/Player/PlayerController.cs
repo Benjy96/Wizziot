@@ -160,8 +160,7 @@ public class PlayerController : MonoBehaviour {
                 }
                 catch (Exception e)
                 {
-                    Debug.Log(e.Message);
-                    Debug.Log(e.StackTrace);
+                    Debug.Log("Keybind not able to trigger");
                 }
             }
         }
