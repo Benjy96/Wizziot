@@ -6,7 +6,7 @@ public class EntityStats : MonoBehaviour {
 
     [Header("Standard Stats")]
     public int maxHealth = 100;
-    public int CurrentHealth { get { return currentHealth; } private set { currentHealth = value; } }
+    public int CurrentHealth { get { return currentHealth; } set { currentHealth = value; } }
     private int currentHealth;
 
     public int maxStamina = 100;

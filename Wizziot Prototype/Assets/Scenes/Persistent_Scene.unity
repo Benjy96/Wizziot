@@ -202,7 +202,7 @@ Prefab:
     - target: {fileID: 114227188130123050, guid: 6bba16423bada83449bf7c78d2f23384,
         type: 2}
       propertyPath: spawnAmount
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6bba16423bada83449bf7c78d2f23384, type: 2}
@@ -2314,7 +2314,6 @@ GameObject:
   - component: {fileID: 2099303815}
   - component: {fileID: 2099303816}
   - component: {fileID: 2099303817}
-  - component: {fileID: 2099303818}
   m_Layer: 0
   m_Name: GameManagers
   m_TagString: Untagged
@@ -2400,23 +2399,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds: []
---- !u!95 &2099303818
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2099303811}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6b225415f5496d147b56277c7d7dd1fb, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &2104224050
 GameObject:
   m_ObjectHideFlags: 0

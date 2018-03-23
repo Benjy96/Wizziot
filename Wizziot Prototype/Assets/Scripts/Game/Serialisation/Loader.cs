@@ -2,11 +2,10 @@
 using Newtonsoft.Json.Bson;
 using System.IO;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Loader : MonoBehaviour
 {
-    public static SaveData LoadGame(bool fileEncrypted)
+    public static bool LoadGame(bool fileEncrypted)
     {
         string file = GameManager.Instance.GameSaveFile;
 
@@ -33,12 +32,36 @@ public class Loader : MonoBehaviour
                 savedData = JsonConvert.DeserializeObject<SaveData>(dataAsJSON);
             }
 
-            return savedData;
+            if (savedData == null) return false;
+
+            LoadData(savedData);
+            return true;
         }
         else
         {
-            return null;
+            return false;
         }
+    }
+
+    private static void LoadData(SaveData data)
+    {
+        //Player
+        Vector3 playerPos = new Vector3();
+        data.Load("playerPos", ref playerPos);
+        PlayerManager.Instance.player.transform.position = playerPos;
+
+        int playerHealth = 0;
+        data.Load("playerHealth", ref playerHealth);
+        PlayerManager.Instance.player.GetComponent<EntityStats>().CurrentHealth = playerHealth;
+
+        data.Load("playerEquipped", ref PlayerManager.Instance.equipped);
+
+        //Inventory
+        data.Load("inventory", ref Inventory.Instance.items);
+        data.Load("coins", ref Inventory.Instance.coins);
+
+        //Missions
+        data.Load("missions", ref MissionManager.Instance.activeMissions);
     }
 }
 

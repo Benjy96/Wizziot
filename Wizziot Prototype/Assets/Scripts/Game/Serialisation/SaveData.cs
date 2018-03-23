@@ -11,32 +11,6 @@ using UnityEngine;
 [Serializable]
 public class SaveData
 {
-    public class Person
-    {
-        public string name;
-        public int age;
-
-        public Person(string a, int b)
-        {
-            name = a; age = b;
-        }
-    }
-
-    public Dictionary<string, Person> keyValueDatabase = new Dictionary<string, Person>();
-
-    public void Save(Person person)
-    {
-        keyValueDatabase[person.name] = new Person(person.name, person.age);
-    }
-
-
-
-
-
-
-
-
-
     //The reason we use generics is so that the class is truly acting as a BLUEPRINT. i.e. we create structures that can vary in type, and their methods work for each.
     [Serializable]
     public class SaveDictionary<T>
@@ -89,6 +63,9 @@ public class SaveData
     public SaveDictionary<int> intData = new SaveDictionary<int>();
     public SaveDictionary<Vector3> v3Data = new SaveDictionary<Vector3>();
     public SaveDictionary<Quaternion> quaternionData = new SaveDictionary<Quaternion>();
+    public SaveDictionary<List<Item>> itemData = new SaveDictionary<List<Item>>();
+    public SaveDictionary<List<Mission>> missionData = new SaveDictionary<List<Mission>>();
+    public SaveDictionary<Item[]> equipmentData = new SaveDictionary<Item[]>();
 
     public void Reset()
     {
@@ -97,6 +74,9 @@ public class SaveData
         intData.Clear();
         v3Data.Clear();
         quaternionData.Clear();
+        itemData.Clear();
+        missionData.Clear();
+        equipmentData.Clear();
     }
 
     private void Save<T>(SaveDictionary<T> lists, string key, T value)
@@ -135,6 +115,21 @@ public class SaveData
         Save(quaternionData, key, value);
     }
 
+    public void Save(string key, List<Item> value)
+    {
+        Save(itemData, key, value);
+    }
+
+    public void Save(string key, List<Mission> value)
+    {
+        Save(missionData, key, value);
+    }
+
+    public void Save(string key, Item[] value)
+    {
+        Save(equipmentData, key, value);
+    }
+
     //Interface Load Overrides
     public bool Load(string key, ref bool value)
     {
@@ -159,5 +154,20 @@ public class SaveData
     public bool Load(string key, ref Quaternion value)
     {
         return Load(quaternionData, key, ref value);
+    }
+
+    public bool Load(string key, ref List<Item> value)
+    {
+        return Load(itemData, key, ref value);
+    }
+
+    public bool Load(string key, ref List<Mission> value)
+    {
+        return Load(missionData, key, ref value);
+    }
+
+    public bool Load(string key, ref Item[] value)
+    {
+        return Load(equipmentData, key, ref value);
     }
 }

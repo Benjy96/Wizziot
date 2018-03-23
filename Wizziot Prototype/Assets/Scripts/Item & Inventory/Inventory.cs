@@ -9,10 +9,10 @@ public class Inventory : MonoBehaviour {
 
     public Action onItemChanged;
 
-    public List<Item> items = new List<Item>();
     public int space = 20;
 
-    private int coins;
+    public List<Item> items = new List<Item>();
+    public int coins;
 
     private void Awake()
     {

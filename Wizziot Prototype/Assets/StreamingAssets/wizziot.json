@@ -1,1 +1,73 @@
-{"keyValueDatabase":{},"boolData":{"keys":[],"values":[],"Length":0},"stringData":{"keys":[],"values":[],"Length":0},"intData":{"keys":[],"values":[],"Length":0},"v3Data":{"keys":["Collider","SubEmitter death spark cross","SubEmitter death spark","Zap Source","Sunglasses","Enemy(Clone)","QuitButton","Text","SaveButton","ResumeButton","PauseMenu","BlockCoin","Rock Type2 04","Crate","Rock Type2 04 (1)","Pancake Hat","Sphere NPC","Crate (1)","TargetIndicator","Cube NPC","Tree Type3 04","EnemySpawner","Boundary","Player","Ground (1)","Main Camera","Cube","Image","StaminaBar","Environment","Cube (2)","Boundary (2)","Cube (1)","Sun","Ground","UI","StoryManager","Boundary (1)","Objects","Story Interaction Canvas","Coins","Mission Log","Interactable NPCs","HealthBar","EventSystem","Boundaries","Missions","GameManagers"],"values":[{"x":8.012018,"y":0.5,"z":6.74154949},{"x":0.8102752,"y":0.49999997,"z":-5.333947},{"x":0.8102752,"y":0.49999997,"z":-5.333947},{"x":0.8102752,"y":0.49999997,"z":-5.333947},{"x":7.773387,"y":0.7,"z":6.485512},{"x":8.012018,"y":0.5,"z":6.74154949},{"x":384.0,"y":57.0,"z":0.0},{"x":384.0,"y":196.0,"z":0.0},{"x":384.0,"y":126.0,"z":0.0},{"x":384.0,"y":196.0,"z":0.0},{"x":383.0,"y":139.0,"z":0.0},{"x":-3.30999732,"y":0.460982621,"z":0.0},{"x":-9.51,"y":-3.32206E-08,"z":11.98},{"x":1.711013E-07,"y":0.4999999,"z":1.49639547E-07},{"x":-11.84,"y":9.179406E-09,"z":11.0100012},{"x":7.0,"y":0.1,"z":-5.0},{"x":10.88,"y":0.8530011,"z":-10.3099995},{"x":1.419983,"y":0.50000006,"z":2.62668181E-07},{"x":0.8102752,"y":0.49999997,"z":-5.333947},{"x":-8.8,"y":1.2966671,"z":8.0},{"x":-10.97,"y":0.0,"z":11.2200012},{"x":22.5,"y":0.0,"z":0.0},{"x":0.0,"y":1.0,"z":13.4500017},{"x":0.8102752,"y":0.49999997,"z":-5.333947},{"x":24.8500023,"y":0.0,"z":0.0},{"x":-4.74506664,"y":6.49999952,"z":-9.592842},{"x":-6.08,"y":1.0,"z":10.73},{"x":90.0,"y":256.0,"z":0.0},{"x":15.0,"y":243.0,"z":0.0},{"x":0.0,"y":0.0,"z":0.0},{"x":11.0899992,"y":1.00000048,"z":-0.32999897},{"x":0.0,"y":1.0,"z":-13.750001},{"x":-11.8800011,"y":1.00000024,"z":6.9800005},{"x":0.0,"y":3.0,"z":0.0},{"x":0.0,"y":0.0,"z":0.0},{"x":383.0,"y":139.0,"z":0.0},{"x":0.0,"y":0.0,"z":0.0},{"x":-13.75,"y":1.0,"z":0.5999994},{"x":0.0,"y":0.0,"z":0.0},{"x":383.0,"y":139.0,"z":0.0},{"x":0.0,"y":0.0,"z":0.0},{"x":766.0,"y":101.5,"z":0.0},{"x":0.422131538,"y":5.650193,"z":0.823798656},{"x":15.0,"y":263.0,"z":0.0},{"x":0.0,"y":0.0,"z":0.0},{"x":0.0,"y":1.0,"z":13.4500017},{"x":666.0,"y":99.0,"z":0.0},{"x":0.0,"y":0.0,"z":0.0}],"Length":48},"quaternionData":{"keys":[],"values":[],"Length":0}}
+{
+  "boolData": {
+    "keys": [],
+    "values": [],
+    "Length": 0
+  },
+  "stringData": {
+    "keys": [],
+    "values": [],
+    "Length": 0
+  },
+  "intData": {
+    "keys": [
+      "playerHealth",
+      "coins"
+    ],
+    "values": [
+      100,
+      0
+    ],
+    "Length": 2
+  },
+  "v3Data": {
+    "keys": [
+      "playerPos"
+    ],
+    "values": [
+      {
+        "x": 19.3409424,
+        "y": 0.49999994,
+        "z": 5.59764
+      }
+    ],
+    "Length": 1
+  },
+  "quaternionData": {
+    "keys": [],
+    "values": [],
+    "Length": 0
+  },
+  "itemData": {
+    "keys": [
+      "inventory"
+    ],
+    "values": [
+      []
+    ],
+    "Length": 1
+  },
+  "missionData": {
+    "keys": [
+      "missions"
+    ],
+    "values": [
+      []
+    ],
+    "Length": 1
+  },
+  "equipmentData": {
+    "keys": [
+      "playerEquipped"
+    ],
+    "values": [
+      [
+        null,
+        null,
+        null,
+        null
+      ]
+    ],
+    "Length": 1
+  }
+}

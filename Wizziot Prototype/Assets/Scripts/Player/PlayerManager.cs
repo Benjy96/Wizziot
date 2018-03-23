@@ -7,11 +7,10 @@ public class PlayerManager : MonoBehaviour {
     private static PlayerManager _PlayerManager;
     public static PlayerManager Instance { get { return _PlayerManager; } }
 
-    public GameObject player;
+    public GameObject player;   //reference for runtime
+    public Item[] equipped;
 
     private PlayerStats playerStats;
-
-    private Item[] equipped;
 
     private void Awake()
     {

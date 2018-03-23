@@ -42,9 +42,18 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    private void Start()
+    {
+        LoadGame();
+    }
+
     public void LoadGame()
     {
+        //TODO: remove hard-coding of save/load keys
+        Debug.Log("Loading story script...");
         StoryManager.Instance.LoadStory();
+        Debug.Log("Loading game data...");
+        Loader.LoadGame(encryptGameSave);
     }
 
     public void SaveGame()

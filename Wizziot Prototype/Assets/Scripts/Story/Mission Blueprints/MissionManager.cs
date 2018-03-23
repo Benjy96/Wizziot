@@ -10,7 +10,6 @@ public class MissionManager : MonoBehaviour {
     public static MissionManager Instance { get { return _MissionManager; } }
 
     public MissionUIManager missionUI;
-
     public GameObject waypointPrefab;
 
     public List<Mission> activeMissions;
