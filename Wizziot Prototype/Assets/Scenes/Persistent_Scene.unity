@@ -1834,6 +1834,26 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5a4dd3cba68095c4ca9bac724b8b00a7, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1494218789 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1986077721385236, guid: 5a4dd3cba68095c4ca9bac724b8b00a7,
+    type: 2}
+  m_PrefabInternal: {fileID: 1494218788}
+--- !u!208 &1494218790
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1494218789}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.5, y: 1, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1001 &1509074205
 Prefab:
   m_ObjectHideFlags: 0
@@ -2357,8 +2377,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99176ce022d16054393ab0d3fb6f76d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  items: []
   space: 16
+  items: []
+  coins: 0
 --- !u!114 &2099303815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2387,6 +2408,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 25667299}
+  equipped: []
 --- !u!114 &2099303817
 MonoBehaviour:
   m_ObjectHideFlags: 0

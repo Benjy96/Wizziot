@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -19,11 +18,11 @@ public class GameManager : MonoBehaviour
         {
             if (encryptGameSave)
             {
-                return Path.Combine(Application.streamingAssetsPath, "wizziot.dat");
+                return GameMetaInfo._SAVE_FILE_ENCRYPTED;
             }
             else
             {
-                return Path.Combine(Application.streamingAssetsPath, "wizziot.json");
+                return GameMetaInfo._SAVE_FILE_JSON;
             }
         }
     }
@@ -45,6 +44,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         LoadGame();
+        Debug.Log("Game Difficulty: " + GameMetaInfo._GAME_DIFFICULTY);
     }
 
     public void LoadGame()

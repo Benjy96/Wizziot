@@ -57,9 +57,9 @@ public class SaveData
         }
     }//SaveDictionary
 
-    //Data information
-    public int savedItems = 0;
-    public int loadedItems = 0;
+    //Data information to ensure all game-data has been saved & loaded
+    [NonSerialized] public int savedItems = 0;
+    [NonSerialized] public int loadedItems = 0;
 
     //The data holders
     public SaveDictionary<bool> boolData = new SaveDictionary<bool>();
