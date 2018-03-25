@@ -59,6 +59,7 @@ public class SaveData
 
     //Data information
     public int savedItems = 0;
+    public int loadedItems = 0;
 
     //The data holders
     public SaveDictionary<bool> boolData = new SaveDictionary<bool>();
@@ -92,6 +93,7 @@ public class SaveData
 
     private bool Load<T>(SaveDictionary<T> lists, string key, ref T value)
     {
+        loadedItems++; 
         return lists.TryGetValue(key, ref value);
     }
 

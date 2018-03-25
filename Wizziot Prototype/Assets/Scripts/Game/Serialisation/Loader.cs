@@ -45,23 +45,20 @@ public class Loader : MonoBehaviour
 
     private static void LoadData(SaveData data)
     {
-        ////Player
-        //Vector3 playerPos = new Vector3();
-        //data.Load("PlayerPosition", ref playerPos);
-        //PlayerManager.Instance.player.transform.position = playerPos;
+        Vector3 newPlayerPos = new Vector3();
+        data.Load(GameMetaInfo._STATE_DATA[(int)StateData.PlayerPosition], ref newPlayerPos);
+        PlayerManager.Instance.player.transform.position = newPlayerPos;
 
-        //int playerHealth = 0;
-        //data.Load("playerHealth", ref playerHealth);
-        //PlayerManager.Instance.player.GetComponent<EntityStats>().CurrentHealth = playerHealth;
+        int playerHealth = 0;
+        data.Load(GameMetaInfo._STATE_DATA[(int)StateData.PlayerHealth], ref playerHealth);
+        PlayerManager.Instance.player.GetComponent<EntityStats>().CurrentHealth = playerHealth;
 
-        //data.Load("playerEquipped", ref PlayerManager.Instance.equipped);
+        data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Equipped], ref PlayerManager.Instance.equipped);
+        data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Inventory], ref Inventory.Instance.items);
+        data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Coins], ref Inventory.Instance.coins);
+        data.Load(GameMetaInfo._STATE_DATA[(int)StateData.MissionsActive], ref MissionManager.Instance.activeMissions);
 
-        ////Inventory
-        //data.Load("inventory", ref Inventory.Instance.items);
-        //data.Load("coins", ref Inventory.Instance.coins);
-
-        ////Missions
-        //data.Load("missions", ref MissionManager.Instance.activeMissions);
+        if (data.loadedItems != GameMetaInfo._STATE_DATA.Count) throw new System.Exception("Not all state data loaded");
     }
 }
 
