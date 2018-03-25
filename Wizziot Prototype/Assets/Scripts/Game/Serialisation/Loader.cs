@@ -45,23 +45,23 @@ public class Loader : MonoBehaviour
 
     private static void LoadData(SaveData data)
     {
-        //Player
-        Vector3 playerPos = new Vector3();
-        data.Load("playerPos", ref playerPos);
-        PlayerManager.Instance.player.transform.position = playerPos;
+        ////Player
+        //Vector3 playerPos = new Vector3();
+        //data.Load("PlayerPosition", ref playerPos);
+        //PlayerManager.Instance.player.transform.position = playerPos;
 
-        int playerHealth = 0;
-        data.Load("playerHealth", ref playerHealth);
-        PlayerManager.Instance.player.GetComponent<EntityStats>().CurrentHealth = playerHealth;
+        //int playerHealth = 0;
+        //data.Load("playerHealth", ref playerHealth);
+        //PlayerManager.Instance.player.GetComponent<EntityStats>().CurrentHealth = playerHealth;
 
-        data.Load("playerEquipped", ref PlayerManager.Instance.equipped);
+        //data.Load("playerEquipped", ref PlayerManager.Instance.equipped);
 
-        //Inventory
-        data.Load("inventory", ref Inventory.Instance.items);
-        data.Load("coins", ref Inventory.Instance.coins);
+        ////Inventory
+        //data.Load("inventory", ref Inventory.Instance.items);
+        //data.Load("coins", ref Inventory.Instance.coins);
 
-        //Missions
-        data.Load("missions", ref MissionManager.Instance.activeMissions);
+        ////Missions
+        //data.Load("missions", ref MissionManager.Instance.activeMissions);
     }
 }
 

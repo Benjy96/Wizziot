@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class Inventory : MonoBehaviour {
 
     private static Inventory _Inventory;
@@ -11,7 +12,7 @@ public class Inventory : MonoBehaviour {
 
     public int space = 20;
 
-    public List<Item> items = new List<Item>();
+    [SerializeField] public List<Item> items = new List<Item>();
     public int coins;
 
     private void Awake()

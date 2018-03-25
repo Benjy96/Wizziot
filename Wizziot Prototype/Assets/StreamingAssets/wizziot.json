@@ -1,4 +1,5 @@
 {
+  "savedItems": 6,
   "boolData": {
     "keys": [],
     "values": [],
@@ -11,8 +12,8 @@
   },
   "intData": {
     "keys": [
-      "playerHealth",
-      "coins"
+      "PlayerHealth",
+      "Coins"
     ],
     "values": [
       100,
@@ -22,13 +23,13 @@
   },
   "v3Data": {
     "keys": [
-      "playerPos"
+      "PlayerPosition"
     ],
     "values": [
       {
-        "x": 19.3409424,
-        "y": 0.49999994,
-        "z": 5.59764
+        "x": 0.776518941,
+        "y": 0.499999553,
+        "z": -0.433170766
       }
     ],
     "Length": 1
@@ -38,9 +39,9 @@
     "values": [],
     "Length": 0
   },
-  "itemData": {
+  "inventoryData": {
     "keys": [
-      "inventory"
+      "Inventory"
     ],
     "values": [
       []
@@ -49,16 +50,16 @@
   },
   "missionData": {
     "keys": [
-      "missions"
+      "MissionsActive"
     ],
     "values": [
       []
     ],
     "Length": 1
   },
-  "equipmentData": {
+  "itemData": {
     "keys": [
-      "playerEquipped"
+      "Equipped"
     ],
     "values": [
       [

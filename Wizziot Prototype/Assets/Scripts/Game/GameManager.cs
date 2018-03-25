@@ -62,7 +62,8 @@ public class GameManager : MonoBehaviour
         StoryManager.Instance.SaveStory();
 
         Debug.Log("Saving game data...");
-        Saver.SaveGame(encryptGameSave);        
+        Saver saver = new Saver();
+        saver.SaveGame(encryptGameSave);        
     }
 
     //Assuming param is from a button (e.g. menu - buttons are ints)

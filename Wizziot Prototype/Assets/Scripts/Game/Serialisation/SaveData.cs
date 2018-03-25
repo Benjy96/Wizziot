@@ -55,17 +55,21 @@ public class SaveData
                 return false;
             }
         }
-    }
-    
+    }//SaveDictionary
+
+    //Data information
+    public int savedItems = 0;
+
     //The data holders
     public SaveDictionary<bool> boolData = new SaveDictionary<bool>();
     public SaveDictionary<string> stringData = new SaveDictionary<string>();
     public SaveDictionary<int> intData = new SaveDictionary<int>();
     public SaveDictionary<Vector3> v3Data = new SaveDictionary<Vector3>();
     public SaveDictionary<Quaternion> quaternionData = new SaveDictionary<Quaternion>();
-    public SaveDictionary<List<Item>> itemData = new SaveDictionary<List<Item>>();
+    //Custom game types
+    public SaveDictionary<List<Item>> inventoryData = new SaveDictionary<List<Item>>();
     public SaveDictionary<List<Mission>> missionData = new SaveDictionary<List<Mission>>();
-    public SaveDictionary<Item[]> equipmentData = new SaveDictionary<Item[]>();
+    public SaveDictionary<Item[]> itemData = new SaveDictionary<Item[]>();
 
     public void Reset()
     {
@@ -74,13 +78,15 @@ public class SaveData
         intData.Clear();
         v3Data.Clear();
         quaternionData.Clear();
+
+        inventoryData.Clear();
         itemData.Clear();
         missionData.Clear();
-        equipmentData.Clear();
     }
 
     private void Save<T>(SaveDictionary<T> lists, string key, T value)
     {
+        savedItems++;
         lists.TrySetValue(key, value);
     }
 
@@ -117,7 +123,7 @@ public class SaveData
 
     public void Save(string key, List<Item> value)
     {
-        Save(itemData, key, value);
+        Save(inventoryData, key, value);
     }
 
     public void Save(string key, List<Mission> value)
@@ -127,7 +133,7 @@ public class SaveData
 
     public void Save(string key, Item[] value)
     {
-        Save(equipmentData, key, value);
+        Save(itemData, key, value);
     }
 
     //Interface Load Overrides
@@ -158,7 +164,7 @@ public class SaveData
 
     public bool Load(string key, ref List<Item> value)
     {
-        return Load(itemData, key, ref value);
+        return Load(inventoryData, key, ref value);
     }
 
     public bool Load(string key, ref List<Mission> value)
@@ -168,6 +174,6 @@ public class SaveData
 
     public bool Load(string key, ref Item[] value)
     {
-        return Load(equipmentData, key, ref value);
+        return Load(itemData, key, ref value);
     }
 }
