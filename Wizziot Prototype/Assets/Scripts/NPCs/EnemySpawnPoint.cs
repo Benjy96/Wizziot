@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySpawnPoint : MonoBehaviour {
+public class EnemySpawnPoint : MonoBehaviour
+{
 
     public List<Enemy> enemiesSpawned;  //Hold reference to all enemies spawned at this point
 
@@ -16,7 +17,7 @@ public class EnemySpawnPoint : MonoBehaviour {
     private void Awake()
     {
         float largestTransformSize = 0f;
-        if(enemyPrefab.transform.localScale.x > enemyPrefab.transform.localScale.z)
+        if (enemyPrefab.transform.localScale.x > enemyPrefab.transform.localScale.z)
         {
             largestTransformSize = enemyPrefab.transform.localScale.x;
         }
@@ -41,7 +42,7 @@ public class EnemySpawnPoint : MonoBehaviour {
     {
         int safetyCounter = 0;
 
-        while(spawnAreaWaypoints.Count != spawnAreaWaypoints.Capacity)
+        while (spawnAreaWaypoints.Count != spawnAreaWaypoints.Capacity)
         {
             safetyCounter++;
             if (safetyCounter >= spawnRadius * spawnRadius) break;
@@ -49,7 +50,7 @@ public class EnemySpawnPoint : MonoBehaviour {
             Vector3 randomWaypoint = new Vector3(Random.Range(-spawnRadius, spawnRadius), 0f, Random.Range(-spawnRadius, spawnRadius));
 
             //Get Colliders that aren't marked as the "Ground" (detect obstacles)
-            Collider[] colliders = Physics.OverlapSphere(randomWaypoint, enemyPrefab.transform.localScale.sqrMagnitude, LayerMask.GetMask("Ground"));
+            Collider[] colliders = Physics.OverlapSphere(randomWaypoint, enemyPrefab.transform.localScale.sqrMagnitude, LayerMask.NameToLayer(GameMetaInfo._LAYER_GROUND_WALKABLE));
 
             if (colliders.Length == 0 && !spawnAreaWaypoints.Contains(randomWaypoint))
             {
@@ -59,13 +60,16 @@ public class EnemySpawnPoint : MonoBehaviour {
         }
     }
 
+    //Recursively instantiate enemies
     public void InstantiateEnemy()
     {
         int randomIndex = Random.Range(0, availableSpawnPoints.Count);
 
-        GameObject e = Instantiate(enemyPrefab, 
-            availableSpawnPoints[randomIndex], 
+        GameObject e = Instantiate(enemyPrefab,
+            availableSpawnPoints[randomIndex],
             Quaternion.identity);
+
+        Debug.Log("Spawning enemy at pos: " + availableSpawnPoints[randomIndex]);
 
         Debug.Log(availableSpawnPoints[0]);
 
@@ -83,5 +87,17 @@ public class EnemySpawnPoint : MonoBehaviour {
     public void RemoveEnemy(Enemy e)
     {
         enemiesSpawned.Remove(e);
+    }
+
+    //show waypoint
+    private void OnDrawGizmos()
+    {
+        if (spawnAreaWaypoints != null)
+        {
+            foreach (Vector3 wp in spawnAreaWaypoints)
+            {
+                Gizmos.DrawSphere(wp, 1f);
+            }
+        }
     }
 }

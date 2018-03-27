@@ -2,18 +2,28 @@
 
 [CreateAssetMenu(fileName = "FollowState", menuName = "States/Follow")]
 [RequireComponent(typeof(NeighbourhoodTracker))]
-public class FollowState : State {   
+public class FollowState : State {
+
+    public float patrolResetDuration = 10f;
+    private bool patrolling = false;
+    private float patrolResetTime;
 
     public override void Execute()
     {
         target = SelectTarget();
         if (target != null && owner.CanSeeTarget(target))
         {
+            patrolling = false;
             owner.MoveTo(target.position);
         }
         else
         {
-            Search();
+            if (Time.time >= patrolResetTime || owner.DestinationReached() || patrolling == false)
+            {
+                patrolling = true;
+                MoveToRandomWaypoint();
+                patrolResetTime = Time.time + patrolResetDuration;
+            }
         }
     }
 
@@ -35,11 +45,11 @@ public class FollowState : State {
         return target;
     }
 
-    private void Search()
+    private void MoveToRandomWaypoint()
     {
-        //TODO: Patrol ABOUT spawn or the spawn's spawn points (e.g. x co-ord + offset after cos)
-        //TODO: Coroutine so only accept new cos/sin pos every odd number of seconds
-        Vector3 patrolPos = new Vector3(Mathf.Cos(Time.time), 0f, Mathf.Sin(Time.time)) * 10;
+        //Get random point, based upon spawner waypoints
+        Vector3 pointOrigin = owner.Spawn.spawnAreaWaypoints[Random.Range(0, owner.Spawn.spawnAreaWaypoints.Count - 1)];
+        Vector3 patrolPos = new Vector3(pointOrigin.x + Mathf.Cos(Random.value), 0f, pointOrigin.z + Mathf.Sin(Random.value)) * 10;
         owner.MoveTo(patrolPos);
     }
 }

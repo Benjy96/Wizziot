@@ -371,7 +371,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dee817f5e39bf184180df4a1339914af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  disposition: 2
+  disposition: 0
   reluctance: 0.5
   emotionalStability: 0.5
   trust: 1
