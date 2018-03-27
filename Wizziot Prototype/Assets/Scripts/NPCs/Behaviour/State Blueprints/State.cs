@@ -11,6 +11,7 @@ public class State : ScriptableObject {
     protected Enemy owner;
     protected EnemySpawnPoint spawn;
     protected NeighbourhoodTracker neighbourhoodTracker;
+    protected AbilityComponent abilComponent;
 
     protected Transform target;
     
@@ -37,6 +38,7 @@ public class State : ScriptableObject {
         influencer = lastInfluence;
         spawn = owner.Spawn;
         neighbourhoodTracker = owner.neighbourhoodTracker;
+        abilComponent = owner.abilityComponent;
 
         neighbourhoodTracker.RegisterInterest(interestedIn);
         neighbourhoodTracker.RegisterInterest(secondaryInterest);

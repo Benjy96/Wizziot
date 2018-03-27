@@ -13,6 +13,8 @@ public class MissionUIManager : MonoBehaviour {
         missions = GetComponentsInChildren<MissionUI>(true);    //TODO: activate each slot
 
         missionManager.onActiveMissionsChanged += UpdateUI;
+
+        GameManager.Instance.onGameLoaded += UpdateUI;
     }
 
     public void SetMissionText(Mission mission)

@@ -2,33 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Vortex : MonoBehaviour
-{ 
-    public static float G = Singularity.G;  //GameManager.G or StatManager.G in final
-
+public class Vortex : AreaAbility
+{
     public bool yoyoMode = true;
 
     public WaitForSeconds yoyoDuration = new WaitForSeconds(1f);
-    public float vortexMass = 500f;
-    public float vortexRadius = 5f;     //This values only used for INITIAL neighbours - can use update method for continuos assignments
-    public float vortexDuration = 5f;
 
     public GameObject vortexEffectPrefab;
 
     private bool vortexForming = false;
     private bool vortexRepulsing = false;
     private Collider[] neighbourhood;
-    private List<Rigidbody> neighbourRbs;
-
+    
     private bool attractStep = true;
-
-    private Rigidbody rb;
-
-    private void Awake()
-    {
-        neighbourRbs = new List<Rigidbody>();
-        rb = GetComponent<Rigidbody>();
-    }
 
     //Once landed on/impacted a surface:
     private void OnCollisionEnter(Collision collision)
@@ -41,9 +27,9 @@ public class Vortex : MonoBehaviour
             vortexForming = true;
 
             //Set high mass
-            rb.mass = vortexMass;
+            rb.mass = objectMass;
 
-            neighbourhood = Physics.OverlapSphere(transform.position, vortexRadius);
+            neighbourhood = Physics.OverlapSphere(transform.position, effectRadius);
             foreach (Collider c in neighbourhood)
             {
                 if (c != gameObject.GetComponent<Collider>())
@@ -82,6 +68,7 @@ public class Vortex : MonoBehaviour
     //Alternating repulsion/attraction (can add another variable to enable/disable this)
     private void ApplyVortex(Rigidbody toAffect)
     {
+        if (toAffect == null) return;
         //Default behaviour is the else (repulse) if yoyoMode not enabled
         if (attractStep && yoyoMode)
         {
@@ -91,20 +78,6 @@ public class Vortex : MonoBehaviour
         {
             Repulse(toAffect);
         }
-    }
-
-    private void Attract(Rigidbody toAffect, float modifier = 1)
-    {
-        Vector3 direction = rb.position - toAffect.position;
-
-        float distance = Mathf.Clamp(direction.magnitude, 0.001f, float.MaxValue);
-
-        //Calculate Gravitational attraction force based on masses and G
-        float forceMagnitude = G * ((rb.mass * toAffect.mass));
-
-        //Apply force t object
-        Vector3 force = direction.normalized * forceMagnitude;
-        toAffect.AddForce(force * modifier);
     }
 
     private void Repulse(Rigidbody toAffect)
@@ -141,7 +114,7 @@ public class Vortex : MonoBehaviour
     {
         Debug.Log("Starting");
         vortexRepulsing = true;
-        yield return new WaitForSeconds(vortexDuration);
+        yield return new WaitForSeconds(duration);
         Debug.Log("Ending");
         vortexRepulsing = false;
 

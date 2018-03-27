@@ -3,20 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //TODO: Add Parent class for vortex/singularity shared variables and methods
-public class Singularity : MonoBehaviour {
-
-    public static float G = 0.5f;
-
-    public float singularityMass = 500f;
-    public float singularityRadius = 5f;
-    public float duration = 5f;
+public class Singularity : AreaAbility {
 
     public GameObject singularityEffectPrefab;
 
     private bool singularityForming = false;
     private bool singularityAttracting = false;
     private Collider[] neighbourhood;
-    private List<Rigidbody> neighbourRbs;
 
     private Vector3 startPos;
     private bool raiseObject;
@@ -41,12 +34,12 @@ public class Singularity : MonoBehaviour {
             singularityForming = true;  
 
             //Set high mass
-            rb.mass = singularityMass;
+            rb.mass = objectMass;
 
             //Get all items in range
             //TODO: CONSTANT addition? e.g. add items to list in update instead of only once?
                 //Maybe as an upgraded singularity - e.g. instead of initial, continual singularity additions
-            neighbourhood = Physics.OverlapSphere(transform.position, singularityRadius);
+            neighbourhood = Physics.OverlapSphere(transform.position, effectRadius);
             foreach (Collider c in neighbourhood)
             {
                 if (c != this)
@@ -71,8 +64,6 @@ public class Singularity : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        
-
         if (singularityAttracting)
         {
             //TODO: Disable movement component of affected NPCs while active
@@ -81,20 +72,6 @@ public class Singularity : MonoBehaviour {
                 Attract(body);
             }
         }
-    }
-
-    private void Attract(Rigidbody toAttract)
-    {
-        //Get Vector from Singularity to object
-        Vector3 direction = rb.position - toAttract.position;
-        float distance = Mathf.Clamp(direction.magnitude, 0.001f, float.MaxValue);
-
-        //Calculate Gravitational attraction force based on masses and G
-        float forceMagnitude = G * ((rb.mass * toAttract.mass) / Mathf.Pow(distance, 2));
-
-        //Apply force t object
-        Vector3 force = direction.normalized * forceMagnitude;
-        toAttract.AddForce(force);
     }
 
     private IEnumerator StartSingularity()

@@ -60,6 +60,7 @@ public class Loader : MonoBehaviour
 
         if (data.loadedItems != GameMetaInfo._STATE_DATA.Count) throw new System.Exception("Not all state data loaded");
 
+        //GAME LOADED Event
         if(GameManager.Instance.onGameLoaded != null) GameManager.Instance.onGameLoaded.Invoke();
     }
 }

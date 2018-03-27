@@ -75,7 +75,7 @@ public class AbilityComponent : MonoBehaviour {
     }
 
     //Player interface
-    public void UseInstantAbility(Abilities ability, Transform target)  //TODO; make bool for player?
+    public void PlayerUseInstant(Abilities ability, Transform target)  //TODO; make bool for player?
     {
         SetTarget(target);
 
@@ -83,6 +83,11 @@ public class AbilityComponent : MonoBehaviour {
         {
             if (currentTarget != null)
             {
+                Enemy e = currentTarget.GetComponent<Enemy>();
+                if(e != null)
+                {
+                    e.Influence(gameObject, Emotion.Anger, 1f);
+                }
                 UseAbility();
             }
             else
@@ -97,7 +102,7 @@ public class AbilityComponent : MonoBehaviour {
     }
 
     //Player interface
-    public void UseAOEAbility(Abilities ability)    //TODO: make bool for player?
+    public void PlayerUseAoE(Abilities ability)    //TODO: make bool for player?
     {
         if (SelectedAbility == ability)
         {
@@ -218,6 +223,14 @@ public class AbilityComponent : MonoBehaviour {
         {
             Instantiate(spellPrefab,
                 instantiatedAimingDisc.position + new Vector3(0f, instantiatedAimingDisc.localScale.y / 2, 0f), Quaternion.identity);
+
+            Collider[] cols = Physics.OverlapSphere(instantiatedAimingDisc.position, spellPrefab.GetComponent<AreaAbility>().effectRadius, LayerMask.NameToLayer(GameMetaInfo._LAYER_IMMOVABLE_OBJECT));
+            foreach (Collider c in cols)
+            {
+                Enemy e = c.GetComponent<Enemy>();
+                if (e != null) e.Influence(gameObject, Emotion.Anger, .3f); Debug.Log("angering");
+            }
+
             Destroy(instantiatedAimingDisc.gameObject);
             aiming = false;
         }

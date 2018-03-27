@@ -4,7 +4,6 @@
 [RequireComponent(typeof(NeighbourhoodTracker))]
 public class AttackState : State {
 
-    private AbilityComponent abilComponent;
     private PlayerStats playerStats;
 
     protected override void EnterState(Enemy owner, GameObject lastInfluence)
