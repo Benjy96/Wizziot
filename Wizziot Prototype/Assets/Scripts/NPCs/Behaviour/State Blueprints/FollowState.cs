@@ -4,9 +4,11 @@
 [RequireComponent(typeof(NeighbourhoodTracker))]
 public class FollowState : State {
 
+    //TODO: Fix - Not seen player - patrol as first action
+
     public float patrolResetDuration = 10f;
     private bool patrolling = false;
-    private float patrolResetTime;
+    private float patrolResetTime = 0f;
 
     public override void Execute()
     {
@@ -48,8 +50,16 @@ public class FollowState : State {
     private void MoveToRandomWaypoint()
     {
         //Get random point, based upon spawner waypoints
-        Vector3 pointOrigin = owner.Spawn.spawnAreaWaypoints[Random.Range(0, owner.Spawn.spawnAreaWaypoints.Count - 1)];
-        Vector3 patrolPos = new Vector3(pointOrigin.x + Mathf.Cos(Random.value), 0f, pointOrigin.z + Mathf.Sin(Random.value)) * 10;
+        Vector3 pointOrigin = owner.Spawn.spawnAreaWaypoints[Random.Range(0, owner.Spawn.spawnAreaWaypoints.Count)];
+        Vector3 patrolPos = new Vector3(pointOrigin.x + Mathf.Cos(Random.value), 0f, pointOrigin.z + Mathf.Sin(Random.value));
+
+        //Prevent waypoint at current location being set as new target
+        if (patrolPos == owner.Position)
+        {
+            MoveToRandomWaypoint();
+            return;
+        }
+
         owner.MoveTo(patrolPos);
     }
 }

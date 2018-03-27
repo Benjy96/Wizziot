@@ -202,7 +202,7 @@ Prefab:
     - target: {fileID: 114227188130123050, guid: 6bba16423bada83449bf7c78d2f23384,
         type: 2}
       propertyPath: spawnAmount
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114227188130123050, guid: 6bba16423bada83449bf7c78d2f23384,
         type: 2}

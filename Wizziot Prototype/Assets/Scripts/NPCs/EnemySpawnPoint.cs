@@ -26,8 +26,11 @@ public class EnemySpawnPoint : MonoBehaviour
             largestTransformSize = enemyPrefab.transform.localScale.z;
         }
 
-        spawnAreaWaypoints = new List<Vector3>(spawnAmount * 2);
-        availableSpawnPoints = new List<Vector3>(spawnAmount * 2);
+        //Spawns with spacing - separate the spawn into chunks of size "enemy", then halved to double space between spawns
+        float numWaypoints = ((spawnRadius * 2) / largestTransformSize) / 2;
+
+        spawnAreaWaypoints = new List<Vector3>((int)numWaypoints);
+        availableSpawnPoints = new List<Vector3>(spawnAreaWaypoints.Capacity);
 
         enemiesSpawned = new List<Enemy>();
 
@@ -58,7 +61,6 @@ public class EnemySpawnPoint : MonoBehaviour
 
             if (colliders.Length == 0 && !spawnAreaWaypoints.Contains(randomWaypoint))
             {
-                Debug.Log("New spawn waypoint: " + randomWaypoint);
                 spawnAreaWaypoints.Add(randomWaypoint);
                 availableSpawnPoints.Add(randomWaypoint);
             }
@@ -73,8 +75,6 @@ public class EnemySpawnPoint : MonoBehaviour
         GameObject e = Instantiate(enemyPrefab,
             availableSpawnPoints[randomIndex],
             Quaternion.identity);
-
-        Debug.Log("Spawning enemy at pos: " + availableSpawnPoints[randomIndex]);
 
         Debug.Log(availableSpawnPoints[0]);
 

@@ -126,7 +126,7 @@ public class Enemy : Targetable {
     {
         if(navAgent != null)
         {
-            return navAgent.remainingDistance <= (navAgent.stoppingDistance);
+            return (navAgent.destination - transform.position).sqrMagnitude <= (navAgent.stoppingDistance * navAgent.stoppingDistance); //multiply better performance than sqrRoot
         }
         else
         {
