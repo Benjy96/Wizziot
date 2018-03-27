@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
+    public event Action OnEscapeKey;
+
     // ----- References ----- //
     private PauseMenu pauseMenu;
 
@@ -41,7 +43,7 @@ public class PlayerController : MonoBehaviour {
         GameMetaInfo.allKeybinds.Add(KeyCode.Alpha5, new Action(() => abilityComponent.PlayerUseInstant(Abilities.Heal, target.transform)));
         //General
         GameMetaInfo.allKeybinds.Add(KeyCode.F, Interact);
-        GameMetaInfo.allKeybinds.Add(KeyCode.Escape, new Action(() => ClearUIAndPause())); //TODO: every ui subscribe to manager to close upon esc -> then menu
+        GameMetaInfo.allKeybinds.Add(KeyCode.Escape, new Action(() => TriggerEscapeAction())); //TODO: every ui subscribe to manager to close upon esc -> then menu
         //Camera
         GameMetaInfo.allKeybinds.Add(KeyCode.LeftAlt, cam.GetComponent<PlayerCamera>().SwitchCameraMode);
         GameMetaInfo.allKeybinds.Add(KeyCode.I, new Action(() => inventoryUI.gameObject.SetActive(!inventoryUI.activeSelf)));
@@ -68,19 +70,9 @@ public class PlayerController : MonoBehaviour {
         HandleConversationInput();
     }
 
-    private void ClearUIAndPause()
+    private void TriggerEscapeAction()
     {
-        //Clear story input on first press
-        if (StoryManager.Instance.StoryClosing == false && StoryManager.Instance.StoryInputEnabled)
-        {
-            StoryManager.Instance.CloseConversation();
-            return;
-        }
-        if (StoryManager.Instance.StoryInputEnabled == false)
-        {
-            
-            if(pauseMenu != null) pauseMenu.PauseGame();
-        }
+        if (OnEscapeKey != null) OnEscapeKey.Invoke();
     }
 
     private void HandleDirectionInput()

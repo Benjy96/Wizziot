@@ -5,6 +5,8 @@ public class InventoryUIManager : MonoBehaviour {
     public Transform itemsParent;
     public TMPro.TextMeshProUGUI coinCounterText;
 
+    public GameObject inventoryUI;
+
     Inventory inventory;
     InventorySlot[] slots;
 
@@ -20,6 +22,8 @@ public class InventoryUIManager : MonoBehaviour {
 
         GameManager.Instance.onGameLoaded += UpdateUI;
         GameManager.Instance.onGameLoaded += UpdateCoins;
+
+        PlayerManager.Instance.playerControls.OnEscapeKey += Close;
     }
 
     void UpdateUI()
@@ -40,5 +44,10 @@ public class InventoryUIManager : MonoBehaviour {
     void UpdateCoins()
     {
         coinCounterText.text = inventory.coins.ToString();
+    }
+
+    public void Close()
+    {
+        if(inventoryUI.activeSelf) inventoryUI.SetActive(false);
     }
 }

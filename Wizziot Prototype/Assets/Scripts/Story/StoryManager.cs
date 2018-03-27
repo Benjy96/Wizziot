@@ -59,6 +59,8 @@ public class StoryManager : MonoBehaviour {
     {
         storyDataFileName = GameManager.Instance.StorySaveFileName; //Needs to be in Start since Awake the scripts are still initializing and in random order
         filepath = Path.Combine(Application.streamingAssetsPath, storyDataFileName);
+
+        PlayerManager.Instance.playerControls.OnEscapeKey += CloseConversation;
     }
 
     #region Interface

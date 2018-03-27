@@ -154,26 +154,11 @@ public class AbilityComponent : MonoBehaviour {
                         break;
                 }
                 //Apply AoE damage to targets within range
-                if (GameMetaInfo._Is_AoE_Ability(SelectedAbility))
+                if (GameMetaInfo._Is_AoE_Ability(SelectedAbility) && AoEDeployed)
                 {
                     globalCooldownFinishTime = Time.time + globalCooldown;
-                    //Only damage if the AoE has been placed
-                    if (AoEDeployed == true)
-                    {
-                        List<Enemy> enemies = new List<Enemy>();
-                        //Influence enemies within AoE sphere
-                        Collider[] cols = Physics.OverlapSphere(AoEUsed.transform.position, AoEUsed.effectRadius);
-                        foreach (Collider c in cols)
-                        {
-                            Debug.Log(c.name);
-                            Enemy e = c.GetComponent<Enemy>();
-                            if (e != null) e.Influence(gameObject, Emotion.Anger, .5f); enemies.Add(e);
-
-                            EntityStats eS = c.GetComponent<EntityStats>();
-                            if (eS != null) StartCoroutine(eS.DoTDamage(damageToDo, AoEUsed.duration));
-                        }
-                        return true;
-                    }
+                    ApplyAoEEffects(damageToDo, AoEUsed);
+                    return true;
                 }
                 else
                 {
@@ -257,6 +242,26 @@ public class AbilityComponent : MonoBehaviour {
             Destroy(instantiatedAimingDisc.gameObject);
             aiming = false;
             AoEDeployed = true;
+        }
+    }
+
+    /// <summary>
+    /// Damage and influence targets within area of effect
+    /// </summary>
+    /// <param name="damageToDo"></param>
+    private void ApplyAoEEffects(float damageToDo, AreaAbility AoEUsed)
+    {
+        List<Enemy> enemies = new List<Enemy>();
+        //Influence enemies within AoE sphere
+        Collider[] cols = Physics.OverlapSphere(AoEUsed.transform.position, AoEUsed.effectRadius);
+        foreach (Collider c in cols)
+        {
+            Debug.Log(c.name);
+            Enemy e = c.GetComponent<Enemy>();
+            if (e != null) e.Influence(gameObject, Emotion.Anger, .5f); enemies.Add(e);
+
+            EntityStats eS = c.GetComponent<EntityStats>();
+            if (eS != null) StartCoroutine(eS.DoTDamage(damageToDo, AoEUsed.duration));
         }
     }
     #endregion

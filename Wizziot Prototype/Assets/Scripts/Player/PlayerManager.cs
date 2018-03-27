@@ -8,6 +8,7 @@ public class PlayerManager : MonoBehaviour {
     public static PlayerManager Instance { get { return _PlayerManager; } }
 
     public GameObject player;   //reference for runtime
+    public PlayerController playerControls;
     public Item[] equipped;
 
     public Action onTargetDestroyed;    //for targeting, xp, etc...
@@ -28,6 +29,7 @@ public class PlayerManager : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
 
         playerStats = player.GetComponent<PlayerStats>();
+        playerControls = player.GetComponent<PlayerController>();
         equipped = new Item[Enum.GetValues(typeof(EquipmentSlot)).Length];
     }
 
