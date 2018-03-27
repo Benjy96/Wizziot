@@ -80,23 +80,6 @@ public class Vortex : AreaAbility
         }
     }
 
-    private void Repulse(Rigidbody toAffect)
-    {
-        Vector3 direction = -(rb.position - toAffect.position);
-        //Makes them go up (less emphasis put on x and z direction - y is maintained)
-        direction.x *= .5f;
-        direction.z *= .5f;
-
-        float distance = Mathf.Clamp(direction.magnitude, 0.001f, float.MaxValue);
-
-        //Calculate Gravitational attraction force based on masses and G
-        float forceMagnitude = G * ((rb.mass * toAffect.mass) / Mathf.Pow(distance, 2));
-
-        //Apply force t object
-        Vector3 force = direction.normalized * forceMagnitude;
-        toAffect.AddForce(force);
-    }
-
     private IEnumerator Yoyo()
     {
         yield return yoyoDuration;

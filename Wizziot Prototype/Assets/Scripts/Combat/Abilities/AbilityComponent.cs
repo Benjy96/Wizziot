@@ -128,6 +128,8 @@ public class AbilityComponent : MonoBehaviour {
     private bool UseAbility()
     {
         float damageToDo = 0f;
+        bool AoEDeployed = false;
+        AreaAbility AoEUsed = null;
 
         if (Time.time > globalCooldownFinishTime)
         {
@@ -144,16 +146,41 @@ public class AbilityComponent : MonoBehaviour {
                         break;
 
                     case Abilities.Vortex:
-                        AoE(vortexPrefab);
+                        AoE(vortexPrefab, ref AoEDeployed, ref AoEUsed);
                         break;
 
                     case Abilities.Singularity:
-                        AoE(singularityPrefab);
+                        AoE(singularityPrefab, ref AoEDeployed, ref AoEUsed);
                         break;
                 }
-                currentTargetStats.Damage(damageToDo);  //Damage the target
-                globalCooldownFinishTime = Time.time + globalCooldown;  //Handle global cooldown
-                return true;
+                //Apply AoE damage to targets within range
+                if (GameMetaInfo._Is_AoE_Ability(SelectedAbility))
+                {
+                    globalCooldownFinishTime = Time.time + globalCooldown;
+                    //Only damage if the AoE has been placed
+                    if (AoEDeployed == true)
+                    {
+                        List<Enemy> enemies = new List<Enemy>();
+                        //Influence enemies within AoE sphere
+                        Collider[] cols = Physics.OverlapSphere(AoEUsed.transform.position, AoEUsed.effectRadius);
+                        foreach (Collider c in cols)
+                        {
+                            Debug.Log(c.name);
+                            Enemy e = c.GetComponent<Enemy>();
+                            if (e != null) e.Influence(gameObject, Emotion.Anger, .5f); enemies.Add(e);
+
+                            EntityStats eS = c.GetComponent<EntityStats>();
+                            if (eS != null) StartCoroutine(eS.DoTDamage(damageToDo, AoEUsed.duration));
+                        }
+                        return true;
+                    }
+                }
+                else
+                {
+                    currentTargetStats.Damage(damageToDo);  //Damage the target
+                    globalCooldownFinishTime = Time.time + globalCooldown;  //Handle global cooldown
+                    return true;
+                }
             }
             else
             {
@@ -212,27 +239,24 @@ public class AbilityComponent : MonoBehaviour {
         }
     }
 
-    private void AoE(GameObject spellPrefab)
+    private void AoE(GameObject spellPrefab, ref bool AoEDeployed, ref AreaAbility deployed)
     {
         if (aiming == false)
         {
             aiming = true;
             instantiatedAimingDisc = Instantiate(aimingDisc);
+            AoEDeployed = false;
         }
         else
         {
             Instantiate(spellPrefab,
                 instantiatedAimingDisc.position + new Vector3(0f, instantiatedAimingDisc.localScale.y / 2, 0f), Quaternion.identity);
 
-            Collider[] cols = Physics.OverlapSphere(instantiatedAimingDisc.position, spellPrefab.GetComponent<AreaAbility>().effectRadius, LayerMask.NameToLayer(GameMetaInfo._LAYER_IMMOVABLE_OBJECT));
-            foreach (Collider c in cols)
-            {
-                Enemy e = c.GetComponent<Enemy>();
-                if (e != null) e.Influence(gameObject, Emotion.Anger, .3f); Debug.Log("angering");
-            }
+            deployed = spellPrefab.GetComponent<AreaAbility>();
 
             Destroy(instantiatedAimingDisc.gameObject);
             aiming = false;
+            AoEDeployed = true;
         }
     }
     #endregion

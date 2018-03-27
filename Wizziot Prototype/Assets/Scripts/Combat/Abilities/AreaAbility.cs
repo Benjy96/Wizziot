@@ -19,7 +19,7 @@ public class AreaAbility : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
     }
 
-    protected virtual void Attract(Rigidbody toAffect)
+    protected virtual void Attract(Rigidbody toAffect, float forceModifier = 1)
     {
         if (toAffect == null) return;
         Vector3 direction = rb.position - toAffect.position;
@@ -28,6 +28,23 @@ public class AreaAbility : MonoBehaviour {
 
         //Calculate Gravitational attraction force based on masses and G
         float forceMagnitude = G * ((rb.mass * toAffect.mass));
+
+        //Apply force t object
+        Vector3 force = direction.normalized * forceMagnitude;
+        toAffect.AddForce(force);
+    }
+
+    protected void Repulse(Rigidbody toAffect, float forceModifier = 1)
+    {
+        Vector3 direction = -(rb.position - toAffect.position);
+        //Makes them go up (less emphasis put on x and z direction - y is maintained)
+        direction.x *= .5f;
+        direction.z *= .5f;
+
+        float distance = Mathf.Clamp(direction.magnitude, 0.001f, float.MaxValue);
+
+        //Calculate Gravitational attraction force based on masses and G
+        float forceMagnitude = G * ((rb.mass * toAffect.mass) / Mathf.Pow(distance, 2));
 
         //Apply force t object
         Vector3 force = direction.normalized * forceMagnitude;

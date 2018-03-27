@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -118,6 +119,44 @@ public class EntityStats : MonoBehaviour {
         else
         {
             Mathf.Clamp(CurrentHealth, 0, maxHealth);
+        }
+    }
+
+    /// <summary>
+    /// Damages the target over time
+    /// </summary>
+    public IEnumerator DoTDamage(float amount, float duration)
+    {
+        float damageApplied = 0f;
+        float increments = amount / duration;
+
+        while(damageApplied != amount)
+        {
+            float damage = increments;
+            //1. Mitigate Attack
+            if (UnityEngine.Random.Range(0, 100) < statModifiers[Stats.MitigationChance].StatValue)
+            {
+                Debug.Log("Attack mitigated");
+                yield break;
+            }
+
+            //2. Apply damage reduction
+            damage *= statModifiers[Stats.DamageReduction].StatValue;
+
+            CurrentHealth -= (int)damage;
+
+            //3. Reduce health
+            if (CurrentHealth <= 0)
+            {
+                if (onDeath != null) onDeath.Invoke();
+            }
+            else
+            {
+                Mathf.Clamp(CurrentHealth, 0, maxHealth);
+            }
+
+            damageApplied += damage;
+            yield return new WaitForSeconds(1f);    //amount / duration scales to 1s increments
         }
     }
 

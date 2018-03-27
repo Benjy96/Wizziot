@@ -14,8 +14,6 @@ public class Singularity : AreaAbility {
     private Vector3 startPos;
     private bool raiseObject;
 
-    private Rigidbody rb;
-
     private void Awake()
     {
         neighbourRbs = new List<Rigidbody>();
