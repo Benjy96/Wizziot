@@ -3,10 +3,11 @@ using UnityEngine;
 
 public class EnemySpawnPoint : MonoBehaviour
 {
+    //TODO: Make the spawns "generically" allocated? i.e. a grid? - currently random
 
     public List<Enemy> enemiesSpawned;  //Hold reference to all enemies spawned at this point
 
-    public GameObject enemyPrefab;  //TODO: Make list for spawning multiple types   //TODO: Research factory design pattern ?
+    public GameObject enemyPrefab; 
     public int spawnAmount;
     public float spawnRadius;
     public float spawnDelay;

@@ -13,15 +13,17 @@ public class Enemy : Targetable {
 
     protected EnemySpawnPoint home;
 
+    public GameObject deathEffect;
+
     public Transform target;
     
     //Components
-    public EmotionChip emotionChip;
-    public NavMeshAgent navAgent;
-    public AbilityComponent abilityComponent;
-    public Rigidbody rBody;
-    public EntityStats stats;
-    public NeighbourhoodTracker neighbourhoodTracker;
+    [HideInInspector] public EmotionChip emotionChip;
+    [HideInInspector] public NavMeshAgent navAgent;
+    [HideInInspector] public AbilityComponent abilityComponent;
+    [HideInInspector] public Rigidbody rBody;
+    [HideInInspector] public EntityStats stats;
+    [HideInInspector] public NeighbourhoodTracker neighbourhoodTracker;
 
     //Properties
     public EnemySpawnPoint Spawn
@@ -75,11 +77,22 @@ public class Enemy : Targetable {
         if (player == null) player = PlayerManager.Instance.player;
 
         SetStats();
+        stats.onDeath += Die;
     }
 
     protected void FixedUpdate()
     {
         emotionChip.Execute(this);
+    }
+
+    private void Die()
+    {
+        abilityComponent.enabled = false;
+        emotionChip.enabled = false;
+        navAgent.destination = transform.position;
+        GameObject deathFx = Instantiate(deathEffect, transform.position, Quaternion.identity);
+        Destroy(deathFx, 2f);
+        Destroy(gameObject, .25f);
     }
 
     // ----- COMPONENTs & SET-UP ----- //

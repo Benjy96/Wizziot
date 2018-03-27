@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerStats : EntityStats {
 
-    public override void Die()
+    public override void RemoveTargetFromSelf()
     {
-        base.Die();
+        base.RemoveTargetFromSelf();
     }
 }

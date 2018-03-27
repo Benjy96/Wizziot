@@ -105,7 +105,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4212554981147484}
   - component: {fileID: 114667065209656976}
-  - component: {fileID: 114164407006037506}
+  - component: {fileID: 114581727265643428}
   - component: {fileID: 114792908412176066}
   - component: {fileID: 114653254589682158}
   - component: {fileID: 114072976499328846}
@@ -327,26 +327,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b05ea246a524de34abbdbeaa565e3011, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114164407006037506
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1967363257081838}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c8b346434a4ab44185ef4a8a79d70c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  maxStamina: 100
-  sqrMaxTargetDistance: 225
-  speed: 0
-  turnSpeed: 0
-  instantAbilityCost: 10
-  areaAbilityCost: 30
-  defenseAbilityCost: 40
-  defaultModifierValue: 1
 --- !u!114 &114220245209035952
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -360,6 +340,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   speed: 15
+--- !u!114 &114581727265643428
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1967363257081838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9fab411d5bac80408e8e2ba6118653e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  maxStamina: 100
+  sqrMaxTargetDistance: 225
+  speed: 10
+  turnSpeed: 100
+  instantAbilityCost: 10
+  areaAbilityCost: 30
+  defenseAbilityCost: 40
+  defaultModifierValue: 1
 --- !u!114 &114653254589682158
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -395,6 +395,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetType: 2
+  deathEffect: {fileID: 1000011128802252, guid: 96730f8640590934eacb6f860058e7f9,
+    type: 2}
   target: {fileID: 0}
   emotionChip: {fileID: 0}
   navAgent: {fileID: 0}

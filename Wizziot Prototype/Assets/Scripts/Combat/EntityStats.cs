@@ -31,7 +31,7 @@ public class EntityStats : MonoBehaviour {
 
     private void Awake()
     {
-        onDeath += Die;
+        onDeath += RemoveTargetFromSelf;
 
         CurrentHealth = maxHealth;
         CurrentStamina = maxStamina;
@@ -70,17 +70,13 @@ public class EntityStats : MonoBehaviour {
         if(CurrentStamina != maxStamina) CurrentStamina = Mathf.Lerp(CurrentStamina, maxStamina, Time.deltaTime / statModifiers[Stats.Fitness].StatValue);
     }
 
-    public virtual void Die()
+    public virtual void RemoveTargetFromSelf()
     {
         Projector playerTarget = GetComponentInChildren<Projector>();
         if(playerTarget != null)
         {
             if(PlayerManager.Instance.onTargetDestroyed != null) PlayerManager.Instance.onTargetDestroyed.Invoke();
         }
-        gameObject.SetActive(false);
-
-        //TODO: End game / respawn - use game manager
-        //TODO: Object pool AI
     }
 
     //TODO: Use difficulty setting to modify
