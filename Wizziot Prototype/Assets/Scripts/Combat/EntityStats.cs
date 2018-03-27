@@ -181,9 +181,9 @@ public class EntityStats : MonoBehaviour {
     {
         float damage = 0f;
         //Damage dependent upon NPC ability cost, health, and then damage modifier. Increase in health/Decreases in cost will increase the damage the NPC can do.
-        if (GameMetaInfo._Is_Instant_Ability(ability)) damage = maxHealth - instantAbilityCost;
-        else if (GameMetaInfo._Is_AoE_Ability(ability)) damage = maxHealth - areaAbilityCost;
-        else if (GameMetaInfo._Is_Defense_Ability(ability)) damage = maxHealth - defenseAbilityCost;
+        if (GameMetaInfo._Is_Instant_Ability(ability)) damage = instantAbilityCost;
+        else if (GameMetaInfo._Is_AoE_Ability(ability)) damage = areaAbilityCost;
+        else if (GameMetaInfo._Is_Defense_Ability(ability)) damage = defenseAbilityCost;
         damage /= 2;
 
         damage *= statModifiers[Stats.DamageModifier].StatValue;

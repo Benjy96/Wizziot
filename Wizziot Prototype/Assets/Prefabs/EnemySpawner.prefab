@@ -54,7 +54,7 @@ MonoBehaviour:
   enemiesSpawned: []
   enemyPrefab: {fileID: 1967363257081838, guid: ffda47dcd015b5d42822cee50b149c07,
     type: 2}
-  spawnAmount: 1
+  spawnAmount: 2
   spawnRadius: 20
   spawnDelay: 0.1
   spawnAreaWaypoints: []

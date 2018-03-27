@@ -4,8 +4,6 @@
 [RequireComponent(typeof(NeighbourhoodTracker))]
 public class AttackState : State {
 
-    private PlayerStats playerStats;
-
     protected override void EnterState(Enemy owner, GameObject lastInfluence)
     {
         base.EnterState(owner, lastInfluence);
@@ -22,7 +20,6 @@ public class AttackState : State {
         if(newTarget != target)
         {
             target = newTarget;
-            playerStats = target.GetComponent<PlayerStats>();
         }
 
         if (target != null)
