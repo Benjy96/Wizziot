@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 
-public class InventoryUI : MonoBehaviour {
+public class InventoryUIManager : MonoBehaviour {
 
     public Transform itemsParent;
+    public TMPro.TextMeshProUGUI coinCounterText;
 
     Inventory inventory;
     InventorySlot[] slots;
@@ -12,7 +13,10 @@ public class InventoryUI : MonoBehaviour {
         inventory = Inventory.Instance;
         slots = itemsParent.GetComponentsInChildren<InventorySlot>();
 
+        UpdateCoins();
+
         inventory.onItemChanged += UpdateUI;
+        inventory.onCoinPickup += UpdateCoins;
 	}
 
     void UpdateUI()
@@ -28,5 +32,10 @@ public class InventoryUI : MonoBehaviour {
                 slots[i].ClearSlot();
             }
         }
+    }
+
+    void UpdateCoins()
+    {
+        coinCounterText.text = inventory.coins.ToString();
     }
 }

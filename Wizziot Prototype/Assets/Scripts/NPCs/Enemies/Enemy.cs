@@ -89,6 +89,7 @@ public class Enemy : Targetable {
     {
         abilityComponent.enabled = false;
         emotionChip.enabled = false;
+        navAgent.velocity = new Vector3(0f, 0f, 0f);
         navAgent.destination = transform.position;
         GameObject deathFx = Instantiate(deathEffect, transform.position, Quaternion.identity);
         Destroy(deathFx, 2f);

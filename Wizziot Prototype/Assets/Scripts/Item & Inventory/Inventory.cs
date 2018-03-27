@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
 public class Inventory : MonoBehaviour {
 
     private static Inventory _Inventory;
     public static Inventory Instance { get { return _Inventory; } }
 
     public Action onItemChanged;
+    public Action onCoinPickup;
 
     public int space = 20;
 
-    [SerializeField] public List<Item> items = new List<Item>();
+    public List<Item> items = new List<Item>();
     public int coins;
 
     private void Awake()
@@ -72,23 +72,30 @@ public class Inventory : MonoBehaviour {
         gameObject.SetActive(true);
     }
 
+    //Add coins if the player will not go over the coin limit determined in GameMetaInfo
     public void AddCoins(int count)
     {
         if(count > 0)
         {
-            coins += count;
+            if ((coins + count) < GameMetaInfo._MAX_COINS)
+            {
+                coins += count;
+                if (onCoinPickup != null) onCoinPickup.Invoke();
+            }
         }
         else
         {
             RemoveCoins(count);
         }
+        
     }
 
     public void RemoveCoins(int count)
     {
-        if(count < 0)
+        if(count < 0 && (coins - count) >= 0)
         {
             coins -= count;
+            if (onCoinPickup != null) onCoinPickup.Invoke();
         }
         else
         {

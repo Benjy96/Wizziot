@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class GameMetaInfo {
 
+    // ----- Save & State Data ----- //
     public static string _SAVE_FILE_ENCRYPTED = Path.Combine(Application.streamingAssetsPath, "wizziot.dat");
     public static string _SAVE_FILE_JSON = Path.Combine(Application.streamingAssetsPath, "wizziot.json");
 
@@ -23,6 +24,12 @@ public class GameMetaInfo {
     //Default key bindings ( <Key, User's key binding i.e. ability used> )
     public static Dictionary<KeyCode, Action> allKeybinds = new Dictionary<KeyCode, Action>();
 
+    // ----- Gameplay ----- //
+    public static Difficulty _GAME_DIFFICULTY = Difficulty.Normal;
+
+    public static int _MAX_COINS = 100000000;   //to fit UI
+
+    // ----- Game World ----- //
     //Layer Contracts
     public static string _LAYER_AFFECTABLE_OBJECT { get { return "Object"; } }
     public static string _LAYER_IMMOVABLE_OBJECT { get { return "Environment"; } }
@@ -75,9 +82,6 @@ public class GameMetaInfo {
             return false;
         }
     }
-
-    //Difficulty
-    public static Difficulty _GAME_DIFFICULTY = Difficulty.Normal;
 }
 
 public enum Difficulty
