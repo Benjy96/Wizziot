@@ -73,12 +73,14 @@ public class NeighbourhoodTracker : MonoBehaviour
         toTrack = TrackType.Enemies;
     }
 
-    //Add enemy to neighbourhood on trigger collision
+    //Add to neighbourhood on trigger collision
     private void OnTriggerEnter(Collider other)
     {
+        string[] objName = other.name.Split('(');
         //Track interest
-        if (secondaryNeighbours.ContainsKey(other.name))
+        if (secondaryNeighbours.ContainsKey(objName[0]))
         {
+            Debug.Log("tracking " + objName[0]);
             secondaryNeighbours[other.name] = other.gameObject;
         }
 
@@ -114,8 +116,10 @@ public class NeighbourhoodTracker : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        string[] objName = other.name.Split('(');
+
         //Remove interest
-        if (secondaryNeighbours.ContainsKey(other.name))
+        if (secondaryNeighbours.ContainsKey(objName[0]))
         {
             if (secondaryNeighbours[other.name] != null)
             {
@@ -152,6 +156,8 @@ public class NeighbourhoodTracker : MonoBehaviour
     public void RegisterInterest(GameObject gameObject)
     {
         if (gameObject == null) return;
+
+        Debug.Log("registering " + gameObject.name);
 
         if (!secondaryNeighbours.ContainsKey(gameObject.name))
         {

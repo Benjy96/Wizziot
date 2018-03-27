@@ -25,7 +25,7 @@ public class SuicideState : State {
         if (reachedFinalDestination)
         {
             ExitState();
-            Destroy(owner.gameObject);
+            if(owner.stats.onDeath != null) owner.stats.onDeath.Invoke();
         }
     }
 

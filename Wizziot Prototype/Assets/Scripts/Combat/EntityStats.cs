@@ -94,6 +94,16 @@ public class EntityStats : MonoBehaviour {
     }
 
     /// <summary>
+    /// Interface method for external agents to heal "this"
+    /// </summary>
+    /// <param name="amount"></param>
+    public void Heal(float amount)
+    {
+        amount *= statModifiers[Stats.Fitness].StatValue;
+        CurrentHealth += (int)amount;
+    }
+
+    /// <summary>
     /// Public interface method for external agents to damage "this"
     /// </summary>
     /// <param name="amount">How powerful the attack is. External agent provides this value</param>

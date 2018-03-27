@@ -146,26 +146,23 @@ public class AbilityComponent : MonoBehaviour {
                         break;
 
                     case Abilities.Vortex:
-                        AoE(vortexPrefab, ref AoEDeployed, ref AoEUsed);
+                        AoE(vortexPrefab, damageToDo);
                         break;
 
                     case Abilities.Singularity:
-                        AoE(singularityPrefab, ref AoEDeployed, ref AoEUsed);
+                        AoE(singularityPrefab, damageToDo);
+                        break;
+
+                    case Abilities.Heal:
+                        Heal(damageToDo);
                         break;
                 }
-                //Apply AoE damage to targets within range
-                if (GameMetaInfo._Is_AoE_Ability(SelectedAbility) && AoEDeployed)
-                {
-                    globalCooldownFinishTime = Time.time + globalCooldown;
-                    ApplyAoEEffects(damageToDo, AoEUsed);
-                    return true;
-                }
-                else
+                if(GameMetaInfo._Is_Instant_Ability(SelectedAbility))
                 {
                     currentTargetStats.Damage(damageToDo);  //Damage the target
-                    globalCooldownFinishTime = Time.time + globalCooldown;  //Handle global cooldown
-                    return true;
                 }
+                globalCooldownFinishTime = Time.time + globalCooldown;  //Handle global cooldown
+                return true;
             }
             else
             {
@@ -224,13 +221,14 @@ public class AbilityComponent : MonoBehaviour {
         }
     }
 
-    private void AoE(GameObject spellPrefab, ref bool AoEDeployed, ref AreaAbility deployed)
+    private void AoE(GameObject spellPrefab, float damage)
     {
+        AreaAbility deployed = null;
+
         if (aiming == false)
         {
             aiming = true;
             instantiatedAimingDisc = Instantiate(aimingDisc);
-            AoEDeployed = false;
         }
         else
         {
@@ -241,7 +239,8 @@ public class AbilityComponent : MonoBehaviour {
 
             Destroy(instantiatedAimingDisc.gameObject);
             aiming = false;
-            AoEDeployed = true;
+
+            ApplyAoEEffects(damage, deployed);
         }
     }
 
@@ -262,6 +261,14 @@ public class AbilityComponent : MonoBehaviour {
 
             EntityStats eS = c.GetComponent<EntityStats>();
             if (eS != null) StartCoroutine(eS.DoTDamage(damageToDo, AoEUsed.duration));
+        }
+    }
+
+    private void Heal(float amount)
+    {
+        if(currentTarget != null)
+        {
+            currentTargetStats.Heal(amount);
         }
     }
     #endregion

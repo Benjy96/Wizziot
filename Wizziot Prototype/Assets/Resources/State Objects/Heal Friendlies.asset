@@ -9,10 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 06217d2870fb76a4da993594e972090b, type: 3}
-  m_Name: AttackState
+  m_Name: Heal Friendlies
   m_EditorClassIdentifier: 
-  interestedIn: {fileID: 1458570314575524, guid: 0e6afb90b2ea6fb4391ecd6b4a9f34a2,
+  interestedIn: {fileID: 1967363257081838, guid: ffda47dcd015b5d42822cee50b149c07,
     type: 2}
   secondaryInterest: {fileID: 0}
-  hostileToInterests: 1
+  hostileToInterests: 0
   influencer: {fileID: 0}

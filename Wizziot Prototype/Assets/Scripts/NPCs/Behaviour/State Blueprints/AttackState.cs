@@ -9,6 +9,10 @@ public class AttackState : State {
         base.EnterState(owner, lastInfluence);
     }
 
+    /// <summary>
+    /// Select a random ability and attempt to use on the selected target. Follows target.
+    /// Otherwise, move about in a circle and attepmt to calm down.
+    /// </summary>
     public override void Execute()
     {
         int randomIndex = Random.Range(0, abilComponent.unlockedAbilities.Count);
@@ -17,6 +21,7 @@ public class AttackState : State {
         abilComponent.SelectAbility(ability);
 
         Transform newTarget = SelectTarget();
+        if(newTarget != null) Debug.Log(owner.name + "'s target is: " + newTarget.name);
         if(newTarget != target)
         {
             target = newTarget;
@@ -28,23 +33,38 @@ public class AttackState : State {
             {
                 if ((target.position - owner.Position).sqrMagnitude < owner.stats.sqrMaxTargetDistance)
                 {
-                    abilComponent.UseSelected(target);
+                    //If not a defense ability, use on the target
+                    if(!GameMetaInfo._Is_Defense_Ability(abilComponent.SelectedAbility)) abilComponent.UseSelected(target);
                 }
             }
+            else
+            {
+                abilComponent.SelectAbility(Abilities.Heal);
+                abilComponent.UseSelected(target);
+            }
             owner.FaceTarget(target.position);
+            owner.MoveTo(target.position);
         }
-    }
-
-    public override void ExitState()
-    {
-        base.ExitState();
+        else
+        {
+            owner.MoveTo(new Vector3(owner.Position.x + Mathf.Cos(Time.time) * 2f, 0f, owner.Position.z + Mathf.Sin(Time.time) * 2f));
+            //owner.Influence(Emotion.Calm, .2f * Time.deltaTime);
+        }
     }
 
     private bool HostileToCurrentTarget()
     {
         if (target == null) return false;
 
-        if (target.name == interestedIn.name && !hostileToInterests) return false;
+        if (interestedIn != null && (target.name == interestedIn.name && hostileToInterests))
+        {
+            return true;
+        }
+
+        if (secondaryInterest != null && (target.name == secondaryInterest.name && hostileToInterests))
+        {
+            return true;
+        }
         
         if (target.tag.Equals(GameMetaInfo._TAG_SHOOTABLE_BY_NPC))
         {
