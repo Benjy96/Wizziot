@@ -17,13 +17,15 @@ public class InventoryUIManager : MonoBehaviour {
 
         UpdateCoins();
 
+        //Subscribe to inventory change events
         inventory.onItemChanged += UpdateUI;
         inventory.onCoinPickup += UpdateCoins;
 
+        //Update UI on game file load
         GameManager.Instance.onGameLoaded += UpdateUI;
-        GameManager.Instance.onGameLoaded += UpdateCoins;
+        GameManager.Instance.onGameLoaded += UpdateCoins; 
 
-        PlayerManager.Instance.playerControls.OnEscapeKey += Close;
+        PlayerManager.Instance.playerControls.OnEscapeKey += Close; //Close UI on escape press
     }
 
     void UpdateUI()
