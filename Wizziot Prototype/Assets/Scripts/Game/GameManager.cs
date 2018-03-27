@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public Action onGameLoaded;
+
     //Singleton & accessor
     private static GameManager _GameManager = null;
     public static GameManager Instance { get { return _GameManager; } }

@@ -59,6 +59,8 @@ public class Loader : MonoBehaviour
         data.Load(GameMetaInfo._STATE_DATA[(int)StateData.MissionsActive], ref MissionManager.Instance.activeMissions);
 
         if (data.loadedItems != GameMetaInfo._STATE_DATA.Count) throw new System.Exception("Not all state data loaded");
+
+        if(GameManager.Instance.onGameLoaded != null) GameManager.Instance.onGameLoaded.Invoke();
     }
 }
 

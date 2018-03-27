@@ -17,7 +17,10 @@ public class InventoryUIManager : MonoBehaviour {
 
         inventory.onItemChanged += UpdateUI;
         inventory.onCoinPickup += UpdateCoins;
-	}
+
+        GameManager.Instance.onGameLoaded += UpdateUI;
+        GameManager.Instance.onGameLoaded += UpdateCoins;
+    }
 
     void UpdateUI()
     {
