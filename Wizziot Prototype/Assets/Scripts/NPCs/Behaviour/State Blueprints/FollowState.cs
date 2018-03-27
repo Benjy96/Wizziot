@@ -51,7 +51,7 @@ public class FollowState : State {
     {
         //Get random point, based upon spawner waypoints
         Vector3 pointOrigin = owner.Spawn.spawnAreaWaypoints[Random.Range(0, owner.Spawn.spawnAreaWaypoints.Count)];
-        Vector3 patrolPos = new Vector3(pointOrigin.x + Mathf.Cos(Random.value), 0f, pointOrigin.z + Mathf.Sin(Random.value));
+        Vector3 patrolPos = new Vector3(pointOrigin.x, 0f, pointOrigin.z);
 
         //Prevent waypoint at current location being set as new target
         if (patrolPos == owner.Position)

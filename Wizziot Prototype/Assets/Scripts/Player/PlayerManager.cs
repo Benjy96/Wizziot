@@ -94,8 +94,16 @@ public class PlayerManager : MonoBehaviour {
     {
         item.transform.parent = player.transform;
         item.transform.position = new Vector3(player.transform.position.x,
-            (player.transform.position.y + player.transform.localScale.y),
+            (player.transform.position.y + player.transform.localScale.y / 2),
             player.transform.position.z);
+
+        //Disable everything except component visibility
+        //MonoBehaviour[] itemComponents = item.GetComponents<MonoBehaviour>();
+        //foreach (MonoBehaviour component in itemComponents)
+        //{
+        //    if (component.GetType() == typeof(Transform)) continue;
+        //    component.enabled = false;
+        //}
     }
 
     void EquipBody(Item item)

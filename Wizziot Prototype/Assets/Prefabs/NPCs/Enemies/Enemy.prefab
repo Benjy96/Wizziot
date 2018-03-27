@@ -354,7 +354,7 @@ MonoBehaviour:
   maxHealth: 100
   maxStamina: 100
   sqrMaxTargetDistance: 225
-  speed: 10
+  speed: 5
   turnSpeed: 100
   instantAbilityCost: 10
   areaAbilityCost: 30
