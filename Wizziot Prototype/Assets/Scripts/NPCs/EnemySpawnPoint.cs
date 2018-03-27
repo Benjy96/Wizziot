@@ -47,13 +47,18 @@ public class EnemySpawnPoint : MonoBehaviour
             safetyCounter++;
             if (safetyCounter >= spawnRadius * spawnRadius) break;
 
-            Vector3 randomWaypoint = new Vector3(Random.Range(-spawnRadius, spawnRadius), 0f, Random.Range(-spawnRadius, spawnRadius));
+            Vector3 randomWaypoint = new Vector3(Random.Range(-spawnRadius, spawnRadius),
+                0f,
+                Random.Range(-spawnRadius, spawnRadius));
+
+            randomWaypoint = transform.position - randomWaypoint;   //convert to local co-ords about spawner
 
             //Get Colliders that aren't marked as the "Ground" (detect obstacles)
             Collider[] colliders = Physics.OverlapSphere(randomWaypoint, enemyPrefab.transform.localScale.sqrMagnitude, LayerMask.NameToLayer(GameMetaInfo._LAYER_GROUND_WALKABLE));
 
             if (colliders.Length == 0 && !spawnAreaWaypoints.Contains(randomWaypoint))
             {
+                Debug.Log("New spawn waypoint: " + randomWaypoint);
                 spawnAreaWaypoints.Add(randomWaypoint);
                 availableSpawnPoints.Add(randomWaypoint);
             }
@@ -92,6 +97,10 @@ public class EnemySpawnPoint : MonoBehaviour
     //show waypoint
     private void OnDrawGizmos()
     {
+        //Spawner radius
+        Gizmos.DrawWireCube(transform.position, new Vector3(spawnRadius * 2, 1f, spawnRadius * 2));
+
+        //Spawn points
         if (spawnAreaWaypoints != null)
         {
             foreach (Vector3 wp in spawnAreaWaypoints)
