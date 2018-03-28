@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour {
         GameMetaInfo.allKeybinds.Add(KeyCode.Alpha2, new Action(() => InstantAttack(Abilities.Confuse, target.transform)));
         GameMetaInfo.allKeybinds.Add(KeyCode.Alpha3, new Action(() => abilityComponent.PlayerUseAoE(Abilities.Vortex)));
         GameMetaInfo.allKeybinds.Add(KeyCode.Alpha4, new Action(() => abilityComponent.PlayerUseAoE(Abilities.Singularity)));
-        GameMetaInfo.allKeybinds.Add(KeyCode.Alpha5, new Action(() => InstantAttack(Abilities.Heal, target.transform)));
+        GameMetaInfo.allKeybinds.Add(KeyCode.Alpha5, new Action(() => InstantAttack(Abilities.Heal, target)));
         //General
         GameMetaInfo.allKeybinds.Add(KeyCode.F, Interact);
         GameMetaInfo.allKeybinds.Add(KeyCode.Escape, new Action(() => TriggerEscapeAction()));
@@ -226,7 +226,7 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    private void InstantAttack(Abilities abil, Transform target = null)
+    private void InstantAttack(Abilities abil, Targetable target = null)
     {
         if (target == null || GameMetaInfo._Is_Defense_Ability(abil))
         {
@@ -234,7 +234,7 @@ public class PlayerController : MonoBehaviour {
         }
         else if(target.GetComponent<Targetable>().targetType == TargetType.Enemy || target.tag.Equals(GameMetaInfo._TAG_SHOOTABLE_BY_PLAYER))
         {
-            abilityComponent.PlayerUseInstant(abil, target);
+            abilityComponent.PlayerUseInstant(abil, target.transform);
         }
     }
 }

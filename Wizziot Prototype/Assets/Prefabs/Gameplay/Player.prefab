@@ -259,7 +259,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SelectedAbility: 0
-  unlockedAbilities: 32000000330000006400000065000000
+  unlockedAbilities: 3200000033000000640000006500000096000000
   globalCooldown: 1
   aimingDisc: {fileID: 4692180556801494, guid: 44e75b50b1e131e49b4a6ff407a6be7a, type: 2}
   zapSource: {fileID: 1677534009832248}
@@ -270,6 +270,7 @@ MonoBehaviour:
   singularityPrefab: {fileID: 1134084517704520, guid: 217668003b71cfa4e9928e20f2b247f5,
     type: 2}
   healPrefab: {fileID: 100002, guid: 847f669bc75db4de8be28dc6dc55874d, type: 2}
+  additionalHealCooldown: 0
 --- !u!114 &114232869456884162
 MonoBehaviour:
   m_ObjectHideFlags: 1

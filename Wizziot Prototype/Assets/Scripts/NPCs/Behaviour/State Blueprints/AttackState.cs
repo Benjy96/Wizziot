@@ -23,19 +23,24 @@ public class AttackState : State {
 
         if (target != null)
         {
+            //if target in range
             if((target.position - owner.Position).sqrMagnitude < owner.stats.sqrMaxTargetDistance)
             {
+                //if hostile target
                 if (HostileToCurrentTarget())
                 {
+                    //if offense ability, attack
                     if (!GameMetaInfo._Is_Defense_Ability(abilComponent.SelectedAbility))
                     {
                         abilComponent.UseSelected(target);
                     }
+                    //if defense ability, use on self if hostile target
                     else
                     {
                         abilComponent.UseSelected(owner.transform);
                     }
                 }
+                //if target not hostile, but ability is a defense ability, use it on them
                 else if(GameMetaInfo._Is_Defense_Ability(abilComponent.SelectedAbility))
                 {
                     abilComponent.UseSelected(target);
