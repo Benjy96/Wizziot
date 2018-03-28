@@ -6,12 +6,13 @@ public class InventoryUIManager : MonoBehaviour {
     public TMPro.TextMeshProUGUI coinCounterText;
 
     public GameObject inventoryUI;
+    public bool InventoryUIActive { get { return inventoryUI.activeSelf; } }
 
     Inventory inventory;
     InventorySlot[] slots;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         inventory = Inventory.Instance;
         slots = itemsParent.GetComponentsInChildren<InventorySlot>();
 

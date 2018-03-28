@@ -119,6 +119,12 @@ GameObject:
   m_PrefabParentObject: {fileID: 1458570314575524, guid: 0e6afb90b2ea6fb4391ecd6b4a9f34a2,
     type: 2}
   m_PrefabInternal: {fileID: 198408790}
+--- !u!114 &25667308 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114232869456884162, guid: 0e6afb90b2ea6fb4391ecd6b4a9f34a2,
+    type: 2}
+  m_PrefabInternal: {fileID: 198408790}
+  m_Script: {fileID: 11500000, guid: e92ec31c08157314eacdd8d159adb604, type: 3}
 --- !u!1001 &43591011
 Prefab:
   m_ObjectHideFlags: 0
@@ -2180,6 +2186,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1596915822 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114094886572754808, guid: 1ec208e9e5307db4ba7d0bc2a98a1d08,
+    type: 2}
+  m_PrefabInternal: {fileID: 60654791}
+  m_Script: {fileID: 11500000, guid: 86863b5f4c6973a4489b31e623632fcf, type: 3}
 --- !u!1001 &1604202247
 Prefab:
   m_ObjectHideFlags: 0
@@ -2485,6 +2497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99176ce022d16054393ab0d3fb6f76d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventoryUI: {fileID: 1596915822}
   space: 16
   items: []
   coins: 0
@@ -2516,7 +2529,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 25667299}
-  playerControls: {fileID: 0}
+  playerControls: {fileID: 25667308}
   equipped: []
 --- !u!114 &2099303817
 MonoBehaviour:

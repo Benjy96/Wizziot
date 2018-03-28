@@ -10,6 +10,8 @@ public class Inventory : MonoBehaviour {
     public Action onItemChanged;
     public Action onCoinPickup;
 
+    public InventoryUIManager inventoryUI;
+
     public int space = 20;
 
     public List<Item> items = new List<Item>();
