@@ -46,17 +46,14 @@ public class HideState : State {
             //If it's been too long and we aren't hidden, change hiding spot
             if ((Time.deltaTime > checkHiddenInterval))
             {
-                hideSpot = CalculateHideSpot(GetNewHideObstacle(), chaser);
-                if (PointHiddenFromChaser(hideSpot))
-                {
-                    owner.MoveTo(hideSpot);
-                }
+                hideObstacle = GetNewHideObstacle();
+                
             }
-            //Else (update) hide (position) behind current object
-            else
+            //Calculate & move to a hide spot
+            hideSpot = CalculateHideSpot(GetNewHideObstacle(), chaser);
+            if (PointHiddenFromChaser(hideSpot))
             {
-                hideSpot = CalculateHideSpot(hideObstacle, chaser);
-                if(PointHiddenFromChaser(hideSpot)) owner.MoveTo(hideSpot);
+                owner.MoveTo(hideSpot);
             }
         }
         else
