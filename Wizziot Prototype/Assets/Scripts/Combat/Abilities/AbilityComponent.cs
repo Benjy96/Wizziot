@@ -50,7 +50,7 @@ public class AbilityComponent : MonoBehaviour {
 
     [Header("Heal")]
     public GameObject healPrefab;
-    [Tooltip("Adds onto an existing 5s CD")] public float healCD;
+    [Tooltip("Adds onto an existing 5s CD")] public float additionalHealCooldown;
     private float healFinishTime;
     private float healFXTime;
 
@@ -63,7 +63,7 @@ public class AbilityComponent : MonoBehaviour {
             zapParticles = zapSource.GetComponent<ParticleSystem>();
         }
 
-        if (healPrefab != null) healCD += healPrefab.GetComponent<ParticleSystem>().main.duration; healFXTime = healPrefab.GetComponent<ParticleSystem>().main.duration;
+        if (healPrefab != null) additionalHealCooldown += healPrefab.GetComponent<ParticleSystem>().main.duration; healFXTime = healPrefab.GetComponent<ParticleSystem>().main.duration;
     }
 
     //Kebyind & UI button accesses this from controller (Start @ 1 to correspond to player UI)
@@ -278,7 +278,7 @@ public class AbilityComponent : MonoBehaviour {
     {
         if(currentTarget != null && Time.time > healFinishTime)
         {
-            healFinishTime = Time.time + healCD;
+            healFinishTime = Time.time + additionalHealCooldown;
             GameObject fx = Instantiate(healPrefab, currentTarget, false);
 
             yield return new WaitForSeconds(healFXTime);

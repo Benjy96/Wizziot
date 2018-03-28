@@ -23,19 +23,23 @@ public class AttackState : State {
 
         if (target != null)
         {
-            if (HostileToCurrentTarget())
+            if((target.position - owner.Position).sqrMagnitude < owner.stats.sqrMaxTargetDistance)
             {
-                if ((target.position - owner.Position).sqrMagnitude < owner.stats.sqrMaxTargetDistance)
+                if (HostileToCurrentTarget())
                 {
-                    //If not a defense ability, use on the target
-                    if (!GameMetaInfo._Is_Defense_Ability(abilComponent.SelectedAbility)) abilComponent.UseSelected(target);
-                    else abilComponent.UseSelected(owner.transform);
+                    if (!GameMetaInfo._Is_Defense_Ability(abilComponent.SelectedAbility))
+                    {
+                        abilComponent.UseSelected(target);
+                    }
+                    else
+                    {
+                        abilComponent.UseSelected(owner.transform);
+                    }
                 }
-            }
-            else
-            {
-                abilComponent.SelectAbility(Abilities.Heal);
-                abilComponent.UseSelected(target);
+                else if(GameMetaInfo._Is_Defense_Ability(abilComponent.SelectedAbility))
+                {
+                    abilComponent.UseSelected(target);
+                }
             }
             owner.MoveTo(target.position);
         }
