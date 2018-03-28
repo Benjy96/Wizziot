@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 23952319093175682}
   - component: {fileID: 114118271763390230}
   m_Layer: 10
-  m_Name: Enemy
+  m_Name: Coward
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -156,7 +156,7 @@ Transform:
   m_GameObject: {fileID: 1967363257081838}
   m_LocalRotation: {x: -0, y: -0.81889063, z: -0, w: 0.5739497}
   m_LocalPosition: {x: 5.97, y: 0.5, z: -3.58}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 4108263866267530}
   - {fileID: 4701446535584276}
@@ -371,7 +371,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dee817f5e39bf184180df4a1339914af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  disposition: 0
+  disposition: 2
   reluctance: 0.5
   emotionalStability: 0.5
   trust: 1

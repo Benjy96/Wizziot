@@ -42,13 +42,13 @@ public class EmotionChip : MonoBehaviour {
     /// With stability of 0.5: Reluctance == .1: Time to revert to disposition (from 0) == 11s || Reluctance == .9: Time to revert to disposition (from 0) == 28s
     /// IS A WEIGHT.
     /// </summary>
-    [Range(0.1f, 0.9f)] public float reluctance = 0.5f;
+    [Tooltip("Higher means lerps toward disposition more slowly")][Range(0.1f, 0.9f)] public float reluctance = 0.5f;
 
     /// <summary>
     /// How easy it is for an enemy is to change their current emotional state. Higher value means it takes longer to change emotion.
     /// NOT A WEIGHT.
     /// </summary>
-    [Range(0.1f, 0.9f)] public float emotionalStability = 0.5f;
+    [Tooltip("Higher means longer to change state")][Range(0.1f, 0.9f)] public float emotionalStability = 0.5f;
 
     //The agent's emotional state(s)
     public Dictionary<Emotion, float> agentEmotions = new Dictionary<Emotion, float>();

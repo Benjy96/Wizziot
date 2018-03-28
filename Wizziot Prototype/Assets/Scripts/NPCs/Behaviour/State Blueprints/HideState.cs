@@ -11,13 +11,14 @@ public class HideState : State {
 
     private Transform hideObstacle;
     private float checkHiddenInterval;
+    private float checkHiddenIncrements = 5f;
 
     protected override void EnterState(Enemy owner, GameObject lastInfluence)
     {
         base.EnterState(owner, lastInfluence);
 
         neighbourhoodTracker.TrackObstacles();
-        checkHiddenInterval = Time.time + 10f;
+        checkHiddenInterval = Time.time + checkHiddenIncrements;
     }
 
     /**
@@ -43,14 +44,15 @@ public class HideState : State {
 
             if (hideObstacle == null) hideObstacle = GetNewHideObstacle();
 
-            //If it's been too long and we aren't hidden, change hiding spot
+            //If it's been too long and we aren't able to hide, change hiding spot or enrage (Check can hide)
             if ((Time.time > checkHiddenInterval))
             {
+                //If no obstacles, enrage. Get new obstacle. If obstacle already selected, enrage. Else continue.
                 if (VerifiedNoObstacles()) owner.Enrage();
                 Transform tempObstacle = GetNewHideObstacle();
                 if (tempObstacle == hideObstacle) owner.Enrage();
                 else hideObstacle = tempObstacle;
-                checkHiddenInterval = Time.time + 10f;
+                checkHiddenInterval = Time.time + checkHiddenIncrements;
             }
 
             //Calculate & move to a hide spot

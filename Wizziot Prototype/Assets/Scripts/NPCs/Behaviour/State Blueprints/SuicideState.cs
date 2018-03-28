@@ -24,8 +24,7 @@ public class SuicideState : State {
 
         if (reachedFinalDestination)
         {
-            ExitState();
-            if(owner.stats.onDeath != null) owner.stats.onDeath.Invoke();
+            ExitState();       
         }
     }
 
@@ -35,5 +34,6 @@ public class SuicideState : State {
         {
             e.neighbourhoodTracker.neighbours.Remove(owner);
         }
+        if (owner.stats.onDeath != null) owner.stats.onDeath.Invoke();
     }
 }
