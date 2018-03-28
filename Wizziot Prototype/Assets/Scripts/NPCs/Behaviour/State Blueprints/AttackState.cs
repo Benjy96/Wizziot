@@ -57,14 +57,16 @@ public class AttackState : State {
 
     private bool HostileToCurrentTarget()
     {
+        string targetName = target.name.Split('(')[0];  //Disregard "(Clone)" as part of the name
+
         if (target == null) return false;
 
-        if (interestedIn != null && (target.name == interestedIn.name && hostileToInterests))
+        if (interestedIn != null && (targetName == interestedIn.name && hostileToInterests))
         {
             return true;
         }
 
-        if (secondaryInterest != null && (target.name == secondaryInterest.name && hostileToInterests))
+        if (secondaryInterest != null && (targetName == secondaryInterest.name && hostileToInterests))
         {
             return true;
         }

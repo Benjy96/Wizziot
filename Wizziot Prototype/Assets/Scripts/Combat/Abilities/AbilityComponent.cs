@@ -63,7 +63,11 @@ public class AbilityComponent : MonoBehaviour {
             zapParticles = zapSource.GetComponent<ParticleSystem>();
         }
 
-        if (healPrefab != null) additionalHealCooldown += healPrefab.GetComponent<ParticleSystem>().main.duration; healFXTime = healPrefab.GetComponent<ParticleSystem>().main.duration;
+        if (healPrefab != null)
+        {
+            additionalHealCooldown += healPrefab.GetComponent<ParticleSystem>().main.duration;
+            healFXTime = healPrefab.GetComponent<ParticleSystem>().main.duration;
+        }
     }
 
     //Kebyind & UI button accesses this from controller (Start @ 1 to correspond to player UI)
@@ -282,6 +286,7 @@ public class AbilityComponent : MonoBehaviour {
             GameObject fx = Instantiate(healPrefab, currentTarget, false);
 
             yield return new WaitForSeconds(healFXTime);
+            Debug.Log("Healing");
             currentTargetStats.Heal(amount);
 
             Destroy(fx);

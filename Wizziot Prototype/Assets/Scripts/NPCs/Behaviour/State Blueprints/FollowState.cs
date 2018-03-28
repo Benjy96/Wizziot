@@ -21,6 +21,7 @@ public class FollowState : State {
         {
             if (Time.time >= patrolResetTime || owner.DestinationReached() || patrolling == false)
             {
+                owner.Influence(Emotion.Calm, .2f * Time.fixedDeltaTime);
                 patrolling = true;
                 MoveToRandomWaypoint();
                 patrolResetTime = Time.time + patrolResetDuration;

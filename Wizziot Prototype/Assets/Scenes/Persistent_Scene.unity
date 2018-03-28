@@ -175,7 +175,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1667744843981164, guid: 6bba16423bada83449bf7c78d2f23384, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6bba16423bada83449bf7c78d2f23384, type: 2}
@@ -443,11 +443,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114205869762454452, guid: 0e6afb90b2ea6fb4391ecd6b4a9f34a2,
-        type: 2}
-      propertyPath: unlockedAbilities.Array.size
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 4253239760578642, guid: 0e6afb90b2ea6fb4391ecd6b4a9f34a2, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -485,11 +480,6 @@ Prefab:
       propertyPath: inventoryUI
       value: 
       objectReference: {fileID: 904664195}
-    - target: {fileID: 114205869762454452, guid: 0e6afb90b2ea6fb4391ecd6b4a9f34a2,
-        type: 2}
-      propertyPath: unlockedAbilities.Array.data[4]
-      value: 150
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0e6afb90b2ea6fb4391ecd6b4a9f34a2, type: 2}
   m_IsPrefabParent: 0
@@ -1671,7 +1661,7 @@ Prefab:
         type: 2}
     - target: {fileID: 1667744843981164, guid: 6bba16423bada83449bf7c78d2f23384, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6bba16423bada83449bf7c78d2f23384, type: 2}
@@ -1947,7 +1937,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1667744843981164, guid: 0449c31b7e3fb3f4eb47d2ea95d89af6, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0449c31b7e3fb3f4eb47d2ea95d89af6, type: 2}

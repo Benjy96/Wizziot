@@ -36,8 +36,8 @@ public class PlayerController : MonoBehaviour {
 
         //TODO: Put all bindings in GameControls.cs
         //Abilities
-        GameMetaInfo.allKeybinds.Add(KeyCode.Alpha1, new Action(() => InstantAttack(Abilities.Zap, target.transform)));
-        GameMetaInfo.allKeybinds.Add(KeyCode.Alpha2, new Action(() => InstantAttack(Abilities.Confuse, target.transform)));
+        GameMetaInfo.allKeybinds.Add(KeyCode.Alpha1, new Action(() => InstantAttack(Abilities.Zap, target)));
+        GameMetaInfo.allKeybinds.Add(KeyCode.Alpha2, new Action(() => InstantAttack(Abilities.Confuse, target)));
         GameMetaInfo.allKeybinds.Add(KeyCode.Alpha3, new Action(() => abilityComponent.PlayerUseAoE(Abilities.Vortex)));
         GameMetaInfo.allKeybinds.Add(KeyCode.Alpha4, new Action(() => abilityComponent.PlayerUseAoE(Abilities.Singularity)));
         GameMetaInfo.allKeybinds.Add(KeyCode.Alpha5, new Action(() => InstantAttack(Abilities.Heal, target)));

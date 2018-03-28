@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interestedIn: {fileID: 1458570314575524, guid: 0e6afb90b2ea6fb4391ecd6b4a9f34a2,
     type: 2}
-  secondaryInterest: {fileID: 1967363257081838, guid: ffda47dcd015b5d42822cee50b149c07,
+  secondaryInterest: {fileID: 1967363257081838, guid: a86761f9d819c4f4b8cfd3c438a6956f,
     type: 2}
   hostileToInterests: 1
   influencer: {fileID: 0}
