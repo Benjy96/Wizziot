@@ -12,6 +12,7 @@ public class GameMetaInfo {
 
     public static List<string> _STATE_DATA = new List<string>()
     {
+        "GameDifficulty",
         "PlayerPosition",
         "PlayerHealth",
         "Equipped",
@@ -99,6 +100,7 @@ public enum Abilities
 
 public enum StateData
 {
+    GameDifficulty,
     PlayerPosition,
     PlayerHealth,
     Equipped,

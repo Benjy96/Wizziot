@@ -45,6 +45,10 @@ public class Loader : MonoBehaviour
 
     private static void LoadData(SaveData data)
     {
+        int difficulty = 0;
+        data.Load(GameMetaInfo._STATE_DATA[(int)StateData.GameDifficulty], ref difficulty);
+        GameMetaInfo._GAME_DIFFICULTY = (Difficulty) difficulty;
+
         Vector3 newPlayerPos = new Vector3();
         data.Load(GameMetaInfo._STATE_DATA[(int)StateData.PlayerPosition], ref newPlayerPos);
         PlayerManager.Instance.player.transform.position = newPlayerPos;

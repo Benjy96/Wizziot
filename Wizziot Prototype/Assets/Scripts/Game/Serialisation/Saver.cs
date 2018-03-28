@@ -48,6 +48,7 @@ public class Saver {
     {
         SaveData save = new SaveData();
 
+        save.Save(GameMetaInfo._STATE_DATA[(int)StateData.GameDifficulty], (int)GameMetaInfo._GAME_DIFFICULTY);
         save.Save(GameMetaInfo._STATE_DATA[(int)StateData.PlayerPosition], PlayerManager.Instance.player.transform.position);
         save.Save(GameMetaInfo._STATE_DATA[(int)StateData.PlayerHealth], PlayerManager.Instance.player.GetComponent<EntityStats>().CurrentHealth);
         save.Save(GameMetaInfo._STATE_DATA[(int)StateData.Inventory], Inventory.Instance.items);
