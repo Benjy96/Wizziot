@@ -198,6 +198,7 @@ public class EmotionChip : MonoBehaviour {
                 {
                     case Emotion.Calm:  //If actor intends to calm the enemy, calm them, but reduce by a factor of their irascibility
                         agentEmotions[intent] += amount / irascibility;
+                        agentEmotions[Emotion.Anger] -= amount / irascibility;
                         break;
 
                     case Emotion.Anger: //If actor intends to anger the enemy, increase the intent by a factor of their irascibility
@@ -214,12 +215,10 @@ public class EmotionChip : MonoBehaviour {
             case Emotion.Fear:
                 switch (intent)
                 {
-                    case Emotion.Calm:  //If actor intends to calm the agent, calm it, but reduce calming effect in relation to the agent's cowardice
-                        agentEmotions[intent] += amount / cowardice;
-                        break;
-
+                    case Emotion.Calm:  //If actor intends to calm/anger the agent, do it, but reduce calming effect in relation to the agent's cowardice
                     case Emotion.Anger: //If actor intends to anger the enemy, anger them, but anger them slowly in relation to cowardice
                         agentEmotions[intent] += amount / cowardice;
+                        agentEmotions[Emotion.Fear] -= amount / cowardice;
                         break;
 
                     case Emotion.Fear:  //If actor intends to scare enemy, scare them by a factor of the intent and cowardice

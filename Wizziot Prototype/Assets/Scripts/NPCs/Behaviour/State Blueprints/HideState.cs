@@ -44,7 +44,7 @@ public class HideState : State {
             if (hideObstacle == null) hideObstacle = GetNewHideObstacle();
 
             //If it's been too long and we aren't hidden, change hiding spot
-            if ((Time.deltaTime > checkHiddenInterval))
+            if ((Time.time > checkHiddenInterval))
             {
                 if (VerifiedNoObstacles()) owner.Enrage();
                 Transform tempObstacle = GetNewHideObstacle();
@@ -58,7 +58,6 @@ public class HideState : State {
             if (PointHiddenFromChaser(hideSpot))
             {
                 owner.MoveTo(hideSpot);
-                owner.FaceTarget(chaser.position);
             }
         }
         else
