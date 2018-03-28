@@ -63,13 +63,12 @@ public class EmotionChip : MonoBehaviour {
 
     [SerializeField] private State currentState;
 
-    //TODO: Would make sense to make "State Objects" "Goals", e.g. Goal: Suicide -> has a list of "State" classes that it goes through
     public State calmState;
     public State angryState;
     public State scaredState;
     public State fallbackState;   //fallback
 
-    [HideInInspector] public bool enraged;  //for fallback state
+    [HideInInspector] public bool enraged;  //Used to enable the fallback state - if other behaviours fail, use this as a "last stand" or act behaviour
 
     private void Awake()
     {
@@ -139,6 +138,8 @@ public class EmotionChip : MonoBehaviour {
             {
                 if (key == disposition)
                 {
+                    //Every second with standard values, ~ 0.05 is applied to the disposition. If Stability = 0.5, then Stability / 0.05 = 10 Seconds to reach & surpass Stability (and change state)
+                    //Debug.Log("Applying " + Time.fixedDeltaTime / (10f / reluctance) + " to disposition");
                     agentEmotions[key] = Mathf.Lerp(agentEmotions[key], 1f, Time.fixedDeltaTime / (10f / reluctance));   //Approx 10 seconds to return to disposition (assuming no external influences)
                 }
                 else
@@ -162,9 +163,12 @@ public class EmotionChip : MonoBehaviour {
 
     /// <summary>
     /// This method provides a way in which to influence this agent's emotional state - will not influence who the agent targets.
+    /// DISPOSITION (Calm): will tend towards the intent at a rate modified by trust.
+    /// DISPOSITION (Anger): will tend towards the intent scaled by irascibility, except fear will anger the agent further.
+    /// DISPOSITION (Fear): will tend towards the intent scaled by cowardice.
     /// </summary>
     /// <param name="intent">The way in which the actor intends to influence this agent</param>
-    /// <param name="amount">How much to influence the agent's emotions in the range of 0 to 1</param>
+    /// <param name="amount">How much to influence the agent's emotions in the range of 0 to 1. In update methods, scale by deltaTime.</param>
     public void Influence(Emotion intent, float amount)
     {
         amount = Mathf.Clamp(amount, 0f, 1f);
@@ -182,7 +186,7 @@ public class EmotionChip : MonoBehaviour {
 
                     case Emotion.Anger: //If actor intends to scare or anger enemy, anger/scare them, but reduced by a factor of their trust (harder to anger/scare if calm)
                     case Emotion.Fear:
-                        agentEmotions[Emotion.Calm] -= amount / trust;  //TODO: Source of why I want to balance
+                        agentEmotions[Emotion.Calm] -= amount / trust;
                         agentEmotions[intent] += amount / trust;
                         break;
                 }

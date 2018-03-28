@@ -13,7 +13,7 @@ public class FollowState : State {
         target = SelectTarget();
         if (target != null && owner.CanSeeTarget(target))
         {
-            if (hostileToInterests) owner.Influence(Emotion.Anger, .5f);
+            if (hostileToInterests) owner.Influence(Emotion.Anger, .5f * Time.fixedDeltaTime);
             patrolling = false;
             owner.MoveTo(target.position);
         }

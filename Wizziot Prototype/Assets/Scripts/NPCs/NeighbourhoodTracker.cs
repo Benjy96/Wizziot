@@ -193,6 +193,9 @@ public class NeighbourhoodTracker : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Check for nearby interests
+    /// </summary>
     public void ScanForNearby()
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, TrackingRadius);

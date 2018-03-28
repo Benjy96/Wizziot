@@ -41,11 +41,17 @@ public class Enemy : Targetable {
         emotionChip.enraged = true; 
     }
 
+    /// <summary>
+    /// Influence the enemy. The caller will be recorded as the influencer if the agent's emotion changes as a result of this method call.
+    /// </summary>
     public void Influence(GameObject influencer, Emotion intent, float amount)
     {
         emotionChip.Influence(influencer, intent, amount);
     }
 
+    /// <summary>
+    /// Influences the enemy towards the specified emotion. 
+    /// </summary>
     public void Influence(Emotion intent, float amount)
     {
         emotionChip.Influence(null, intent, amount);

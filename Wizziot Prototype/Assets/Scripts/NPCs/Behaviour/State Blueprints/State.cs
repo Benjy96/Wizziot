@@ -40,9 +40,10 @@ public class State : ScriptableObject {
         neighbourhoodTracker = owner.neighbourhoodTracker;
         abilComponent = owner.abilityComponent;
 
+        //Register gameobject types as interests to the neighbourhood tracker
         neighbourhoodTracker.RegisterInterest(interestedIn);
         neighbourhoodTracker.RegisterInterest(secondaryInterest);
-        neighbourhoodTracker.ScanForNearby();
+        neighbourhoodTracker.ScanForNearby();   //Check for registered interests on state entry
     }
 
     /// <summary>
