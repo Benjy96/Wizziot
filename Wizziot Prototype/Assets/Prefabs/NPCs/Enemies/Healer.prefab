@@ -356,7 +356,7 @@ MonoBehaviour:
   sqrMaxTargetDistance: 225
   speed: 5
   turnSpeed: 100
-  instantAbilityCost: 10
+  instantAbilityCost: 20
   areaAbilityCost: 30
   defenseAbilityCost: 40
   defaultModifierValue: 1.25

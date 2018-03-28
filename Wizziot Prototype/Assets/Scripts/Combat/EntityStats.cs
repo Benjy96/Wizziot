@@ -19,8 +19,8 @@ public class EntityStats : MonoBehaviour {
     [Range(50, 150)] public float turnSpeed;
 
     [Header("Base Cost of Abilities")]
-    public float instantAbilityCost = 10f;
-    public float areaAbilityCost = 30f;
+    public float instantAbilityCost = 30f;
+    public float areaAbilityCost = 50f;
     public float defenseAbilityCost = 40f;
     public Dictionary<Abilities, float> abilityCosts;
 

@@ -11,11 +11,11 @@ public class StatUIManager : MonoBehaviour {
     public Image healthImage;
     public Image staminaImage;
 
-    PlayerStats playerStats;
+    EntityStats playerStats;
 
 	// Use this for initialization
 	void Start () {
-		playerStats = PlayerManager.Instance.player.GetComponent<PlayerStats>();
+		playerStats = PlayerManager.Instance.player.GetComponent<EntityStats>();
     }
 	
 	// Update is called once per frame

@@ -128,8 +128,7 @@ public class AbilityComponent : MonoBehaviour {
     private bool UseAbility()
     {
         float damageToDo = 0f;
-        bool AoEDeployed = false;
-        AreaAbility AoEUsed = null;
+        bool aoePlaced = false;
 
         if (Time.time > globalCooldownFinishTime)
         {
@@ -138,7 +137,7 @@ public class AbilityComponent : MonoBehaviour {
                 switch (SelectedAbility)
                 {
                     case Abilities.Zap:
-                        Zap();
+                        Zap(damageToDo);
                         break;
 
                     case Abilities.Confuse:
@@ -146,22 +145,21 @@ public class AbilityComponent : MonoBehaviour {
                         break;
 
                     case Abilities.Vortex:
-                        AoE(vortexPrefab, damageToDo);
+                        AoE(vortexPrefab, damageToDo, ref aoePlaced);
                         break;
 
                     case Abilities.Singularity:
-                        AoE(singularityPrefab, damageToDo);
+                        AoE(singularityPrefab, damageToDo, ref aoePlaced);
+                        if(aoePlaced) globalCooldownFinishTime = Time.time + globalCooldown;
                         break;
 
                     case Abilities.Heal:
                         Heal(damageToDo);
+                        if(aoePlaced) globalCooldownFinishTime = Time.time + globalCooldown;
                         break;
                 }
-                if(GameMetaInfo._Is_Instant_Ability(SelectedAbility))
-                {
-                    currentTargetStats.Damage(damageToDo);  //Damage the target
-                }
-                globalCooldownFinishTime = Time.time + globalCooldown;  //Handle global cooldown
+                //Add to GCD if not an AoE - AoEs handle cooldown with bool check to verify they have actually been placed
+                if(!GameMetaInfo._Is_AoE_Ability(SelectedAbility)) globalCooldownFinishTime = Time.time + globalCooldown;  //Handle global cooldown
                 return true;
             }
             else
@@ -176,11 +174,12 @@ public class AbilityComponent : MonoBehaviour {
         return false;
     }
 
-    private void Zap()  
+    private void Zap(float damage)  
     {
         if (currentTarget != null)
         {
             StartCoroutine(ShotEffect());
+            currentTargetStats.Damage(damage);
         }
     }
 
@@ -221,7 +220,7 @@ public class AbilityComponent : MonoBehaviour {
         }
     }
 
-    private void AoE(GameObject spellPrefab, float damage)
+    private void AoE(GameObject spellPrefab, float damage, ref bool aoePlaced)
     {
         AreaAbility deployed = null;
 
@@ -241,6 +240,7 @@ public class AbilityComponent : MonoBehaviour {
             aiming = false;
 
             ApplyAoEEffects(damage, deployed);
+            aoePlaced = true;
         }
     }
 

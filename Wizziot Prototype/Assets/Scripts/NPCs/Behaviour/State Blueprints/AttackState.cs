@@ -4,11 +4,6 @@
 [RequireComponent(typeof(NeighbourhoodTracker))]
 public class AttackState : State {
 
-    protected override void EnterState(Enemy owner, GameObject lastInfluence)
-    {
-        base.EnterState(owner, lastInfluence);
-    }
-
     /// <summary>
     /// Select a random ability and attempt to use on the selected target. Follows target.
     /// Otherwise, move about in a circle and attepmt to calm down.
@@ -21,7 +16,6 @@ public class AttackState : State {
         abilComponent.SelectAbility(ability);
 
         Transform newTarget = SelectTarget();
-        if(newTarget != null) Debug.Log(owner.name + "'s target is: " + newTarget.name);
         if(newTarget != target)
         {
             target = newTarget;
@@ -29,8 +23,10 @@ public class AttackState : State {
 
         if (target != null)
         {
+            Debug.Log(name + " is targeting " + target.name);
             if (HostileToCurrentTarget())
             {
+                Debug.Log(name + " is hostile to " + target.name);
                 if ((target.position - owner.Position).sqrMagnitude < owner.stats.sqrMaxTargetDistance)
                 {
                     //If not a defense ability, use on the target

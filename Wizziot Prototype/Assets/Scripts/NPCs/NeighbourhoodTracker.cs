@@ -80,8 +80,7 @@ public class NeighbourhoodTracker : MonoBehaviour
         //Track interest
         if (secondaryNeighbours.ContainsKey(objName[0]))
         {
-            Debug.Log("tracking " + objName[0]);
-            secondaryNeighbours[other.name] = other.gameObject;
+            secondaryNeighbours[objName[0]] = other.gameObject;
         }
 
         //Track enemies, else environment
@@ -121,9 +120,9 @@ public class NeighbourhoodTracker : MonoBehaviour
         //Remove interest
         if (secondaryNeighbours.ContainsKey(objName[0]))
         {
-            if (secondaryNeighbours[other.name] != null)
+            if (secondaryNeighbours[objName[0]] != null)
             {
-                secondaryNeighbours[other.name] = null;
+                secondaryNeighbours[objName[0]] = null;
             }
         }
 
@@ -157,8 +156,6 @@ public class NeighbourhoodTracker : MonoBehaviour
     {
         if (gameObject == null) return;
 
-        Debug.Log("registering " + gameObject.name);
-
         if (!secondaryNeighbours.ContainsKey(gameObject.name))
         {
             secondaryNeighbours.Add(gameObject.name, null);
@@ -187,7 +184,7 @@ public class NeighbourhoodTracker : MonoBehaviour
 
         if (secondaryNeighbours.ContainsKey(gameObject.name))
         {
-            if(secondaryNeighbours[gameObject.name] != null)
+            if (secondaryNeighbours[gameObject.name] != null)
             {
                 return secondaryNeighbours[gameObject.name];
             }

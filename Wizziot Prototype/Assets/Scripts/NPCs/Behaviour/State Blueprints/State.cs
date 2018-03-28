@@ -42,6 +42,7 @@ public class State : ScriptableObject {
 
         neighbourhoodTracker.RegisterInterest(interestedIn);
         neighbourhoodTracker.RegisterInterest(secondaryInterest);
+        neighbourhoodTracker.ScanForNearby();
     }
 
     /// <summary>
@@ -68,7 +69,7 @@ public class State : ScriptableObject {
     /// <returns></returns>
     protected virtual Transform SelectTarget()
     {
-        if (influencer != null && (influencer.transform.position - owner.Position).magnitude < owner.SightRange)
+        if (influencer != null && (influencer.transform.position - owner.Position).sqrMagnitude < (owner.SightRange * owner.SightRange))
         {
             return influencer.transform;
         }
@@ -78,7 +79,12 @@ public class State : ScriptableObject {
             Transform target = null;
 
             targetGO = neighbourhoodTracker.RetrieveTrackedObject(interestedIn);
-            if (targetGO == null) targetGO = neighbourhoodTracker.RetrieveTrackedObject(secondaryInterest);
+            if (targetGO == null ||
+                (targetGO.transform.position - owner.Position).sqrMagnitude > (owner.SightRange * owner.SightRange))
+            {
+                targetGO = neighbourhoodTracker.RetrieveTrackedObject(secondaryInterest);
+            }
+
             if (targetGO != null) target = targetGO.transform;
             return target;
         }
