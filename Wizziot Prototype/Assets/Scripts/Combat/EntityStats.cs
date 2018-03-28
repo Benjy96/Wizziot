@@ -24,6 +24,9 @@ public class EntityStats : MonoBehaviour {
     public float defenseAbilityCost = 40f;
     public Dictionary<Abilities, float> abilityCosts;
 
+    [Header("Attack Agro")]
+    public float attackInfluence = 0.5f;   //Affected by the "Reputation" stat - determines how much to influence an emotionChip when using abilities. AKA "Agro"
+
     [Header("Default Stat Modifier Values")]
     public float defaultModifierValue = 1f;
     public Dictionary<Stats, Stat> statModifiers;
@@ -80,7 +83,6 @@ public class EntityStats : MonoBehaviour {
         }
     }
 
-    //TODO: Use difficulty setting to modify
     public void ApplyStatModifiers()
     {
         //Apply Modifiers
@@ -91,6 +93,8 @@ public class EntityStats : MonoBehaviour {
 
         speed *= statModifiers[Stats.MovementSpeed].StatValue;
         turnSpeed *= statModifiers[Stats.MovementSpeed].StatValue;
+
+        attackInfluence *= statModifiers[Stats.Reputation].StatValue;
     }
 
     /// <summary>

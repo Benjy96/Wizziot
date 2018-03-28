@@ -16,8 +16,11 @@ public class PauseMenu : MonoBehaviour {
 
     public void PauseGame()
     {
-        if (_GamePaused) Resume();
-        return;
+        if (_GamePaused == true)
+        {
+            Resume();
+            return;
+        }
 
         //Only use pausing logic if other UI elements are closed & escape wasn't used for closing UI
         if (!(Inventory.Instance.inventoryUI.InventoryUIActive && StoryManager.Instance.StoryInputEnabled))

@@ -263,11 +263,13 @@ MonoBehaviour:
   globalCooldown: 1
   aimingDisc: {fileID: 4692180556801494, guid: 44e75b50b1e131e49b4a6ff407a6be7a, type: 2}
   zapSource: {fileID: 1677534009832248}
+  confusePrefab: {fileID: 100004, guid: a89abc0d2591545288f4c041059ae633, type: 2}
   confuseDuration: 3
   vortexPrefab: {fileID: 1893987604404780, guid: c41f338f3e10fb74ca9f81ce1b665355,
     type: 2}
   singularityPrefab: {fileID: 1134084517704520, guid: 217668003b71cfa4e9928e20f2b247f5,
     type: 2}
+  healPrefab: {fileID: 100002, guid: 847f669bc75db4de8be28dc6dc55874d, type: 2}
 --- !u!114 &114232869456884162
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -299,6 +301,7 @@ MonoBehaviour:
   instantAbilityCost: 40
   areaAbilityCost: 30
   defenseAbilityCost: 40
+  attackInfluence: 0.5
   defaultModifierValue: 1
 --- !u!114 &114884924212849452
 MonoBehaviour:

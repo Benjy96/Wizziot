@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour {
         GameMetaInfo.allKeybinds.Add(KeyCode.Alpha5, new Action(() => InstantAttack(Abilities.Heal, target.transform)));
         //General
         GameMetaInfo.allKeybinds.Add(KeyCode.F, Interact);
-        GameMetaInfo.allKeybinds.Add(KeyCode.Escape, new Action(() => TriggerEscapeAction())); //TODO: every ui subscribe to manager to close upon esc -> then menu
+        GameMetaInfo.allKeybinds.Add(KeyCode.Escape, new Action(() => TriggerEscapeAction()));
         //Camera
         GameMetaInfo.allKeybinds.Add(KeyCode.LeftAlt, cam.GetComponent<PlayerCamera>().SwitchCameraMode);
         GameMetaInfo.allKeybinds.Add(KeyCode.I, new Action(() => inventoryUI.gameObject.SetActive(!inventoryUI.activeSelf)));
@@ -226,9 +226,13 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    private void InstantAttack(Abilities abil, Transform target)
+    private void InstantAttack(Abilities abil, Transform target = null)
     {
-        if(target.GetComponent<Targetable>().targetType == TargetType.Enemy || target.tag.Equals(GameMetaInfo._TAG_SHOOTABLE_BY_PLAYER))
+        if (target == null || GameMetaInfo._Is_Defense_Ability(abil))
+        {
+            abilityComponent.PlayerUseInstant(abil, transform);
+        }
+        else if(target.GetComponent<Targetable>().targetType == TargetType.Enemy || target.tag.Equals(GameMetaInfo._TAG_SHOOTABLE_BY_PLAYER))
         {
             abilityComponent.PlayerUseInstant(abil, target);
         }

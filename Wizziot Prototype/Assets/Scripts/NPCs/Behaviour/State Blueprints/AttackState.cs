@@ -23,14 +23,13 @@ public class AttackState : State {
 
         if (target != null)
         {
-            Debug.Log(name + " is targeting " + target.name);
             if (HostileToCurrentTarget())
             {
-                Debug.Log(name + " is hostile to " + target.name);
                 if ((target.position - owner.Position).sqrMagnitude < owner.stats.sqrMaxTargetDistance)
                 {
                     //If not a defense ability, use on the target
-                    if(!GameMetaInfo._Is_Defense_Ability(abilComponent.SelectedAbility)) abilComponent.UseSelected(target);
+                    if (!GameMetaInfo._Is_Defense_Ability(abilComponent.SelectedAbility)) abilComponent.UseSelected(target);
+                    else abilComponent.UseSelected(owner.transform);
                 }
             }
             else

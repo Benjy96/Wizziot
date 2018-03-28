@@ -14,6 +14,8 @@ public class Options : MonoBehaviour {
 
         RewriteEncryptedFileDifficulty(diff);
         RewriteJSONFileDifficulty(diff);
+
+        Debug.Log("Game Difficulty Updated");
     }
 
     //Open file, modify difficulty, save
@@ -23,7 +25,6 @@ public class Options : MonoBehaviour {
         if (File.Exists(GameMetaInfo._SAVE_FILE_ENCRYPTED))
         {
             //Get data from file
-            Debug.Log("Deserialising file");
             SaveData savedData = new SaveData();
             using (var fs = File.OpenRead(GameMetaInfo._SAVE_FILE_ENCRYPTED))
             {

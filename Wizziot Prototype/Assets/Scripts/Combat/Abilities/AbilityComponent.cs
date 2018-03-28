@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Interface for using Abilities. Links with Entity Stats to handle stamina.
+/// Interface for using Abilities for use by Player & AI.
+/// Applies damage & influence using stat component.
 /// </summary>
 [RequireComponent(typeof(EntityStats))]
 public class AbilityComponent : MonoBehaviour {
@@ -35,8 +36,9 @@ public class AbilityComponent : MonoBehaviour {
     private ParticleSystem zapParticles;
     private particleAttractorLinear zapTargeter;
     private WaitForSeconds zapEffectDuration = new WaitForSeconds(.5f);
-    
+
     [Header("Confuse")]
+    public GameObject confusePrefab;
     public float confuseDuration = 3f;
     private float confuseFinishTime;    //Used to track when confuse debuff will wear off - needs separate cooldown tracker (other than global)
 
@@ -46,12 +48,22 @@ public class AbilityComponent : MonoBehaviour {
     [Header("Singularity")]
     public GameObject singularityPrefab;
 
+    [Header("Heal")]
+    public GameObject healPrefab;
+    [Tooltip("Adds onto an existing 5s CD")] public float healCD;
+    private float healFinishTime;
+    private float healFXTime;
+
     private void Awake()
     {
         statComponent = GetComponent<EntityStats>();
+        if (zapSource != null)
+        {
+            zapTargeter = zapSource.GetComponentInChildren<particleAttractorLinear>();
+            zapParticles = zapSource.GetComponent<ParticleSystem>();
+        }
 
-        zapTargeter = zapSource.GetComponentInChildren<particleAttractorLinear>();
-        zapParticles = zapSource.GetComponent<ParticleSystem>();
+        if (healPrefab != null) healCD += healPrefab.GetComponent<ParticleSystem>().main.duration; healFXTime = healPrefab.GetComponent<ParticleSystem>().main.duration;
     }
 
     //Kebyind & UI button accesses this from controller (Start @ 1 to correspond to player UI)
@@ -86,7 +98,7 @@ public class AbilityComponent : MonoBehaviour {
                 Enemy e = currentTarget.GetComponent<Enemy>();
                 if(e != null)
                 {
-                    e.Influence(gameObject, Emotion.Anger, 1f);
+                    e.Influence(gameObject, Emotion.Anger, statComponent.attackInfluence);
                 }
                 UseAbility();
             }
@@ -146,6 +158,7 @@ public class AbilityComponent : MonoBehaviour {
 
                     case Abilities.Vortex:
                         AoE(vortexPrefab, damageToDo, ref aoePlaced);
+                        if (aoePlaced) globalCooldownFinishTime = Time.time + globalCooldown;
                         break;
 
                     case Abilities.Singularity:
@@ -154,8 +167,7 @@ public class AbilityComponent : MonoBehaviour {
                         break;
 
                     case Abilities.Heal:
-                        Heal(damageToDo);
-                        if(aoePlaced) globalCooldownFinishTime = Time.time + globalCooldown;
+                        StartCoroutine(Heal(damageToDo));
                         break;
                 }
                 //Add to GCD if not an AoE - AoEs handle cooldown with bool check to verify they have actually been placed
@@ -166,10 +178,6 @@ public class AbilityComponent : MonoBehaviour {
             {
                 Debug.Log("Not enough stamina");
             }
-        }
-        else
-        {
-            Debug.Log("On cooldown...");
         }
         return false;
     }
@@ -207,16 +215,18 @@ public class AbilityComponent : MonoBehaviour {
             EmotionChip e = currentTarget.GetComponent<EmotionChip>();
             if(e != null)
             {
-                Debug.Log("Influencing with confuse...");
-                e.Influence(Emotion.Fear, .5f); //TODO: Where to set strength of influence? Stats? Factor of powers? Level?
+                Debug.Log("Influencing " + currentTarget.name + " with confuse...");
+                e.Influence(Emotion.Fear, 1f);
             }
-            yield return new WaitForSeconds(confuseDuration);
+            GameObject confuseFX = Instantiate(confusePrefab, currentTarget, false);
             //Disable effect
             confuseFinishTime = Time.time + confuseDuration;
+            yield return new WaitForSeconds(confuseDuration);
+            Destroy(confuseFX);
         }
         else
         {
-            Debug.Log("Target is already confused!");
+            Debug.Log("Confuse not ready!");
         }
     }
 
@@ -257,18 +267,28 @@ public class AbilityComponent : MonoBehaviour {
         {
             Debug.Log(c.name);
             Enemy e = c.GetComponent<Enemy>();
-            if (e != null) e.Influence(gameObject, Emotion.Anger, .5f); enemies.Add(e);
+            if (e != null) e.Influence(gameObject, Emotion.Anger, statComponent.attackInfluence); enemies.Add(e);
 
             EntityStats eS = c.GetComponent<EntityStats>();
             if (eS != null) StartCoroutine(eS.DoTDamage(damageToDo, AoEUsed.duration));
         }
     }
 
-    private void Heal(float amount)
+    private IEnumerator Heal(float amount)
     {
-        if(currentTarget != null)
+        if(currentTarget != null && Time.time > healFinishTime)
         {
+            healFinishTime = Time.time + healCD;
+            GameObject fx = Instantiate(healPrefab, currentTarget, false);
+
+            yield return new WaitForSeconds(healFXTime);
             currentTargetStats.Heal(amount);
+
+            Destroy(fx);
+        }
+        else
+        {
+            Debug.Log("Heal on CD");
         }
     }
     #endregion

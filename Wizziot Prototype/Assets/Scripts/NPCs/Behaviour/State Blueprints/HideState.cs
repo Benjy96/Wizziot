@@ -11,7 +11,7 @@ public class HideState : State {
 
     private Transform hideObstacle;
     private float checkHiddenInterval;
-    private float checkHiddenIncrements = 5f;
+    private float checkHiddenIncrements = 10f;
 
     protected override void EnterState(Enemy owner, GameObject lastInfluence)
     {
