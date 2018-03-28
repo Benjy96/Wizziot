@@ -38,7 +38,6 @@ public class AttackState : State {
                 abilComponent.SelectAbility(Abilities.Heal);
                 abilComponent.UseSelected(target);
             }
-            owner.FaceTarget(target.position);
             owner.MoveTo(target.position);
         }
         else

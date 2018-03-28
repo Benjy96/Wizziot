@@ -32,7 +32,7 @@ public class Enemy : Targetable {
         set { home = value; transform.SetParent(value.transform); }
     }
     public Vector3 Position { get { return transform.position; } }
-    public Vector3 Velocity { get { return rBody.velocity; } set { rBody.velocity = value; } }
+    public Vector3 Velocity { get { return navAgent.velocity; } set { navAgent.velocity = value; } }
     public float SightRange { get { return neighbourhoodTracker.TrackingRadius; } }
 
     // -- Interface -- //
@@ -134,7 +134,7 @@ public class Enemy : Targetable {
         FaceTarget(target);
     }
 
-    public void FaceTarget(Vector3 target)
+    private void FaceTarget(Vector3 target)
     {
         Vector3 direction = target - Position;
         direction = direction.normalized;

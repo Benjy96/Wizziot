@@ -6,7 +6,7 @@ using UnityEngine;
 public class HideState : State {
 
     private Transform chaser;
-    private Vector3 newHideSpot;
+    private Vector3 hideSpot;
     private float chaserSightDist;
 
     private Transform hideObstacle;
@@ -31,70 +31,56 @@ public class HideState : State {
     */
     public override void Execute()
     {
-        newHideSpot = Vector3.forward;
-        chaser = SelectTarget();    //TODO: Last influencer
+        hideSpot = Vector3.forward;
+        chaser = SelectTarget();
+
+        if (chaser.GetComponent<EntityStats>() != null) chaserSightDist = chaser.GetComponent<EntityStats>().sqrMaxTargetDistance;
 
         //If current hiding spot not letting us hide from player, re-evaluate
         if (chaser != null && owner.CanSeeTarget(chaser))
         {
+            owner.Influence(Emotion.Fear, 1f * Time.deltaTime);
+
+            if (hideObstacle == null) hideObstacle = GetNewHideObstacle();
+
+            //If it's been too long and we aren't hidden, change hiding spot
             if ((Time.deltaTime > checkHiddenInterval))
             {
-                Debug.Log("Change hiding spot");
-                ChangeHidingSpot();
-                return;
+                hideSpot = CalculateHideSpot(GetNewHideObstacle(), chaser);
+                if (PointHiddenFromChaser(hideSpot))
+                {
+                    owner.MoveTo(hideSpot);
+                }
             }
-
-            EntityStats eS = chaser.GetComponent<EntityStats>();
-            if (eS != null) chaserSightDist = eS.sqrMaxTargetDistance;
-            CalculateHideSpot();
+            //Else (update) hide (position) behind current object
+            else
+            {
+                hideSpot = CalculateHideSpot(hideObstacle, chaser);
+                if(PointHiddenFromChaser(hideSpot)) owner.MoveTo(hideSpot);
+            }
         }
         else
         {
-            owner.Influence(Emotion.Calm, .5f * Time.deltaTime);
+            owner.Influence(Emotion.Calm, .2f * Time.fixedDeltaTime);
         }
 
-        //If been trying to hide for a long time, and nowhere to hide, influence maximum fear
-        if (Time.time > checkHiddenInterval && VerifiedNoObstacles()) owner.Enrage();
-    }
-
-    private void CalculateHideSpot()
-    {
-        Vector3 distance = Vector3.zero;
-
-        if (owner.CanSeeTarget(chaser))
+        //If been trying to hide for a long time, and nowhere to hide, influence maximum fear, else add to interval
+        if (Time.time > checkHiddenInterval && VerifiedNoObstacles())
         {
-            owner.Influence(Emotion.Fear, 1f);
-            //Debug.Log("Can see chaser, hiding");
-            foreach (Transform pos in neighbourhoodTracker.obstacles) //List is already sorted, closest will be first!
-            {
-                if (pos == hideObstacle) continue;
-                //Debug.Log("Checking neighbourhood, pos found: " + pos.name);
-                if (PointHiddenFromChaser(pos.transform.position))
-                {
-                    Debug.Log("Point behind pos is hidden");
-                    //Calculate spot
-                    newHideSpot = CalculateHideSpot(pos, chaser);
-                    owner.MoveTo(newHideSpot);
-                    owner.FaceTarget(chaser.position);
-
-                    hideObstacle = pos;
-                    checkHiddenInterval = Time.time + 10f;
-                    break;
-                }
-            }
+            owner.Enrage();
         }
-        else if(hideObstacle != null)
+        else if (Time.time > checkHiddenInterval)
         {
-            owner.Influence(Emotion.Calm, .1f * Time.deltaTime);
-            //Mirror enemy movement about obstacle
-            newHideSpot = CalculateHideSpot(hideObstacle, chaser);
-            owner.MoveTo(newHideSpot);
+            checkHiddenInterval = Time.time + 10f;
         }
     }
 
+    /// <summary>
+    /// Returns true if a ray hits an obstacle before the point
+    /// </summary>
     private bool PointHiddenFromChaser(Vector3 point)
     {
-        Ray ray = new Ray(owner.Position, chaser.position);
+        Ray ray = new Ray(point, chaser.position);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, chaserSightDist))
         {
@@ -104,6 +90,9 @@ public class HideState : State {
         return false;
     }
 
+    /// <summary>
+    /// Returns a point behind an obstacle but opposite the chaser.
+    /// </summary>
     private Vector3 CalculateHideSpot(Transform point, Transform chaser)
     {
         Vector3 direction = (point.position - chaser.position).normalized;
@@ -116,31 +105,23 @@ public class HideState : State {
         return adjustedForObstacleSizePos;
     }
 
-    private void ChangeHidingSpot()
+    /// <summary>
+    /// Returns an obstacle that blocks the chaser's vision
+    /// </summary>
+    /// <returns></returns>
+    private Transform GetNewHideObstacle()
     {
-        Debug.Log("Removing bad hiding spot");
-        if (VerifiedNoObstacles())
+        foreach (Transform pos in neighbourhoodTracker.obstacles)
         {
-            owner.Enrage();
-        }
-        else
-        {
-            foreach (Transform pos in neighbourhoodTracker.obstacles)
+            if (pos == hideObstacle) continue;
+            if (PointHiddenFromChaser(pos.transform.position))
             {
-                if (pos == hideObstacle) continue;
-                if (PointHiddenFromChaser(pos.transform.position))
-                {
-                    Debug.Log("Point behind pos is hidden");
-                    //Calculate spot
-                    newHideSpot = CalculateHideSpot(pos, chaser);
-                    owner.MoveTo(newHideSpot);
-                    owner.FaceTarget(chaser.position);
-                    hideObstacle = pos;
-                    checkHiddenInterval = Time.time + 10f;
-                    break;
-                }
+                Debug.Log("Point behind pos is hidden");
+                //Calculate spot
+                return pos;
             }
         }
+        return null;
     }
 
     private bool VerifiedNoObstacles()
