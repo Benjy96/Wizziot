@@ -34,7 +34,7 @@ public class HideState : State {
         hideSpot = Vector3.forward;
         chaser = SelectTarget();
 
-        if (chaser.GetComponent<EntityStats>() != null) chaserSightDist = chaser.GetComponent<EntityStats>().sqrMaxTargetDistance;
+        if (chaser != null && chaser.GetComponent<EntityStats>() != null) chaserSightDist = chaser.GetComponent<EntityStats>().sqrMaxTargetDistance;
 
         //If current hiding spot not letting us hide from player, re-evaluate
         if (chaser != null && owner.CanSeeTarget(chaser))
@@ -46,29 +46,24 @@ public class HideState : State {
             //If it's been too long and we aren't hidden, change hiding spot
             if ((Time.deltaTime > checkHiddenInterval))
             {
-                hideObstacle = GetNewHideObstacle();
-                
+                if (VerifiedNoObstacles()) owner.Enrage();
+                Transform tempObstacle = GetNewHideObstacle();
+                if (tempObstacle == hideObstacle) owner.Enrage();
+                else hideObstacle = tempObstacle;
+                checkHiddenInterval = Time.time + 10f;
             }
+
             //Calculate & move to a hide spot
-            hideSpot = CalculateHideSpot(GetNewHideObstacle(), chaser);
+            if(hideObstacle != null) hideSpot = CalculateHideSpot(hideObstacle, chaser);
             if (PointHiddenFromChaser(hideSpot))
             {
                 owner.MoveTo(hideSpot);
+                owner.FaceTarget(chaser.position);
             }
         }
         else
         {
             owner.Influence(Emotion.Calm, .2f * Time.fixedDeltaTime);
-        }
-
-        //If been trying to hide for a long time, and nowhere to hide, influence maximum fear, else add to interval
-        if (Time.time > checkHiddenInterval && VerifiedNoObstacles())
-        {
-            owner.Enrage();
-        }
-        else if (Time.time > checkHiddenInterval)
-        {
-            checkHiddenInterval = Time.time + 10f;
         }
     }
 
@@ -81,7 +76,6 @@ public class HideState : State {
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, chaserSightDist))
         {
-            Debug.Log("Chaser can't see point");
             return true;
         }
         return false;

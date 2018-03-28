@@ -134,7 +134,10 @@ public class Enemy : Targetable {
         FaceTarget(target);
     }
 
-    private void FaceTarget(Vector3 target)
+    /// <summary>
+    /// This is already called in MoveTo, use to face away from move location.
+    /// </summary>
+    public void FaceTarget(Vector3 target)
     {
         Vector3 direction = target - Position;
         direction = direction.normalized;
