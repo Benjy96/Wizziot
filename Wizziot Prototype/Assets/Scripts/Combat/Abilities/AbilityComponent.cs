@@ -91,7 +91,7 @@ public class AbilityComponent : MonoBehaviour {
     }
 
     //Player interface
-    public void PlayerUseInstant(Abilities ability, Transform target)  //TODO; make bool for player?
+    public void PlayerUseInstant(Abilities ability, Transform target)  
     {
         SetTarget(target);
 
@@ -118,7 +118,7 @@ public class AbilityComponent : MonoBehaviour {
     }
 
     //Player interface
-    public void PlayerUseAoE(Abilities ability)    //TODO: make bool for player?
+    public void PlayerUseAoE(Abilities ability)    
     {
         if (SelectedAbility == ability)
         {
@@ -148,40 +148,51 @@ public class AbilityComponent : MonoBehaviour {
 
         if (Time.time > globalCooldownFinishTime)
         {
-            if (statComponent.TryUseAbility(SelectedAbility, out damageToDo))
+            switch (SelectedAbility)
             {
-                switch (SelectedAbility)
-                {
-                    case Abilities.Zap:
-                        Zap(damageToDo);
-                        break;
+                case Abilities.Zap:
+                    statComponent.TryUseAbility(SelectedAbility, out damageToDo);
+                    Zap(damageToDo);
+                    break;
 
-                    case Abilities.Confuse:
-                        if(Time.time > confuseFinishTime) StartCoroutine(Confuse());
-                        break;
+                case Abilities.Confuse:
+                    if (Time.time > confuseFinishTime)
+                    {
+                        statComponent.TryUseAbility(SelectedAbility, out damageToDo);
+                        StartCoroutine(Confuse());
+                    }
+                    break;
 
-                    case Abilities.Vortex:
-                        AoE(vortexPrefab, damageToDo, ref aoePlaced);
-                        if (aoePlaced) globalCooldownFinishTime = Time.time + globalCooldown;
-                        break;
+                case Abilities.Vortex:
+                    AoE(vortexPrefab, damageToDo, ref aoePlaced);
+                    if (aoePlaced)
+                    {
+                        statComponent.TryUseAbility(SelectedAbility, out damageToDo);
+                        globalCooldownFinishTime = Time.time + globalCooldown;
+                    }
+                    break;
 
-                    case Abilities.Singularity:
-                        AoE(singularityPrefab, damageToDo, ref aoePlaced);
-                        if(aoePlaced) globalCooldownFinishTime = Time.time + globalCooldown;
-                        break;
+                case Abilities.Singularity:
+                    
+                    AoE(singularityPrefab, damageToDo, ref aoePlaced);
+                    if (aoePlaced)
+                    {
+                        statComponent.TryUseAbility(SelectedAbility, out damageToDo);
+                        globalCooldownFinishTime = Time.time + globalCooldown;
+                    }
+                    break;
 
-                    case Abilities.Heal:
-                        if(Time.time > healFinishTime) StartCoroutine(Heal(damageToDo));
-                        break;
-                }
-                //Add to GCD if not an AoE - AoEs handle cooldown with bool check to verify they have actually been placed
-                if(!GameMetaInfo._Is_AoE_Ability(SelectedAbility)) globalCooldownFinishTime = Time.time + globalCooldown;  //Handle global cooldown
-                return true;
+                case Abilities.Heal:
+                    if (Time.time > healFinishTime)
+                    {
+                        statComponent.TryUseAbility(SelectedAbility, out damageToDo);
+                        StartCoroutine(Heal(damageToDo));
+                    }
+                    break;
             }
-            else
-            {
-                Debug.Log("Not enough stamina");
-            }
+            //Add to GCD if not an AoE - AoEs handle cooldown with bool check to verify they have actually been placed
+            if(!GameMetaInfo._Is_AoE_Ability(SelectedAbility)) globalCooldownFinishTime = Time.time + globalCooldown;  //Handle global cooldown
+            return true;
         }
         return false;
     }
