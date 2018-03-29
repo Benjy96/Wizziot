@@ -222,7 +222,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4546299176709026}
   - component: {fileID: 33089685171959850}
-  - component: {fileID: 65475401002714842}
   - component: {fileID: 23000553143831166}
   m_Layer: 10
   m_Name: Tassle
@@ -1064,18 +1063,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &65475401002714842
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1750229114038088}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &65514224335697710
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1189,7 +1176,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetType: 0
   name: Scholarly Hat
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 88c3a061f9828244c9fb964e11acec81, type: 3}
   equipment: {fileID: 11400000, guid: aba5f8ca346df9d40a35218b31e11c74, type: 2}
 --- !u!135 &135441772291355274
 SphereCollider:

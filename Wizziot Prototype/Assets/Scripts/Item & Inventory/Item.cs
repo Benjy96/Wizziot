@@ -23,6 +23,7 @@ public class Item : Targetable {
     {
         if ((player.transform.position - transform.position).sqrMagnitude < interactionRadius)
         {
+            Debug.Log("hi3");
             Inventory.Instance.Add(this);
             MissionManager.Instance.RegisterItemFound(this);
             gameObject.SetActive(false);

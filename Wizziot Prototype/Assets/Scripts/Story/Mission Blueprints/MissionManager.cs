@@ -58,7 +58,6 @@ public class MissionManager : MonoBehaviour {
         foreach (Mission mission in activeMissions)
         {
             if (mission == null || mission.GetType() != typeof(KillMission)) continue;
-            Debug.Log("Updating mission");
             mission.UpdateMission(PlayerManager.Instance.playerControls.Target);
         }
     }
@@ -70,8 +69,9 @@ public class MissionManager : MonoBehaviour {
 
     public void RegisterItemFound(Item item)
     {
-        foreach (CollectMission mission in activeMissions)
+        foreach (Mission mission in activeMissions)
         {
+            if (mission == null || mission.GetType() != typeof(CollectMission)) continue;
             mission.UpdateMission(item);
         }
     }

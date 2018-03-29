@@ -97,7 +97,7 @@ public class PlayerManager : MonoBehaviour {
         item.transform.parent = player.transform;
 
         item.transform.localPosition = new Vector3(0f, player.transform.localScale.y / 2, 0f);
-        item.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+        item.transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
 
         //Disable everything except component visibility
         //MonoBehaviour[] itemComponents = item.GetComponents<MonoBehaviour>();

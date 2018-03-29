@@ -159,15 +159,16 @@ public class PlayerController : MonoBehaviour {
             KeyCode code = (KeyCode)i;
             if (Input.GetKeyDown(code) && GameMetaInfo.allKeybinds.ContainsKey(code))
             {
-                try
-                {
+                //try
+                //{
                     //todo: check target ain't null? or do in the methods / prob for abilcomp methods
                     GameMetaInfo.allKeybinds[code]();
-                }
-                catch (Exception e)
-                {
-                    Debug.Log("Keybind not able to trigger");
-                }
+                //}
+                //catch (Exception e)
+                //{
+                //    Debug.Log(e.Message);
+                //    Debug.Log("Keybind not able to trigger");
+                //}
             }
         }
     }
@@ -221,10 +222,13 @@ public class PlayerController : MonoBehaviour {
     //Attempts to converse with story NPCs or pick up objects
     private void Interact()
     {
+        Debug.Log("Hi");
         switch (target.targetType)
         {
             case TargetType.Item:
+                Debug.Log("hi2");
                 target.GetComponent<Item>().PickUp(transform);
+                Debug.Log("hi5");
                 break;
 
             case TargetType.Story:
