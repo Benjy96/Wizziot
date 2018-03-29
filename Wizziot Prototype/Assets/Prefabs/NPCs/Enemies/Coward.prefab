@@ -109,12 +109,12 @@ GameObject:
   - component: {fileID: 114792908412176066}
   - component: {fileID: 114653254589682158}
   - component: {fileID: 114072976499328846}
+  - component: {fileID: 114118271763390230}
   - component: {fileID: 195700673612654074}
   - component: {fileID: 54602758527950376}
   - component: {fileID: 33171637944474046}
   - component: {fileID: 135430337262968196}
   - component: {fileID: 23952319093175682}
-  - component: {fileID: 114118271763390230}
   m_Layer: 10
   m_Name: Coward
   m_TagString: Enemy
@@ -359,6 +359,7 @@ MonoBehaviour:
   instantAbilityCost: 40
   areaAbilityCost: 30
   defenseAbilityCost: 40
+  attackInfluence: 0.5
   defaultModifierValue: 1
 --- !u!114 &114653254589682158
 MonoBehaviour:
@@ -420,11 +421,14 @@ MonoBehaviour:
   globalCooldown: 1
   aimingDisc: {fileID: 4019791227191684, guid: 31faa8d85dd7c824bac358c123afb1e3, type: 2}
   zapSource: {fileID: 1247003542369760}
+  confusePrefab: {fileID: 0}
   confuseDuration: 3
   vortexPrefab: {fileID: 1893987604404780, guid: c41f338f3e10fb74ca9f81ce1b665355,
     type: 2}
   singularityPrefab: {fileID: 1134084517704520, guid: 217668003b71cfa4e9928e20f2b247f5,
     type: 2}
+  healPrefab: {fileID: 0}
+  additionalHealCooldown: 0
 --- !u!135 &135430337262968196
 SphereCollider:
   m_ObjectHideFlags: 1

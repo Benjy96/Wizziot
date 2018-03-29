@@ -71,8 +71,8 @@ MonoBehaviour:
   depthOfField:
     m_Enabled: 1
     m_Settings:
-      focusDistance: 4
-      aperture: 2
+      focusDistance: 115.6
+      aperture: 18
       focalLength: 50
       useCameraFov: 0
       kernelSize: 1
@@ -284,7 +284,7 @@ MonoBehaviour:
     m_Enabled: 1
     m_Settings:
       spectralTexture: {fileID: 0}
-      intensity: 0.085
+      intensity: 1
   grain:
     m_Enabled: 0
     m_Settings:

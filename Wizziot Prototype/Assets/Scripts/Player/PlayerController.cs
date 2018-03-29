@@ -228,7 +228,7 @@ public class PlayerController : MonoBehaviour {
 
     private void InstantAttack(Abilities abil, Targetable target = null)
     {
-        if (target == null || GameMetaInfo._Is_Defense_Ability(abil))
+        if (target == null && GameMetaInfo._Is_Defense_Ability(abil))
         {
             abilityComponent.PlayerUseInstant(abil, transform);
         }
