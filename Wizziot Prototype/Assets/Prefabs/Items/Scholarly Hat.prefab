@@ -194,5 +194,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetType: 0
   name: Scholarly Hat
-  icon: {fileID: 0}
-  equipment: {fileID: 0}
+  icon: {fileID: 21300000, guid: 88c3a061f9828244c9fb964e11acec81, type: 3}
+  equipment: {fileID: 11400000, guid: aba5f8ca346df9d40a35218b31e11c74, type: 2}

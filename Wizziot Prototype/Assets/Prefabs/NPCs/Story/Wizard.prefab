@@ -382,8 +382,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1003125731606806}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.44, y: 2.825, z: -0.819}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -7.45, y: 2.825, z: 88.791}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4764226872646606}
@@ -1190,7 +1190,7 @@ MonoBehaviour:
   targetType: 0
   name: Scholarly Hat
   icon: {fileID: 0}
-  equipment: {fileID: 0}
+  equipment: {fileID: 11400000, guid: aba5f8ca346df9d40a35218b31e11c74, type: 2}
 --- !u!135 &135441772291355274
 SphereCollider:
   m_ObjectHideFlags: 1

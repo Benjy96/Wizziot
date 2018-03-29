@@ -95,9 +95,9 @@ public class PlayerManager : MonoBehaviour {
     void EquipHead(Item item)
     {
         item.transform.parent = player.transform;
-        item.transform.position = new Vector3(player.transform.position.x,
-            (player.transform.position.y + player.transform.localScale.y / 2),
-            player.transform.position.z);
+
+        item.transform.localPosition = new Vector3(0f, player.transform.localScale.y / 2, 0f);
+        item.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
 
         //Disable everything except component visibility
         //MonoBehaviour[] itemComponents = item.GetComponents<MonoBehaviour>();
