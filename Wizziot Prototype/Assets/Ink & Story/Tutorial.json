@@ -1,1 +1,1 @@
-﻿{"inkVersion":17,"root":["done",{"Tutorial_KillNuisance":["ev","void","/ev","~ret",{"#f":3}],"wizard":["^Testing","\n","done",{"#f":3}],"#f":3}],"listDefs":{}}
+﻿{"inkVersion":17,"root":["done",{"Tutorial_KillNuisance":["ev","void","/ev","~ret",{"#f":3}],"wizard":["^The wizard wavers from side to side. \"Get rid of that bloody ball!\"","\n",["G>","ev",{"x()":"Tutorial_KillNuisance"},"out","/ev","G<",null],"\n","done",{"#f":3}],"#f":3}],"listDefs":{}}

@@ -56,15 +56,13 @@ public class PlayerController : MonoBehaviour {
     {
         storyManager = StoryManager.Instance;
         //EVENT: onTargetDestroyed - Invoked by target of player
-        PlayerManager.Instance.onTargetDestroyed += ResetTarget;    //Delegate: Reset target indicator when target is destroyed
-        PlayerManager.Instance.onTargetDestroyed += MissionManager.Instance.RegisterKill;    //Delegate: Reset target indicator when target is destroyed
+        PlayerManager.Instance.onTargetDestroyed += RegisterKill;    //Delegate: Register kill to mission manager & Reset target indicator when target is destroyed 
     }
 
     //UNSUBSCRIBE EVENTS
     private void OnDisable()
     {
-        PlayerManager.Instance.onTargetDestroyed -= ResetTarget;
-        PlayerManager.Instance.onTargetDestroyed -= MissionManager.Instance.RegisterKill;
+        PlayerManager.Instance.onTargetDestroyed -= RegisterKill;
     }
 
     //Call Handle methods
@@ -117,13 +115,10 @@ public class PlayerController : MonoBehaviour {
                     if (pointHit.transform.GetComponent<Targetable>() != null)  
                     {
                         Targetable t = pointHit.transform.GetComponent<Targetable>();
-                        Debug.Log(t.name);
                         if (t == null) t = pointHit.transform.GetComponentInParent<Targetable>();
                         if (t == null) return;
 
                         TargetType currentTargetType = t.targetType;
-
-                        Debug.Log(currentTargetType);
 
                         switch (currentTargetType)
                         {
@@ -194,9 +189,10 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    //Resets the target indicator
-    private void ResetTarget()
+    //Registers a kill and then resets the target
+    private void RegisterKill()
     {
+        MissionManager.Instance.RegisterKill();
         SetTargetIndicatorPos(false);
     }
 

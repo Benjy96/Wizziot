@@ -12,6 +12,7 @@ public class MissionManager : MonoBehaviour {
     public GameObject waypointPrefab;
 
     public List<Mission> activeMissions;
+    private List<Mission> completedMissions;
     public int maxMissions = 3;
 
     public Action onActiveMissionsChanged;   //update UI etc
@@ -29,6 +30,7 @@ public class MissionManager : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
 
         activeMissions = new List<Mission>(maxMissions);
+        completedMissions = new List<Mission>(maxMissions);
     }
 
     public void GrantMission(Mission mission)
@@ -39,18 +41,25 @@ public class MissionManager : MonoBehaviour {
         if (!activeMissions.Contains(grantedMission) && activeMissions.Count < maxMissions)
         {
             activeMissions.Add(grantedMission);
-            Instantiate(waypointPrefab, mission.location, Quaternion.Euler(-90f, 0f, 0f));
 
             //ACTIVATE UI
             if (onActiveMissionsChanged != null) onActiveMissionsChanged.Invoke();
         }
     }
 
+    public void FinishMission(Mission mission)
+    {
+        activeMissions.Remove(mission);
+        completedMissions.Add(mission);
+    }
+
     public void RegisterKill()
     {
-        foreach (KillMission killMission in activeMissions)
+        foreach (Mission mission in activeMissions)
         {
-            killMission.UpdateMission(PlayerManager.Instance.playerControls.Target);
+            if (mission == null || mission.GetType() != typeof(KillMission)) continue;
+            Debug.Log("Updating mission");
+            mission.UpdateMission(PlayerManager.Instance.playerControls.Target);
         }
     }
 
@@ -61,6 +70,9 @@ public class MissionManager : MonoBehaviour {
 
     public void RegisterItemFound(Item item)
     {
-
+        foreach (CollectMission mission in activeMissions)
+        {
+            mission.UpdateMission(item);
+        }
     }
 }

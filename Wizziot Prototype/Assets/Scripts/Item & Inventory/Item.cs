@@ -24,6 +24,7 @@ public class Item : Targetable {
         if ((player.transform.position - transform.position).sqrMagnitude < interactionRadius)
         {
             Inventory.Instance.Add(this);
+            MissionManager.Instance.RegisterItemFound(this);
             gameObject.SetActive(false);
             gameObject.transform.SetParent(player);
             //Destroy(gameObject); //use this if going to use ScriptableObjects <- destroy the ITEM, store the asset

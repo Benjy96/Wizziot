@@ -7,5 +7,6 @@ EXTERNAL Tutorial_KillNuisance()
 
 // ----- Dialogue ----- //
 === wizard ===
-Testing
+The wizard wavers from side to side. "Get rid of that bloody ball!"
+{Tutorial_KillNuisance()}
 -> DONE

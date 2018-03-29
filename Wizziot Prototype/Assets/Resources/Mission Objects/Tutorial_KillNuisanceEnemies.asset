@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: Tutorial_KillNuisanceEnemies
   m_EditorClassIdentifier: 
   additionalMissionStages: []
-  location: {x: -131, y: 20, z: -17}
+  location: {x: 5, y: 0, z: 90}
   locationRadius: 20
   killTypes:
-  - {fileID: 1967363257081838, guid: e82303aed87cf3c489a837e2477aad19, type: 2}
-  killsRequired: 5
+  - {fileID: 1967363257081838, guid: ffda47dcd015b5d42822cee50b149c07, type: 2}
+  killsRequired: 1

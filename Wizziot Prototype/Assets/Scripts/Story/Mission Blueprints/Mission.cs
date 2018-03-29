@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-//TODO: Research generics to make a mission class/classes
-
 [CreateAssetMenu(fileName = "Standard Mission", menuName = "Missions/Standard Mission")]
 public class Mission : ScriptableObject {
 
@@ -14,32 +12,36 @@ public class Mission : ScriptableObject {
 
     protected bool completed = false;
 
+    private GameObject waypoint;
+
     public Mission CreateMission()
     {
         Mission newMission = (Mission)Instantiate(Resources.Load("Mission Objects/" + name));
+        newMission.waypoint = Instantiate(MissionManager.Instance.waypointPrefab, location, Quaternion.Euler(-90f, 0f, 0f));
         return newMission;
     }
 
-    public virtual void CompleteMission()
+    public void CompleteMission()
     {
-        if (additionalMissionStages == null)
+        if (missionManager.activeMissions.Contains(this))
         {
-            if (missionManager.activeMissions.Contains(this))
-            {
-                completed = true;
-                missionManager.activeMissions.Remove(this);
-            }
+            Debug.Log("Destroying wp");
+            Destroy(waypoint);
+            completed = true;
+            MissionManager.Instance.FinishMission(this);
         }
         else
         {
-            //TODO: Add multi mission management support in Mission Manager (depends on how we track the currently engaged missions, etc)
-            //missionManager.CurrentMission(x).SetStep(additionalMissionStages[count];
+            throw new System.Exception("Mission manager is not storing this mission!: " + name);
         }
     }
 
-    public virtual bool UpdateMission(Targetable target)
+    /// <summary>
+    /// Determine how the target is handled with regards to the mission type
+    /// </summary>
+    /// <param name="target">For example, a killed enemy or picked up item</param>
+    public virtual void UpdateMission(Targetable target)
     {
         Debug.Log("Update the mission progress");
-        return false;   //Not completed
     }
 }
