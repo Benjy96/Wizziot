@@ -23,6 +23,8 @@ GameObject:
   - component: {fileID: 135441772291355274}
   - component: {fileID: 23756626440842906}
   - component: {fileID: 114257968466901038}
+  - component: {fileID: 114419442973730064}
+  - component: {fileID: 114082580686691578}
   m_Layer: 10
   m_Name: Wizard
   m_TagString: InteractableNPC
@@ -1134,6 +1136,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114082580686691578
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1003125731606806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e6dd2fc69b3bcd4386e5c1cd7ebd958, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverRange: 1
 --- !u!114 &114257968466901038
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1149,6 +1163,19 @@ MonoBehaviour:
   inkConversationPath: wizard
   inkMissionName: Tutorial_KillNuisance
   mission: {fileID: 11400000, guid: 20867fd8a9efb8e4baf94e4e683425b1, type: 2}
+--- !u!114 &114419442973730064
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1003125731606806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dafdb4bf0f548740851500f7204f665, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  angleToLookEachSide: 15
+  speed: 0.3
 --- !u!114 &114888721516274848
 MonoBehaviour:
   m_ObjectHideFlags: 1
