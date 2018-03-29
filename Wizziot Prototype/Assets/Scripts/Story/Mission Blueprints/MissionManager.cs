@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//TODO: Add UI Representation
 public class MissionManager : MonoBehaviour {
 
     private static MissionManager _MissionManager;
@@ -47,24 +46,20 @@ public class MissionManager : MonoBehaviour {
         }
     }
 
-    //TODO: Watch brackeys combat/enemies and events to see if events would be more applicable than inventory style system
-    //Who calls this? In enemy Die() method? Player Controller?
-    public void RegisterKill(Enemy enemy)
+    public void RegisterKill()
     {
-        List<Mission> missions = activeMissions.FindAll(x => x is Mission);
-
-        foreach (KillMission killMission in missions)
+        foreach (KillMission killMission in activeMissions)
         {
-            killMission.UpdateMission(enemy);
+            killMission.UpdateMission(PlayerManager.Instance.playerControls.Target);
         }
     }
 
-    public void RegisterWaypointReached()
+    public void RegisterWaypointReached(Vector3 waypoint)
     {
-
+        Mission matchingMission = activeMissions.Find(x => x.location == waypoint);
     }
 
-    public void RegisterItemFound()
+    public void RegisterItemFound(Item item)
     {
 
     }

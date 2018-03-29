@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
-    public event Action OnEscapeKey;
+    public event Action OnEscapeKey;    //Used to signify when the "Escape" button has been pressed - clears UI, pauses the game, etc...
 
     // ----- References ----- //
     private PauseMenu pauseMenu;
@@ -20,11 +20,13 @@ public class PlayerController : MonoBehaviour {
 
     //Interaction
     private Targetable target;
+    public Targetable Target { get { return target; } }
 
     public float Speed { get { return playerStats.speed; } }
     public float TurnSpeed { get { return playerStats.turnSpeed; } }
 
-    private void Awake()    //References & initialisation - Start is once scripts are definitely enabled - Awake the GOs are all enabled
+    //References & initialisation - Start is once scripts are definitely enabled - Awake the GOs are all enabled
+    private void Awake()    
     {
         abilityComponent = GetComponent<AbilityComponent>();
         targetIndicator = GetComponentInChildren<Projector>();
@@ -49,20 +51,23 @@ public class PlayerController : MonoBehaviour {
         GameMetaInfo.allKeybinds.Add(KeyCode.I, new Action(() => inventoryUI.gameObject.SetActive(!inventoryUI.activeSelf)));
     }
 
-    //EVENT SUBSCRIPTIONS
+    //EVENT SUBSCRIPTIONS & Script property references
     private void Start()
     {
         storyManager = StoryManager.Instance;
-        //EVENT SUBSCRIPTION
+        //EVENT: onTargetDestroyed - Invoked by target of player
         PlayerManager.Instance.onTargetDestroyed += ResetTarget;    //Delegate: Reset target indicator when target is destroyed
+        PlayerManager.Instance.onTargetDestroyed += MissionManager.Instance.RegisterKill;    //Delegate: Reset target indicator when target is destroyed
     }
 
     //UNSUBSCRIBE EVENTS
     private void OnDisable()
     {
         PlayerManager.Instance.onTargetDestroyed -= ResetTarget;
+        PlayerManager.Instance.onTargetDestroyed -= MissionManager.Instance.RegisterKill;
     }
 
+    //Call Handle methods
     private void Update () {
         HandleDirectionInput();
         HandleTargeting();
@@ -70,11 +75,13 @@ public class PlayerController : MonoBehaviour {
         HandleConversationInput();
     }
 
+    //Used as a keybind action for the "Escape" key event
     private void TriggerEscapeAction()
     {
         if (OnEscapeKey != null) OnEscapeKey.Invoke();
     }
 
+    //Simple axis movement
     private void HandleDirectionInput()
     {
         float x = Input.GetAxis("Horizontal") * TurnSpeed * Time.deltaTime;
@@ -83,6 +90,7 @@ public class PlayerController : MonoBehaviour {
         transform.Translate(0, 0, z);
     }
 
+    //Sends a raycast to detect "Targetable" type objects on the "Object" layer, ignoring trigger colliders
     private void HandleTargeting()
     {
         //Must be within 10 metres - using sqr values since getting root is expensive
@@ -148,6 +156,7 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    //Use the keybind dictionary to perform actions
     private void HandleKeyboardInput()
     {
         for (int i = 0; i < Enum.GetValues(typeof(KeyCode)).Cast<int>().Last(); i++)
@@ -168,6 +177,7 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    //Make story choices depending on keyboard input
     private void HandleConversationInput()
     {
         if (target != null)
@@ -184,11 +194,13 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    //Resets the target indicator
     private void ResetTarget()
     {
         SetTargetIndicatorPos(false);
     }
 
+    //Places a projector on the current target
     private void SetTargetIndicatorPos(bool aboveTarget)
     {
         float height;
@@ -210,6 +222,7 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    //Attempts to converse with story NPCs or pick up objects
     private void Interact()
     {
         switch (target.targetType)
@@ -229,13 +242,15 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    //Checks target can be attacked & handles "self abilities"
     private void InstantAttack(Abilities abil, Targetable target = null)
     {
         if (target == null && GameMetaInfo._Is_Defense_Ability(abil))
         {
             abilityComponent.PlayerUseInstant(abil, transform);
         }
-        else if((target.GetComponent<Targetable>().targetType == TargetType.Enemy || target.tag.Equals(GameMetaInfo._TAG_SHOOTABLE_BY_PLAYER)) && !GameMetaInfo._Is_Defense_Ability(abil))
+        else if((target.GetComponent<Targetable>().targetType == TargetType.Enemy || target.tag.Equals(GameMetaInfo._TAG_SHOOTABLE_BY_PLAYER)) 
+            && !GameMetaInfo._Is_Defense_Ability(abil))
         {
             abilityComponent.PlayerUseInstant(abil, target.transform);
         }

@@ -35,7 +35,7 @@ public class EntityStats : MonoBehaviour {
 
     private void Awake()
     {
-        onDeath += RemoveTargetFromSelf;
+        onDeath += InvokeTargetDestroyedEvent;
 
         CurrentHealth = maxHealth;
         CurrentStamina = maxStamina;
@@ -74,7 +74,8 @@ public class EntityStats : MonoBehaviour {
         if(CurrentStamina != maxStamina) CurrentStamina = Mathf.Lerp(CurrentStamina, maxStamina, Time.deltaTime / statModifiers[Stats.Fitness].StatValue);
     }
 
-    public virtual void RemoveTargetFromSelf()
+    //Check if target & reset target indicator and invoke onTargetDestroyed if so
+    public virtual void InvokeTargetDestroyedEvent()
     {
         Projector playerTarget = GetComponentInChildren<Projector>();
         if(playerTarget != null)
@@ -115,14 +116,14 @@ public class EntityStats : MonoBehaviour {
     public void Damage(float amount)
     {
         //1. Mitigate Attack
-        if(UnityEngine.Random.Range(0, 100) < statModifiers[Stats.MitigationChance].StatValue)
+        if(UnityEngine.Random.Range(0, 100) < statModifiers[Stats.MitigationChance].StatValue)  //Max 3% mitigation chance (range: 0 -> 3 for Stat Value)
         {
             Debug.Log("Attack mitigated");
             return;
         }
 
         //2. Apply damage reduction
-        amount /= statModifiers[Stats.DamageReduction].StatValue;
+        amount /= statModifiers[Stats.DamageReduction].StatValue;   //Max 300% damage reduction (Stat Value: 3)
         
         CurrentHealth -= (int)amount;
 
