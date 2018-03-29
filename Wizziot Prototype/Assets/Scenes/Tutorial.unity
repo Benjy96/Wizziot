@@ -227,7 +227,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114082580686691578, guid: 85da5cf61d9ef5a48a2944a2411182e4,
         type: 2}
-      propertyPath: speed
+      propertyPath: hoverRange
       value: 0.3
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -235,7 +235,7 @@ public class PlayerController : MonoBehaviour {
         {
             abilityComponent.PlayerUseInstant(abil, transform);
         }
-        else if(target.GetComponent<Targetable>().targetType == TargetType.Enemy || target.tag.Equals(GameMetaInfo._TAG_SHOOTABLE_BY_PLAYER))
+        else if((target.GetComponent<Targetable>().targetType == TargetType.Enemy || target.tag.Equals(GameMetaInfo._TAG_SHOOTABLE_BY_PLAYER)) && !GameMetaInfo._Is_Defense_Ability(abil))
         {
             abilityComponent.PlayerUseInstant(abil, target.transform);
         }

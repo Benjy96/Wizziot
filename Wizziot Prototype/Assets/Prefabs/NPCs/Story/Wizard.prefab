@@ -1147,7 +1147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e6dd2fc69b3bcd4386e5c1cd7ebd958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hoverRange: 1
+  hoverRange: 0.3
 --- !u!114 &114257968466901038
 MonoBehaviour:
   m_ObjectHideFlags: 1
