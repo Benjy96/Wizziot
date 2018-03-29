@@ -83,6 +83,7 @@ public class EntityStats : MonoBehaviour {
         }
     }
 
+    //TODO for loop for every stat
     public void ApplyStatModifiers()
     {
         //Apply Modifiers
@@ -121,8 +122,8 @@ public class EntityStats : MonoBehaviour {
         }
 
         //2. Apply damage reduction
-        amount *= statModifiers[Stats.DamageReduction].StatValue;
-
+        amount /= statModifiers[Stats.DamageReduction].StatValue;
+        
         CurrentHealth -= (int)amount;
 
         //3. Reduce health
