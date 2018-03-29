@@ -109,11 +109,14 @@ public class PlayerController : MonoBehaviour {
                     if (pointHit.transform.GetComponent<Targetable>() != null)  
                     {
                         Targetable t = pointHit.transform.GetComponent<Targetable>();
+                        Debug.Log(t.name);
                         if (t == null) t = pointHit.transform.GetComponentInParent<Targetable>();
                         if (t == null) return;
 
                         TargetType currentTargetType = t.targetType;
-                        
+
+                        Debug.Log(currentTargetType);
+
                         switch (currentTargetType)
                         {
                             case TargetType.Item:

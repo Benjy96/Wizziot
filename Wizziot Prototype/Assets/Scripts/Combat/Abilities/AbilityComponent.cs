@@ -52,7 +52,7 @@ public class AbilityComponent : MonoBehaviour {
     public GameObject healPrefab;
     [Tooltip("Adds onto an existing 5s CD")] public float additionalHealCooldown;
     private float healFinishTime;
-    private float healFXTime;
+    private float healFXTime = -1f;    //-.65f BECAUSE EFFECT TIME IS INACCURATE - THIS IS TO SYNC THE FX WITH HEALTH INCREASE
 
     private void Awake()
     {
@@ -66,7 +66,7 @@ public class AbilityComponent : MonoBehaviour {
         if (healPrefab != null)
         {
             additionalHealCooldown += healPrefab.GetComponent<ParticleSystem>().main.duration;
-            healFXTime = healPrefab.GetComponent<ParticleSystem>().main.duration;
+            healFXTime += healPrefab.GetComponent<ParticleSystem>().main.duration;
         }
     }
 
@@ -157,7 +157,7 @@ public class AbilityComponent : MonoBehaviour {
                         break;
 
                     case Abilities.Confuse:
-                        StartCoroutine(Confuse());
+                        if(Time.time > confuseFinishTime) StartCoroutine(Confuse());
                         break;
 
                     case Abilities.Vortex:
@@ -171,7 +171,7 @@ public class AbilityComponent : MonoBehaviour {
                         break;
 
                     case Abilities.Heal:
-                        StartCoroutine(Heal(damageToDo));
+                        if(Time.time > healFinishTime) StartCoroutine(Heal(damageToDo));
                         break;
                 }
                 //Add to GCD if not an AoE - AoEs handle cooldown with bool check to verify they have actually been placed
@@ -212,26 +212,18 @@ public class AbilityComponent : MonoBehaviour {
 
     private IEnumerator Confuse()
     {
-        //Check if previous confuse debuff has worn off
-        if (Time.time > confuseFinishTime)
+        //Enable effect
+        EmotionChip e = currentTarget.GetComponent<EmotionChip>();
+        if(e != null)
         {
-            //Enable effect
-            EmotionChip e = currentTarget.GetComponent<EmotionChip>();
-            if(e != null)
-            {
-                Debug.Log("Influencing " + currentTarget.name + " with confuse...");
-                e.Influence(Emotion.Fear, 1f);
-            }
-            GameObject confuseFX = Instantiate(confusePrefab, currentTarget, false);
-            //Disable effect
-            confuseFinishTime = Time.time + confuseDuration;
-            yield return new WaitForSeconds(confuseDuration);
-            Destroy(confuseFX);
+            Debug.Log("Influencing " + currentTarget.name + " with confuse...");
+            e.Influence(Emotion.Fear, 1f);
         }
-        else
-        {
-            Debug.Log("Confuse not ready!");
-        }
+        GameObject confuseFX = Instantiate(confusePrefab, currentTarget, false);
+        //Disable effect
+        confuseFinishTime = Time.time + confuseDuration;
+        yield return new WaitForSeconds(confuseDuration);
+        Destroy(confuseFX);
     }
 
     private void AoE(GameObject spellPrefab, float damage, ref bool aoePlaced)
@@ -280,7 +272,7 @@ public class AbilityComponent : MonoBehaviour {
 
     private IEnumerator Heal(float amount)
     {
-        if(currentTarget != null && Time.time > healFinishTime)
+        if(currentTarget != null)
         {
             healFinishTime = Time.time + additionalHealCooldown;
             GameObject fx = Instantiate(healPrefab, currentTarget, false);

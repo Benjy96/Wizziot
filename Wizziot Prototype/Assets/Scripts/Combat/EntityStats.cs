@@ -156,7 +156,7 @@ public class EntityStats : MonoBehaviour {
             }
 
             //2. Apply damage reduction
-            damage *= statModifiers[Stats.DamageReduction].StatValue;
+            damage /= statModifiers[Stats.DamageReduction].StatValue;
 
             CurrentHealth -= (int)damage;
 

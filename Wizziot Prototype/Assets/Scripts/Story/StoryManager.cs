@@ -86,7 +86,7 @@ public class StoryManager : MonoBehaviour {
 
             //Find out if NPC has "anything to say"
             conversationTarget = targetNPC;
-            scriptManager.StoryPosition = targetNPC.inkPath;
+            scriptManager.StoryPosition = targetNPC.inkConversationPath;
 
             if (scriptManager.ContentAvailable)
             {

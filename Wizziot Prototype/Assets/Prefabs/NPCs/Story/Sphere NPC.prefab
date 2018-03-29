@@ -97,7 +97,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetType: 3
-  inkPath: sphere.interact
+  inkConversationPath: sphere.interact
+  inkMissionName: 
   mission: {fileID: 0}
   pushOffForce: 30
 --- !u!114 &114823869058487346
