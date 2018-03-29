@@ -240,9 +240,9 @@ public class PlayerController : MonoBehaviour {
     }
 
     //Checks target can be attacked & handles "self abilities"
-    private void InstantAttack(Abilities abil, Targetable target = null)
+    private void InstantAttack(Abilities abil, Targetable target)
     {
-        if (target == null && GameMetaInfo._Is_Defense_Ability(abil))
+        if (GameMetaInfo._Is_Defense_Ability(abil))
         {
             abilityComponent.PlayerUseInstant(abil, transform);
         }
