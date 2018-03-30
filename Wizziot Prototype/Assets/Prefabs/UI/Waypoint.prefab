@@ -36,6 +36,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4787456922743650}
+  - component: {fileID: 114658354439596614}
   - component: {fileID: 199931314026103716}
   - component: {fileID: 198210956481529096}
   - component: {fileID: 135609816271941910}
@@ -89,6 +90,17 @@ MonoBehaviour:
   effectWidth: 2
   effectDistance: 32
   force: 0
+--- !u!114 &114658354439596614
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1593002576045128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8336a925504e5f54689022fb9a6e578f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!135 &135609816271941910
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -99,7 +111,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 16
+  m_Radius: 20
   m_Center: {x: 0, y: 0, z: 16}
 --- !u!198 &198210956481529096
 ParticleSystem:

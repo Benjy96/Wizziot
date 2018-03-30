@@ -37,7 +37,6 @@ public class MissionManager : MonoBehaviour {
     {
         Mission grantedMission = mission.CreateMission();
 
-        //TODO: Change to dict -> if contains(mission.name) - using SOs and need to differentiate missions
         if (!activeMissions.Contains(grantedMission) && activeMissions.Count < maxMissions)
         {
             activeMissions.Add(grantedMission);
@@ -51,14 +50,28 @@ public class MissionManager : MonoBehaviour {
     {
         activeMissions.Remove(mission);
         completedMissions.Add(mission);
+        if (onActiveMissionsChanged != null) onActiveMissionsChanged.Invoke();
     }
 
     public void RegisterKill()
     {
+        Mission[] completed = new Mission[maxMissions];
+        int count = 0;
         foreach (Mission mission in activeMissions)
         {
             if (mission == null || mission.GetType() != typeof(KillMission)) continue;
             mission.UpdateMission(PlayerManager.Instance.playerControls.Target);
+            if (mission.completed) completed[count] = mission;
+            count++;
+        }
+
+        for (int i = 0; i < completed.Length; i++)
+        {
+            if (completed[i] != null)
+            {
+                completed[i].CompleteMission();
+                FinishMission(completed[i]);
+            }
         }
     }
 
@@ -69,10 +82,23 @@ public class MissionManager : MonoBehaviour {
 
     public void RegisterItemFound(Item item)
     {
+        Mission[] completed = new Mission[maxMissions];
+        int count = 0;
         foreach (Mission mission in activeMissions)
         {
             if (mission == null || mission.GetType() != typeof(CollectMission)) continue;
             mission.UpdateMission(item);
+            if (mission.completed) completed[count] = mission;
+            count++;
+        }
+
+        for (int i = 0; i < completed.Length; i++)
+        {
+            if (completed[i] != null)
+            {
+                completed[i].CompleteMission();
+                FinishMission(completed[i]);
+            }
         }
     }
 }

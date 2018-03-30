@@ -8,9 +8,11 @@ public class CollectMission : Mission {
     //Check if item matches the specified "collectItem"
     public override void UpdateMission(Targetable item)
     {
-        if (item.GetType() == collectItem.GetType() && (location - item.transform.position).sqrMagnitude < locationRadius)
+        string itemName = item.name.Split('(')[0];  //Disregard clones
+        if (itemName.Equals(collectItem.name) && (location - item.transform.position).sqrMagnitude < waypointRadius * waypointRadius)
         {
-            CompleteMission();
+            completed = true;
+            return;
         }
     }
 }

@@ -166,8 +166,8 @@ public class PlayerController : MonoBehaviour {
                 }
                 catch (Exception e)
                 {
-                    Debug.Log(e.Source);
-                    Debug.Log("Either Keybind not able to trigger or an exception occurred");
+                Debug.Log(e.StackTrace);
+                Debug.Log("Either Keybind not able to trigger or an exception occurred");
                 }
             }
         }

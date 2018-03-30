@@ -11,8 +11,28 @@ public class MissionUI : MonoBehaviour {
 
     public void ActivateMission(Mission mission)
     {
-        title.text = mission.name;
-        body.text = "test";
+        title.text = mission.title;
+        if(mission.GetType() == typeof(KillMission))
+        {
+            KillMission kMission = (KillMission)mission;
+            int killRequiredIndex = 0;  //Track list of enemies / kills required per enemy type (each list index corresponds, e.g. enemy type 01 -> kill 5. Each stored in 2 lists.
+            body.text = ""; //Replace placeholder text
+            foreach (GameObject x in kMission.killTypes)
+            {
+                if (killRequiredIndex > 0) body.text += "\n";
+                body.text += x.name + " Kills: 0" + "/" + kMission.killsRequired[killRequiredIndex];
+                killRequiredIndex++;
+            }
+        }
+        else if(mission.GetType() == typeof(CollectMission))
+        {
+
+        }
+        else //normal mission
+        {
+
+        }
+
         currentWaypoint = mission.location;
     }
 

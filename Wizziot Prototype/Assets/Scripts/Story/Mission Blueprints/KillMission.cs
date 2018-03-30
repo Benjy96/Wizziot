@@ -5,21 +5,27 @@ using UnityEngine;
 public class KillMission : Mission {
 
     public List<GameObject> killTypes;
-    public int killsRequired;
+    public List<int> killsRequired;
 
     //Check if enemy matches any of the specified "killTypes"
     public override void UpdateMission(Targetable enemy)
     {
+        int killTypeIndex = 0;
         string enemyName = enemy.name.Split('(')[0];    //disregard clone part of name
-        Debug.Log("Updating mission with " + enemyName);
+        
         foreach (GameObject x in killTypes)
         {
             //If enemy matches type in kill types and the distance is within range of the waypoint, update the quest
-            if(x.name.Equals(enemyName) && (location - enemy.transform.position).sqrMagnitude < (locationRadius * locationRadius))
+            if(x.name.Equals(enemyName) && (location - enemy.transform.position).sqrMagnitude < (waypointRadius * waypointRadius))
             {
                 Debug.Log("Quest conditions met, updating progress");
-                killsRequired--;
-                if (killsRequired <= 0) CompleteMission();
+                killsRequired[killTypeIndex]--;
+                if (killsRequired[killTypeIndex] <= 0)
+                {
+                    completed = true;
+                    return;
+                }
+                killTypeIndex++;
             }
         }
     }
