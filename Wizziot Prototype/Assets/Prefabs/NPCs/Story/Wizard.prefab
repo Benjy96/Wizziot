@@ -1149,7 +1149,7 @@ MonoBehaviour:
   targetType: 0
   inkConversationPath: wizard
   inkMissionName: Tutorial_KillNuisance
-  mission: {fileID: 11400000, guid: 20867fd8a9efb8e4baf94e4e683425b1, type: 2}
+  mission: {fileID: 11400000, guid: 89e27585fc32755429fc6ffe6d116839, type: 2}
 --- !u!114 &114419442973730064
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -9,11 +9,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8aeeb188642b88645929862131006b01, type: 3}
-  m_Name: Tutorial_KillNuisanceEnemies
+  m_Name: KillEnemies
   m_EditorClassIdentifier: 
   title: Rid Nuisance
   additionalMissionStages: []
+  missionStage: 0
   location: {x: 5, y: 0, z: 90}
+  completed: 0
   killTypes:
   - {fileID: 1967363257081838, guid: ffda47dcd015b5d42822cee50b149c07, type: 2}
   killsRequired: 01000000

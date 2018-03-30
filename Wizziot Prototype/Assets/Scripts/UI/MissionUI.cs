@@ -9,10 +9,12 @@ public class MissionUI : MonoBehaviour {
 
     private Vector3 currentWaypoint;
 
-    public void ActivateMission(Mission mission)
+    public void SetMissionText(Mission mission)
     {
         title.text = mission.title;
-        if(mission.GetType() == typeof(KillMission))
+        currentWaypoint = mission.location;
+
+        if (mission.GetType() == typeof(KillMission))
         {
             KillMission kMission = (KillMission)mission;
             int killRequiredIndex = 0;  //Track list of enemies / kills required per enemy type (each list index corresponds, e.g. enemy type 01 -> kill 5. Each stored in 2 lists.
@@ -20,20 +22,21 @@ public class MissionUI : MonoBehaviour {
             foreach (GameObject x in kMission.killTypes)
             {
                 if (killRequiredIndex > 0) body.text += "\n";
-                body.text += x.name + " Kills: 0" + "/" + kMission.killsRequired[killRequiredIndex];
+                body.text += x.name + " Kills Left: " + kMission.killsRequired[killRequiredIndex];
                 killRequiredIndex++;
             }
         }
         else if(mission.GetType() == typeof(CollectMission))
         {
-
+            CollectMission cMission = (CollectMission)mission;
+            body.text = ""; //Replace placeholder text
+            body.text = "Find: " + cMission.collectItem.name;
         }
         else //normal mission
         {
-
+            body.text = "";
+            body.text = "Go to Waypoint: " + currentWaypoint;
         }
-
-        currentWaypoint = mission.location;
     }
 
     //Rotate compass - rotates differently depending on Camera State (Look or Follow) - a bunch of trigonometry, so beware

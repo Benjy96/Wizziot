@@ -15,7 +15,7 @@ public class MissionManager : MonoBehaviour {
     private List<Mission> completedMissions;
     public int maxMissions = 3;
 
-    public Action onActiveMissionsChanged;   //update UI etc
+    public Action onActiveMissionsChanged;   //update missions displayed in UI
 
     private void Awake()
     {
@@ -50,6 +50,23 @@ public class MissionManager : MonoBehaviour {
     {
         activeMissions.Remove(mission);
         completedMissions.Add(mission);
+        
+        //Activate next mission stage
+        if(mission.additionalMissionStages.Length > 0)
+        {
+            //Activate first non-null stage
+            foreach (Mission m in mission.additionalMissionStages)
+            {
+                //If stage is null or has been completed, continue
+                if (m == null || completedMissions.Contains(m)) continue;
+                else
+                {
+                    GrantMission(m);
+                    break;
+                }
+            }
+        }
+
         if (onActiveMissionsChanged != null) onActiveMissionsChanged.Invoke();
     }
 
@@ -65,6 +82,8 @@ public class MissionManager : MonoBehaviour {
             count++;
         }
 
+        if (onActiveMissionsChanged != null && count > 0) onActiveMissionsChanged.Invoke();
+
         for (int i = 0; i < completed.Length; i++)
         {
             if (completed[i] != null)
@@ -75,9 +94,31 @@ public class MissionManager : MonoBehaviour {
         }
     }
 
-    public void RegisterWaypointReached(Vector3 waypoint)
+    public void RegisterWaypointReached(Waypoint waypoint)
     {
-        Mission matchingMission = activeMissions.Find(x => x.location == waypoint);
+        Mission[] completed = new Mission[maxMissions];
+        int count = 0;
+        foreach (Mission mission in activeMissions)
+        {
+            if (mission == null || mission.GetType() != typeof(Mission)) continue;
+            if (mission.location == waypoint.transform.position)
+            {
+                mission.completed = true;
+                completed[count] = mission;
+            }
+            count++;
+        }
+
+        if (onActiveMissionsChanged != null && count > 0) onActiveMissionsChanged.Invoke();
+
+        for (int i = 0; i < completed.Length; i++)
+        {
+            if (completed[i] != null)
+            {
+                completed[i].CompleteMission();
+                FinishMission(completed[i]);
+            }
+        }
     }
 
     public void RegisterItemFound(Item item)
@@ -91,6 +132,8 @@ public class MissionManager : MonoBehaviour {
             if (mission.completed) completed[count] = mission;
             count++;
         }
+
+        if (onActiveMissionsChanged != null && count > 0) onActiveMissionsChanged.Invoke();
 
         for (int i = 0; i < completed.Length; i++)
         {

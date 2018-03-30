@@ -8,13 +8,14 @@ public class Mission : ScriptableObject {
     MissionManager missionManager = MissionManager.Instance;
 
     public Mission[] additionalMissionStages;
-    public Vector3 location;
 
-    public bool completed = false;
+    public Vector3 location;
 
     private GameObject waypointObject;
     protected float waypointRadius;
     protected Waypoint waypoint;
+
+    [HideInInspector] public bool completed = false;
 
     //Insantiate a Mission SO using Resources folder to find asset type
     public Mission CreateMission()
@@ -25,9 +26,6 @@ public class Mission : ScriptableObject {
         newMission.waypointObject = Instantiate(MissionManager.Instance.waypointPrefab, location, Quaternion.Euler(-90f, 0f, 0f));
         newMission.waypointRadius = newMission.waypointObject.GetComponent<SphereCollider>().radius;
         newMission.waypoint = newMission.waypointObject.GetComponent<Waypoint>();
-        
-        //Event Subscription - Call Update Mission (No params) on Player enter trigger event
-        newMission.waypoint.OnPlayerEnteredWaypoint += UpdateMission;
 
         return newMission;
     }
@@ -36,27 +34,12 @@ public class Mission : ScriptableObject {
     {
         if (missionManager.activeMissions.Contains(this))
         {
-            //Event Removal
-            waypoint.OnPlayerEnteredWaypoint -= UpdateMission;
             //Remove waypoint
             Destroy(waypointObject);
         }
         else
         {
             throw new System.Exception("Mission manager is not storing this mission!: " + name);
-        }
-    }
-
-    //Called by an event "OnPlayerEnteredWaypoint" when player enters waypoint
-    public virtual void UpdateMission()
-    {
-        if(additionalMissionStages.Length > 0)
-        {
-            return;
-        }
-        else
-        {
-            completed = true;
         }
     }
 

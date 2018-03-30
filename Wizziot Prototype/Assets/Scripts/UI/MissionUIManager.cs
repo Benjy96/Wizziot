@@ -33,7 +33,7 @@ public class MissionUIManager : MonoBehaviour {
             if(i < missionManager.activeMissions.Count)
             {
                 missions[i].gameObject.SetActive(true);
-                missions[i].ActivateMission(missionManager.activeMissions[i]);
+                missions[i].SetMissionText(missionManager.activeMissions[i]);
             }
             else
             {

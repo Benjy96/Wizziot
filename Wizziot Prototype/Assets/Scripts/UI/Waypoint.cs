@@ -8,10 +8,9 @@ public class Waypoint : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("other entered" + other.name);
         if (other.tag.Equals("Player") || other.name.Equals("Player"))
         {
-            if (OnPlayerEnteredWaypoint != null) OnPlayerEnteredWaypoint.Invoke();
+            MissionManager.Instance.RegisterWaypointReached(this);
         }
     }
 }
