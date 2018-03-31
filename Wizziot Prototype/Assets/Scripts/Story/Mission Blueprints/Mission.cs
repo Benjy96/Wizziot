@@ -3,12 +3,17 @@
 [CreateAssetMenu(fileName = "Standard Mission", menuName = "Missions/Standard Mission")]
 public class Mission : ScriptableObject {
 
-    public string title;
-
     MissionManager missionManager = MissionManager.Instance;
 
-    public Mission[] additionalMissionStages;
+    [Header("Displayed in Journal and Log")]
+    public string title;
+    public string description;
 
+    [Header("Completion Reward")]
+    public Item[] missionRewards;
+
+    [Header("Gameplay")]
+    public Mission[] additionalMissionStages;
     public Vector3 location;
 
     private GameObject waypointObject;

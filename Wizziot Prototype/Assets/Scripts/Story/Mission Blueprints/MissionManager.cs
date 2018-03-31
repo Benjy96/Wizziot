@@ -16,6 +16,7 @@ public class MissionManager : MonoBehaviour {
     public int maxMissions = 3;
 
     public Action onActiveMissionsChanged;   //update missions displayed in UI
+    public Action onJournalOpened;
 
     private void Awake()
     {

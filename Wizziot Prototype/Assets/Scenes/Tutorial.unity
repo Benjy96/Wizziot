@@ -1062,21 +1062,11 @@ Prefab:
       propertyPath: inventoryUI
       value: 
       objectReference: {fileID: 904664195}
-    - target: {fileID: 114671688569003678, guid: 0e6afb90b2ea6fb4391ecd6b4a9f34a2,
+    - target: {fileID: 114232869456884162, guid: 0e6afb90b2ea6fb4391ecd6b4a9f34a2,
         type: 2}
-      propertyPath: speed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 54694654279500918, guid: 0e6afb90b2ea6fb4391ecd6b4a9f34a2,
-        type: 2}
-      propertyPath: m_UseGravity
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 54694654279500918, guid: 0e6afb90b2ea6fb4391ecd6b4a9f34a2,
-        type: 2}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
+      propertyPath: missionJournal
+      value: 
+      objectReference: {fileID: 775436104}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0e6afb90b2ea6fb4391ecd6b4a9f34a2, type: 2}
   m_IsPrefabParent: 0
@@ -2382,6 +2372,11 @@ Transform:
   m_PrefabParentObject: {fileID: 4711729357603256, guid: 85da5cf61d9ef5a48a2944a2411182e4,
     type: 2}
   m_PrefabInternal: {fileID: 24582992}
+--- !u!1 &775436104 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1831361697729098, guid: 1ec208e9e5307db4ba7d0bc2a98a1d08,
+    type: 2}
+  m_PrefabInternal: {fileID: 60654791}
 --- !u!1 &793808945 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100000, guid: dd2992225e8a5064787a7fc1ce537bcd, type: 3}

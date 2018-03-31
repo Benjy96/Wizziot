@@ -155,7 +155,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1458570314575524}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 2.23, z: -5.92}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4817542374885658}
@@ -297,7 +297,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -368,6 +368,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryUI: {fileID: 0}
+  missionJournal: {fileID: 0}
 --- !u!114 &114671688569003678
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -382,7 +383,7 @@ MonoBehaviour:
   maxHealth: 100
   maxStamina: 100
   sqrMaxTargetDistance: 225
-  speed: 6
+  speed: 10
   turnSpeed: 100
   instantAbilityCost: 40
   areaAbilityCost: 30

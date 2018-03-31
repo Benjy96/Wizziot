@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour {
 
     // ----- Components ----- //
     public GameObject inventoryUI;
+    public MissionJournal missionJournal;
 
     private StoryManager storyManager;
     private AbilityComponent abilityComponent;
@@ -49,6 +50,7 @@ public class PlayerController : MonoBehaviour {
         //Camera
         GameMetaInfo.allKeybinds.Add(KeyCode.LeftAlt, cam.GetComponent<PlayerCamera>().SwitchCameraMode);
         GameMetaInfo.allKeybinds.Add(KeyCode.I, new Action(() => inventoryUI.gameObject.SetActive(!inventoryUI.activeSelf)));
+        GameMetaInfo.allKeybinds.Add(KeyCode.J, new Action(() => TriggerJournalLoad()));
     }
 
     //EVENT SUBSCRIPTIONS & Script property references
@@ -77,6 +79,12 @@ public class PlayerController : MonoBehaviour {
     private void TriggerEscapeAction()
     {
         if (OnEscapeKey != null) OnEscapeKey.Invoke();
+    }
+
+    //Open & Update the Mission Journal - event
+    private void TriggerJournalLoad()
+    {
+        if (MissionManager.Instance.onJournalOpened != null) MissionManager.Instance.onJournalOpened.Invoke();
     }
 
     //Simple axis movement
@@ -159,16 +167,16 @@ public class PlayerController : MonoBehaviour {
             KeyCode code = (KeyCode)i;
             if (Input.GetKeyDown(code) && GameMetaInfo.allKeybinds.ContainsKey(code))
             {
-                try
-                {
+                //try
+                //{
                     //todo: check target ain't null? or do in the methods / prob for abilcomp methods
                     GameMetaInfo.allKeybinds[code]();
-                }
-                catch (Exception e)
-                {
-                Debug.Log(e.StackTrace);
-                Debug.Log("Either Keybind not able to trigger or an exception occurred");
-                }
+                //}
+                //catch (Exception e)
+                //{
+                //Debug.Log(e.StackTrace);
+                //Debug.Log("Either Keybind not able to trigger or an exception occurred");
+                //}
             }
         }
     }
