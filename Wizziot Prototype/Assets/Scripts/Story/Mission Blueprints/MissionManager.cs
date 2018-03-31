@@ -78,12 +78,18 @@ public class MissionManager : MonoBehaviour {
     private void GrantRewards(Mission mission)
     {
         //Grant rewards
-        foreach (GameObject item in mission.missionRewards)
+        foreach (GameObject itemPrefab in mission.missionRewards)
         {
-            Item i = item.GetComponent<Item>();
+            //Make item of prefab
+            GameObject worldItem = Instantiate(itemPrefab, PlayerManager.Instance.player.transform.position, Quaternion.identity);
+            Item i = worldItem.GetComponent<Item>();
             if (i != null)
             {
                 i.AddToInventory();
+            }
+            else
+            {
+                Destroy(worldItem);
             }
         }
     }
