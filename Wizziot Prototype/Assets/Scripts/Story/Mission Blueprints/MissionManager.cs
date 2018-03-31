@@ -67,8 +67,25 @@ public class MissionManager : MonoBehaviour {
                 }
             }
         }
+        else
+        {
+            GrantRewards(mission);
+        }
 
         if (onActiveMissionsChanged != null) onActiveMissionsChanged.Invoke();
+    }
+
+    private void GrantRewards(Mission mission)
+    {
+        //Grant rewards
+        foreach (GameObject item in mission.missionRewards)
+        {
+            Item i = item.GetComponent<Item>();
+            if (i != null)
+            {
+                i.AddToInventory();
+            }
+        }
     }
 
     public void RegisterKill()

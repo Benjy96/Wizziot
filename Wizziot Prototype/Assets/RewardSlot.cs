@@ -16,7 +16,7 @@ public class RewardSlot : MonoBehaviour {
         icon.sprite = item.icon;
     }
 
-    public void ClearSlot(Item item)
+    public void ClearSlot()
     {
         icon.sprite = null;
         icon.enabled = false;

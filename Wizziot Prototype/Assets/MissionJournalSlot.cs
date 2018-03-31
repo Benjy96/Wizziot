@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class MissionJournalSlot : MonoBehaviour {
@@ -25,10 +24,12 @@ public class MissionJournalSlot : MonoBehaviour {
 
             for (int i = 0; i < mission.missionRewards.Length; i++)
             {
-                if (mission.missionRewards[i] != null)
+                if (mission.missionRewards[i] == null) continue;
+                Item item = mission.missionRewards[i].GetComponent<Item>();
+                if (item != null)
                 {
                     rewards[i].enabled = true;
-                    rewards[i].AddItem(mission.missionRewards[i]);
+                    rewards[i].AddItem(item);
                 }
             }
         }
@@ -36,9 +37,20 @@ public class MissionJournalSlot : MonoBehaviour {
 
     public void RemoveMission()
     {
-        rewards = null;
-        missionDescription = null;
-        missionTitle = null;
-        enabled = false;
+        if (rewards != null)
+        {
+            foreach (RewardSlot slot in rewards)
+            {
+                if (slot == null) continue;
+                slot.ClearSlot();
+            }
+        }
+
+        if (missionTitle != null && missionDescription != null)
+        {
+            missionDescription.text = "";
+            missionTitle.text = "";
+            enabled = false;
+        }
     }
 }

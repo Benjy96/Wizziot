@@ -2626,9 +2626,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   missionJournal: {fileID: 1831361697729098}
-  journalSlots: []
   missionLog: {fileID: 224133439212289804}
-  missions: []
 --- !u!114 &114027124217876984
 MonoBehaviour:
   m_ObjectHideFlags: 1

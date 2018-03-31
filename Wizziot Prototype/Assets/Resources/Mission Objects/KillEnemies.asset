@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Name: KillEnemies
   m_EditorClassIdentifier: 
   title: Rid Nuisance
+  description: 
+  missionRewards:
+  - {fileID: 1986077721385236, guid: 5a4dd3cba68095c4ca9bac724b8b00a7, type: 2}
   additionalMissionStages: []
-  missionStage: 0
   location: {x: 5, y: 0, z: 90}
   completed: 0
   killTypes:

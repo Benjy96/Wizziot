@@ -10,7 +10,7 @@ public class Mission : ScriptableObject {
     public string description;
 
     [Header("Completion Reward")]
-    public Item[] missionRewards;
+    public GameObject[] missionRewards;
 
     [Header("Gameplay")]
     public Mission[] additionalMissionStages;

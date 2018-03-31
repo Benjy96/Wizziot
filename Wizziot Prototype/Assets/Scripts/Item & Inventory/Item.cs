@@ -19,14 +19,22 @@ public class Item : Targetable {
         interactionRadius *= interactionRadius;
     }
 
-    public void PickUp(Transform player)
+    /// <summary>
+    /// AKA PickUp();
+    /// Adds an item object to the player's inventory.
+    /// Stores the ScriptableObject in inventory/applies to stats.
+    /// Parents the GameObject to the player and disables it.
+    /// </summary>
+    /// <param name="player"></param>
+    public void AddToInventory()
     {
-        if ((player.transform.position - transform.position).sqrMagnitude < interactionRadius)
+        if ((PlayerManager.Instance.player.transform.position - transform.position).sqrMagnitude < interactionRadius)
         {
             Inventory.Instance.Add(this);
             MissionManager.Instance.RegisterItemFound(this);
             gameObject.SetActive(false);
-            gameObject.transform.SetParent(player);
+            gameObject.transform.SetParent(PlayerManager.Instance.player.transform);
+            gameObject.transform.position = PlayerManager.Instance.player.transform.position;
         }
     }
 

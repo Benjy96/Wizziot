@@ -233,7 +233,7 @@ public class PlayerController : MonoBehaviour {
         switch (target.targetType)
         {
             case TargetType.Item:
-                target.GetComponent<Item>().PickUp(transform);
+                target.GetComponent<Item>().AddToInventory();
                 break;
 
             case TargetType.Story:
