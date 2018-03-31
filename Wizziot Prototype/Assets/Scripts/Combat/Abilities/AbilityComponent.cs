@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +9,8 @@ using UnityEngine;
 /// </summary>
 [RequireComponent(typeof(EntityStats))]
 public class AbilityComponent : MonoBehaviour {
+
+    public event Action OnPlayerAbilitySelected;
 
     private EntityStats statComponent;
     private EntityStats currentTargetStats;
@@ -114,6 +117,7 @@ public class AbilityComponent : MonoBehaviour {
         else
         {
             SelectAbility(ability);
+            if (OnPlayerAbilitySelected != null) OnPlayerAbilitySelected.Invoke();
         }
     }
 
@@ -127,6 +131,7 @@ public class AbilityComponent : MonoBehaviour {
         else
         {
             SelectAbility(ability);
+            if (OnPlayerAbilitySelected != null) OnPlayerAbilitySelected.Invoke();
         }
     }
 

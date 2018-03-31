@@ -6,6 +6,8 @@ using TMPro;
 //To display available abilities & their keybind
 public class AbilitySlot : MonoBehaviour {
 
+    public bool selectedAbilitySlot = false;
+
     public TextMeshProUGUI abilKeyDisplay;
     public Image abilityImage;
     public Abilities slotAbility;
@@ -13,11 +15,12 @@ public class AbilitySlot : MonoBehaviour {
     KeyCode keybind;
     // Use this for initialization
     void Start () {
-        PlaceAbilityInSlot(slotAbility);
+        if(!selectedAbilitySlot) PlaceAbilityInSlot(slotAbility);
 	}
 	
 	public void PlaceAbilityInSlot(Abilities abil)
     {
+        Debug.Log(selectedAbilitySlot + " abil: " + abil);
         //Keybind & text
         keybind = GameMetaInfo.abilityKeybinds[abil];
         abilKeyDisplay.text = keybind.ToString();

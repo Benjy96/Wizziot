@@ -9,6 +9,7 @@ public class PlayerManager : MonoBehaviour {
 
     public GameObject player;   //reference for runtime
     public PlayerController playerControls;
+    public AbilityComponent playerAbilityComponent;
     public Item[] equipped;
 
     public Action onTargetDestroyed;    //for targeting, xp, etc...
@@ -30,10 +31,10 @@ public class PlayerManager : MonoBehaviour {
 
         playerStats = player.GetComponent<EntityStats>();
         playerControls = player.GetComponent<PlayerController>();
+        playerAbilityComponent = player.GetComponent<AbilityComponent>();
         equipped = new Item[Enum.GetValues(typeof(EquipmentSlot)).Length];
     }
 
-    //TODO: Maybe make a separate EquipmentManager?
     /// <summary>
     /// Equip an item and apply its modifiers to the player's stats
     /// </summary>
