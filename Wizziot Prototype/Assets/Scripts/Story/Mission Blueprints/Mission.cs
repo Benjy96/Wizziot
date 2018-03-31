@@ -10,7 +10,7 @@ public class Mission : ScriptableObject {
     public string title;
     public string description;
 
-    [Header("Completion Reward - For Multi-Stage, Set in First (Parent) Only")]
+    [Header("Completion Reward - For Multi-Stage, Set in First Stage Only")]
     public GameObject missionReward1;
     public GameObject missionReward2;
     public GameObject missionReward3;

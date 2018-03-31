@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour {
 
@@ -39,18 +40,18 @@ public class PlayerController : MonoBehaviour {
 
         //TODO: Put all bindings in GameControls.cs
         //Abilities
-        GameMetaInfo.allKeybinds.Add(KeyCode.Alpha1, new Action(() => InstantAttack(Abilities.Zap, target)));
-        GameMetaInfo.allKeybinds.Add(KeyCode.Alpha2, new Action(() => InstantAttack(Abilities.Confuse, target)));
-        GameMetaInfo.allKeybinds.Add(KeyCode.Alpha3, new Action(() => abilityComponent.PlayerUseAoE(Abilities.Vortex)));
-        GameMetaInfo.allKeybinds.Add(KeyCode.Alpha4, new Action(() => abilityComponent.PlayerUseAoE(Abilities.Singularity)));
-        GameMetaInfo.allKeybinds.Add(KeyCode.Alpha5, new Action(() => InstantAttack(Abilities.Heal, target)));
+        GameMetaInfo.keybindActions.Add(KeyCode.Alpha1, new Action(() => InstantAttack(Abilities.Zap, target)));
+        GameMetaInfo.keybindActions.Add(KeyCode.Alpha2, new Action(() => InstantAttack(Abilities.Confuse, target)));
+        GameMetaInfo.keybindActions.Add(KeyCode.Alpha3, new Action(() => abilityComponent.PlayerUseAoE(Abilities.Vortex)));
+        GameMetaInfo.keybindActions.Add(KeyCode.Alpha4, new Action(() => abilityComponent.PlayerUseAoE(Abilities.Singularity)));
+        GameMetaInfo.keybindActions.Add(KeyCode.Alpha5, new Action(() => InstantAttack(Abilities.Heal, target)));
         //General
-        GameMetaInfo.allKeybinds.Add(KeyCode.F, Interact);
-        GameMetaInfo.allKeybinds.Add(KeyCode.Escape, new Action(() => TriggerEscapeAction()));
+        GameMetaInfo.keybindActions.Add(KeyCode.F, Interact);
+        GameMetaInfo.keybindActions.Add(KeyCode.Escape, new Action(() => TriggerEscapeAction()));
         //Camera
-        GameMetaInfo.allKeybinds.Add(KeyCode.LeftAlt, cam.GetComponent<PlayerCamera>().SwitchCameraMode);
-        GameMetaInfo.allKeybinds.Add(KeyCode.I, new Action(() => inventoryUI.gameObject.SetActive(!inventoryUI.activeSelf)));
-        GameMetaInfo.allKeybinds.Add(KeyCode.J, new Action(() => TriggerJournalLoad()));
+        GameMetaInfo.keybindActions.Add(KeyCode.LeftAlt, cam.GetComponent<PlayerCamera>().SwitchCameraMode);
+        GameMetaInfo.keybindActions.Add(KeyCode.I, new Action(() => inventoryUI.gameObject.SetActive(!inventoryUI.activeSelf)));
+        GameMetaInfo.keybindActions.Add(KeyCode.J, new Action(() => TriggerJournalLoad()));
     }
 
     //EVENT SUBSCRIPTIONS & Script property references
@@ -74,7 +75,8 @@ public class PlayerController : MonoBehaviour {
         HandleKeyboardInput();
         HandleConversationInput();
     }
-
+    
+    #region Event Triggers - Escape & Mission Journal
     //Used as a keybind action for the "Escape" key event
     private void TriggerEscapeAction()
     {
@@ -86,6 +88,7 @@ public class PlayerController : MonoBehaviour {
     {
         if (MissionManager.Instance.onJournalOpened != null) MissionManager.Instance.onJournalOpened.Invoke();
     }
+    #endregion
 
     //Simple axis movement
     private void HandleDirectionInput()
@@ -99,7 +102,7 @@ public class PlayerController : MonoBehaviour {
     //Sends a raycast to detect "Targetable" type objects on the "Object" layer, ignoring trigger colliders
     private void HandleTargeting()
     {
-        //Must be within 10 metres - using sqr values since getting root is expensive
+        //Must be within x metres - using sqr values since getting root is expensive
         if(target != null && 
             (target.transform.position - transform.position).sqrMagnitude > playerStats.sqrMaxTargetDistance)
         {
@@ -152,6 +155,11 @@ public class PlayerController : MonoBehaviour {
                     }
                 }
             }
+            else if(EventSystem.current.IsPointerOverGameObject())
+            {
+                //Debug.Log("Hit ui");
+                return; //Don't lose target if mouse clicking UI
+            }
             else
             {
                 SetTargetIndicatorPos(false);
@@ -165,12 +173,12 @@ public class PlayerController : MonoBehaviour {
         for (int i = 0; i < Enum.GetValues(typeof(KeyCode)).Cast<int>().Last(); i++)
         {
             KeyCode code = (KeyCode)i;
-            if (Input.GetKeyDown(code) && GameMetaInfo.allKeybinds.ContainsKey(code))
+            if (Input.GetKeyDown(code) && GameMetaInfo.keybindActions.ContainsKey(code))
             {
                 try
                 {
                     //todo: check target ain't null? or do in the methods / prob for abilcomp methods
-                    GameMetaInfo.allKeybinds[code]();
+                    GameMetaInfo.keybindActions[code]();
                 }
                 catch (Exception e)
                 {
