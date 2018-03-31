@@ -38,16 +38,22 @@ public class PlayerController : MonoBehaviour {
 
         target = null;
 
-        //TODO: Put all bindings in GameControls.cs
         //Abilities
-        GameMetaInfo.keybindActions.Add(KeyCode.Alpha1, new Action(() => InstantAttack(Abilities.Zap, target)));
-        GameMetaInfo.keybindActions.Add(KeyCode.Alpha2, new Action(() => InstantAttack(Abilities.Confuse, target)));
-        GameMetaInfo.keybindActions.Add(KeyCode.Alpha3, new Action(() => abilityComponent.PlayerUseAoE(Abilities.Vortex)));
-        GameMetaInfo.keybindActions.Add(KeyCode.Alpha4, new Action(() => abilityComponent.PlayerUseAoE(Abilities.Singularity)));
-        GameMetaInfo.keybindActions.Add(KeyCode.Alpha5, new Action(() => InstantAttack(Abilities.Heal, target)));
+        GameMetaInfo.SetAbilityKeybindAction(Abilities.Zap, KeyCode.Alpha1, new Action(() => InstantAttack(Abilities.Zap, target)));
+        GameMetaInfo.SetAbilityKeybindAction(Abilities.Confuse, KeyCode.Alpha2, new Action(() => InstantAttack(Abilities.Confuse, target)));
+        GameMetaInfo.SetAbilityKeybindAction(Abilities.Vortex, KeyCode.Alpha3, new Action(() => InstantAttack(Abilities.Vortex, target)));
+        GameMetaInfo.SetAbilityKeybindAction(Abilities.Singularity, KeyCode.Alpha4, new Action(() => InstantAttack(Abilities.Singularity, target)));
+        GameMetaInfo.SetAbilityKeybindAction(Abilities.Heal, KeyCode.Alpha5, new Action(() => InstantAttack(Abilities.Heal, target)));
+        //GameMetaInfo.keybindActions.Add(KeyCode.Alpha1, new Action(() => InstantAttack(Abilities.Zap, target)));
+        //GameMetaInfo.keybindActions.Add(KeyCode.Alpha2, new Action(() => InstantAttack(Abilities.Confuse, target)));
+        //GameMetaInfo.keybindActions.Add(KeyCode.Alpha3, new Action(() => abilityComponent.PlayerUseAoE(Abilities.Vortex)));
+        //GameMetaInfo.keybindActions.Add(KeyCode.Alpha4, new Action(() => abilityComponent.PlayerUseAoE(Abilities.Singularity)));
+        //GameMetaInfo.keybindActions.Add(KeyCode.Alpha5, new Action(() => InstantAttack(Abilities.Heal, target)));
+        
         //General
         GameMetaInfo.keybindActions.Add(KeyCode.F, Interact);
         GameMetaInfo.keybindActions.Add(KeyCode.Escape, new Action(() => TriggerEscapeAction()));
+        
         //Camera
         GameMetaInfo.keybindActions.Add(KeyCode.LeftAlt, cam.GetComponent<PlayerCamera>().SwitchCameraMode);
         GameMetaInfo.keybindActions.Add(KeyCode.I, new Action(() => inventoryUI.gameObject.SetActive(!inventoryUI.activeSelf)));
@@ -155,11 +161,13 @@ public class PlayerController : MonoBehaviour {
                     }
                 }
             }
+            //Check if we have clicked UI
             else if(EventSystem.current.IsPointerOverGameObject())
             {
                 //Debug.Log("Hit ui");
                 return; //Don't lose target if mouse clicking UI
             }
+            //If nothing clicked, reset the target
             else
             {
                 SetTargetIndicatorPos(false);

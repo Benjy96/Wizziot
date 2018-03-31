@@ -20,7 +20,6 @@ public class AbilitySlot : MonoBehaviour {
 	
 	public void PlaceAbilityInSlot(Abilities abil)
     {
-        Debug.Log(selectedAbilitySlot + " abil: " + abil);
         //Keybind & text
         keybind = GameMetaInfo.abilityKeybinds[abil];
         abilKeyDisplay.text = keybind.ToString();

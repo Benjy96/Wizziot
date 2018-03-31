@@ -22,18 +22,17 @@ public class GameMetaInfo {
     };
 
     // ----- Actions ----- //
+    public static void SetAbilityKeybindAction(Abilities abil, KeyCode key, Action action)
+    {
+        keybindActions[key] = action;
+        abilityKeybinds[abil] = key;
+    }
+
     //Default key bindings ( <Key, User's key binding, i.e.: ability used> )
     public static Dictionary<KeyCode, Action> keybindActions = new Dictionary<KeyCode, Action>();
 
     //Ability key bindings - Displayed in UI
-    public static Dictionary<Abilities, KeyCode> abilityKeybinds = new Dictionary<Abilities, KeyCode>()
-    {
-        { Abilities.Zap, KeyCode.Alpha1 },
-        { Abilities.Confuse, KeyCode.Alpha2 },
-        { Abilities.Vortex, KeyCode.Alpha3 },
-        { Abilities.Singularity, KeyCode.Alpha4 },
-        { Abilities.Heal, KeyCode.Alpha5 },
-    };
+    public static Dictionary<Abilities, KeyCode> abilityKeybinds = new Dictionary<Abilities, KeyCode>();
 
     // ----- Gameplay ----- //
     public static Difficulty _GAME_DIFFICULTY = Difficulty.Normal;
