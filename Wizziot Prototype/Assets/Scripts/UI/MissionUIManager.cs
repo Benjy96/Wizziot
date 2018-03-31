@@ -72,6 +72,7 @@ public class MissionUIManager : MonoBehaviour {
             {
                 //Journal
                 journalSlots[i].RemoveMission();
+                journalSlots[i].gameObject.SetActive(false);
             }
         }
     }

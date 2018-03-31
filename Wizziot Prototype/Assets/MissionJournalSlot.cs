@@ -22,7 +22,7 @@ public class MissionJournalSlot : MonoBehaviour {
             missionTitle.text = mission.title;
             missionDescription.text = mission.description;
 
-            for (int i = 0; i < mission.missionRewards.Length; i++)
+            for (int i = 0; i < mission.missionRewards.Capacity; i++)
             {
                 if (mission.missionRewards[i] == null) continue;
                 Item item = mission.missionRewards[i].GetComponent<Item>();

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "Standard Mission", menuName = "Missions/Standard Mission")]
 public class Mission : ScriptableObject {
@@ -9,8 +10,11 @@ public class Mission : ScriptableObject {
     public string title;
     public string description;
 
-    [Header("Completion Reward")]
-    public GameObject[] missionRewards;
+    [Header("Completion Reward - For Multi-Stage, Set in First (Parent) Only")]
+    public GameObject missionReward1;
+    public GameObject missionReward2;
+    public GameObject missionReward3;
+    [HideInInspector] public List<GameObject> missionRewards;
 
     [Header("Gameplay")]
     public Mission[] additionalMissionStages;
@@ -22,6 +26,14 @@ public class Mission : ScriptableObject {
 
     [HideInInspector] public bool completed = false;
 
+    private void Awake()
+    {
+        missionRewards = new List<GameObject>(3);
+        missionRewards.Add(missionReward1);
+        missionRewards.Add(missionReward2);
+        missionRewards.Add(missionReward3);
+    }
+
     //Insantiate a Mission SO using Resources folder to find asset type
     public Mission CreateMission()
     {
@@ -31,6 +43,22 @@ public class Mission : ScriptableObject {
         newMission.waypointObject = Instantiate(MissionManager.Instance.waypointPrefab, location, Quaternion.Euler(-90f, 0f, 0f));
         newMission.waypointRadius = newMission.waypointObject.GetComponent<SphereCollider>().radius;
         newMission.waypoint = newMission.waypointObject.GetComponent<Waypoint>();
+
+        return newMission;
+    }
+
+    //Insantiate a child mission - inherits the rewards of the parent (first) mission
+    public Mission CreateMission(List<GameObject> firstStageRewards)
+    {
+        Mission newMission = (Mission)Instantiate(Resources.Load("Mission Objects/" + name));
+
+        //Instantiate & Setup Waypoint Radius
+        newMission.waypointObject = Instantiate(MissionManager.Instance.waypointPrefab, location, Quaternion.Euler(-90f, 0f, 0f));
+        newMission.waypointRadius = newMission.waypointObject.GetComponent<SphereCollider>().radius;
+        newMission.waypoint = newMission.waypointObject.GetComponent<Waypoint>();
+
+        //Set rewards
+        newMission.missionRewards = firstStageRewards;
 
         return newMission;
     }

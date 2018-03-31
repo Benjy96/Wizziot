@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -34,9 +33,24 @@ public class MissionManager : MonoBehaviour {
         completedMissions = new List<Mission>(maxMissions);
     }
 
+    //Grant a mission
     public void GrantMission(Mission mission)
     {
         Mission grantedMission = mission.CreateMission();
+
+        if (!activeMissions.Contains(grantedMission) && activeMissions.Count < maxMissions)
+        {
+            activeMissions.Add(grantedMission);
+
+            //ACTIVATE UI
+            if (onActiveMissionsChanged != null) onActiveMissionsChanged.Invoke();
+        }
+    }
+
+    //Grant a new part of a multi-stage mission, passing through the parent's rewards
+    public void GrantMission(Mission mission, List<GameObject> firstStageRewards)
+    {
+        Mission grantedMission = mission.CreateMission(firstStageRewards);
 
         if (!activeMissions.Contains(grantedMission) && activeMissions.Count < maxMissions)
         {
@@ -62,13 +76,16 @@ public class MissionManager : MonoBehaviour {
                 if (m == null || completedMissions.Contains(m)) continue;
                 else
                 {
-                    GrantMission(m);
+                    //Grant the child mission, and pass through the parent rewards
+                    if (m.missionRewards.Count != 0) GrantMission(m, m.missionRewards);
+                    else GrantMission(m);
                     break;
                 }
             }
         }
         else
         {
+            //If no stages left, grant the rewards
             GrantRewards(mission);
         }
 
