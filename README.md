@@ -19,7 +19,7 @@ For example:
 
 3.) Create a State Object (ScriptableObject), e.g.: Attack State, and modify its target variable, and whether it is hostile. 
 
-4.) Drag this state into either the Angry, Calm, or Fear State. 
+4.) Drag this state into either the Angry, the Calm, or the Fear State. 
 
 5.) Add a spawner to the world, and hit Play.
 
