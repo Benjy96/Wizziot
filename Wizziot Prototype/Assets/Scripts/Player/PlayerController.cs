@@ -39,11 +39,11 @@ public class PlayerController : MonoBehaviour {
         target = null;
 
         //Abilities
-        GameMetaInfo.SetAbilityKeybindAction(Abilities.Zap, KeyCode.Alpha1, new Action(() => InstantAttack(Abilities.Zap, target)));
-        GameMetaInfo.SetAbilityKeybindAction(Abilities.Confuse, KeyCode.Alpha2, new Action(() => InstantAttack(Abilities.Confuse, target)));
-        GameMetaInfo.SetAbilityKeybindAction(Abilities.Vortex, KeyCode.Alpha3, new Action(() => InstantAttack(Abilities.Vortex, target)));
-        GameMetaInfo.SetAbilityKeybindAction(Abilities.Singularity, KeyCode.Alpha4, new Action(() => InstantAttack(Abilities.Singularity, target)));
-        GameMetaInfo.SetAbilityKeybindAction(Abilities.Heal, KeyCode.Alpha5, new Action(() => InstantAttack(Abilities.Heal, target)));
+        GameMetaInfo.SetAbilityKeybindAction(Abilities.Zap, KeyCode.Alpha1, new Action(() => UseAbility(Abilities.Zap, target)));
+        GameMetaInfo.SetAbilityKeybindAction(Abilities.Confuse, KeyCode.Alpha2, new Action(() => UseAbility(Abilities.Confuse, target)));
+        GameMetaInfo.SetAbilityKeybindAction(Abilities.Vortex, KeyCode.Alpha3, new Action(() => UseAbility(Abilities.Vortex, target)));
+        GameMetaInfo.SetAbilityKeybindAction(Abilities.Singularity, KeyCode.Alpha4, new Action(() => UseAbility(Abilities.Singularity, target)));
+        GameMetaInfo.SetAbilityKeybindAction(Abilities.Heal, KeyCode.Alpha5, new Action(() => UseAbility(Abilities.Heal, target)));
         //GameMetaInfo.keybindActions.Add(KeyCode.Alpha1, new Action(() => InstantAttack(Abilities.Zap, target)));
         //GameMetaInfo.keybindActions.Add(KeyCode.Alpha2, new Action(() => InstantAttack(Abilities.Confuse, target)));
         //GameMetaInfo.keybindActions.Add(KeyCode.Alpha3, new Action(() => abilityComponent.PlayerUseAoE(Abilities.Vortex)));
@@ -264,9 +264,15 @@ public class PlayerController : MonoBehaviour {
     }
 
     //Checks target can be attacked & handles "self abilities"
-    private void InstantAttack(Abilities abil, Targetable target)
+    private void UseAbility(Abilities abil, Targetable target)
     {
-        if (GameMetaInfo._Is_Defense_Ability(abil))
+        AbilityUI.Instance.ChangeSelectedDisplay(abil);
+
+        if (GameMetaInfo._Is_AoE_Ability(abil))
+        {
+            abilityComponent.PlayerUseAoE(abil);
+        }
+        else if (GameMetaInfo._Is_Defense_Ability(abil))
         {
             abilityComponent.PlayerUseInstant(abil, transform);
         }

@@ -9,7 +9,6 @@ public class PlayerManager : MonoBehaviour {
 
     public GameObject player;   //reference for runtime
     public PlayerController playerControls;
-    public AbilityComponent playerAbilityComponent;
     public Item[] equipped;
 
     public Action onTargetDestroyed;    //for targeting, xp, etc...
@@ -31,7 +30,6 @@ public class PlayerManager : MonoBehaviour {
 
         playerStats = player.GetComponent<EntityStats>();
         playerControls = player.GetComponent<PlayerController>();
-        playerAbilityComponent = player.GetComponent<AbilityComponent>();
         equipped = new Item[Enum.GetValues(typeof(EquipmentSlot)).Length];
     }
 

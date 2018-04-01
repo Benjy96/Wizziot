@@ -1,18 +1,33 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class AbilityUI : MonoBehaviour {
 
-    public GameObject abilityDisplay;
-    public AbilitySlot selectedAbilityDisplay;
+    #region Singleton
+    private static AbilityUI _AbilityUI;
+    public static AbilityUI Instance { get { return _AbilityUI;  } }
 
-	// Use this for initialization
-	void Start () {
-        PlayerManager.Instance.playerControls.GetComponent<AbilityComponent>().OnPlayerAbilitySelected += ChangeSelectedDisplay;
-	}
-	
-	void ChangeSelectedDisplay()
+    private void Awake()
     {
-        selectedAbilityDisplay.PlaceAbilityInSlot(PlayerManager.Instance.playerAbilityComponent.SelectedAbility);
+        if(_AbilityUI == null)
+        {
+            _AbilityUI = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+        DontDestroyOnLoad(gameObject);
+    }
+    #endregion
+
+    public AbilitySlot selectedAbilityDisplay;
+	
+	public void ChangeSelectedDisplay(Abilities ability)
+    {
+        if (!StoryManager.Instance.StoryInputEnabled)
+        {
+            selectedAbilityDisplay.PlaceAbilityInSlot(ability);
+        }
     }
 }
