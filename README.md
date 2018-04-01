@@ -29,6 +29,6 @@ For example: 1.) Attach EmotionChip to an enemy. 2.) Set its emotional dispositi
 
 ***Architectural:***
 
-EmotionChip.cs
-State.cs
-StoryManager.cs
+- EmotionChip.cs
+- State.cs
+- StoryManager.cs
