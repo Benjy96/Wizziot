@@ -14,6 +14,9 @@ public class PlayerManager : MonoBehaviour {
     public Action onTargetDestroyed;    //for targeting, xp, etc...
 
     private EntityStats playerStats;
+    private AbilityComponent playerAbilComponent;
+
+    public List<Abilities> UnlockedAbilities { get { return playerAbilComponent.unlockedAbilities; } }
 
     private void Awake()
     {
@@ -29,6 +32,7 @@ public class PlayerManager : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
 
         playerStats = player.GetComponent<EntityStats>();
+        playerAbilComponent = player.GetComponent<AbilityComponent>();
         playerControls = player.GetComponent<PlayerController>();
         equipped = new Item[Enum.GetValues(typeof(EquipmentSlot)).Length];
     }

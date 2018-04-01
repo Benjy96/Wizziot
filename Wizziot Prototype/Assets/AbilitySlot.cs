@@ -10,7 +10,9 @@ public class AbilitySlot : MonoBehaviour {
 
     public TextMeshProUGUI abilKeyDisplay;
     public Image abilityImage;
-    public Abilities slotAbility;
+
+    [SerializeField] private Abilities slotAbility; //Use Setter method "PlaceAbilityInSlot" to handle all related info
+    public Abilities SlotAbility { get { return slotAbility; } private set { slotAbility = value; } }
 
     KeyCode keybind;
     // Use this for initialization

@@ -20,7 +20,7 @@ public class MissionUIManager : MonoBehaviour {
         missionManager.onActiveMissionsChanged += UpdateUI;
         missionManager.onJournalOpened += LoadJournal;
 
-        GameManager.Instance.onGameLoaded += UpdateUI;
+        GameManager.Instance.OnGameLoaded += UpdateUI;
         PlayerManager.Instance.playerControls.OnEscapeKey += Close;
     }
 

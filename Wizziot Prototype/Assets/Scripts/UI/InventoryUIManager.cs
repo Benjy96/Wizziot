@@ -23,8 +23,8 @@ public class InventoryUIManager : MonoBehaviour {
         inventory.onCoinPickup += UpdateCoins;
 
         //Update UI on game file load
-        GameManager.Instance.onGameLoaded += UpdateUI;
-        GameManager.Instance.onGameLoaded += UpdateCoins; 
+        GameManager.Instance.OnGameLoaded += UpdateUI;
+        GameManager.Instance.OnGameLoaded += UpdateCoins; 
 
         PlayerManager.Instance.playerControls.OnEscapeKey += Close; //Close UI on escape press
     }

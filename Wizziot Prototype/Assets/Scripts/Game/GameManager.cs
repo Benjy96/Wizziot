@@ -4,7 +4,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public Action onGameLoaded;
+    public Action OnGameLoaded;
+    public Action OnKeybindsChanged;
 
     //Singleton & accessor
     private static GameManager _GameManager = null;
