@@ -52,8 +52,9 @@ public class AbilityUI : MonoBehaviour {
         {
             if (item.selectedAbilitySlot) continue; //Keep selected active
             //If the ability is unlocked, place it in the slot, else set inactive
-            if (!PlayerManager.Instance.UnlockedAbilities.Contains(item.SlotAbility))
+            if (!AbilityUnlocked(item.SlotAbility))
             {
+                Debug.Log(item.SlotAbility);
                 item.gameObject.SetActive(false);
             }
             else
@@ -62,5 +63,15 @@ public class AbilityUI : MonoBehaviour {
                 abilEnumIndex++;
             }
         }
+    }
+
+    private bool AbilityUnlocked(Abilities slotAbility)
+    {
+        for (int i = 0; i < PlayerManager.Instance.UnlockedAbilities.Count; i++)
+        {
+            Debug.Log(PlayerManager.Instance.UnlockedAbilities[i]);
+            if ((int)slotAbility == (int)PlayerManager.Instance.UnlockedAbilities[i]) return true;
+        }
+        return false;
     }
 }

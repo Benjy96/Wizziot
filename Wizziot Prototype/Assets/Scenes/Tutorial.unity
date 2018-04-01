@@ -925,11 +925,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114205869762454452, guid: 0e6afb90b2ea6fb4391ecd6b4a9f34a2,
-        type: 2}
-      propertyPath: unlockedAbilities.Array.size
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 4253239760578642, guid: 0e6afb90b2ea6fb4391ecd6b4a9f34a2, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -967,21 +962,6 @@ Prefab:
       propertyPath: inventoryUI
       value: 
       objectReference: {fileID: 904664195}
-    - target: {fileID: 114232869456884162, guid: 0e6afb90b2ea6fb4391ecd6b4a9f34a2,
-        type: 2}
-      propertyPath: missionJournal
-      value: 
-      objectReference: {fileID: 775436104}
-    - target: {fileID: 114205869762454452, guid: 0e6afb90b2ea6fb4391ecd6b4a9f34a2,
-        type: 2}
-      propertyPath: unlockedAbilities.Array.data[3]
-      value: 101
-      objectReference: {fileID: 0}
-    - target: {fileID: 114205869762454452, guid: 0e6afb90b2ea6fb4391ecd6b4a9f34a2,
-        type: 2}
-      propertyPath: unlockedAbilities.Array.data[4]
-      value: 150
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0e6afb90b2ea6fb4391ecd6b4a9f34a2, type: 2}
   m_IsPrefabParent: 0
@@ -2287,11 +2267,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4711729357603256, guid: 85da5cf61d9ef5a48a2944a2411182e4,
     type: 2}
   m_PrefabInternal: {fileID: 24582992}
---- !u!1 &775436104 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1831361697729098, guid: 1ec208e9e5307db4ba7d0bc2a98a1d08,
-    type: 2}
-  m_PrefabInternal: {fileID: 1536799333}
 --- !u!1 &793808945 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100000, guid: dd2992225e8a5064787a7fc1ce537bcd, type: 3}
@@ -10759,6 +10734,31 @@ Prefab:
         type: 2}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114696947922815788, guid: 1ec208e9e5307db4ba7d0bc2a98a1d08,
+        type: 2}
+      propertyPath: slotAbility
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114341831548404030, guid: 1ec208e9e5307db4ba7d0bc2a98a1d08,
+        type: 2}
+      propertyPath: slotAbility
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114273422634702326, guid: 1ec208e9e5307db4ba7d0bc2a98a1d08,
+        type: 2}
+      propertyPath: slotAbility
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114008514664357740, guid: 1ec208e9e5307db4ba7d0bc2a98a1d08,
+        type: 2}
+      propertyPath: slotAbility
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114575662965379970, guid: 1ec208e9e5307db4ba7d0bc2a98a1d08,
+        type: 2}
+      propertyPath: slotAbility
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1ec208e9e5307db4ba7d0bc2a98a1d08, type: 2}

@@ -344,7 +344,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SelectedAbility: 0
-  unlockedAbilities: 3200000033000000640000006500000096000000
+  unlockedAbilities: 000000000100000002000000
   globalCooldown: 1
   aimingDisc: {fileID: 4692180556801494, guid: 44e75b50b1e131e49b4a6ff407a6be7a, type: 2}
   zapSource: {fileID: 1677534009832248}

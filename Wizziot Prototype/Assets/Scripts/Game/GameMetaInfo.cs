@@ -53,8 +53,8 @@ public class GameMetaInfo {
     // ----- Abilities ----- //
     //Codes
     public static int _INSTANT_ABILITY_CODE { get { return Enum.GetValues(typeof(Abilities)).Cast<int>().First(); } }
-    public static int _AREA_ABILITY_CODE { get { return Enum.GetValues(typeof(Abilities)).Cast<int>().First() + 50;  } }
-    public static int _DEFENSE_ABILITY_CODE { get { return Enum.GetValues(typeof(Abilities)).Cast<int>().First() + 100; } }
+    public static int _AREA_ABILITY_CODE { get { return Enum.GetValues(typeof(Abilities)).Cast<int>().First() + 2;  } }
+    public static int _DEFENSE_ABILITY_CODE { get { return Enum.GetValues(typeof(Abilities)).Cast<int>().First() + 4; } }
 
     //Ability Type Checkers
     public static bool _Is_Instant_Ability(Abilities ability)
@@ -115,9 +115,9 @@ public enum Difficulty
 //Separate abilities between a large gap to act as a "code" difference
 public enum Abilities
 {
-    Zap = 50, Confuse,
-    Vortex = 100, Singularity,
-    Heal = 150
+    Zap, Confuse,
+    Vortex, Singularity,
+    Heal
 }
 
 public enum StateData

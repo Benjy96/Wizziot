@@ -5037,7 +5037,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22e1244d502f12545838e91c34e40bce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedAbilityDisplay: {fileID: 114830822281222304}
+  abilityDisplay: {fileID: 1221098986722616}
+  selectedAbilitySlot: {fileID: 114830822281222304}
 --- !u!114 &114238884280571034
 MonoBehaviour:
   m_ObjectHideFlags: 1

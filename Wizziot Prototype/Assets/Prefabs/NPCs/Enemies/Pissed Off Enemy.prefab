@@ -417,7 +417,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SelectedAbility: 0
-  unlockedAbilities: 32000000
+  unlockedAbilities: 00000000
   globalCooldown: 1
   aimingDisc: {fileID: 4019791227191684, guid: 31faa8d85dd7c824bac358c123afb1e3, type: 2}
   zapSource: {fileID: 1247003542369760}
@@ -428,6 +428,7 @@ MonoBehaviour:
   singularityPrefab: {fileID: 1134084517704520, guid: 217668003b71cfa4e9928e20f2b247f5,
     type: 2}
   healPrefab: {fileID: 0}
+  additionalHealCooldown: 0
 --- !u!135 &135430337262968196
 SphereCollider:
   m_ObjectHideFlags: 1
