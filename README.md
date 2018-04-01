@@ -13,9 +13,13 @@ Once the NPC's emotion has been influenced enough (determined by their emotional
 
 For example: 
 1.) Attach EmotionChip to an enemy. 
+
 2.) Set its emotional disposition and reluctance/emotional stability. 
+
 3.) Create a State Object (ScriptableObject), e.g.: Attack State, and modify its target variable, and whether it is hostile. 
+
 4.) Drag this state into either the Angry, Calm, or Fear State. 
+
 5.) Add a spawner to the world, and hit Play.
 
 **Features**
