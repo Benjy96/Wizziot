@@ -156,20 +156,41 @@ public class Enemy : Targetable {
 
     public bool CanSeeTarget(Transform target)
     {
-        Ray ray = new Ray(Position, (target.position - Position).normalized);
+        Debug.Log(target.tag);
+        Ray ray = new Ray(Position, (target.position - Position));
         RaycastHit hit;
-        //Racyast everything except affectable objects
-        if (Physics.Raycast(ray, out hit, SightRange, LayerMask.GetMask("Default", GameMetaInfo._LAYER_IMMOVABLE_OBJECT), QueryTriggerInteraction.Ignore))
+        //Racyast everything except default & affectable objects
+
+        //Player raycast - disregard layers
+        if (target.tag.Equals("Player"))
         {
-            if (hit.transform.tag.Equals(target.tag))
+            if (Physics.Raycast(ray, out hit, SightRange, LayerMask.GetMask("Default", GameMetaInfo._LAYER_IMMOVABLE_OBJECT), QueryTriggerInteraction.Ignore))
             {
-                return true;
-            }
-            else
-            {
-                return false;
+                if (hit.transform.tag.Equals(target.tag))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
+        else //Target other objects - change layer mask
+        {
+            if (Physics.Raycast(ray, out hit, SightRange, LayerMask.GetMask(GameMetaInfo._LAYER_AFFECTABLE_OBJECT), QueryTriggerInteraction.Ignore))
+            {
+                if (hit.transform.tag.Equals(target.tag))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
         return false;
     }
 }
