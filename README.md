@@ -11,7 +11,12 @@ I designed an "EMOTIONAL STATE MACHINE", based upon a Finite State Machine and G
 
 Once the NPC's emotion has been influenced enough (determined by their emotional stability), then they will switch State/Goal. Their States/Goals (e.g. angryState) carry out actions determined by ScriptableObjects which can be created by a game designer. This entire framework allows EXTREME variation in the creation of enemy types. You can make an enemy prefab and modify their emotion weights, disposition, reluctance, and goals! 
 
-For example: 1.) Attach EmotionChip to an enemy. 2.) Set its emotional disposition and reluctance/emotional stability. 3.) Create a State Object (ScriptableObject), e.g. Attack State, and modify its target variable, and whether it is hostile. 4.) Drag this state into either the Angry, Calm, or Fear State. 5.) Done.
+For example: 
+1.) Attach EmotionChip to an enemy. 
+2.) Set its emotional disposition and reluctance/emotional stability. 
+3.) Create a State Object (ScriptableObject), e.g.: Attack State, and modify its target variable, and whether it is hostile. 
+4.) Drag this state into either the Angry, Calm, or Fear State. 
+5.) Add a spawner to the world, and hit Play.
 
 **Features**
 - Story System (Interactive, e.g., KOTOR)
