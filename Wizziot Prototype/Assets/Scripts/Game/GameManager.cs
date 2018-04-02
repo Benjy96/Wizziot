@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
     {
         if(!SceneManager.GetActiveScene().name.Equals("Tutorial")) LoadGame();
         Debug.Log("Game Difficulty: " + GameMetaInfo._GAME_DIFFICULTY);
+        if (OnGameLoaded != null) OnGameLoaded.Invoke();
     }
 
     public void LoadGame()
