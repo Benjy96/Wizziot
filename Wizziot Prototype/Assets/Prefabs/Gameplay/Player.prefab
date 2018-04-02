@@ -72,8 +72,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4253239760578642}
   - component: {fileID: 114232869456884162}
+  - component: {fileID: 114329578860527756}
   - component: {fileID: 114205869762454452}
-  - component: {fileID: 114671688569003678}
   - component: {fileID: 81209199237318868}
   - component: {fileID: 33984999312761298}
   - component: {fileID: 65068491791960126}
@@ -368,8 +368,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryUI: {fileID: 0}
-  missionJournal: {fileID: 0}
---- !u!114 &114671688569003678
+--- !u!114 &114329578860527756
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -384,9 +383,9 @@ MonoBehaviour:
   maxStamina: 100
   sqrMaxTargetDistance: 225
   speed: 10
-  turnSpeed: 100
-  instantAbilityCost: 40
-  areaAbilityCost: 30
+  turnSpeed: 150
+  instantAbilityCost: 30
+  areaAbilityCost: 50
   defenseAbilityCost: 40
   attackInfluence: 0.5
   defaultModifierValue: 1
