@@ -84,10 +84,18 @@ public class EntityStats : MonoBehaviour {
         }
     }
 
-    //TODO for loop for every stat
-    public void ApplyStatModifiers()
+    //TODO: Diff for player & NPCs - player worsen, enemy increase stats
+    public virtual void ApplyStatModifiers()
     {
-        //Apply Modifiers
+        int difficultyScale = ((int)GameMetaInfo._GAME_DIFFICULTY) + 1;
+
+        //Set Modifiers
+        foreach (KeyValuePair<Stats,Stat> item in statModifiers)
+        {
+            item.Value.StatValue *= difficultyScale;
+        }
+
+        //Apply Modifiers to Variables
         maxHealth *= (int)statModifiers[Stats.MaxHealthModifier].StatValue;
         maxStamina *= (int)statModifiers[Stats.MaxHealthModifier].StatValue;
 

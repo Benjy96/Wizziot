@@ -93,9 +93,9 @@ public class EmotionChip : MonoBehaviour {
     /// As difficulty increases, enemy NPCs gain confidence.
     /// </summary>
     /// <param name="difficulty">The difficulty you wish to set this agent to</param>
-    public void ScaleEmotionWeights(Difficulty difficulty)
+    public void ScaleEmotionWeights()
     {
-        int difficultyFactor = (int)difficulty; //Easy == 0, Normal == 1
+        int difficultyFactor = ((int)GameMetaInfo._GAME_DIFFICULTY) + 1; //Easy == 0, Normal == 1
 
         trust /= difficultyFactor;
         irascibility *= difficultyFactor;

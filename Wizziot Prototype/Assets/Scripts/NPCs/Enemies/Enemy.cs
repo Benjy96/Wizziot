@@ -57,17 +57,6 @@ public class Enemy : Targetable {
         emotionChip.Influence(null, intent, amount);
     }
 
-    protected void OnEnable()
-    {
-        //GameManager.Instance.OnDifficultyChanged += SetStats;
-    }
-
-    private void OnDisable()
-    {
-        //GameManager.Instance.OnDifficultyChanged -= SetStats;
-        Spawn.RemoveEnemy(this);
-    }
-
     protected void Awake()  //Object initialised
     {
         emotionChip = GetComponent<EmotionChip>();
@@ -78,12 +67,23 @@ public class Enemy : Targetable {
         neighbourhoodTracker = GetComponent<NeighbourhoodTracker>();
     }
 
+    //References & Event subscriptions
     protected void Start () //Scripts initialised
     {
         if (player == null) player = PlayerManager.Instance.player;
 
-        SetStats();
+        //Events
         stats.onDeath += Die;
+        GameManager.Instance.OnGameLoaded += SetStats;
+    }
+
+    //Event unsubscriptions
+    private void OnDisable()
+    {
+        Spawn.RemoveEnemy(this);
+        //Event Removals
+        stats.onDeath -= Die;
+        GameManager.Instance.OnGameLoaded -= SetStats;
     }
 
     protected void FixedUpdate()
@@ -102,18 +102,17 @@ public class Enemy : Targetable {
         Destroy(gameObject, .25f);
     }
 
-    // ----- COMPONENTs & SET-UP ----- //
-    private void SetStats() //Use as a SetDifficulty() method as well - modify stats and components based upon gameDifficulty
+    //Stats - Related to difficulty/load events
+    public void SetStats()
     {
-        gameDifficulty = GameMetaInfo._GAME_DIFFICULTY;
+        //Apply stat modifiers with difficulty setting
+        stats.ApplyStatModifiers();
 
+        //Set Component Variables (may use stats)
+        emotionChip.ScaleEmotionWeights();
         neighbourhoodTracker.TrackingRadius = Mathf.Sqrt(stats.sqrMaxTargetDistance);
-
-        //TODO: Change to access the entityStats dict
-        abilityComponent.KnockbackForce = 0f;
-
-        emotionChip.ScaleEmotionWeights(gameDifficulty);
     }
+
 
     // ----- NAVIGATION ----- //
 

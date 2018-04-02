@@ -1,0 +1,75 @@
+{
+  "boolData": {
+    "keys": [],
+    "values": [],
+    "Length": 0
+  },
+  "stringData": {
+    "keys": [],
+    "values": [],
+    "Length": 0
+  },
+  "intData": {
+    "keys": [
+      "PlayerHealth",
+      "Coins",
+      "GameDifficulty"
+    ],
+    "values": [
+      100,
+      1,
+      3
+    ],
+    "Length": 3
+  },
+  "v3Data": {
+    "keys": [
+      "PlayerPosition"
+    ],
+    "values": [
+      {
+        "x": 4.30565929,
+        "y": 0.49999997,
+        "z": 5.331018
+      }
+    ],
+    "Length": 1
+  },
+  "quaternionData": {
+    "keys": [],
+    "values": [],
+    "Length": 0
+  },
+  "inventoryData": {
+    "keys": [
+      "Inventory"
+    ],
+    "values": [
+      []
+    ],
+    "Length": 1
+  },
+  "missionData": {
+    "keys": [
+      "MissionsActive"
+    ],
+    "values": [
+      []
+    ],
+    "Length": 1
+  },
+  "itemData": {
+    "keys": [
+      "Equipped"
+    ],
+    "values": [
+      [
+        null,
+        null,
+        null,
+        null
+      ]
+    ],
+    "Length": 1
+  }
+}

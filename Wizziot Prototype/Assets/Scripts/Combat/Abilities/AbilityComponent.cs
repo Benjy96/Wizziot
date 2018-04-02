@@ -31,9 +31,6 @@ public class AbilityComponent : MonoBehaviour {
     private bool aiming = false;
     private Transform instantiatedAimingDisc;
 
-    private float knockbackForce = 0f;
-    public float KnockbackForce { get { return knockbackForce; } set { knockbackForce = value; } }
-
     [Header("Zap")]
     public GameObject zapSource;
     private ParticleSystem zapParticles;
@@ -216,10 +213,6 @@ public class AbilityComponent : MonoBehaviour {
         if(zapTargeter.target != currentTarget) zapTargeter.target = currentTarget;
         zapParticles.time = 0;
         zapParticles.Play(true);
-        if (targetRB != null && KnockbackForce > 0)
-        {
-            targetRB.AddForce(currentTarget.position - transform.position * KnockbackForce);
-        }
 
         yield return zapEffectDuration;
 
