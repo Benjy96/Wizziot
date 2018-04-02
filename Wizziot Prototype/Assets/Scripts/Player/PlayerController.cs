@@ -12,7 +12,6 @@ public class PlayerController : MonoBehaviour {
 
     // ----- Components ----- //
     public GameObject inventoryUI;
-    public MissionJournal missionJournal;
 
     private StoryManager storyManager;
     private AbilityComponent abilityComponent;

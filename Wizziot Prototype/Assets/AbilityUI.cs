@@ -69,7 +69,6 @@ public class AbilityUI : MonoBehaviour {
     {
         for (int i = 0; i < PlayerManager.Instance.UnlockedAbilities.Count; i++)
         {
-            Debug.Log(PlayerManager.Instance.UnlockedAbilities[i]);
             if ((int)slotAbility == (int)PlayerManager.Instance.UnlockedAbilities[i]) return true;
         }
         return false;

@@ -37,6 +37,8 @@ public class EmotionChip : MonoBehaviour {
     public Emotion disposition = Emotion.Calm;
     private Emotion currentEmotionalState;
 
+    public Emotion CurrentEmotion { get { return currentEmotionalState; } set { currentEmotionalState = value; } }
+
     /// <summary>
     /// Rate at which agent tends towards their disposition. Higher reluctance takes longer to LERP to disposition.
     /// With stability of 0.5: Reluctance == .1: Time to revert to disposition (from 0) == 11s || Reluctance == .9: Time to revert to disposition (from 0) == 28s
