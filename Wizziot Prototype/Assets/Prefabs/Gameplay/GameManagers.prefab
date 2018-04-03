@@ -58,7 +58,7 @@ MonoBehaviour:
   sounds:
   - name: Forest
     soundClip: {fileID: 8300000, guid: 91bbb00001da8314f8ffff9c07a41954, type: 3}
-    volume: 0.3
+    volume: 0.2
     pitch: 1
     loop: 1
     source: {fileID: 0}

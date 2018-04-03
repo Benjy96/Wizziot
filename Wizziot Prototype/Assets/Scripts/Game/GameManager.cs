@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public Action OnGameLoaded;
+    private bool gameLoaded = false;
+
     public Action OnKeybindsChanged;
 
     //Singleton & accessor
@@ -48,10 +50,13 @@ public class GameManager : MonoBehaviour
     {
         if (!SceneManager.GetActiveScene().name.Equals("Tutorial")) LoadGame();
         else AudioManager.Instance.Play("Forest");
+    }
 
-        if (OnGameLoaded != null)
+    private void Update()
+    {
+        if (!gameLoaded && OnGameLoaded != null)
         {
-            Debug.Log("Invoke OnGameLoaded");
+            gameLoaded = true;
             OnGameLoaded.Invoke();
         }
     }

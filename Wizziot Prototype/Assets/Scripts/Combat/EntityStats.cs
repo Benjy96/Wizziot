@@ -24,7 +24,7 @@ public class EntityStats : MonoBehaviour {
     public float defenseAbilityCost = 40f;
     public Dictionary<Abilities, float> abilityCosts;
 
-    [Header("Attack Agro")]
+    [Tooltip("How much attacks anger the target EmotionChip")][Header("Attack Agro")]
     public float attackInfluence = 0.5f;   //Affected by the "Reputation" stat - determines how much to influence an emotionChip when using abilities. AKA "Agro"
 
     [Header("Default Stat Modifier Values")]
@@ -33,7 +33,7 @@ public class EntityStats : MonoBehaviour {
 
     public Action onDeath;
 
-    private void Awake()
+    protected void Awake()
     {
         onDeath += InvokeTargetDestroyedEvent;  //Unsubscribe in OnDisable
 
@@ -64,12 +64,12 @@ public class EntityStats : MonoBehaviour {
         }
     }
 
-    private void OnDisable()
+    protected void OnDisable()
     {
         onDeath -= InvokeTargetDestroyedEvent;
     }
 
-    private void Update()
+    protected void Update()
     {
         if(CurrentStamina != maxStamina) CurrentStamina = Mathf.Lerp(CurrentStamina, maxStamina, Time.deltaTime / statModifiers[Stats.Fitness].StatValue);
     }
@@ -85,6 +85,7 @@ public class EntityStats : MonoBehaviour {
     }
 
     //TODO: Diff for player & NPCs - player worsen, enemy increase stats
+    //TODO: make so multiple updates don't keep scaling off each other, e.g. reset from base values each time (currently *=)
     public virtual void ApplyStatModifiers()
     {
         int difficultyScale = ((int)GameMetaInfo._GAME_DIFFICULTY) + 1;
@@ -106,7 +107,6 @@ public class EntityStats : MonoBehaviour {
 
         attackInfluence *= statModifiers[Stats.Reputation].StatValue;
 
-        Debug.Log(gameObject + " applying stat modifiers mH: " + maxHealth);
         CurrentHealth = maxHealth;
         CurrentStamina = maxStamina;
     }
