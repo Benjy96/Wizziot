@@ -28,10 +28,12 @@ public class Mission : ScriptableObject {
 
     private void Awake()
     {
-        missionRewards = new List<GameObject>(3);
-        missionRewards.Add(missionReward1);
-        missionRewards.Add(missionReward2);
-        missionRewards.Add(missionReward3);
+        missionRewards = new List<GameObject>(3)
+        {
+            missionReward1,
+            missionReward2,
+            missionReward3
+        };
     }
 
     //Insantiate a Mission SO using Resources folder to find asset type
