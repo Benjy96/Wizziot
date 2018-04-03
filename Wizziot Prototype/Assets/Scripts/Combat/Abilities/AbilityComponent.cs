@@ -102,7 +102,7 @@ public class AbilityComponent : MonoBehaviour {
                 Enemy e = currentTarget.GetComponent<Enemy>();
                 if(e != null)
                 {
-                    e.Influence(gameObject, Emotion.Anger, statComponent.attackInfluence);
+                    e.Influence(gameObject, Emotion.Anger, statComponent.agro);
                 }
                 UseAbility();
             }
@@ -273,7 +273,7 @@ public class AbilityComponent : MonoBehaviour {
         {
             Debug.Log(c.name);
             Enemy e = c.GetComponent<Enemy>();
-            if (e != null) e.Influence(gameObject, Emotion.Anger, statComponent.attackInfluence); enemies.Add(e);
+            if (e != null) e.Influence(gameObject, Emotion.Anger, statComponent.agro); enemies.Add(e);
 
             EntityStats eS = c.GetComponent<EntityStats>();
             if (eS != null) StartCoroutine(eS.DoTDamage(damageToDo, AoEUsed.duration));

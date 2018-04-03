@@ -25,7 +25,7 @@ public class EntityStats : MonoBehaviour {
     public Dictionary<Abilities, float> abilityCosts;
 
     [Tooltip("How much attacks anger the target EmotionChip")][Header("Attack Agro")]
-    public float attackInfluence = 0.5f;   //Affected by the "Reputation" stat - determines how much to influence an emotionChip when using abilities. AKA "Agro"
+    public float agro = 0.5f;   //Affected by the "Reputation" stat - higher means enemies will be angered more easily
 
     [Header("Default Stat Modifier Values")]
     public float defaultModifierValue = 1f;
@@ -84,12 +84,11 @@ public class EntityStats : MonoBehaviour {
         }
     }
 
-    //TODO: Diff for player & NPCs - player worsen, enemy increase stats
-    //TODO: make so multiple updates don't keep scaling off each other, e.g. reset from base values each time (currently *=)
     public virtual void ApplyStatModifiers()
     {
-        int difficultyScale = ((int)GameMetaInfo._GAME_DIFFICULTY) + 1;
-
+        //Scale is "1 + difficulty %" i.e.: Easy = + 0, Normal = + 0.25, Hard = + 0.5, Suicidal = + 0.75. Suicidal modifier would be 1.75
+        float difficultyScale = GameMetaInfo._DIFFICULTY_SCALE;
+        
         //Set Modifiers
         foreach (KeyValuePair<Stats,Stat> item in statModifiers)
         {
@@ -99,13 +98,10 @@ public class EntityStats : MonoBehaviour {
         //Apply Modifiers to Variables
         maxHealth *= (int)statModifiers[Stats.MaxHealthModifier].StatValue;
         maxStamina *= (int)statModifiers[Stats.MaxHealthModifier].StatValue;
-
         sqrMaxTargetDistance *= statModifiers[Stats.SightRange].StatValue;
-
         speed *= statModifiers[Stats.MovementSpeed].StatValue;
         turnSpeed *= statModifiers[Stats.MovementSpeed].StatValue;
-
-        attackInfluence *= statModifiers[Stats.Reputation].StatValue;
+        agro *= statModifiers[Stats.Reputation].StatValue;
 
         CurrentHealth = maxHealth;
         CurrentStamina = maxStamina;
@@ -137,8 +133,6 @@ public class EntityStats : MonoBehaviour {
         amount /= statModifiers[Stats.DamageReduction].StatValue;   //Max 300% damage reduction (Stat Value: 3)
         
         CurrentHealth -= (int)amount;
-
-        Debug.Log(gameObject + " taking dmg, hp: " + CurrentHealth);
 
         //3. Reduce health
         if (CurrentHealth <= 0)
@@ -206,6 +200,9 @@ public class EntityStats : MonoBehaviour {
         return false;
     }
 
+    /// <summary>
+    /// Calculates damage or heal amount based upon ability costs
+    /// </summary>
     private float CalculateAbilDamage(Abilities ability)
     {
         float damage = 0f;
@@ -219,6 +216,9 @@ public class EntityStats : MonoBehaviour {
         return damage;
     }
 
+    /// <summary>
+    /// Calculates ability stamina cost using ability costs and ACR stat modifier
+    /// </summary>
     private float GetNewStaminaForUsingAbil(Abilities ability)
     {
         //Calculate Stamina to remove for using the ability

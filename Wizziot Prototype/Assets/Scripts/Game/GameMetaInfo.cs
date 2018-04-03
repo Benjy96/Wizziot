@@ -36,6 +36,8 @@ public class GameMetaInfo {
 
     // ----- Gameplay ----- //
     public static Difficulty _GAME_DIFFICULTY = Difficulty.Normal;
+    //Scale is "1 + difficulty %" i.e.: Easy = + 0, Normal = + 0.25, Hard = + 0.5, Suicidal = + 0.75. Suicidal modifier would be 1.75
+    public static float _DIFFICULTY_SCALE { get { return 1 + (((int)_GAME_DIFFICULTY) / Enum.GetValues(typeof(Difficulty)).Length); } }
 
     public static int _MAX_COINS = 100000000;   //to fit UI
 
