@@ -65,29 +65,29 @@ public class State : ScriptableObject {
     }
 
     /// <summary>
-    /// Selects a target. Emotional influencer takes priority over interests.
+    /// Selects a target. Emotional influencer used if no interests nearby
     /// </summary>
-    /// <returns></returns>
     protected virtual Transform SelectTarget()
     {
-        if (influencer != null && (influencer.transform.position - owner.Position).sqrMagnitude < (owner.SightRange * owner.SightRange))
+        GameObject targetGO = null;
+        Transform target = null;
+
+        targetGO = neighbourhoodTracker.RetrieveTrackedObject(interestedIn);
+        if (targetGO == null ||
+            (targetGO.transform.position - owner.Position).sqrMagnitude > (owner.SightRange * owner.SightRange))
+        {
+            targetGO = neighbourhoodTracker.RetrieveTrackedObject(secondaryInterest);
+        }
+
+        if (targetGO != null) target = targetGO.transform;
+        if (target != null)
+        {
+            return target;
+        }
+        else if (influencer != null && (influencer.transform.position - owner.Position).sqrMagnitude < (owner.SightRange * owner.SightRange))
         {
             return influencer.transform;
         }
-        else
-        {
-            GameObject targetGO = null;
-            Transform target = null;
-
-            targetGO = neighbourhoodTracker.RetrieveTrackedObject(interestedIn);
-            if (targetGO == null ||
-                (targetGO.transform.position - owner.Position).sqrMagnitude > (owner.SightRange * owner.SightRange))
-            {
-                targetGO = neighbourhoodTracker.RetrieveTrackedObject(secondaryInterest);
-            }
-
-            if (targetGO != null) target = targetGO.transform;
-            return target;
-        }
+        return null;
     }
 }

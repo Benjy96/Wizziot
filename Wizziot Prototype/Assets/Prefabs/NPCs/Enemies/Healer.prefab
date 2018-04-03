@@ -487,7 +487,7 @@ MonoBehaviour:
   cowardice: 1
   currentState: {fileID: 0}
   calmState: {fileID: 11400000, guid: 7382833d54f0f374599c396fa2f8a5ec, type: 2}
-  angryState: {fileID: 11400000, guid: 2671af7d1b75043488af752041d221c4, type: 2}
+  angryState: {fileID: 11400000, guid: 3939acb9c1ae2e742bb3cfac23cc8388, type: 2}
   scaredState: {fileID: 11400000, guid: 8083b0667a546b24aa4986d6cde9bf74, type: 2}
   fallbackState: {fileID: 11400000, guid: 69a6f096fd7b4384f9aa59881370ca25, type: 2}
   enraged: 0

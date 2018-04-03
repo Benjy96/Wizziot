@@ -1424,6 +1424,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114570875608098564, guid: 8b3353d29db0fb34fab378b5335c99ec,
+        type: 2}
+      propertyPath: inventoryUI
+      value: 
+      objectReference: {fileID: 1596915822}
+    - target: {fileID: 114828716227662528, guid: 8b3353d29db0fb34fab378b5335c99ec,
+        type: 2}
+      propertyPath: missionUI
+      value: 
+      objectReference: {fileID: 1034514362}
     - target: {fileID: 114229979343066084, guid: 8b3353d29db0fb34fab378b5335c99ec,
         type: 2}
       propertyPath: player
@@ -1434,16 +1444,6 @@ Prefab:
       propertyPath: playerControls
       value: 
       objectReference: {fileID: 25667308}
-    - target: {fileID: 114828716227662528, guid: 8b3353d29db0fb34fab378b5335c99ec,
-        type: 2}
-      propertyPath: missionUI
-      value: 
-      objectReference: {fileID: 1034514362}
-    - target: {fileID: 114570875608098564, guid: 8b3353d29db0fb34fab378b5335c99ec,
-        type: 2}
-      propertyPath: inventoryUI
-      value: 
-      objectReference: {fileID: 1596915822}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8b3353d29db0fb34fab378b5335c99ec, type: 2}
   m_IsPrefabParent: 0
