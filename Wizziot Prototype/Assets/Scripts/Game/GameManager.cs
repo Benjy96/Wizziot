@@ -48,8 +48,7 @@ public class GameManager : MonoBehaviour
     //TODO: OnGameLoaded event in Update (i.e., if(notLoaded) LoadGame()) ?
     private void Start()
     {
-        if (!SceneManager.GetActiveScene().name.Equals("Tutorial")) LoadGame();
-        else AudioManager.Instance.Play("Forest");
+        AudioManager.Instance.Play("Forest");
     }
 
     private void Update()
@@ -57,7 +56,9 @@ public class GameManager : MonoBehaviour
         if (!gameLoaded && OnGameLoaded != null)
         {
             gameLoaded = true;
+            LoadGame();
             OnGameLoaded.Invoke();
+            Debug.Log("Invoked OnGameLoaded");
         }
     }
 

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -47,8 +48,9 @@ public class Saver {
     private SaveData CreateSaveGame()
     {
         SaveData save = new SaveData();
-
+        //Keybind actions & Abil keybinds
         save.Save(GameMetaInfo._STATE_DATA[(int)StateData.Keybinds], GameMetaInfo.abilityKeybinds);
+        //Game State Data
         save.Save(GameMetaInfo._STATE_DATA[(int)StateData.GameDifficulty], (int)GameMetaInfo._GAME_DIFFICULTY);
         save.Save(GameMetaInfo._STATE_DATA[(int)StateData.PlayerPosition], PlayerManager.Instance.player.transform.position);
         save.Save(GameMetaInfo._STATE_DATA[(int)StateData.PlayerHealth], PlayerManager.Instance.player.GetComponent<EntityStats>().CurrentHealth);
@@ -58,7 +60,7 @@ public class Saver {
         save.Save(GameMetaInfo._STATE_DATA[(int)StateData.MissionsActive], MissionManager.Instance.activeMissions);
 
         //Ensure all state data has been added to the save list
-        if (save.savedItems != GameMetaInfo._STATE_DATA.Count) throw new System.Exception("Not all required data has been saved");
+        if (save.savedItems != GameMetaInfo._STATE_DATA.Count) throw new Exception("Not all required data has been saved");
 
         return save;
     }

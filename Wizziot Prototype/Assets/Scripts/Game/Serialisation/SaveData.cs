@@ -68,6 +68,7 @@ public class SaveData
     public SaveDictionary<Vector3> v3Data = new SaveDictionary<Vector3>();
     public SaveDictionary<Quaternion> quaternionData = new SaveDictionary<Quaternion>();
     //Custom game types
+    public SaveDictionary<Dictionary<Abilities, KeyCode>> abilityKeyData = new SaveDictionary<Dictionary<Abilities, KeyCode>>();
     public SaveDictionary<List<Item>> inventoryData = new SaveDictionary<List<Item>>();
     public SaveDictionary<List<Mission>> missionData = new SaveDictionary<List<Mission>>();
     public SaveDictionary<Item[]> itemData = new SaveDictionary<Item[]>();
@@ -79,7 +80,8 @@ public class SaveData
         intData.Clear();
         v3Data.Clear();
         quaternionData.Clear();
-
+        //Custom
+        abilityKeyData.Clear();
         inventoryData.Clear();
         itemData.Clear();
         missionData.Clear();
@@ -123,6 +125,11 @@ public class SaveData
         Save(quaternionData, key, value);
     }
 
+    public void Save(string key, Dictionary<Abilities, KeyCode> value)
+    {
+        Save(abilityKeyData, key, value);
+    }
+
     public void Save(string key, List<Item> value)
     {
         Save(inventoryData, key, value);
@@ -162,6 +169,11 @@ public class SaveData
     public bool Load(string key, ref Quaternion value)
     {
         return Load(quaternionData, key, ref value);
+    }
+
+    public bool Load(string key, ref Dictionary<Abilities, KeyCode> value)
+    {
+        return Load(abilityKeyData, key, ref value);
     }
 
     public bool Load(string key, ref List<Item> value)
