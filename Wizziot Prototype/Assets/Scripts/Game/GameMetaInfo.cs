@@ -24,10 +24,6 @@ public class GameMetaInfo {
     };
 
     // ----- Keybinds & Actions ----- //
-    //Two keybind dictionaries because ability actions need a parameter
-    //Keybind Type 1 (Abil): Parameter - which ability
-    //Keybind Type 2 (Standard Function): No param - use function
-
     public static void SetAbilityKeybindAction(Abilities abil, KeyCode key, Action action)
     {
         keybindActions[key] = action;
@@ -113,6 +109,21 @@ public class GameMetaInfo {
         { Abilities.Vortex, (Sprite)Resources.Load("Vortex", typeof(Sprite)) },
         { Abilities.Singularity, (Sprite)Resources.Load("Singularity", typeof(Sprite)) },
         { Abilities.Heal, (Sprite)Resources.Load("Heal", typeof(Sprite)) },
+    };
+
+    // ----- Stats ----- //
+    public static Dictionary<Stats, string> _STAT_DESCRIPTIONS = new Dictionary<Stats, string>()
+    {
+        { Stats.ActionCostReduction, "Modifies ability cost" },
+        { Stats.DamageModifier, "Multiplies damage dealt" },
+        { Stats.DamageReduction, "Reduces incoming damage" },
+        { Stats.Fitness, "Modifies Stamina regeneration rate. Multiplies heals received" },
+        { Stats.MaxHealthModifier, "Multiplies character health limit" },
+        { Stats.MaxStaminaModifier, "Multiplies character stamina limit" },
+        { Stats.MitigationChance, "Chance to prevent an attack's damage" },
+        { Stats.MovementSpeed, "Multiplies character's movement speed" },
+        { Stats.Notoriety, "Modifies the amount of anger your attacks generate. A notorious player will anger enemies quickly" },
+        { Stats.SightRange, "Affects how far the character can target things" }
     };
 }
 

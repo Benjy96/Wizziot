@@ -389,6 +389,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryUI: {fileID: 0}
+  characterSheet: {fileID: 0}
 --- !u!114 &114884924212849452
 MonoBehaviour:
   m_ObjectHideFlags: 1

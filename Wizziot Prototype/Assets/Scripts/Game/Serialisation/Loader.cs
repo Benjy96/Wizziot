@@ -60,10 +60,9 @@ public class Loader : MonoBehaviour
             KeyCode currentAbilKey = abilKeybindsIteratable[currentAbil];
             System.Action currentKeyAction = GameMetaInfo.keybindActions[currentAbilKey];
             
+            //Using KeyCode from saveData, update the GameMetaInfo abil/keycode & keycode/action dictionaries (use current action/abil to update to new)
             GameMetaInfo.SetAbilityKeybindAction(currentAbil, newAbilKeybinds[currentAbil], currentKeyAction);
         }
-
-        Debug.Log("Zap keybind: " + GameMetaInfo.abilityKeybinds[Abilities.Zap]);
 
         int difficulty = 0;
         data.Load(GameMetaInfo._STATE_DATA[(int)StateData.GameDifficulty], ref difficulty);
