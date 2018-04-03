@@ -10,6 +10,7 @@ public class GameMetaInfo {
     public static string _SAVE_FILE_ENCRYPTED = Path.Combine(Application.streamingAssetsPath, "wizziot.dat");
     public static string _SAVE_FILE_JSON = Path.Combine(Application.streamingAssetsPath, "wizziot.json");
 
+    //Register types of state data here - used for verifying all state data has been saved/loaded
     public static List<string> _STATE_DATA = new List<string>()
     {
         "GameDifficulty",
@@ -39,7 +40,7 @@ public class GameMetaInfo {
     //Scale is "1 + difficulty %" i.e.: Easy = + 0, Normal = + 0.25, Hard = + 0.5, Suicidal = + 0.75. Suicidal modifier would be 1.75
     public static float _DIFFICULTY_SCALE { get { return 1 + (((int)_GAME_DIFFICULTY) / Enum.GetValues(typeof(Difficulty)).Length); } }
 
-    public static int _MAX_COINS = 100000000;   //to fit UI
+    public static int _MAX_COINS = 100000000;
 
     // ----- Game World ----- //
     //Layer Contracts
@@ -114,7 +115,6 @@ public enum Difficulty
     Easy, Normal, Hard, Suicidal
 }
 
-//Separate abilities between a large gap to act as a "code" difference
 public enum Abilities
 {
     Zap, Confuse,

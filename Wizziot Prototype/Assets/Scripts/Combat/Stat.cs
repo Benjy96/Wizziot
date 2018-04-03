@@ -17,7 +17,14 @@ public class Stat
     }
 }
 
+/// <summary>
+/// Not obvious Stats descriptions:
+/// ActionCostReduction: Used to calculate ability costs.
+/// Fitness: Used to modify heals received.
+/// MitigationChance: Chance to take no damage at all.
+/// Notoriety: Agro modifier (Reputation with NPCs)
+/// </summary>
 public enum Stats
 {
-    ActionCostReduction, DamageModifier, DamageReduction, Fitness, MaxHealthModifier, MaxStaminaModifier, MitigationChance, MovementSpeed, Reputation, SightRange
+    ActionCostReduction, DamageModifier, DamageReduction, Fitness, MaxHealthModifier, MaxStaminaModifier, MitigationChance, MovementSpeed, Notoriety, SightRange
 }
