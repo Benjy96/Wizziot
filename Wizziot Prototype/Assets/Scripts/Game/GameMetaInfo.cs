@@ -13,6 +13,7 @@ public class GameMetaInfo {
     //Register types of state data here - used for verifying all state data has been saved/loaded
     public static List<string> _STATE_DATA = new List<string>()
     {
+        "Keybinds",
         "GameDifficulty",
         "PlayerPosition",
         "PlayerHealth",
@@ -23,6 +24,20 @@ public class GameMetaInfo {
     };
 
     // ----- Actions ----- //
+    public class KeybindAction
+    {
+        public Abilities ability;
+        public KeyCode keybind;
+        public Action action;
+
+        public KeybindAction(Abilities abilityToBind, KeyCode keyToFireAction, Action actionToPerform)
+        {
+            ability = abilityToBind;
+            keybind = keyToFireAction;
+            action = actionToPerform;
+        }
+    }
+
     public static void SetAbilityKeybindAction(Abilities abil, KeyCode key, Action action)
     {
         keybindActions[key] = action;
@@ -124,6 +139,7 @@ public enum Abilities
 
 public enum StateData
 {
+    Keybinds,
     GameDifficulty,
     PlayerPosition,
     PlayerHealth,
