@@ -10,7 +10,7 @@ public class NeighbourhoodTracker : MonoBehaviour
     public enum TrackType { Enemies, Obstacles }
     public TrackType toTrack;
 
-    public Dictionary<string, GameObject> secondaryNeighbours;
+    public Dictionary<string, List<GameObject>> secondaryNeighbours;
 
     private SphereCollider sphereCol;
 
@@ -66,7 +66,7 @@ public class NeighbourhoodTracker : MonoBehaviour
     {
         neighbours = new List<Enemy>();
         obstacles = new List<Transform>();
-        secondaryNeighbours = new Dictionary<string, GameObject>();
+        secondaryNeighbours = new Dictionary<string, List<GameObject>>();
 
         sphereCol = GetComponent<SphereCollider>();
 
@@ -80,7 +80,11 @@ public class NeighbourhoodTracker : MonoBehaviour
         //Track interest
         if (secondaryNeighbours.ContainsKey(objName[0]))
         {
-            secondaryNeighbours[objName[0]] = other.gameObject;
+            if(secondaryNeighbours[objName[0]] == null)
+            {
+                secondaryNeighbours[objName[0]] = new List<GameObject>();
+            }
+            secondaryNeighbours[objName[0]].Add(other.gameObject);
         }
 
         //Track enemies, else environment
@@ -158,7 +162,8 @@ public class NeighbourhoodTracker : MonoBehaviour
 
         if (!secondaryNeighbours.ContainsKey(gameObject.name))
         {
-            secondaryNeighbours.Add(gameObject.name, null);
+            secondaryNeighbours.Add(gameObject.name, new List<GameObject>());
+            Debug.Assert(secondaryNeighbours[gameObject.name] != null);
         }
     }
 
@@ -177,7 +182,7 @@ public class NeighbourhoodTracker : MonoBehaviour
     /// Retrieve a GameObject that has been registered as interesting if it is within the agent's neighbourhood
     /// </summary>
     /// <param name="gameObject">The type of object you wish to locate in this neighbourhood</param>
-    /// <returns>Returns a reference to the game object in the scene</returns>
+    /// <returns>Returns a reference to a game object in the scene</returns>
     public GameObject RetrieveTrackedObject(GameObject gameObject)
     {
         if (gameObject == null) return null;
@@ -186,7 +191,10 @@ public class NeighbourhoodTracker : MonoBehaviour
         {
             if (secondaryNeighbours[gameObject.name] != null)
             {
-                return secondaryNeighbours[gameObject.name];
+                foreach (GameObject x in secondaryNeighbours[gameObject.name])
+                {
+                    if (x != null) return x;
+                }
             }
         }
 
@@ -198,12 +206,22 @@ public class NeighbourhoodTracker : MonoBehaviour
     /// </summary>
     public void ScanForNearby()
     {
+        //Track self if interested
+        string[] thisName = name.Split('(');
+        if (secondaryNeighbours.ContainsKey(thisName[0]))
+        {
+            if(!secondaryNeighbours[thisName[0]].Contains(gameObject))
+            {
+                secondaryNeighbours[thisName[0]].Add(gameObject);
+            }
+        }
+
         Collider[] colliders = Physics.OverlapSphere(transform.position, TrackingRadius);
         foreach (Collider c in colliders)
         {
             if (secondaryNeighbours.ContainsKey(c.name))
             {
-                secondaryNeighbours[c.name] = c.gameObject;
+                secondaryNeighbours[c.name].Add(c.gameObject);
             }
             
             if (toTrack == TrackType.Enemies)

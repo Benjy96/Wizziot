@@ -1148,8 +1148,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetType: 0
   inkConversationPath: wizard
-  inkMissionName: Tutorial_KillNuisance
-  mission: {fileID: 11400000, guid: 89e27585fc32755429fc6ffe6d116839, type: 2}
+  inkMissionNames:
+  - Tutorial_KillNuisance()
+  missions:
+  - {fileID: 11400000, guid: 89e27585fc32755429fc6ffe6d116839, type: 2}
 --- !u!114 &114419442973730064
 MonoBehaviour:
   m_ObjectHideFlags: 1

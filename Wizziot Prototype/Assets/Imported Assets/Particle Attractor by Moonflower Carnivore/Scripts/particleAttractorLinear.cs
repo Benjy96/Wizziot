@@ -26,7 +26,7 @@ public class particleAttractorLinear : MonoBehaviour {
             ps.SetParticles(m_Particles, numParticlesAlive);
         }catch(System.Exception e)
         {
-            Debug.Log("Target destroyed, particles still firing");
+            //Debug.Log("Target destroyed, particles still firing");
         }
 	}
 }
