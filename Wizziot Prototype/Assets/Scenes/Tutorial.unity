@@ -161,11 +161,11 @@ Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 424457165}
+    m_TransformParent: {fileID: 1617700401}
     m_Modifications:
     - target: {fileID: 4711729357603256, guid: 85da5cf61d9ef5a48a2944a2411182e4, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -7.45
+      value: -12.44
       objectReference: {fileID: 0}
     - target: {fileID: 4711729357603256, guid: 85da5cf61d9ef5a48a2944a2411182e4, type: 2}
       propertyPath: m_LocalPosition.y
@@ -173,7 +173,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4711729357603256, guid: 85da5cf61d9ef5a48a2944a2411182e4, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 88.791
+      value: -0.81900024
       objectReference: {fileID: 0}
     - target: {fileID: 4711729357603256, guid: 85da5cf61d9ef5a48a2944a2411182e4, type: 2}
       propertyPath: m_LocalRotation.x
@@ -193,7 +193,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4711729357603256, guid: 85da5cf61d9ef5a48a2944a2411182e4, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 85da5cf61d9ef5a48a2944a2411182e4, type: 2}
@@ -478,6 +478,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114079558771530136, guid: 71c12a80e8fa6af46a704908a832e18a,
+        type: 2}
+      propertyPath: destination
+      value: 
+      objectReference: {fileID: 576519908}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 71c12a80e8fa6af46a704908a832e18a, type: 2}
   m_IsPrefabParent: 0
@@ -740,15 +745,15 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 1193815325340886, guid: b933446370a780d4196da503b09cc04f, type: 2}
-      propertyPath: m_Name
-      value: Wizard's Portal
-      objectReference: {fileID: 0}
     - target: {fileID: 114142478404565884, guid: b933446370a780d4196da503b09cc04f,
         type: 2}
       propertyPath: destination
       value: 
       objectReference: {fileID: 925745112}
+    - target: {fileID: 1193815325340886, guid: b933446370a780d4196da503b09cc04f, type: 2}
+      propertyPath: m_Name
+      value: Wizard's Portal
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b933446370a780d4196da503b09cc04f, type: 2}
   m_IsPrefabParent: 0
@@ -786,7 +791,6 @@ Transform:
   - {fileID: 593950097}
   - {fileID: 730207056}
   - {fileID: 1617700401}
-  - {fileID: 770260065}
   - {fileID: 864474819}
   m_Father: {fileID: 0}
   m_RootOrder: 10
@@ -994,6 +998,12 @@ Transform:
   m_PrefabParentObject: {fileID: 4233056092151912, guid: 28a59b8a973854349bf14d400b81ab7a,
     type: 2}
   m_PrefabInternal: {fileID: 1850656242}
+--- !u!114 &576519908 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114142478404565884, guid: b933446370a780d4196da503b09cc04f,
+    type: 2}
+  m_PrefabInternal: {fileID: 382130989}
+  m_Script: {fileID: 11500000, guid: 23f7cc40afc2f2147aa055a16611b833, type: 3}
 --- !u!4 &593950097 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: c99599b849928364a9b9d61b2623dbe4, type: 3}
@@ -1370,7 +1380,7 @@ Transform:
   - {fileID: 2080026971}
   - {fileID: 1165401708}
   m_Father: {fileID: 424457165}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &898406636 stripped
 Light:
@@ -2981,6 +2991,7 @@ Transform:
   - {fileID: 1488437036}
   - {fileID: 1065379243}
   - {fileID: 382130990}
+  - {fileID: 770260065}
   m_Father: {fileID: 424457165}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

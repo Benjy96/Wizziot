@@ -28,8 +28,10 @@ public class AbilityComponent : MonoBehaviour {
 
     [Header("AoE Ability Related")]
     public Transform aimingDisc;
+    public float aoeCooldown = 3f;
     private bool aiming = false;
     private Transform instantiatedAimingDisc;
+    private float aoeFinishTime;
 
     [Header("Zap")]
     public GameObject zapSource;
@@ -52,7 +54,7 @@ public class AbilityComponent : MonoBehaviour {
     public GameObject healPrefab;
     [Tooltip("Adds onto an existing 5s CD")] public float additionalHealCooldown;
     private float healFinishTime;
-    private float healFXTime = -1f;    //-.65f BECAUSE EFFECT TIME IS INACCURATE - THIS IS TO SYNC THE FX WITH HEALTH INCREASE
+    private float healFXTime = -1f;    //-1f BECAUSE EFFECT TIME IS INACCURATE - THIS IS TO SYNC THE FX WITH HEALTH INCREASE
 
     private void Awake()
     {
@@ -84,7 +86,7 @@ public class AbilityComponent : MonoBehaviour {
     /// </summary>
     /// <param name="target">Target if one is selected. Null if not</param>
     /// <returns>Returns true when damage can be applied to the target's stats (once the attack has been executed)</returns>
-    public void UseSelected(Transform target)
+    public void AIUseSelected(Transform target)
     {
         SetTarget(target);
         UseAbility();
@@ -166,21 +168,26 @@ public class AbilityComponent : MonoBehaviour {
                     break;
 
                 case Abilities.Vortex:
-                    AoE(vortexPrefab, damageToDo, ref aoePlaced);
-                    if (aoePlaced)
+                    if (Time.time > aoeFinishTime)
                     {
-                        statComponent.TryUseAbility(SelectedAbility, out damageToDo);
-                        globalCooldownFinishTime = Time.time + globalCooldown;
+                        AoE(vortexPrefab, damageToDo, ref aoePlaced);
+                        if (aoePlaced)
+                        {
+                            statComponent.TryUseAbility(SelectedAbility, out damageToDo);
+                            globalCooldownFinishTime = Time.time + globalCooldown;
+                        }
                     }
                     break;
 
                 case Abilities.Singularity:
-                    
-                    AoE(singularityPrefab, damageToDo, ref aoePlaced);
-                    if (aoePlaced)
+                    if (Time.time > aoeFinishTime)
                     {
-                        statComponent.TryUseAbility(SelectedAbility, out damageToDo);
-                        globalCooldownFinishTime = Time.time + globalCooldown;
+                        AoE(singularityPrefab, damageToDo, ref aoePlaced);
+                        if (aoePlaced)
+                        {
+                            statComponent.TryUseAbility(SelectedAbility, out damageToDo);
+                            globalCooldownFinishTime = Time.time + globalCooldown;
+                        }
                     }
                     break;
 
@@ -257,6 +264,7 @@ public class AbilityComponent : MonoBehaviour {
 
             ApplyAoEEffects(damage, deployed);
             aoePlaced = true;
+            aoeFinishTime = Time.time + aoeCooldown;
         }
     }
 

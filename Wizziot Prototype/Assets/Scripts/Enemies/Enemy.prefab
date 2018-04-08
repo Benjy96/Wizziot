@@ -359,7 +359,7 @@ MonoBehaviour:
   instantAbilityCost: 40
   areaAbilityCost: 30
   defenseAbilityCost: 40
-  attackInfluence: 0.5
+  agro: 0.5
   defaultModifierValue: 1
 --- !u!114 &114653254589682158
 MonoBehaviour:
@@ -417,7 +417,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SelectedAbility: 0
-  unlockedAbilities: 00000000
+  unlockedAbilities: 02000000
   globalCooldown: 1
   aimingDisc: {fileID: 4019791227191684, guid: 31faa8d85dd7c824bac358c123afb1e3, type: 2}
   zapSource: {fileID: 1247003542369760}

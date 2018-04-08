@@ -33,18 +33,18 @@ public class AttackState : State {
                     if (!GameMetaInfo._Is_Defense_Ability(abilComponent.SelectedAbility))
                     {
                         //Debug.Log("Attacking");
-                        abilComponent.UseSelected(target);
+                        abilComponent.AIUseSelected(target);
                     }
                     //if defense ability, use on self if hostile target
                     else
                     {
-                        abilComponent.UseSelected(owner.transform);
+                        abilComponent.AIUseSelected(owner.transform);
                     }
                 }
                 //if target not hostile, but ability is a defense ability, use it on them
                 else if(GameMetaInfo._Is_Defense_Ability(abilComponent.SelectedAbility))
                 {
-                    abilComponent.UseSelected(target);
+                    abilComponent.AIUseSelected(target);
                 }
             }
             owner.MoveTo(target.position);
