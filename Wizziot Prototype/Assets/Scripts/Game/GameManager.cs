@@ -45,10 +45,9 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    //TODO: OnGameLoaded event in Update (i.e., if(notLoaded) LoadGame()) ?
     private void Start()
     {
-        AudioManager.Instance.Play("Forest");
+        //AudioManager.Instance.Play("Forest");
     }
 
     private void Update()
@@ -57,8 +56,6 @@ public class GameManager : MonoBehaviour
         {
             gameLoaded = true;
             LoadGame();
-            OnGameLoaded.Invoke();
-            Debug.Log("Invoked OnGameLoaded");
         }
     }
 
@@ -68,6 +65,14 @@ public class GameManager : MonoBehaviour
         StoryManager.Instance.LoadStory();
         Debug.Log("Loading game data...");
         Loader.LoadGame(encryptGameSave);
+
+        if (OnGameLoaded != null) OnGameLoaded.Invoke();
+    }
+
+    public void LoadLastSave()
+    {
+        //TODO: Change which scene is loaded - save in serialisation file - need to re-init scripts so enemy stats, emotions, etc reverts to default
+        LoadGame();
     }
 
     public void SaveGame()

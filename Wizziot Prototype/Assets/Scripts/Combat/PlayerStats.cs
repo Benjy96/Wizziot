@@ -25,6 +25,6 @@ public class PlayerStats : EntityStats {
 
     public override void InvokeDeathEvent()
     {
-        Debug.Log("Player should be dead...");
+        GameManager.Instance.LoadLastSave();
     }
 }

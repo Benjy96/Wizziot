@@ -14,8 +14,8 @@ MonoBehaviour:
   slot: 0
   modifiers:
   - stat: 3
-    value: 0.5
+    statValue: 0.9
   - stat: 9
-    value: 0.5
+    statValue: 0.5
   - stat: 8
-    value: 3
+    statValue: 1.2
