@@ -59,6 +59,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// To reload scenes (use the saved scene variable in file) must go from a level without the gamemanager so we don't get into a repeating load loop, loading the current level
+    /// Could also do a blank "loader" level that checks last save scene and then goes to it - no manager will mean no looping loads, so choose scene to load outside of the current scene
+    /// </summary>
+    public void ExitToMenu()
+    {
+        SceneManager.LoadScene("Main Menu");
+    }
+
     public void LoadGame()
     {
         Debug.Log("Loading story script...");
@@ -67,13 +76,6 @@ public class GameManager : MonoBehaviour
         Loader.LoadGame(encryptGameSave);
 
         if (OnGameLoaded != null) OnGameLoaded.Invoke();
-    }
-
-    public void LoadLastSave()
-    {
-        //TODO: Change which scene is loaded - save in serialisation file - need to re-init scripts so enemy stats, emotions, etc reverts to default
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        LoadGame();
     }
 
     public void SaveGame()

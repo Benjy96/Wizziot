@@ -75,8 +75,6 @@ public class EnemySpawnPoint : MonoBehaviour
             availableSpawnPoints[randomIndex],
             Quaternion.identity);
 
-        Debug.Log(availableSpawnPoints[0]);
-
         availableSpawnPoints.RemoveAt(randomIndex);
 
         Enemy enemy = e.GetComponent<Enemy>();
