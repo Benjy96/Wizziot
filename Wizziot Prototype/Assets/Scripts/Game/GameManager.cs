@@ -72,6 +72,7 @@ public class GameManager : MonoBehaviour
     public void LoadLastSave()
     {
         //TODO: Change which scene is loaded - save in serialisation file - need to re-init scripts so enemy stats, emotions, etc reverts to default
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         LoadGame();
     }
 
