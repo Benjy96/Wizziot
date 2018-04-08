@@ -17,7 +17,9 @@ public class Portal : MonoBehaviour {
             Vector3 forward = destination.transform.forward;
             forward *= 5f;
             other.transform.position = destination.transform.position + forward;
-            other.transform.rotation = Quaternion.Euler(forward);
+
+            Quaternion x = destination.transform.rotation;
+            other.transform.localRotation = x;
         }
     }
 }
