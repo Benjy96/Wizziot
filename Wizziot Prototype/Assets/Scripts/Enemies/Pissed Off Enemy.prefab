@@ -359,7 +359,7 @@ MonoBehaviour:
   instantAbilityCost: 40
   areaAbilityCost: 30
   defenseAbilityCost: 40
-  attackInfluence: 0.5
+  agro: 0.5
   defaultModifierValue: 1.25
 --- !u!114 &114653254589682158
 MonoBehaviour:
@@ -373,10 +373,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   disposition: 1
-  reluctance: 0.5
+  reluctance: 0.4
   emotionalStability: 0.5
   trust: 1
-  irascibility: 2
+  irascibility: 3
   cowardice: 1
   currentState: {fileID: 0}
   calmState: {fileID: 11400000, guid: 9f9f2c7a8fbddab45ac450f4a76c6f17, type: 2}
@@ -420,6 +420,7 @@ MonoBehaviour:
   unlockedAbilities: 00000000
   globalCooldown: 1
   aimingDisc: {fileID: 4019791227191684, guid: 31faa8d85dd7c824bac358c123afb1e3, type: 2}
+  aoeCooldown: 3
   zapSource: {fileID: 1247003542369760}
   confusePrefab: {fileID: 0}
   confuseDuration: 3

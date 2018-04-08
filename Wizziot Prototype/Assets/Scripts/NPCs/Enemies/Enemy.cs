@@ -133,6 +133,36 @@ public class Enemy : Targetable {
         FaceTarget(target);
     }
 
+    public void MoveToRandomWaypoint()
+    {
+        //Get random point, based upon spawner waypoints
+        Vector3 patrolPos = Spawn.spawnAreaWaypoints[UnityEngine.Random.Range(0, Spawn.spawnAreaWaypoints.Count)];
+
+        //Prevent waypoint at current location being set as new target
+        if (patrolPos == Position)
+        {
+            MoveToRandomWaypoint();
+            return;
+        }
+
+        MoveTo(patrolPos);
+    }
+
+    public Vector3 RandomNavMeshPoint(float sightRange)
+    {
+        Vector3 random = UnityEngine.Random.insideUnitSphere * sightRange;
+        random += Position;
+
+        NavMeshHit hit;
+        Vector3 finalPos = Vector3.zero;
+
+        if (NavMesh.SamplePosition(random, out hit, sightRange, 1))
+        {
+            finalPos = hit.position;
+        }
+        return finalPos;
+    }
+
     private void FaceTarget(Vector3 target)
     {
         Vector3 direction = target - Position;
