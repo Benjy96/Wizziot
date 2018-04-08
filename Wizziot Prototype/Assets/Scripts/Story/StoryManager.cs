@@ -44,7 +44,7 @@ public class StoryManager : MonoBehaviour {
         {
             Destroy(gameObject);
         }
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
 
         //Set up Coroutine to close story on a time delay
         ExitConversation = DisableStoryOnDelay();

@@ -27,7 +27,7 @@ public class MissionManager : MonoBehaviour {
         {
             Destroy(gameObject);
         }
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
 
         activeMissions = new List<Mission>(maxMissions);
         completedMissions = new List<Mission>(maxMissions);

@@ -14,6 +14,7 @@ public class MainMenu : MonoBehaviour {
         if (data == null || sceneName == "")
         {
             SceneManager.LoadScene("Tutorial");
+            return;
         }
         SceneManager.LoadScene(sceneName);
     }

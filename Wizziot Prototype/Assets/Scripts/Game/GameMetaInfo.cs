@@ -13,6 +13,7 @@ public class GameMetaInfo {
     //Register types of state data here - used for verifying all state data has been saved/loaded
     public static List<string> _STATE_DATA = new List<string>()
     {
+        "Scene",
         "Keybinds",
         "GameDifficulty",
         "PlayerPosition",
@@ -141,6 +142,7 @@ public enum Abilities
 
 public enum StateData
 {
+    Scene,
     Keybinds,
     GameDifficulty,
     PlayerPosition,

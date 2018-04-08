@@ -30,7 +30,7 @@ public class PlayerManager : MonoBehaviour {
         {
             Destroy(gameObject);
         }
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
 
         playerStats = player.GetComponent<PlayerStats>();
         playerAbilComponent = player.GetComponent<AbilityComponent>();

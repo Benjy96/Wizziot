@@ -19,7 +19,7 @@ public class AbilityUI : MonoBehaviour {
             Destroy(gameObject);
         }
 
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
 
         abilSlots = GetComponentsInChildren<AbilitySlot>(true);
     }
