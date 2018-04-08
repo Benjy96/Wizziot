@@ -17,10 +17,23 @@ public class AbilitySlot : MonoBehaviour {
     KeyCode keybind;
     // Use this for initialization
     void Start () {
-        if(!selectedAbilitySlot) PlaceAbilityInSlot(slotAbility);
+        if(!selectedAbilitySlot) PlaceAbilityInSlot();
+
+        GameManager.Instance.OnGameLoaded += PlaceAbilityInSlot;
 	}
 	
-	public void PlaceAbilityInSlot(Abilities abil)
+	public void PlaceAbilityInSlot()
+    {
+        //Keybind & text
+        keybind = GameMetaInfo.abilityKeybinds[slotAbility];
+        abilKeyDisplay.text = keybind.ToString();
+
+        //Ability Image
+        abilityImage.enabled = true;
+        abilityImage.sprite = GameMetaInfo.abilityIcons[slotAbility];
+    }
+
+    public void PlaceAbilityInSlot(Abilities abil)
     {
         //Keybind & text
         keybind = GameMetaInfo.abilityKeybinds[abil];
