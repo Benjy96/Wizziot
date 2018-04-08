@@ -7,7 +7,7 @@ public class Minimap : MonoBehaviour {
     private void LateUpdate()
     {
         Vector3 newPos = PlayerManager.Instance.player.transform.position;
-        newPos.y = transform.position.y;
+        newPos.y = PlayerManager.Instance.player.transform.position.y + 100f;
         transform.position = newPos;
     }
 }
