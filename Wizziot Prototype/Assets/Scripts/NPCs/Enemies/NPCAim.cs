@@ -9,5 +9,6 @@ public class NPCAim : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         player = PlayerManager.Instance.player.GetComponent<Transform>();
+        transform.position = player.position;
 	}
 }
