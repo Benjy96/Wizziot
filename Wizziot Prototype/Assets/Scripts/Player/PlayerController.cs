@@ -12,7 +12,6 @@ public class PlayerController : MonoBehaviour {
 
     // ----- Components ----- //
     public GameObject inventoryUI;
-    public StatUIManager statUI;
     public CharacterSheetManager characterSheet;
 
     private StoryManager storyManager;
@@ -147,7 +146,6 @@ public class PlayerController : MonoBehaviour {
                             case TargetType.Enemy:
                                 target = pointHit.transform.GetComponent<Enemy>();
                                 SetTargetIndicatorPos(true);
-                                statUI.SetTarget(target.GetComponent<EntityStats>());
                                 break;
 
                             case TargetType.Story:
