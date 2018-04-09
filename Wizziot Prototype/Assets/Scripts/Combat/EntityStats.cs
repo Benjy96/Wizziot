@@ -35,7 +35,10 @@ public class EntityStats : MonoBehaviour {
 
     private void Awake()
     {
-        onDeath += InvokeTargetDestroyedEvent;  //Unsubscribe in OnDisable
+        onDeath += InvokeTargetDestroyedEvent;
+
+        CurrentHealth = maxHealth;
+        CurrentStamina = maxStamina;
 
         //Set ability costs
         abilityCosts = new Dictionary<Abilities, float>();
@@ -66,11 +69,6 @@ public class EntityStats : MonoBehaviour {
         ApplyStatModifiers();
     }
 
-    private void OnDisable()
-    {
-        onDeath -= InvokeTargetDestroyedEvent;
-    }
-
     private void Update()
     {
         if(CurrentStamina != maxStamina) CurrentStamina = Mathf.Lerp(CurrentStamina, maxStamina, Time.deltaTime / statModifiers[Stats.Fitness].StatValue);
@@ -94,14 +92,11 @@ public class EntityStats : MonoBehaviour {
         //Set Modifiers
         foreach (KeyValuePair<Stats,Stat> item in statModifiers)
         {
-            Debug.Log("dif scale: " + difficultyScale);
             item.Value.StatValue *= difficultyScale;
         }
 
         //Apply Modifiers to Variables
-        Debug.Log("(int)statModifiers[Stats.MaxHealthModifier].StatValue" + (int)statModifiers[Stats.MaxHealthModifier].StatValue);
         maxHealth *= (int)statModifiers[Stats.MaxHealthModifier].StatValue;
-        Debug.Log(maxHealth);
         maxStamina *= (int)statModifiers[Stats.MaxHealthModifier].StatValue;
 
         sqrMaxTargetDistance *= statModifiers[Stats.SightRange].StatValue;
@@ -110,9 +105,6 @@ public class EntityStats : MonoBehaviour {
         turnSpeed *= statModifiers[Stats.MovementSpeed].StatValue;
 
         attackInfluence *= statModifiers[Stats.Reputation].StatValue;
-
-        CurrentHealth = maxHealth;
-        CurrentStamina = maxStamina;
     }
 
     /// <summary>

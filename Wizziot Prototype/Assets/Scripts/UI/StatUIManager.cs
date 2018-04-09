@@ -16,8 +16,6 @@ public class StatUIManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		playerStats = PlayerManager.Instance.player.GetComponent<EntityStats>();
-
-        //GameManager.Instance.OnGameLoaded += GetMaxHealthStamina;
     }
 	
 	// Update is called once per frame
@@ -30,10 +28,5 @@ public class StatUIManager : MonoBehaviour {
 
         healthImage.fillAmount = Mathf.Lerp(healthImage.fillAmount, health, Time.deltaTime * 5f);
         staminaImage.fillAmount = Mathf.Lerp(staminaImage.fillAmount, stamina, Time.deltaTime * 5f);
-    }
-
-    private void GetMaxHealthStamina()
-    {
-
     }
 }
