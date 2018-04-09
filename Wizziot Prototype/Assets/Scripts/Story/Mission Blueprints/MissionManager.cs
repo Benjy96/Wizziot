@@ -33,7 +33,9 @@ public class MissionManager : MonoBehaviour {
         completedMissions = new List<Mission>(maxMissions);
     }
 
-    //Grant a mission
+    /// <summary>
+    /// Grant a mission or first stage of chain mission
+    /// </summary>
     public void GrantMission(Mission mission)
     {
         Mission grantedMission = mission.CreateMission();
@@ -47,10 +49,21 @@ public class MissionManager : MonoBehaviour {
         }
     }
 
-    //Grant a new part of a multi-stage mission, passing through the parent's rewards
-    public void GrantMission(Mission mission, List<GameObject> firstStageRewards)
+    /// <summary>
+    /// Grant a new part of a multi-stage mission, passing through the parent's rewards
+    /// </summary>
+    public void GrantChildMission(Mission mission)
     {
-        Mission grantedMission = mission.CreateMission(firstStageRewards);
+        Mission grantedMission;
+        //If the first of a chain, set child's parent reference as this, else carry previous parent
+        if (mission.parentMission == null)
+        {
+            grantedMission = mission.CreateMission(mission);
+        }
+        else
+        {
+            grantedMission = mission.CreateMission(mission.parentMission); 
+        }
 
         if (!activeMissions.Contains(grantedMission) && activeMissions.Count < maxMissions)
         {
@@ -66,7 +79,7 @@ public class MissionManager : MonoBehaviour {
         activeMissions.Remove(mission);
         completedMissions.Add(mission);
         
-        //Activate next mission stage
+        //Activate next mission stage (From parent)
         if(mission.additionalMissionStages.Length > 0)
         {
             //Activate first non-null stage
@@ -77,7 +90,23 @@ public class MissionManager : MonoBehaviour {
                 else
                 {
                     //Grant the child mission, and pass through the parent rewards
-                    if (m.missionRewards.Count != 0) GrantMission(m, m.missionRewards);
+                    if (m.missionRewards.Count != 0) GrantChildMission(m);
+                    else GrantMission(m);
+                    break;
+                }
+            }
+        }
+        else if (mission.parentMission.additionalMissionStages.Length > 0)  //(From child)
+        {
+            //Activate first non-null stage
+            foreach (Mission m in mission.parentMission.additionalMissionStages)
+            {
+                //If stage is null or has been completed, continue
+                if (m == null || completedMissions.Contains(m)) continue;
+                else
+                {
+                    //Grant the child mission, and pass through the parent rewards
+                    if (m.missionRewards.Count != 0) GrantChildMission(m);
                     else GrantMission(m);
                     break;
                 }

@@ -32,9 +32,9 @@
     ],
     "values": [
       {
-        "x": 0.7568444,
-        "y": 2.11733031,
-        "z": 82.71019
+        "x": -1.19477355,
+        "y": 2.16055536,
+        "z": 84.99338
       }
     ],
     "Length": 1
@@ -66,6 +66,7 @@
     "values": [
       [
         {
+          "parentMission": null,
           "title": "Go to the Wizard's Zoo",
           "description": "Some enemies are disturbing the Wizard's wildlife. Remove them.",
           "additionalMissionStages": [
@@ -73,8 +74,9 @@
               "killsRequired": [
                 1
               ],
+              "parentMission": null,
               "title": "Rid Nuisance",
-              "description": "",
+              "description": "There it is! A rabid one by the looks of it!",
               "additionalMissionStages": [],
               "location": {
                 "x": -205.0,

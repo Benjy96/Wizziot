@@ -17,7 +17,7 @@ public class KillMission : Mission {
         foreach (GameObject x in killTypes)
         {
             //If enemy matches type in kill types and the distance is within range of the waypoint, update the quest
-            if(x.Equals(enemyName) && (location - enemy.transform.position).sqrMagnitude < (waypointRadius * waypointRadius))
+            if(x.name.Equals(enemyName) && (location - enemy.transform.position).sqrMagnitude < (waypointRadius * waypointRadius))
             {
                 Debug.Log("Quest conditions met, updating progress");
                 killsRequired[killTypeIndex]--;

@@ -48,34 +48,23 @@ public class Loader : MonoBehaviour
 
     private static bool LoadData(SaveData data)
     {
-        try
-        {
-            LoadAbilityKeybinds(data);
-            LoadScriptableObjects(data);
+        LoadAbilityKeybinds(data);
+        LoadScriptableObjects(data);
 
-            int difficulty = 0;
-            data.Load(GameMetaInfo._STATE_DATA[(int)StateData.GameDifficulty], ref difficulty);
-            GameMetaInfo._GAME_DIFFICULTY = (Difficulty)difficulty;
+        int difficulty = 0;
+        data.Load(GameMetaInfo._STATE_DATA[(int)StateData.GameDifficulty], ref difficulty);
+        GameMetaInfo._GAME_DIFFICULTY = (Difficulty)difficulty;
 
-            Vector3 newPlayerPos = new Vector3();
-            data.Load(GameMetaInfo._STATE_DATA[(int)StateData.PlayerPosition], ref newPlayerPos);
-            PlayerManager.Instance.player.transform.position = newPlayerPos;
+        Vector3 newPlayerPos = new Vector3();
+        data.Load(GameMetaInfo._STATE_DATA[(int)StateData.PlayerPosition], ref newPlayerPos);
+        PlayerManager.Instance.player.transform.position = newPlayerPos;
 
-            int playerHealth = 0;
-            data.Load(GameMetaInfo._STATE_DATA[(int)StateData.PlayerHealth], ref playerHealth);
-            PlayerManager.Instance.player.GetComponent<EntityStats>().CurrentHealth = playerHealth;
+        int playerHealth = 0;
+        data.Load(GameMetaInfo._STATE_DATA[(int)StateData.PlayerHealth], ref playerHealth);
+        PlayerManager.Instance.player.GetComponent<EntityStats>().CurrentHealth = playerHealth;
 
-            //data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Equipped], ref PlayerManager.Instance.equipped);
-            //data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Inventory], ref Inventory.Instance.items);
-            //data.Load(GameMetaInfo._STATE_DATA[(int)StateData.MissionsActive], ref MissionManager.Instance.activeMissions);
+        data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Coins], ref Inventory.Instance.coins);
 
-            data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Coins], ref Inventory.Instance.coins);
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e.StackTrace);
-            return false;
-        }
         return true;
     }
 
@@ -171,7 +160,20 @@ public class Loader : MonoBehaviour
         }
 
         //Missions
-        data.Load(GameMetaInfo._STATE_DATA[(int)StateData.MissionsActive], ref MissionManager.Instance.activeMissions);
+        List<Mission> missions = new List<Mission>();
+        data.Load(GameMetaInfo._STATE_DATA[(int)StateData.MissionsActive], ref missions);
+        foreach (Mission m in missions)
+        {
+            if(m.parentMission == null)
+            {
+                MissionManager.Instance.GrantMission(m);
+            }
+            else
+            {
+                MissionManager.Instance.GrantChildMission(m);
+            }
+            
+        }
     }
     #endregion
 }

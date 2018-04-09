@@ -25,7 +25,7 @@ public class MissionJournalSlot : MonoBehaviour {
             for (int i = 0; i < mission.missionRewards.Capacity; i++)
             {
                 if (mission.missionRewards[i] == null) continue;
-                Item item = ((GameObject)Instantiate(Resources.Load("Item Prefabs/" + mission.missionRewards[i]))).GetComponent<Item>();
+                Item item = Instantiate(mission.missionRewards[i]).GetComponent<Item>();
                 if (item != null)
                 {
                     rewards[i].enabled = true;

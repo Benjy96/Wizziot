@@ -11,18 +11,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8aeeb188642b88645929862131006b01, type: 3}
   m_Name: KillPissedOffEnemies
   m_EditorClassIdentifier: 
+  parentMission: {fileID: 0}
   title: Rid Nuisance
-  description: 
-  missionReward1: 
-  missionReward2: 
-  missionReward3: 
+  description: There it is! A rabid one by the looks of it!
+  missionReward1: {fileID: 0}
+  missionReward2: {fileID: 0}
+  missionReward3: {fileID: 0}
   missionRewards:
-  - (
-  - ','
-  - 0
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   additionalMissionStages: []
   location: {x: -205, y: 29, z: 53.32}
   completed: 0
   killTypes:
-  - L
+  - {fileID: 1967363257081838, guid: e82303aed87cf3c489a837e2477aad19, type: 2}
   killsRequired: 01000000

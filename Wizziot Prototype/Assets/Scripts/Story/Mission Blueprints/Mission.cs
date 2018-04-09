@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 public class Mission : ScriptableObject {
 
     protected MissionManager missionManager = MissionManager.Instance;
+    public Mission parentMission;
 
     [Header("Displayed in Journal and Log")]
     public string title;
@@ -42,7 +43,7 @@ public class Mission : ScriptableObject {
     //Insantiate a Mission SO using Resources folder to find asset type
     public Mission CreateMission()
     {
-        Mission newMission = (Mission)Instantiate(Resources.Load("Mission Objects/" + name));
+        Mission newMission = (Mission)Instantiate(Resources.Load("Mission Objects/" + name.Split('(')[0]));
 
         //Instantiate & Setup Waypoint Radius
         newMission.waypointObject = Instantiate(MissionManager.Instance.waypointPrefab, location, Quaternion.Euler(-90f, 0f, 0f));
@@ -53,17 +54,19 @@ public class Mission : ScriptableObject {
     }
 
     //Insantiate a child mission - inherits the rewards of the parent (first) mission
-    public Mission CreateMission(List<GameObject> firstStageRewards)
+    public Mission CreateMission(Mission chainParent)
     {
-        Mission newMission = (Mission)Instantiate(Resources.Load("Mission Objects/" + name));
+        Mission newMission = (Mission)Instantiate(Resources.Load("Mission Objects/" + name.Split('(')[0]));
 
         //Instantiate & Setup Waypoint Radius
         newMission.waypointObject = Instantiate(MissionManager.Instance.waypointPrefab, location, Quaternion.Euler(-90f, 0f, 0f));
         newMission.waypointRadius = newMission.waypointObject.GetComponent<SphereCollider>().radius;
         newMission.waypoint = newMission.waypointObject.GetComponent<Waypoint>();
 
+        //Set original mission
+        newMission.parentMission = chainParent;
         //Set rewards
-        newMission.missionRewards = firstStageRewards;
+        newMission.missionRewards = chainParent.missionRewards;
 
         return newMission;
     }
@@ -88,5 +91,13 @@ public class Mission : ScriptableObject {
     public virtual void UpdateMission(Targetable target)
     {
         Debug.Log("Update the mission progress");
+    }
+
+    private void CreateWaypoint()
+    {
+        //Instantiate & Setup Waypoint Radius
+        waypointObject = Instantiate(MissionManager.Instance.waypointPrefab, location, Quaternion.Euler(-90f, 0f, 0f));
+        waypointRadius = waypointObject.GetComponent<SphereCollider>().radius;
+        waypoint = waypointObject.GetComponent<Waypoint>();
     }
 }

@@ -22,6 +22,8 @@ public class StoryManager : MonoBehaviour {
     private string filepath;
     private string storyState_JSON;
 
+    public string StoryFilepath { get { return filepath; } }
+
     public bool StoryInputEnabled { get { return takeStoryInput; } }
     public bool StoryClosing { get { return closingStory; } }
 
