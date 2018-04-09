@@ -64,7 +64,8 @@ public class Loader : MonoBehaviour
 
         if (data.loadedItems != GameMetaInfo._STATE_DATA.Count)
         {
-            throw new System.Exception("Not all registered state data types have been loaded");
+            Debug.Log("Save not loaded");
+            return false;
         }
         else
         {

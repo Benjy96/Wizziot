@@ -11,7 +11,7 @@ public class EntityStats : MonoBehaviour {
     private int currentHealth;
 
     public int maxStamina = 100;
-    public float CurrentStamina { get { return currentStamina; } protected set { currentStamina = value; } }
+    public float CurrentStamina { get { return currentStamina; } private set { currentStamina = value; } }
     private float currentStamina;
 
     [Range(0, 225)] public float sqrMaxTargetDistance;
@@ -33,10 +33,9 @@ public class EntityStats : MonoBehaviour {
 
     public Action onDeath;
 
-    //Initialise stat modifiers dictionary with base modifier value and subscribe to onDeath event
     protected void Awake()
     {
-        onDeath += InvokeDeathEvent;  //Unsubscribe in OnDisable
+        onDeath += InvokeTargetDestroyedEvent;  //Unsubscribe in OnDisable
 
         //Set ability costs
         abilityCosts = new Dictionary<Abilities, float>();
@@ -67,17 +66,16 @@ public class EntityStats : MonoBehaviour {
 
     protected void OnDisable()
     {
-        onDeath -= InvokeDeathEvent;
+        onDeath -= InvokeTargetDestroyedEvent;
     }
 
-    //Regenerate Stamina
     protected void Update()
     {
         if(CurrentStamina != maxStamina) CurrentStamina = Mathf.Lerp(CurrentStamina, maxStamina, Time.deltaTime / statModifiers[Stats.Fitness].StatValue);
     }
 
     //Check if target & reset target indicator and invoke onTargetDestroyed if so
-    public virtual void InvokeDeathEvent()
+    public virtual void InvokeTargetDestroyedEvent()
     {
         Projector playerTarget = GetComponentInChildren<Projector>();
         if(playerTarget != null)
@@ -86,7 +84,6 @@ public class EntityStats : MonoBehaviour {
         }
     }
 
-    //Parent Version: Apply stat modifiers, scaled by the game's difficulty
     public virtual void ApplyStatModifiers()
     {
         //Scale is "1 + difficulty %" i.e.: Easy = + 0, Normal = + 0.25, Hard = + 0.5, Suicidal = + 0.75. Suicidal modifier would be 1.75
@@ -104,7 +101,7 @@ public class EntityStats : MonoBehaviour {
         sqrMaxTargetDistance *= statModifiers[Stats.SightRange].StatValue;
         speed *= statModifiers[Stats.MovementSpeed].StatValue;
         turnSpeed *= statModifiers[Stats.MovementSpeed].StatValue;
-        agro *= statModifiers[Stats.Notoriety].StatValue;
+        agro *= statModifiers[Stats.Reputation].StatValue;
 
         CurrentHealth = maxHealth;
         CurrentStamina = maxStamina;

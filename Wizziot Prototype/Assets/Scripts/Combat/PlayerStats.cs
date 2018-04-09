@@ -11,20 +11,13 @@ public class PlayerStats : EntityStats {
 
     public override void ApplyStatModifiers()
     {
-        //Apply Modifiers to Variables
-        maxHealth *= (int)statModifiers[Stats.MaxHealthModifier].StatValue;
-        maxStamina *= (int)statModifiers[Stats.MaxHealthModifier].StatValue;
-        sqrMaxTargetDistance *= statModifiers[Stats.SightRange].StatValue;
-        speed *= statModifiers[Stats.MovementSpeed].StatValue;
-        turnSpeed *= statModifiers[Stats.MovementSpeed].StatValue;
-        agro *= statModifiers[Stats.Notoriety].StatValue;
+        base.ApplyStatModifiers();
 
-        CurrentHealth = maxHealth;
-        CurrentStamina = maxStamina;
+        //TODO: attack agro adjusted by difficulty
     }
 
-    public override void InvokeDeathEvent()
+    public override void InvokeTargetDestroyedEvent()
     {
-        Debug.Log("Player should be dead...");
+        base.InvokeTargetDestroyedEvent();
     }
 }
