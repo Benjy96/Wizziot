@@ -1,0 +1,96 @@
+{
+  "boolData": {
+    "keys": [],
+    "values": [],
+    "Length": 0
+  },
+  "stringData": {
+    "keys": [
+      "Scene"
+    ],
+    "values": [
+      "Tutorial"
+    ],
+    "Length": 1
+  },
+  "intData": {
+    "keys": [
+      "GameDifficulty",
+      "PlayerHealth",
+      "Coins"
+    ],
+    "values": [
+      1,
+      200,
+      0
+    ],
+    "Length": 3
+  },
+  "v3Data": {
+    "keys": [
+      "PlayerPosition"
+    ],
+    "values": [
+      {
+        "x": 1.42462134,
+        "y": 2.176314,
+        "z": -4.631443
+      }
+    ],
+    "Length": 1
+  },
+  "quaternionData": {
+    "keys": [],
+    "values": [],
+    "Length": 0
+  },
+  "abilityKeyData": {
+    "keys": [
+      "Keybinds"
+    ],
+    "values": [
+      {
+        "Zap": 49,
+        "Confuse": 50,
+        "Vortex": 51,
+        "Singularity": 52,
+        "Heal": 53
+      }
+    ],
+    "Length": 1
+  },
+  "scriptableObjectData": {
+    "keys": [],
+    "values": [],
+    "Length": 0
+  },
+  "scriptableObjectDataCollection": {
+    "keys": [],
+    "values": [],
+    "Length": 0
+  },
+  "equipmentData": {
+    "keys": [
+      "Inventory",
+      "Equipped"
+    ],
+    "values": [
+      [
+        {
+          "slot": 0,
+          "modifiers": [
+            {
+              "StatType": 0,
+              "StatValue": 2.0
+            }
+          ],
+          "prefabName": "Pancake Hat",
+          "name": "ACR Hat",
+          "hideFlags": 0
+        }
+      ],
+      []
+    ],
+    "Length": 2
+  }
+}

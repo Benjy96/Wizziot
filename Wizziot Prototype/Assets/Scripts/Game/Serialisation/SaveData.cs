@@ -69,9 +69,11 @@ public class SaveData
     public SaveDictionary<Quaternion> quaternionData = new SaveDictionary<Quaternion>();
     //Custom game types
     public SaveDictionary<Dictionary<Abilities, KeyCode>> abilityKeyData = new SaveDictionary<Dictionary<Abilities, KeyCode>>();
-    public SaveDictionary<List<Item>> inventoryData = new SaveDictionary<List<Item>>();
-    public SaveDictionary<List<Mission>> missionData = new SaveDictionary<List<Mission>>();
-    public SaveDictionary<Item[]> itemData = new SaveDictionary<Item[]>();
+
+    public SaveDictionary<ScriptableObject> scriptableObjectData = new SaveDictionary<ScriptableObject>();
+    public SaveDictionary<List<ScriptableObject>> scriptableObjectDataCollection = new SaveDictionary<List<ScriptableObject>>();
+
+    public SaveDictionary<List<Equipment>> equipmentData = new SaveDictionary<List<Equipment>>();
 
     public void Reset()
     {
@@ -82,9 +84,11 @@ public class SaveData
         quaternionData.Clear();
         //Custom
         abilityKeyData.Clear();
-        inventoryData.Clear();
-        itemData.Clear();
-        missionData.Clear();
+
+        scriptableObjectData.Clear();
+        scriptableObjectDataCollection.Clear();
+
+        equipmentData.Clear();
     }
 
     private void Save<T>(SaveDictionary<T> lists, string key, T value)
@@ -130,19 +134,19 @@ public class SaveData
         Save(abilityKeyData, key, value);
     }
 
-    public void Save(string key, List<Item> value)
+    public void Save(string key, ScriptableObject value)
     {
-        Save(inventoryData, key, value);
+        Save(scriptableObjectData, key, value);
     }
 
-    public void Save(string key, List<Mission> value)
+    public void Save(string key, List<ScriptableObject> value)
     {
-        Save(missionData, key, value);
+        Save(scriptableObjectDataCollection, key, value);
     }
 
-    public void Save(string key, Item[] value)
+    public void Save(string key, List<Equipment> value)
     {
-        Save(itemData, key, value);
+        Save(equipmentData, key, value);
     }
 
     //Interface Load Overrides
@@ -176,18 +180,18 @@ public class SaveData
         return Load(abilityKeyData, key, ref value);
     }
 
-    public bool Load(string key, ref List<Item> value)
+    public bool Load(string key, ref ScriptableObject value)
     {
-        return Load(inventoryData, key, ref value);
+        return Load(scriptableObjectData, key, ref value);
     }
 
-    public bool Load(string key, ref List<Mission> value)
+    public bool Load(string key, ref List<ScriptableObject> value)
     {
-        return Load(missionData, key, ref value);
+        return Load(scriptableObjectDataCollection, key, ref value);
     }
 
-    public bool Load(string key, ref Item[] value)
+    public bool Load(string key, ref List<Equipment> value)
     {
-        return Load(itemData, key, ref value);
+        return Load(equipmentData, key, ref value);
     }
-}
+} 

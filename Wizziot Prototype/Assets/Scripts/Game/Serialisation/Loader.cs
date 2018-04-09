@@ -47,37 +47,8 @@ public class Loader : MonoBehaviour
 
     private static bool LoadData(SaveData data)
     {
-        //Ensure correct scene loaded
-        string sceneName = "";
-        data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Scene], ref sceneName);
-        if (!sceneName.Equals(""))
-        {
-            if (SceneManager.GetActiveScene().name != sceneName)
-            {
-                SceneManager.LoadScene(sceneName);
-            }
-        }
-
-        //Set Ability KeyCodes using ability keybinds (Abil/KeyCode)
-        Dictionary<Abilities, KeyCode> savedAbilKeybinds = new Dictionary<Abilities, KeyCode>();
-        data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Keybinds], ref savedAbilKeybinds);
-
-        //Use Ability KeyCodes to set Action KeyCodes
-        //Temp so can iterate and modify at same time (iterate temp)
-        Dictionary<Abilities, KeyCode> abilKeybindsIteratable = new Dictionary<Abilities, KeyCode>(GameMetaInfo.abilityKeybinds); 
-
-        //Change all ABILITY keybinds
-        foreach (KeyValuePair<Abilities, KeyCode> item in abilKeybindsIteratable)
-        {
-            Abilities currentAbil = item.Key;
-            KeyCode currentAbilKey = item.Value;
-            System.Action currentKeyAction = GameMetaInfo.keybindActions[currentAbilKey];
-
-            //Update Dictionaries
-            GameMetaInfo.keybindActions.Remove(currentAbilKey);
-            GameMetaInfo.keybindActions.Add(savedAbilKeybinds[currentAbil], currentKeyAction);
-            GameMetaInfo.abilityKeybinds[currentAbil] = savedAbilKeybinds[currentAbil];
-        }
+        LoadAbilityKeybinds(data);
+        LoadScriptableObjects(data);
 
         int difficulty = 0;
         data.Load(GameMetaInfo._STATE_DATA[(int)StateData.GameDifficulty], ref difficulty);
@@ -91,19 +62,21 @@ public class Loader : MonoBehaviour
         data.Load(GameMetaInfo._STATE_DATA[(int)StateData.PlayerHealth], ref playerHealth);
         PlayerManager.Instance.player.GetComponent<EntityStats>().CurrentHealth = playerHealth;
 
-        data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Equipped], ref PlayerManager.Instance.equipped);
-        data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Inventory], ref Inventory.Instance.items);
-        data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Coins], ref Inventory.Instance.coins);
-        data.Load(GameMetaInfo._STATE_DATA[(int)StateData.MissionsActive], ref MissionManager.Instance.activeMissions);
+        //data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Equipped], ref PlayerManager.Instance.equipped);
+        //data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Inventory], ref Inventory.Instance.items);
+        //data.Load(GameMetaInfo._STATE_DATA[(int)StateData.MissionsActive], ref MissionManager.Instance.activeMissions);
 
-        if (data.loadedItems != GameMetaInfo._STATE_DATA.Count)
-        {
-            throw new System.Exception("Not all registered state data types have been loaded");
-        }
-        else
-        {
-            return true;
-        }
+        data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Coins], ref Inventory.Instance.coins);
+
+        //if (data.loadedItems < GameMetaInfo._STATE_DATA.Count)
+        //{
+        //    throw new System.Exception("Not all registered state data types have been loaded");
+        //}
+        //else
+        //{
+        //    return true;
+        //}
+        return true;
     }
 
     public static SaveData GetEncryptedSaveFile()
@@ -138,4 +111,67 @@ public class Loader : MonoBehaviour
         }
         return null;
     }
+
+    #region Load Implementations
+    private static void LoadAbilityKeybinds(SaveData data)
+    {
+        //Ensure correct scene loaded
+        string sceneName = "";
+        data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Scene], ref sceneName);
+        if (!sceneName.Equals(""))
+        {
+            if (SceneManager.GetActiveScene().name != sceneName)
+            {
+                SceneManager.LoadScene(sceneName);
+            }
+        }
+
+        //Set Ability KeyCodes using ability keybinds (Abil/KeyCode)
+        Dictionary<Abilities, KeyCode> savedAbilKeybinds = new Dictionary<Abilities, KeyCode>();
+        data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Keybinds], ref savedAbilKeybinds);
+
+        //Use Ability KeyCodes to set Action KeyCodes
+        //Temp so can iterate and modify at same time (iterate temp)
+        Dictionary<Abilities, KeyCode> abilKeybindsIteratable = new Dictionary<Abilities, KeyCode>(GameMetaInfo.abilityKeybinds);
+
+        //Change all ABILITY keybinds
+        foreach (KeyValuePair<Abilities, KeyCode> item in abilKeybindsIteratable)
+        {
+            Abilities currentAbil = item.Key;
+            KeyCode currentAbilKey = item.Value;
+            System.Action currentKeyAction = GameMetaInfo.keybindActions[currentAbilKey];
+
+            //Update Dictionaries
+            GameMetaInfo.keybindActions.Remove(currentAbilKey);
+            GameMetaInfo.keybindActions.Add(savedAbilKeybinds[currentAbil], currentKeyAction);
+            GameMetaInfo.abilityKeybinds[currentAbil] = savedAbilKeybinds[currentAbil];
+        }
+    }
+
+    private static void LoadScriptableObjects(SaveData data)
+    {
+        //Equipment
+        List<Equipment> equipment = new List<Equipment>();
+        data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Equipped], ref equipment);
+        for (int i = 0; i < equipment.Count; i++)
+        {
+            GameObject newItem = Instantiate((GameObject)Resources.Load("Item Prefabs/" + equipment[i].prefabName), PlayerManager.Instance.player.transform.position, Quaternion.identity);
+            PlayerManager.Instance.EquipItem(newItem.GetComponent<Item>());
+        }
+
+        //Inventory
+        List<Equipment> items = new List<Equipment>();
+        data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Inventory], ref items);
+        for(int i = 0; i < items.Count; i++)
+        {
+            GameObject inventoryItem = Instantiate((GameObject)Resources.Load("Item Prefabs/" + items[i].prefabName), PlayerManager.Instance.player.transform.position, Quaternion.identity);
+            Debug.Assert(inventoryItem != null);
+            Debug.Log("Adding to inventory: " + inventoryItem.name);
+            inventoryItem.GetComponent<Item>().AddToInventoryFromSaveFile();
+        }
+
+        //Missions
+        //data.Load(GameMetaInfo._STATE_DATA[(int)StateData.MissionsActive], ref MissionManager.Instance.activeMissions);
+    }
+    #endregion
 }

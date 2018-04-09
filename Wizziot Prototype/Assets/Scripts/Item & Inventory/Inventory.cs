@@ -33,6 +33,7 @@ public class Inventory : MonoBehaviour {
 
     public bool Add(Item item)
     {
+        Debug.Log("Adding item: " + item.name + ", item target type: " + item.targetType);
         if(item.targetType == TargetType.Item)
         {
             if(items.Count >= space)
@@ -42,6 +43,7 @@ public class Inventory : MonoBehaviour {
             }
             else
             {
+                Debug.Log("Updating inventory");
                 items.Add(item);
                 if(onItemChanged != null) onItemChanged.Invoke();
                 return true;

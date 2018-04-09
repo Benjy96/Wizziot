@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 [CreateAssetMenu(fileName = "Standard Mission", menuName = "Missions/Standard Mission")]
 public class Mission : ScriptableObject {
 
@@ -11,7 +12,7 @@ public class Mission : ScriptableObject {
     public string description;
 
     [Header("Completion Reward - For Multi-Stage, Set in First Stage Only")]
-    public GameObject missionReward1;
+    public GameObject missionReward1;       //CHANGE TO PREFAB NAME STRING FOR SERIALISATION
     public GameObject missionReward2;
     public GameObject missionReward3;
     [HideInInspector] public List<GameObject> missionRewards;

@@ -1,15 +1,17 @@
 ﻿using UnityEngine;
 
+[System.Serializable]
 public class Item : Targetable {
 
     new public string name = "New item";
-    public Sprite icon = null;
+    //public Sprite icon = null;
     public Equipment equipment;
 
     private float interactionRadius = 5f;
 
     private void Awake()
     {
+        equipment.prefabName = gameObject.name.Split('(')[0];
         targetType = TargetType.Item;
     }
 
@@ -36,6 +38,15 @@ public class Item : Targetable {
             gameObject.transform.SetParent(PlayerManager.Instance.player.transform);
             gameObject.transform.position = PlayerManager.Instance.player.transform.position;
         }
+    }
+
+    public void AddToInventoryFromSaveFile()
+    {
+        Inventory.Instance.Add(this);
+        MissionManager.Instance.RegisterItemFound(this);
+        gameObject.SetActive(false);
+        gameObject.transform.SetParent(PlayerManager.Instance.player.transform);
+        gameObject.transform.position = PlayerManager.Instance.player.transform.position;
     }
 
     public void Use()

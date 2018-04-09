@@ -52,18 +52,51 @@ public class Saver {
         save.Save(GameMetaInfo._STATE_DATA[(int)StateData.Scene], SceneManager.GetActiveScene().name);
         //Keybind actions & Abil keybinds
         save.Save(GameMetaInfo._STATE_DATA[(int)StateData.Keybinds], GameMetaInfo.abilityKeybinds);
-    
+
         //Game State Data
+        //save.Save(GameMetaInfo._STATE_DATA[(int)StateData.GameDifficulty], (int)GameMetaInfo._GAME_DIFFICULTY);
+        //save.Save(GameMetaInfo._STATE_DATA[(int)StateData.PlayerPosition], PlayerManager.Instance.player.transform.position);
+        //save.Save(GameMetaInfo._STATE_DATA[(int)StateData.PlayerHealth], PlayerManager.Instance.player.GetComponent<EntityStats>().CurrentHealth);
+        //save.Save(GameMetaInfo._STATE_DATA[(int)StateData.Inventory], Inventory.Instance.items);
+        //save.Save(GameMetaInfo._STATE_DATA[(int)StateData.Coins], Inventory.Instance.coins);
+        //save.Save(GameMetaInfo._STATE_DATA[(int)StateData.Equipped], PlayerManager.Instance.equipped);
+        //save.Save(GameMetaInfo._STATE_DATA[(int)StateData.MissionsActive], MissionManager.Instance.activeMissions);
+
         save.Save(GameMetaInfo._STATE_DATA[(int)StateData.GameDifficulty], (int)GameMetaInfo._GAME_DIFFICULTY);
         save.Save(GameMetaInfo._STATE_DATA[(int)StateData.PlayerPosition], PlayerManager.Instance.player.transform.position);
         save.Save(GameMetaInfo._STATE_DATA[(int)StateData.PlayerHealth], PlayerManager.Instance.player.GetComponent<EntityStats>().CurrentHealth);
-        save.Save(GameMetaInfo._STATE_DATA[(int)StateData.Inventory], Inventory.Instance.items);
         save.Save(GameMetaInfo._STATE_DATA[(int)StateData.Coins], Inventory.Instance.coins);
-        save.Save(GameMetaInfo._STATE_DATA[(int)StateData.Equipped], PlayerManager.Instance.equipped);
-        save.Save(GameMetaInfo._STATE_DATA[(int)StateData.MissionsActive], MissionManager.Instance.activeMissions);
+
+        //SOs Items
+        //save.Save(GameMetaInfo._STATE_DATA[(int)StateData.Inventory], Inventory.Instance.items);
+        List<Equipment> equipment = new List<Equipment>();
+        foreach (Item item in Inventory.Instance.items)
+        {
+            equipment.Add(item.equipment);
+        }
+        save.Save(GameMetaInfo._STATE_DATA[(int)StateData.Inventory], equipment);
+
+        //Sos Equipped
+        //save.Save(GameMetaInfo._STATE_DATA[(int)StateData.Equipped], PlayerManager.Instance.equipped);
+        List<Equipment> equipped = new List<Equipment>();
+        foreach (Item item in PlayerManager.Instance.equipped)
+        {
+            if (item == null) continue;
+            equipped.Add(item.equipment);
+        }
+        save.Save(GameMetaInfo._STATE_DATA[(int)StateData.Equipped], equipped);
+
+        //Sos Missions
+        //save.Save(GameMetaInfo._STATE_DATA[(int)StateData.MissionsActive], MissionManager.Instance.activeMissions);
+        //int counter = 0;
+        //foreach (Mission mission in MissionManager.Instance.activeMissions)
+        //{
+        //    save.Save(GameMetaInfo._STATE_DATA[(int)StateData.MissionsActive] + counter, mission);
+        //    counter++;
+        //}
 
         //Ensure all state data has been added to the save list
-        if (save.savedItems != GameMetaInfo._STATE_DATA.Count) throw new Exception("Not all required data has been saved");
+        //if (save.savedItems < GameMetaInfo._STATE_DATA.Count) throw new Exception("Not all required data has been saved");
 
         return save;
     }
