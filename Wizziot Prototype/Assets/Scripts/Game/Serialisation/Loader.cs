@@ -43,7 +43,7 @@ public class Loader : MonoBehaviour
         }
     }
 
-    private static bool LoadData(SaveData data)
+    private static void LoadData(SaveData data)
     {
         int difficulty = 0;
         data.Load(GameMetaInfo._STATE_DATA[(int)StateData.GameDifficulty], ref difficulty);
@@ -62,15 +62,10 @@ public class Loader : MonoBehaviour
         data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Coins], ref Inventory.Instance.coins);
         data.Load(GameMetaInfo._STATE_DATA[(int)StateData.MissionsActive], ref MissionManager.Instance.activeMissions);
 
-        if (data.loadedItems != GameMetaInfo._STATE_DATA.Count)
-        {
-            Debug.Log("Save not loaded");
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        if (data.loadedItems != GameMetaInfo._STATE_DATA.Count) throw new System.Exception("Not all state data loaded");
+
+        //GAME LOADED Event
+        if(GameManager.Instance.OnGameLoaded != null) GameManager.Instance.OnGameLoaded.Invoke();
     }
 }
 

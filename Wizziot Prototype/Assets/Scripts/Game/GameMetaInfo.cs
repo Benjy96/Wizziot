@@ -99,11 +99,11 @@ public class GameMetaInfo {
     //Ability Icons (Sprites)
     public static Dictionary<Abilities, Sprite> abilityIcons = new Dictionary<Abilities, Sprite>()
     {
-        { Abilities.Zap, (Sprite)Resources.Load("Zap", typeof(Sprite)) },
-        { Abilities.Confuse, (Sprite)Resources.Load("Confuse", typeof(Sprite)) },
-        { Abilities.Vortex, (Sprite)Resources.Load("Vortex", typeof(Sprite)) },
-        { Abilities.Singularity, (Sprite)Resources.Load("Singularity", typeof(Sprite)) },
-        { Abilities.Heal, (Sprite)Resources.Load("Heal", typeof(Sprite)) },
+        { Abilities.Zap, (Sprite)Resources.Load("zap", typeof(Sprite)) },
+        { Abilities.Confuse, (Sprite)Resources.Load("confuse", typeof(Sprite)) },
+        { Abilities.Vortex, (Sprite)Resources.Load("vortex", typeof(Sprite)) },
+        { Abilities.Singularity, (Sprite)Resources.Load("singularity", typeof(Sprite)) },
+        { Abilities.Heal, (Sprite)Resources.Load("heal", typeof(Sprite)) },
     };
 }
 
