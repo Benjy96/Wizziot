@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Newtonsoft.Json;
 
 [System.Serializable]
 [CreateAssetMenu(fileName = "Standard Mission", menuName = "Missions/Standard Mission")]
@@ -13,10 +14,10 @@ public class Mission : ScriptableObject {
 
     [Header("Completion Reward - For Multi-Stage, Set in First Stage Only")]
     [Tooltip("Replace x: Resources/Item Prefabs/x")]
-    public string missionReward1;       //CHANGE TO PREFAB NAME STRING FOR SERIALISATION
-    public string missionReward2;
-    public string missionReward3;
-    [HideInInspector] public List<string> missionRewards;
+    [JsonIgnore] public GameObject missionReward1;       //CHANGE TO PREFAB NAME STRING FOR SERIALISATION
+    [JsonIgnore] public GameObject missionReward2;
+    [JsonIgnore] public GameObject missionReward3;
+    [HideInInspector] [JsonIgnore] public List<GameObject> missionRewards;
 
     [Header("Gameplay")]
     public Mission[] additionalMissionStages;
@@ -30,7 +31,7 @@ public class Mission : ScriptableObject {
 
     private void Awake()
     {
-        missionRewards = new List<string>(3)
+        missionRewards = new List<GameObject>(3)
         {
             missionReward1,
             missionReward2,
@@ -52,7 +53,7 @@ public class Mission : ScriptableObject {
     }
 
     //Insantiate a child mission - inherits the rewards of the parent (first) mission
-    public Mission CreateMission(List<string> firstStageRewards)
+    public Mission CreateMission(List<GameObject> firstStageRewards)
     {
         Mission newMission = (Mission)Instantiate(Resources.Load("Mission Objects/" + name));
 

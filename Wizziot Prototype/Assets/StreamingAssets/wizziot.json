@@ -32,9 +32,9 @@
     ],
     "values": [
       {
-        "x": -3.99929023,
-        "y": 2.19160676,
-        "z": 86.6334457
+        "x": 0.7568444,
+        "y": 2.11733031,
+        "z": 82.71019
       }
     ],
     "Length": 1
@@ -68,32 +68,13 @@
         {
           "title": "Go to the Wizard's Zoo",
           "description": "Some enemies are disturbing the Wizard's wildlife. Remove them.",
-          "missionReward1": "",
-          "missionReward2": "",
-          "missionReward3": "",
-          "missionRewards": [
-            null,
-            null,
-            null,
-            "",
-            "",
-            ""
-          ],
           "additionalMissionStages": [
             {
+              "killsRequired": [
+                1
+              ],
               "title": "Rid Nuisance",
               "description": "",
-              "missionReward1": "",
-              "missionReward2": "",
-              "missionReward3": "",
-              "missionRewards": [
-                null,
-                null,
-                null,
-                "",
-                "",
-                ""
-              ],
               "additionalMissionStages": [],
               "location": {
                 "x": -205.0,

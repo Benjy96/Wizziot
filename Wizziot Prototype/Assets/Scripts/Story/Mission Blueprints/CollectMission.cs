@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
+using Newtonsoft.Json;
 
 [CreateAssetMenu(fileName = "Collect Mission", menuName = "Missions/Collect Mission")]
 public class CollectMission : Mission {
 
-    public string collectItem;
+    [JsonIgnore] public GameObject collectItem;
 
     //Check if item matches the specified "collectItem"
     public override void UpdateMission(Targetable item)

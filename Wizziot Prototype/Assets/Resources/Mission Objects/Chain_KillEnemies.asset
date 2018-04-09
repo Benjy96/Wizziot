@@ -13,14 +13,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: Go to the Wizard's Zoo
   description: Some enemies are disturbing the Wizard's wildlife. Remove them.
-  missionReward1: {fileID: 1986077721385236, guid: 5a4dd3cba68095c4ca9bac724b8b00a7,
-    type: 2}
-  missionReward2: {fileID: 0}
-  missionReward3: {fileID: 0}
+  missionReward1: Pancake Hat
+  missionReward2: 
+  missionReward3: 
   missionRewards:
-  - {fileID: 1986077721385236, guid: 5a4dd3cba68095c4ca9bac724b8b00a7, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
+  - (
+  - 0
+  - 4
   additionalMissionStages:
   - {fileID: 11400000, guid: 20867fd8a9efb8e4baf94e4e683425b1, type: 2}
   location: {x: -5.6, y: 3, z: 97.3}

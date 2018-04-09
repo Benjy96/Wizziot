@@ -48,7 +48,7 @@ public class MissionManager : MonoBehaviour {
     }
 
     //Grant a new part of a multi-stage mission, passing through the parent's rewards
-    public void GrantMission(Mission mission, List<string> firstStageRewards)
+    public void GrantMission(Mission mission, List<GameObject> firstStageRewards)
     {
         Mission grantedMission = mission.CreateMission(firstStageRewards);
 
@@ -95,10 +95,10 @@ public class MissionManager : MonoBehaviour {
     private void GrantRewards(Mission mission)
     {
         //Grant rewards
-        foreach (string itemPrefabName in mission.missionRewards)
+        foreach (GameObject itemPrefab in mission.missionRewards)
         {
             //Make item of prefab
-            GameObject worldItem = (GameObject)Instantiate(Resources.Load("Item Prefabs/" + itemPrefabName), PlayerManager.Instance.player.transform.position, Quaternion.identity);
+            GameObject worldItem = Instantiate(itemPrefab, PlayerManager.Instance.player.transform.position, Quaternion.identity);
             Item i = worldItem.GetComponent<Item>();
             if (i != null)
             {

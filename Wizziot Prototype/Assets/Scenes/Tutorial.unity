@@ -26876,11 +26876,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 114461216770539618, guid: 563df87634f57a64189b671a7864570e,
-        type: 2}
-      propertyPath: inkAsset
-      value: 
-      objectReference: {fileID: 4900000, guid: 3fa0c6383865c5c46ae13b94988742e7, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 563df87634f57a64189b671a7864570e, type: 2}
   m_IsPrefabParent: 0
