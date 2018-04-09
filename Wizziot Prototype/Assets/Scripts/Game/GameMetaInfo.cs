@@ -23,10 +23,20 @@ public class GameMetaInfo {
         "MissionsActive"
     };
 
-    // ----- Keybinds & Actions ----- //
-    //Two keybind dictionaries because ability actions need a parameter
-    //Keybind Type 1 (Abil): Parameter - which ability
-    //Keybind Type 2 (Standard Function): No param - use function
+    // ----- Actions ----- //
+    public class KeybindAction
+    {
+        public Abilities ability;
+        public KeyCode keybind;
+        public Action action;
+
+        public KeybindAction(Abilities abilityToBind, KeyCode keyToFireAction, Action actionToPerform)
+        {
+            ability = abilityToBind;
+            keybind = keyToFireAction;
+            action = actionToPerform;
+        }
+    }
 
     public static void SetAbilityKeybindAction(Abilities abil, KeyCode key, Action action)
     {
@@ -38,7 +48,6 @@ public class GameMetaInfo {
     public static Dictionary<KeyCode, Action> keybindActions = new Dictionary<KeyCode, Action>();
 
     //Ability key bindings - Displayed in UI
-    //KeyCode used as a joining link between keybindActions & abilityKeybinds
     public static Dictionary<Abilities, KeyCode> abilityKeybinds = new Dictionary<Abilities, KeyCode>();
 
     // ----- Gameplay ----- //

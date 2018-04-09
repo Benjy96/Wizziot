@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
-using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -46,25 +45,6 @@ public class Loader : MonoBehaviour
 
     private static bool LoadData(SaveData data)
     {
-        //Set Ability KeyCodes using ability keybinds (Abil/KeyCode)
-        Dictionary<Abilities, KeyCode> newAbilKeybinds = new Dictionary<Abilities, KeyCode>();
-        data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Keybinds], ref newAbilKeybinds);
-
-        //Use Ability KeyCodes to set Action KeyCodes
-        //Temp so can iterate and modify at same time (iterate temp)
-        Dictionary<Abilities, KeyCode> abilKeybindsIteratable = new Dictionary<Abilities, KeyCode>(GameMetaInfo.abilityKeybinds); 
-
-        foreach (KeyValuePair<Abilities, KeyCode> item in abilKeybindsIteratable)
-        {
-            Abilities currentAbil = item.Key;
-            KeyCode currentAbilKey = abilKeybindsIteratable[currentAbil];
-            System.Action currentKeyAction = GameMetaInfo.keybindActions[currentAbilKey];
-            
-            GameMetaInfo.SetAbilityKeybindAction(currentAbil, newAbilKeybinds[currentAbil], currentKeyAction);
-        }
-
-        Debug.Log("Zap keybind: " + GameMetaInfo.abilityKeybinds[Abilities.Zap]);
-
         int difficulty = 0;
         data.Load(GameMetaInfo._STATE_DATA[(int)StateData.GameDifficulty], ref difficulty);
         GameMetaInfo._GAME_DIFFICULTY = (Difficulty) difficulty;

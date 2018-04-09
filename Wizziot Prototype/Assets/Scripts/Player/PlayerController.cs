@@ -37,24 +37,26 @@ public class PlayerController : MonoBehaviour {
 
         target = null;
 
-        if (GameMetaInfo.abilityKeybinds.Count == 0 && GameMetaInfo.keybindActions.Count == 0)
-        {
-            //Abilities
-            GameMetaInfo.SetAbilityKeybindAction(Abilities.Zap, KeyCode.Alpha1, new Action(() => UseAbility(Abilities.Zap, target)));
-            GameMetaInfo.SetAbilityKeybindAction(Abilities.Confuse, KeyCode.Alpha2, new Action(() => UseAbility(Abilities.Confuse, target)));
-            GameMetaInfo.SetAbilityKeybindAction(Abilities.Vortex, KeyCode.Alpha3, new Action(() => UseAbility(Abilities.Vortex, target)));
-            GameMetaInfo.SetAbilityKeybindAction(Abilities.Singularity, KeyCode.Alpha4, new Action(() => UseAbility(Abilities.Singularity, target)));
-            GameMetaInfo.SetAbilityKeybindAction(Abilities.Heal, KeyCode.Alpha5, new Action(() => UseAbility(Abilities.Heal, target)));
-
-            //General
-            GameMetaInfo.keybindActions.Add(KeyCode.F, Interact);
-            GameMetaInfo.keybindActions.Add(KeyCode.Escape, new Action(() => TriggerEscapeAction()));
-
-            //Camera
-            GameMetaInfo.keybindActions.Add(KeyCode.LeftAlt, cam.GetComponent<PlayerCamera>().SwitchCameraMode);
-            GameMetaInfo.keybindActions.Add(KeyCode.I, new Action(() => inventoryUI.gameObject.SetActive(!inventoryUI.activeSelf)));
-            GameMetaInfo.keybindActions.Add(KeyCode.J, new Action(() => TriggerJournalLoad()));
-        }
+        //Abilities
+        GameMetaInfo.SetAbilityKeybindAction(Abilities.Zap, KeyCode.Alpha1, new Action(() => UseAbility(Abilities.Zap, target)));
+        GameMetaInfo.SetAbilityKeybindAction(Abilities.Confuse, KeyCode.Alpha2, new Action(() => UseAbility(Abilities.Confuse, target)));
+        GameMetaInfo.SetAbilityKeybindAction(Abilities.Vortex, KeyCode.Alpha3, new Action(() => UseAbility(Abilities.Vortex, target)));
+        GameMetaInfo.SetAbilityKeybindAction(Abilities.Singularity, KeyCode.Alpha4, new Action(() => UseAbility(Abilities.Singularity, target)));
+        GameMetaInfo.SetAbilityKeybindAction(Abilities.Heal, KeyCode.Alpha5, new Action(() => UseAbility(Abilities.Heal, target)));
+        //GameMetaInfo.keybindActions.Add(KeyCode.Alpha1, new Action(() => InstantAttack(Abilities.Zap, target)));
+        //GameMetaInfo.keybindActions.Add(KeyCode.Alpha2, new Action(() => InstantAttack(Abilities.Confuse, target)));
+        //GameMetaInfo.keybindActions.Add(KeyCode.Alpha3, new Action(() => abilityComponent.PlayerUseAoE(Abilities.Vortex)));
+        //GameMetaInfo.keybindActions.Add(KeyCode.Alpha4, new Action(() => abilityComponent.PlayerUseAoE(Abilities.Singularity)));
+        //GameMetaInfo.keybindActions.Add(KeyCode.Alpha5, new Action(() => InstantAttack(Abilities.Heal, target)));
+        
+        //General
+        GameMetaInfo.keybindActions.Add(KeyCode.F, Interact);
+        GameMetaInfo.keybindActions.Add(KeyCode.Escape, new Action(() => TriggerEscapeAction()));
+        
+        //Camera
+        GameMetaInfo.keybindActions.Add(KeyCode.LeftAlt, cam.GetComponent<PlayerCamera>().SwitchCameraMode);
+        GameMetaInfo.keybindActions.Add(KeyCode.I, new Action(() => inventoryUI.gameObject.SetActive(!inventoryUI.activeSelf)));
+        GameMetaInfo.keybindActions.Add(KeyCode.J, new Action(() => TriggerJournalLoad()));
     }
 
     //EVENT SUBSCRIPTIONS & Script property references
@@ -81,13 +83,13 @@ public class PlayerController : MonoBehaviour {
     
     #region Event Triggers - Escape & Mission Journal
     //Used as a keybind action for the "Escape" key event
-    public void TriggerEscapeAction()
+    private void TriggerEscapeAction()
     {
         if (OnEscapeKey != null) OnEscapeKey.Invoke();
     }
 
     //Open & Update the Mission Journal - event
-    public void TriggerJournalLoad()
+    private void TriggerJournalLoad()
     {
         if (MissionManager.Instance.onJournalOpened != null) MissionManager.Instance.onJournalOpened.Invoke();
     }
@@ -241,7 +243,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     //Attempts to converse with story NPCs or pick up objects
-    public void Interact()
+    private void Interact()
     {
         switch (target.targetType)
         {
@@ -261,7 +263,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     //Checks target can be attacked & handles "self abilities"
-    public void UseAbility(Abilities abil, Targetable target)
+    private void UseAbility(Abilities abil, Targetable target)
     {
         AbilityUI.Instance.ChangeSelectedDisplay(abil);
 
