@@ -25,6 +25,6 @@ public class PlayerStats : EntityStats {
 
     public override void InvokeDeathEvent()
     {
-        GameManager.Instance.ExitToMenu();
+        GameManager.Instance.LoadLastSave();
     }
 }
