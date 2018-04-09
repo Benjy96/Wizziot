@@ -75,10 +75,8 @@ public class Singularity : AreaAbility {
 
     private IEnumerator StartSingularity()
     {
-        Debug.Log("Starting");
         singularityAttracting = true;
         yield return new WaitForSeconds(duration);
-        Debug.Log("Ending");
         singularityAttracting = false;
 
         //Destroy object

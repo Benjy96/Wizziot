@@ -170,10 +170,9 @@ public class AbilityComponent : MonoBehaviour {
                 case Abilities.Vortex:
                     if (Time.time > aoeFinishTime)
                     {
-                        AoE(vortexPrefab, damageToDo, ref aoePlaced);
+                        AoE(vortexPrefab, ref aoePlaced, SelectedAbility);
                         if (aoePlaced)
                         {
-                            statComponent.TryUseAbility(SelectedAbility, out damageToDo);
                             globalCooldownFinishTime = Time.time + globalCooldown;
                         }
                     }
@@ -182,10 +181,9 @@ public class AbilityComponent : MonoBehaviour {
                 case Abilities.Singularity:
                     if (Time.time > aoeFinishTime)
                     {
-                        AoE(singularityPrefab, damageToDo, ref aoePlaced);
+                        AoE(singularityPrefab, ref aoePlaced, SelectedAbility);
                         if (aoePlaced)
                         {
-                            statComponent.TryUseAbility(SelectedAbility, out damageToDo);
                             globalCooldownFinishTime = Time.time + globalCooldown;
                         }
                     }
@@ -243,7 +241,7 @@ public class AbilityComponent : MonoBehaviour {
         Destroy(confuseFX, confuseDuration);
     }
 
-    private void AoE(GameObject spellPrefab, float damage, ref bool aoePlaced)
+    private void AoE(GameObject spellPrefab, ref bool aoePlaced, Abilities abil)
     {
         AreaAbility deployed = null;
 
@@ -254,7 +252,7 @@ public class AbilityComponent : MonoBehaviour {
         }
         else
         {
-            Instantiate(spellPrefab,
+            GameObject areaObject = Instantiate(spellPrefab,
                 instantiatedAimingDisc.position + new Vector3(0f, instantiatedAimingDisc.localScale.y / 2, 0f), Quaternion.identity);
 
             deployed = spellPrefab.GetComponent<AreaAbility>();
@@ -262,34 +260,37 @@ public class AbilityComponent : MonoBehaviour {
             Destroy(instantiatedAimingDisc.gameObject);
             aiming = false;
 
-            ApplyAoEEffects(damage, deployed);
+            float damage = 0f;
+            statComponent.TryUseAbility(abil, out damage);
+            ApplyAoEEffects(damage, areaObject.transform, deployed);
+
             aoePlaced = true;
             aoeFinishTime = Time.time + aoeCooldown;
         }
     }
 
     /// <summary>
-    /// Damage and influence targets within area of effect
+    /// Gets, damages and influences targets within area of effect
     /// </summary>
-    /// <param name="damageToDo"></param>
-    private void ApplyAoEEffects(float damageToDo, AreaAbility AoEUsed)
+    private void ApplyAoEEffects(float damageToDo, Transform objectPosition, AreaAbility AoEUsed)
     {
-        Debug.Log("Here");
         List<Enemy> enemies = new List<Enemy>();
         //Influence enemies within AoE sphere
-        Collider[] cols = Physics.OverlapSphere(AoEUsed.transform.position, 
-            AoEUsed.effectRadius / AoEUsed.transform.localScale.x, 
-            LayerMask.NameToLayer(GameMetaInfo._LAYER_AFFECTABLE_OBJECT), 
-            QueryTriggerInteraction.Ignore); //prefab is scaled down - scale up
+        Collider[] cols = Physics.OverlapSphere(objectPosition.position, 
+            AoEUsed.effectRadius); //prefab is scaled down - scale up
 
         foreach (Collider c in cols)
         {
-            Debug.Log("in range: " + c.name);
-            Enemy e = c.GetComponent<Enemy>();
+            if (c.name.Split('(')[0].Equals(AoEUsed.name) || c.tag.Equals(gameObject.tag)) continue;
+
+            Enemy e = c.GetComponentInParent<Enemy>();
             if (e != null) e.Influence(gameObject, Emotion.Anger, statComponent.agro); enemies.Add(e);
 
-            EntityStats eS = c.GetComponent<EntityStats>();
-            if (eS != null) StartCoroutine(eS.DoTDamage(damageToDo, AoEUsed.duration));
+            EntityStats eS = c.GetComponentInParent<EntityStats>();
+            if (eS != null)
+            {
+                StartCoroutine(eS.DoTDamage(damageToDo, AoEUsed.duration));
+            }
         }
     }
 

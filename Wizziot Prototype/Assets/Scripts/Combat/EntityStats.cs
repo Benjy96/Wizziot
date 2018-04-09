@@ -157,7 +157,6 @@ public class EntityStats : MonoBehaviour {
     /// </summary>
     public IEnumerator DoTDamage(float amount, float duration)
     {
-        Debug.Log("Here");
         float damageApplied = 0f;
         float increments = amount / duration;
 
@@ -180,10 +179,11 @@ public class EntityStats : MonoBehaviour {
             if (CurrentHealth <= 0)
             {
                 if (onDeath != null) onDeath.Invoke();
+                yield return null;
             }
             else
             {
-                Mathf.Clamp(CurrentHealth, 0, maxHealth);
+                CurrentHealth = Mathf.Clamp(CurrentHealth, 0, maxHealth);
             }
 
             damageApplied += damage;
