@@ -19,10 +19,10 @@ public class MissionUI : MonoBehaviour {
             KillMission kMission = (KillMission)mission;
             int killRequiredIndex = 0;  //Track list of enemies / kills required per enemy type (each list index corresponds, e.g. enemy type 01 -> kill 5. Each stored in 2 lists.
             body.text = ""; //Replace placeholder text
-            foreach (GameObject x in kMission.killTypes)
+            foreach (string x in kMission.killTypes)
             {
                 if (killRequiredIndex > 0) body.text += "\n";
-                body.text += x.name + " Kills Left: " + kMission.killsRequired[killRequiredIndex];
+                body.text += x + " To Kill: " + kMission.killsRequired[killRequiredIndex];
                 killRequiredIndex++;
             }
         }
@@ -30,7 +30,7 @@ public class MissionUI : MonoBehaviour {
         {
             CollectMission cMission = (CollectMission)mission;
             body.text = ""; //Replace placeholder text
-            body.text = "Find: " + cMission.collectItem.name;
+            body.text = "Find: " + cMission.collectItem;
         }
         else //normal mission
         {

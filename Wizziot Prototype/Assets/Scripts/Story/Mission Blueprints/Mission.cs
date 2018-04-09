@@ -5,17 +5,18 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Standard Mission", menuName = "Missions/Standard Mission")]
 public class Mission : ScriptableObject {
 
-    MissionManager missionManager = MissionManager.Instance;
+    protected MissionManager missionManager = MissionManager.Instance;
 
     [Header("Displayed in Journal and Log")]
     public string title;
     public string description;
 
     [Header("Completion Reward - For Multi-Stage, Set in First Stage Only")]
-    public GameObject missionReward1;       //CHANGE TO PREFAB NAME STRING FOR SERIALISATION
-    public GameObject missionReward2;
-    public GameObject missionReward3;
-    [HideInInspector] public List<GameObject> missionRewards;
+    [Tooltip("Replace x: Resources/Item Prefabs/x")]
+    public string missionReward1;       //CHANGE TO PREFAB NAME STRING FOR SERIALISATION
+    public string missionReward2;
+    public string missionReward3;
+    [HideInInspector] public List<string> missionRewards;
 
     [Header("Gameplay")]
     public Mission[] additionalMissionStages;
@@ -29,7 +30,7 @@ public class Mission : ScriptableObject {
 
     private void Awake()
     {
-        missionRewards = new List<GameObject>(3)
+        missionRewards = new List<string>(3)
         {
             missionReward1,
             missionReward2,
@@ -51,7 +52,7 @@ public class Mission : ScriptableObject {
     }
 
     //Insantiate a child mission - inherits the rewards of the parent (first) mission
-    public Mission CreateMission(List<GameObject> firstStageRewards)
+    public Mission CreateMission(List<string> firstStageRewards)
     {
         Mission newMission = (Mission)Instantiate(Resources.Load("Mission Objects/" + name));
 

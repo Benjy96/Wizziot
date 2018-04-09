@@ -32,9 +32,9 @@
     ],
     "values": [
       {
-        "x": 1.42462134,
-        "y": 2.176314,
-        "z": -4.631443
+        "x": -3.99929023,
+        "y": 2.19160676,
+        "z": 86.6334457
       }
     ],
     "Length": 1
@@ -59,15 +59,64 @@
     ],
     "Length": 1
   },
-  "scriptableObjectData": {
-    "keys": [],
-    "values": [],
-    "Length": 0
-  },
-  "scriptableObjectDataCollection": {
-    "keys": [],
-    "values": [],
-    "Length": 0
+  "missionData": {
+    "keys": [
+      "MissionsActive"
+    ],
+    "values": [
+      [
+        {
+          "title": "Go to the Wizard's Zoo",
+          "description": "Some enemies are disturbing the Wizard's wildlife. Remove them.",
+          "missionReward1": "",
+          "missionReward2": "",
+          "missionReward3": "",
+          "missionRewards": [
+            "",
+            "",
+            ""
+          ],
+          "additionalMissionStages": [
+            {
+              "killTypes": [
+                ""
+              ],
+              "killsRequired": [
+                1
+              ],
+              "title": "Rid Nuisance",
+              "description": "",
+              "missionReward1": "",
+              "missionReward2": "",
+              "missionReward3": "",
+              "missionRewards": [
+                "",
+                "",
+                ""
+              ],
+              "additionalMissionStages": [],
+              "location": {
+                "x": -205.0,
+                "y": 29.0,
+                "z": 53.32
+              },
+              "completed": false,
+              "name": "KillPissedOffEnemies",
+              "hideFlags": 0
+            }
+          ],
+          "location": {
+            "x": -5.6,
+            "y": 3.0,
+            "z": 97.3
+          },
+          "completed": true,
+          "name": "Chain_KillEnemies(Clone)",
+          "hideFlags": 0
+        }
+      ]
+    ],
+    "Length": 1
   },
   "equipmentData": {
     "keys": [
@@ -75,20 +124,7 @@
       "Equipped"
     ],
     "values": [
-      [
-        {
-          "slot": 0,
-          "modifiers": [
-            {
-              "StatType": 0,
-              "StatValue": 2.0
-            }
-          ],
-          "prefabName": "Pancake Hat",
-          "name": "ACR Hat",
-          "hideFlags": 0
-        }
-      ],
+      [],
       []
     ],
     "Length": 2

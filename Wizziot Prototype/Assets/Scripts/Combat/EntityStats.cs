@@ -230,7 +230,7 @@ public class EntityStats : MonoBehaviour {
     private float GetNewStaminaForUsingAbil(Abilities ability)
     {
         //Calculate Stamina to remove for using the ability
-        float staminaToReduceBy = abilityCosts[ability] * statModifiers[Stats.ActionCostReduction].StatValue;
+        float staminaToReduceBy = abilityCosts[ability] / statModifiers[Stats.ActionCostReduction].StatValue;
         CurrentStamina -= (int)staminaToReduceBy;
         CurrentStamina = Mathf.Clamp(CurrentStamina, 0, maxStamina);
 

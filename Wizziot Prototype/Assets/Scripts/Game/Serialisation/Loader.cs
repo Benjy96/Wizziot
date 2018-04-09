@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -47,35 +48,34 @@ public class Loader : MonoBehaviour
 
     private static bool LoadData(SaveData data)
     {
-        LoadAbilityKeybinds(data);
-        LoadScriptableObjects(data);
+        try
+        {
+            LoadAbilityKeybinds(data);
+            LoadScriptableObjects(data);
 
-        int difficulty = 0;
-        data.Load(GameMetaInfo._STATE_DATA[(int)StateData.GameDifficulty], ref difficulty);
-        GameMetaInfo._GAME_DIFFICULTY = (Difficulty) difficulty;
+            int difficulty = 0;
+            data.Load(GameMetaInfo._STATE_DATA[(int)StateData.GameDifficulty], ref difficulty);
+            GameMetaInfo._GAME_DIFFICULTY = (Difficulty)difficulty;
 
-        Vector3 newPlayerPos = new Vector3();
-        data.Load(GameMetaInfo._STATE_DATA[(int)StateData.PlayerPosition], ref newPlayerPos);
-        PlayerManager.Instance.player.transform.position = newPlayerPos;
+            Vector3 newPlayerPos = new Vector3();
+            data.Load(GameMetaInfo._STATE_DATA[(int)StateData.PlayerPosition], ref newPlayerPos);
+            PlayerManager.Instance.player.transform.position = newPlayerPos;
 
-        int playerHealth = 0;
-        data.Load(GameMetaInfo._STATE_DATA[(int)StateData.PlayerHealth], ref playerHealth);
-        PlayerManager.Instance.player.GetComponent<EntityStats>().CurrentHealth = playerHealth;
+            int playerHealth = 0;
+            data.Load(GameMetaInfo._STATE_DATA[(int)StateData.PlayerHealth], ref playerHealth);
+            PlayerManager.Instance.player.GetComponent<EntityStats>().CurrentHealth = playerHealth;
 
-        //data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Equipped], ref PlayerManager.Instance.equipped);
-        //data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Inventory], ref Inventory.Instance.items);
-        //data.Load(GameMetaInfo._STATE_DATA[(int)StateData.MissionsActive], ref MissionManager.Instance.activeMissions);
+            //data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Equipped], ref PlayerManager.Instance.equipped);
+            //data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Inventory], ref Inventory.Instance.items);
+            //data.Load(GameMetaInfo._STATE_DATA[(int)StateData.MissionsActive], ref MissionManager.Instance.activeMissions);
 
-        data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Coins], ref Inventory.Instance.coins);
-
-        //if (data.loadedItems < GameMetaInfo._STATE_DATA.Count)
-        //{
-        //    throw new System.Exception("Not all registered state data types have been loaded");
-        //}
-        //else
-        //{
-        //    return true;
-        //}
+            data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Coins], ref Inventory.Instance.coins);
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e.StackTrace);
+            return false;
+        }
         return true;
     }
 
@@ -171,7 +171,7 @@ public class Loader : MonoBehaviour
         }
 
         //Missions
-        //data.Load(GameMetaInfo._STATE_DATA[(int)StateData.MissionsActive], ref MissionManager.Instance.activeMissions);
+        data.Load(GameMetaInfo._STATE_DATA[(int)StateData.MissionsActive], ref MissionManager.Instance.activeMissions);
     }
     #endregion
 }

@@ -1,9 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Saver {
@@ -42,33 +40,25 @@ public class Saver {
         }
     }
 
-    ///// <summary>
-    ///// Where the what is saved is stored (where the magic happens)
-    ///// </summary>
-    ///// <returns>A data structure containing key value (dictionary) pairs with all decided upon info to be tracked for game objects in the scene</returns>
+    /// <summary>
+    /// Where the what is saved is stored (where the magic happens)
+    /// </summary>
+    /// <returns>A data structure containing key value (dictionary) pairs with all decided upon info to be tracked for game objects in the scene</returns>
     private SaveData CreateSaveGame()
     {
         SaveData save = new SaveData();
+
         save.Save(GameMetaInfo._STATE_DATA[(int)StateData.Scene], SceneManager.GetActiveScene().name);
-        //Keybind actions & Abil keybinds
-        save.Save(GameMetaInfo._STATE_DATA[(int)StateData.Keybinds], GameMetaInfo.abilityKeybinds);
-
-        //Game State Data
-        //save.Save(GameMetaInfo._STATE_DATA[(int)StateData.GameDifficulty], (int)GameMetaInfo._GAME_DIFFICULTY);
-        //save.Save(GameMetaInfo._STATE_DATA[(int)StateData.PlayerPosition], PlayerManager.Instance.player.transform.position);
-        //save.Save(GameMetaInfo._STATE_DATA[(int)StateData.PlayerHealth], PlayerManager.Instance.player.GetComponent<EntityStats>().CurrentHealth);
-        //save.Save(GameMetaInfo._STATE_DATA[(int)StateData.Inventory], Inventory.Instance.items);
-        //save.Save(GameMetaInfo._STATE_DATA[(int)StateData.Coins], Inventory.Instance.coins);
-        //save.Save(GameMetaInfo._STATE_DATA[(int)StateData.Equipped], PlayerManager.Instance.equipped);
-        //save.Save(GameMetaInfo._STATE_DATA[(int)StateData.MissionsActive], MissionManager.Instance.activeMissions);
-
         save.Save(GameMetaInfo._STATE_DATA[(int)StateData.GameDifficulty], (int)GameMetaInfo._GAME_DIFFICULTY);
         save.Save(GameMetaInfo._STATE_DATA[(int)StateData.PlayerPosition], PlayerManager.Instance.player.transform.position);
         save.Save(GameMetaInfo._STATE_DATA[(int)StateData.PlayerHealth], PlayerManager.Instance.player.GetComponent<EntityStats>().CurrentHealth);
         save.Save(GameMetaInfo._STATE_DATA[(int)StateData.Coins], Inventory.Instance.coins);
 
-        //SOs Items
-        //save.Save(GameMetaInfo._STATE_DATA[(int)StateData.Inventory], Inventory.Instance.items);
+        #region Custom Data Types (Keybinds, Equipment, items, missions)
+        //Keybind Combos
+        save.Save(GameMetaInfo._STATE_DATA[(int)StateData.Keybinds], GameMetaInfo.abilityKeybinds);
+        
+        //Inventory Items
         List<Equipment> equipment = new List<Equipment>();
         foreach (Item item in Inventory.Instance.items)
         {
@@ -76,8 +66,7 @@ public class Saver {
         }
         save.Save(GameMetaInfo._STATE_DATA[(int)StateData.Inventory], equipment);
 
-        //Sos Equipped
-        //save.Save(GameMetaInfo._STATE_DATA[(int)StateData.Equipped], PlayerManager.Instance.equipped);
+        //Equipped Items
         List<Equipment> equipped = new List<Equipment>();
         foreach (Item item in PlayerManager.Instance.equipped)
         {
@@ -86,17 +75,9 @@ public class Saver {
         }
         save.Save(GameMetaInfo._STATE_DATA[(int)StateData.Equipped], equipped);
 
-        //Sos Missions
-        //save.Save(GameMetaInfo._STATE_DATA[(int)StateData.MissionsActive], MissionManager.Instance.activeMissions);
-        //int counter = 0;
-        //foreach (Mission mission in MissionManager.Instance.activeMissions)
-        //{
-        //    save.Save(GameMetaInfo._STATE_DATA[(int)StateData.MissionsActive] + counter, mission);
-        //    counter++;
-        //}
-
-        //Ensure all state data has been added to the save list
-        //if (save.savedItems < GameMetaInfo._STATE_DATA.Count) throw new Exception("Not all required data has been saved");
+        //Missions
+        save.Save(GameMetaInfo._STATE_DATA[(int)StateData.MissionsActive], MissionManager.Instance.activeMissions);
+        #endregion
 
         return save;
     }

@@ -4,7 +4,7 @@
 public class Item : Targetable {
 
     new public string name = "New item";
-    //public Sprite icon = null;
+    public Sprite icon = null;
     public Equipment equipment;
 
     private float interactionRadius = 5f;

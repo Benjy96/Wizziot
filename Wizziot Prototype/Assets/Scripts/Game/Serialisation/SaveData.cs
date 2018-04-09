@@ -69,10 +69,7 @@ public class SaveData
     public SaveDictionary<Quaternion> quaternionData = new SaveDictionary<Quaternion>();
     //Custom game types
     public SaveDictionary<Dictionary<Abilities, KeyCode>> abilityKeyData = new SaveDictionary<Dictionary<Abilities, KeyCode>>();
-
-    public SaveDictionary<ScriptableObject> scriptableObjectData = new SaveDictionary<ScriptableObject>();
-    public SaveDictionary<List<ScriptableObject>> scriptableObjectDataCollection = new SaveDictionary<List<ScriptableObject>>();
-
+    public SaveDictionary<List<Mission>> missionData = new SaveDictionary<List<Mission>>();
     public SaveDictionary<List<Equipment>> equipmentData = new SaveDictionary<List<Equipment>>();
 
     public void Reset()
@@ -84,10 +81,7 @@ public class SaveData
         quaternionData.Clear();
         //Custom
         abilityKeyData.Clear();
-
-        scriptableObjectData.Clear();
-        scriptableObjectDataCollection.Clear();
-
+        missionData.Clear();
         equipmentData.Clear();
     }
 
@@ -134,14 +128,9 @@ public class SaveData
         Save(abilityKeyData, key, value);
     }
 
-    public void Save(string key, ScriptableObject value)
+    public void Save(string key, List<Mission> value)
     {
-        Save(scriptableObjectData, key, value);
-    }
-
-    public void Save(string key, List<ScriptableObject> value)
-    {
-        Save(scriptableObjectDataCollection, key, value);
+        Save(missionData, key, value);
     }
 
     public void Save(string key, List<Equipment> value)
@@ -180,14 +169,9 @@ public class SaveData
         return Load(abilityKeyData, key, ref value);
     }
 
-    public bool Load(string key, ref ScriptableObject value)
+    public bool Load(string key, ref List<Mission> value)
     {
-        return Load(scriptableObjectData, key, ref value);
-    }
-
-    public bool Load(string key, ref List<ScriptableObject> value)
-    {
-        return Load(scriptableObjectDataCollection, key, ref value);
+        return Load(missionData, key, ref value);
     }
 
     public bool Load(string key, ref List<Equipment> value)

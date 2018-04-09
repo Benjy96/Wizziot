@@ -13,7 +13,7 @@ public class RewardSlot : MonoBehaviour {
     public void AddItem(Item item)
     {
         icon.enabled = true;
-        //icon.sprite = item.icon;
+        icon.sprite = item.icon;
     }
 
     public void ClearSlot()
