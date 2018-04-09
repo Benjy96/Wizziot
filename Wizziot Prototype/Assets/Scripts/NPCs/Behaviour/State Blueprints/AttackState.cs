@@ -51,10 +51,7 @@ public class AttackState : State {
         }
         else
         {
-            if (owner.DestinationReached())
-            {
-                owner.MoveToRandomWaypoint();
-            }
+            owner.MoveTo(new Vector3(owner.Position.x + Mathf.Cos(Time.time) * 2f, 0f, owner.Position.z + Mathf.Sin(Time.time) * 2f));
             owner.Influence(Emotion.Calm, .2f * Time.fixedDeltaTime);
         }
     }

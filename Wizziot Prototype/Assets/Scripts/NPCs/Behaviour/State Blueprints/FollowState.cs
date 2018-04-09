@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.AI;
 
 [CreateAssetMenu(fileName = "FollowState", menuName = "States/Follow")]
 [RequireComponent(typeof(NeighbourhoodTracker))]
@@ -24,7 +23,7 @@ public class FollowState : State {
             {
                 owner.Influence(Emotion.Calm, .2f * Time.fixedDeltaTime);
                 patrolling = true;
-                owner.MoveToRandomWaypoint();
+                MoveToRandomWaypoint();
                 patrolResetTime = Time.time + patrolResetDuration;
             }
         }
@@ -34,5 +33,20 @@ public class FollowState : State {
     {
         owner.target = target;
         base.ExitState();
+    }
+
+    private void MoveToRandomWaypoint()
+    {
+        //Get random point, based upon spawner waypoints
+        Vector3 patrolPos = owner.Spawn.spawnAreaWaypoints[Random.Range(0, owner.Spawn.spawnAreaWaypoints.Count)];
+
+        //Prevent waypoint at current location being set as new target
+        if (patrolPos == owner.Position)
+        {
+            MoveToRandomWaypoint();
+            return;
+        }
+
+        owner.MoveTo(patrolPos);
     }
 }
