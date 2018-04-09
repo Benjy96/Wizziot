@@ -53,10 +53,9 @@ public class StatUIManager : MonoBehaviour {
         targetHealthUI.SetActive(true);
         targetStats = eS;
         setTargetBars = true;
-        eS.onDeath += ClearTarget;
     }
 
-    private void ClearTarget()
+    public void ClearTarget()
     {
         targetStats = null;
         setTargetBars = false;

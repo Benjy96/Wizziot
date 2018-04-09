@@ -157,6 +157,7 @@ public class EntityStats : MonoBehaviour {
     /// </summary>
     public IEnumerator DoTDamage(float amount, float duration)
     {
+        Debug.Log("Here");
         float damageApplied = 0f;
         float increments = amount / duration;
 
