@@ -14,12 +14,6 @@ public class PauseMenu : MonoBehaviour {
         PlayerManager.Instance.playerControls.OnEscapeKey += PauseGame;
     }
 
-    private void OnDestroy()
-    {
-        //Ensure pause doesn't carry over between scenes
-        Time.timeScale = 1f;
-    }
-
     public void PauseGame()
     {
         if (_GamePaused == true)

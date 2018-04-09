@@ -33,9 +33,6 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        //Ensure pause menu pausing doesn't carry over between scenes
-        Time.timeScale = 1f;
-
         //Singleton setup
         if (_GameManager == null)
         {
@@ -45,7 +42,8 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        
+        //Ensure pause doesn't carry over between scenes
+        Time.timeScale = 1f;
         //DontDestroyOnLoad(gameObject);
     }
 
