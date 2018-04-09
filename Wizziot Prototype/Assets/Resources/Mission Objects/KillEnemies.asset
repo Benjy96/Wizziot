@@ -13,15 +13,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: Rid Nuisance
   description: 
-  missionReward1: {fileID: 0}
-  missionReward2: {fileID: 0}
-  missionReward3: {fileID: 0}
   missionRewards:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1986077721385236, guid: 5a4dd3cba68095c4ca9bac724b8b00a7, type: 2}
   additionalMissionStages: []
-  location: {x: 0, y: 0, z: 0}
+  location: {x: 5, y: 0, z: 90}
   completed: 0
   killTypes:
   - {fileID: 1967363257081838, guid: ffda47dcd015b5d42822cee50b149c07, type: 2}
