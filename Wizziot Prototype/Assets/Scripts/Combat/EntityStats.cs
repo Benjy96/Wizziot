@@ -73,11 +73,7 @@ public class EntityStats : MonoBehaviour {
     //Regenerate Stamina
     protected void Update()
     {
-        //Higher fitness = faster stamina regen (2f is about .7 stamina more per second)
-        //Debug.Log("lerp 0.5f: " + Mathf.Lerp(CurrentStamina, maxStamina, Time.fixedDeltaTime * 0.5f));
-        //Debug.Log("lerp 1f: " + Mathf.Lerp(CurrentStamina, maxStamina, Time.fixedDeltaTime * 1f));
-        //Debug.Log("lerp 2f: " + Mathf.Lerp(CurrentStamina, maxStamina, Time.fixedDeltaTime * 2f));
-        if (CurrentStamina != maxStamina) CurrentStamina = Mathf.Lerp(CurrentStamina, maxStamina, Time.fixedDeltaTime * statModifiers[Stats.Fitness].StatValue);
+        if(CurrentStamina != maxStamina) CurrentStamina = Mathf.Lerp(CurrentStamina, maxStamina, Time.deltaTime / statModifiers[Stats.Fitness].StatValue);
     }
 
     //Check if target & reset target indicator and invoke onTargetDestroyed if so
