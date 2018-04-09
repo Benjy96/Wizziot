@@ -56,6 +56,7 @@ public class Vortex : AreaAbility
     {
         if (vortexRepulsing)
         {
+            //TODO: Disable movement component of affected NPCs while active & re-enable
             StartCoroutine(Yoyo());
             foreach (Rigidbody body in neighbourRbs)
             {
