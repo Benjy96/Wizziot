@@ -161,7 +161,7 @@ public class AbilityComponent : MonoBehaviour {
                     if (Time.time > confuseFinishTime)
                     {
                         statComponent.TryUseAbility(SelectedAbility, out damageToDo);
-                        Confuse();
+                        StartCoroutine(Confuse());
                     }
                     break;
 
@@ -203,7 +203,6 @@ public class AbilityComponent : MonoBehaviour {
     {
         if (currentTarget != null)
         {
-            AudioManager.Instance.Play("Zap");
             StartCoroutine(ShotEffect());
             currentTargetStats.Damage(damage);
         }
@@ -220,7 +219,7 @@ public class AbilityComponent : MonoBehaviour {
         zapParticles.Stop(true);
     }
 
-    private void Confuse()
+    private IEnumerator Confuse()
     {
         //Enable effect
         EmotionChip e = currentTarget.GetComponent<EmotionChip>();
@@ -230,10 +229,10 @@ public class AbilityComponent : MonoBehaviour {
             e.Influence(Emotion.Fear, 1f);
         }
         GameObject confuseFX = Instantiate(confusePrefab, currentTarget, false);
-        AudioManager.Instance.Play("Confuse");
         //Disable effect
         confuseFinishTime = Time.time + confuseDuration;
-        Destroy(confuseFX, confuseDuration);
+        yield return new WaitForSeconds(confuseDuration);
+        Destroy(confuseFX);
     }
 
     private void AoE(GameObject spellPrefab, float damage, ref bool aoePlaced)
@@ -288,7 +287,7 @@ public class AbilityComponent : MonoBehaviour {
             GameObject fx = Instantiate(healPrefab, currentTarget, false);
 
             yield return new WaitForSeconds(healFXTime);
-            AudioManager.Instance.Play("Heal");
+            Debug.Log("Healing");
             currentTargetStats.Heal(amount);
 
             Destroy(fx);

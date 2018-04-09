@@ -155,6 +155,7 @@ public class Enemy : Targetable {
 
     public bool CanSeeTarget(Transform target)
     {
+        Debug.Log(target.tag);
         Ray ray = new Ray(Position, (target.position - Position));
         RaycastHit hit;
         //Racyast everything except default & affectable objects

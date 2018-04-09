@@ -94,11 +94,14 @@ public class EntityStats : MonoBehaviour {
         //Set Modifiers
         foreach (KeyValuePair<Stats,Stat> item in statModifiers)
         {
+            Debug.Log("dif scale: " + difficultyScale);
             item.Value.StatValue *= difficultyScale;
         }
 
         //Apply Modifiers to Variables
+        Debug.Log("(int)statModifiers[Stats.MaxHealthModifier].StatValue" + (int)statModifiers[Stats.MaxHealthModifier].StatValue);
         maxHealth *= (int)statModifiers[Stats.MaxHealthModifier].StatValue;
+        Debug.Log(maxHealth);
         maxStamina *= (int)statModifiers[Stats.MaxHealthModifier].StatValue;
 
         sqrMaxTargetDistance *= statModifiers[Stats.SightRange].StatValue;
@@ -115,6 +118,7 @@ public class EntityStats : MonoBehaviour {
     /// <summary>
     /// Interface method for external agents to heal "this"
     /// </summary>
+    /// <param name="amount"></param>
     public void Heal(float amount)
     {
         amount *= statModifiers[Stats.Fitness].StatValue;
