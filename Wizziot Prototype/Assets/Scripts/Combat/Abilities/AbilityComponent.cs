@@ -274,12 +274,17 @@ public class AbilityComponent : MonoBehaviour {
     /// <param name="damageToDo"></param>
     private void ApplyAoEEffects(float damageToDo, AreaAbility AoEUsed)
     {
+        Debug.Log("Here");
         List<Enemy> enemies = new List<Enemy>();
         //Influence enemies within AoE sphere
-        Collider[] cols = Physics.OverlapSphere(AoEUsed.transform.position, AoEUsed.effectRadius);
+        Collider[] cols = Physics.OverlapSphere(AoEUsed.transform.position, 
+            AoEUsed.effectRadius / AoEUsed.transform.localScale.x, 
+            LayerMask.NameToLayer(GameMetaInfo._LAYER_AFFECTABLE_OBJECT), 
+            QueryTriggerInteraction.Ignore); //prefab is scaled down - scale up
+
         foreach (Collider c in cols)
         {
-            Debug.Log(c.name);
+            Debug.Log("in range: " + c.name);
             Enemy e = c.GetComponent<Enemy>();
             if (e != null) e.Influence(gameObject, Emotion.Anger, statComponent.agro); enemies.Add(e);
 

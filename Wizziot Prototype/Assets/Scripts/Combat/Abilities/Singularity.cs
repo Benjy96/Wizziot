@@ -6,6 +6,7 @@ using UnityEngine;
 public class Singularity : AreaAbility {
 
     public GameObject singularityEffectPrefab;
+    private bool prefabPlaced = false;
 
     private bool singularityForming = false;
     private bool singularityAttracting = false;
@@ -24,7 +25,7 @@ public class Singularity : AreaAbility {
     private void OnCollisionEnter(Collision collision)
     {
         //e.g. this could be a base.OnCollissionEnter();
-        CreateSingularityEffect();
+        if(!prefabPlaced) CreateSingularityEffect();
 
         if (!singularityForming)
         {
@@ -86,6 +87,7 @@ public class Singularity : AreaAbility {
 
     private void CreateSingularityEffect()
     {
+        prefabPlaced = true;
         singularityEffectPrefab = Instantiate(singularityEffectPrefab, transform.position, Quaternion.identity, gameObject.transform);
     }
 }

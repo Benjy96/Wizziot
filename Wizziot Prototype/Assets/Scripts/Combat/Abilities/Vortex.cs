@@ -9,6 +9,7 @@ public class Vortex : AreaAbility
     public WaitForSeconds yoyoDuration = new WaitForSeconds(1f);
 
     public GameObject vortexEffectPrefab;
+    private bool prefabPlaced = false;
 
     private bool vortexForming = false;
     private bool vortexRepulsing = false;
@@ -19,7 +20,7 @@ public class Vortex : AreaAbility
     //Once landed on/impacted a surface:
     private void OnCollisionEnter(Collision collision)
     {
-        CreateVortexEffect();
+        if(!prefabPlaced) CreateVortexEffect();
 
         if (!vortexForming)
         {
@@ -94,18 +95,16 @@ public class Vortex : AreaAbility
 
     private IEnumerator StartVortex()
     {
-        Debug.Log("Starting");
         vortexRepulsing = true;
         yield return new WaitForSeconds(duration);
-        Debug.Log("Ending");
         vortexRepulsing = false;
 
-        //Destroy object
         Destroy(gameObject);
     }
 
     private void CreateVortexEffect()
     {
+        prefabPlaced = true;
         vortexEffectPrefab = Instantiate(vortexEffectPrefab, transform.position, Quaternion.identity, gameObject.transform);
     }
 }

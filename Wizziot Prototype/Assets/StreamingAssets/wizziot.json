@@ -72,24 +72,24 @@
           "missionReward2": "",
           "missionReward3": "",
           "missionRewards": [
+            null,
+            null,
+            null,
             "",
             "",
             ""
           ],
           "additionalMissionStages": [
             {
-              "killTypes": [
-                ""
-              ],
-              "killsRequired": [
-                1
-              ],
               "title": "Rid Nuisance",
               "description": "",
               "missionReward1": "",
               "missionReward2": "",
               "missionReward3": "",
               "missionRewards": [
+                null,
+                null,
+                null,
                 "",
                 "",
                 ""
