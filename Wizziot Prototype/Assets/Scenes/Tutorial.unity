@@ -3730,7 +3730,7 @@ Prefab:
     - target: {fileID: 114227188130123050, guid: 4bf4f21681f2cc04c935c58ecffde9da,
         type: 2}
       propertyPath: spawnAmount
-      value: 10
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114227188130123050, guid: 4bf4f21681f2cc04c935c58ecffde9da,
         type: 2}
