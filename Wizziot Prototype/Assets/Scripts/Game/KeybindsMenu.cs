@@ -5,24 +5,11 @@ using System.Collections.Generic;
 
 public class KeybindsMenu : MonoBehaviour {
 
-    Dictionary<int, KeyCode> keyCodeMappings;
+    TMP_InputField[] inputFields;
 
-    TMP_Dropdown[] dropdowns;
-
-    private void Awake()
-    {
-        keyCodeMappings = new Dictionary<int, KeyCode>();
-
-        //0 -> 9 converted to KeyCodes
-        for(int i = 0; i < 10; i++)
-        {
-            keyCodeMappings[i] = (KeyCode)i + 48;
-        }
-    }
-
-    // Use this for initialization
-    void Start () {
-        dropdowns = GetComponentsInChildren<TMP_Dropdown>(true);
+	// Use this for initialization
+	void Start () {
+        inputFields = GetComponentsInChildren<TMP_InputField>(true);
 	}
 	
 	public void SetKeybinds()
@@ -47,9 +34,9 @@ public class KeybindsMenu : MonoBehaviour {
 
         //Re-write binds of temp dictionaries
         int count = 0;  //Abils listed in menu in order
-        foreach (TMP_Dropdown item in dropdowns)
+        foreach (TMP_InputField item in inputFields)
         {
-            if (item.value.Equals(0))
+            if (item.text.Equals(""))
             {
                 count++;
                 continue;
@@ -58,7 +45,10 @@ public class KeybindsMenu : MonoBehaviour {
             //Get current ability option
             Abilities abil = (Abilities)count;
             //Get user input for new keybind
-            KeyCode newKeybindForAbility = keyCodeMappings[item.value];
+            KeyCode newKeybindForAbility = (KeyCode)Enum.Parse(typeof(KeyCode), item.text[0].ToString());
+
+            //Get old keybind for current ability
+            KeyCode oldCodeForAbil = tempAbilityKeys[abil];
 
             //Set new keybind for current abil
             tempAbilityKeys[abil] = newKeybindForAbility;
@@ -81,22 +71,22 @@ public class KeybindsMenu : MonoBehaviour {
         if (data == null) return;
 
         Dictionary<Abilities, KeyCode> tempAbilityKeys = new Dictionary<Abilities, KeyCode>();
+
         data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Keybinds], ref tempAbilityKeys);
 
         //Re-write binds of temp dictionaries
         int count = 0;  //Abils listed in menu in order
-        foreach (TMP_Dropdown item in dropdowns)
+        foreach (TMP_InputField item in inputFields)
         {
-            if (item.value.Equals(0))
-            {
-                count++;
-                continue;
-            }
+            if (item.text.Equals("")) continue;
 
             //Get current ability option
             Abilities abil = (Abilities)count;
             //Get user input for new keybind
-            KeyCode newKeybindForAbility = keyCodeMappings[item.value];
+            KeyCode newKeybindForAbility = (KeyCode)Enum.Parse(typeof(KeyCode), item.text[0].ToString());
+
+            //Get old keybind for current ability
+            KeyCode oldCodeForAbil = tempAbilityKeys[abil];
 
             //Set new keybind for current abil
             tempAbilityKeys[abil] = newKeybindForAbility;

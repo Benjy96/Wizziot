@@ -59,24 +59,21 @@ public class Loader : MonoBehaviour
         }
 
         //Set Ability KeyCodes using ability keybinds (Abil/KeyCode)
-        Dictionary<Abilities, KeyCode> savedAbilKeybinds = new Dictionary<Abilities, KeyCode>();
-        data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Keybinds], ref savedAbilKeybinds);
+        Dictionary<Abilities, KeyCode> newAbilKeybinds = new Dictionary<Abilities, KeyCode>();
+        data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Keybinds], ref newAbilKeybinds);
 
         //Use Ability KeyCodes to set Action KeyCodes
         //Temp so can iterate and modify at same time (iterate temp)
         Dictionary<Abilities, KeyCode> abilKeybindsIteratable = new Dictionary<Abilities, KeyCode>(GameMetaInfo.abilityKeybinds); 
 
-        //Change all ABILITY keybinds
         foreach (KeyValuePair<Abilities, KeyCode> item in abilKeybindsIteratable)
         {
             Abilities currentAbil = item.Key;
-            KeyCode currentAbilKey = item.Value;
+            KeyCode currentAbilKey = abilKeybindsIteratable[currentAbil];
             System.Action currentKeyAction = GameMetaInfo.keybindActions[currentAbilKey];
 
-            //Update Dictionaries
-            GameMetaInfo.keybindActions.Remove(currentAbilKey);
-            GameMetaInfo.keybindActions.Add(savedAbilKeybinds[currentAbil], currentKeyAction);
-            GameMetaInfo.abilityKeybinds[currentAbil] = savedAbilKeybinds[currentAbil];
+            //Using KeyCode from saveData, update the GameMetaInfo abil/keycode & keycode/action dictionaries (use current action/abil to update to new)
+            GameMetaInfo.SetAbilityKeybindAction(currentAbil, newAbilKeybinds[currentAbil], currentKeyAction);
         }
 
         int difficulty = 0;

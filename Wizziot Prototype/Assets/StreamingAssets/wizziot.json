@@ -5,13 +5,9 @@
     "Length": 0
   },
   "stringData": {
-    "keys": [
-      "Scene"
-    ],
-    "values": [
-      "Tutorial"
-    ],
-    "Length": 1
+    "keys": [],
+    "values": [],
+    "Length": 0
   },
   "intData": {
     "keys": [
@@ -21,7 +17,7 @@
     ],
     "values": [
       1,
-      200,
+      160,
       0
     ],
     "Length": 3
@@ -32,9 +28,9 @@
     ],
     "values": [
       {
-        "x": -0.0259304624,
-        "y": 2.17683029,
-        "z": -5.88926125
+        "x": -3.7890327,
+        "y": 2.35623264,
+        "z": 19.96585
       }
     ],
     "Length": 1
@@ -50,7 +46,7 @@
     ],
     "values": [
       {
-        "Zap": 55,
+        "Zap": 1,
         "Confuse": 50,
         "Vortex": 51,
         "Singularity": 52,
