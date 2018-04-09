@@ -43,17 +43,11 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    //TODO: OnGameLoaded event in Update (i.e., if(notLoaded) LoadGame()) ?
     private void Start()
     {
-        if (!SceneManager.GetActiveScene().name.Equals("Tutorial")) LoadGame();
-        else AudioManager.Instance.Play("Forest");
-
-        if (OnGameLoaded != null)
-        {
-            Debug.Log("Invoke OnGameLoaded");
-            OnGameLoaded.Invoke();
-        }
+        if(!SceneManager.GetActiveScene().name.Equals("Tutorial")) LoadGame();
+        Debug.Log("Game Difficulty: " + GameMetaInfo._GAME_DIFFICULTY);
+        if (OnGameLoaded != null) OnGameLoaded.Invoke();
     }
 
     public void LoadGame()

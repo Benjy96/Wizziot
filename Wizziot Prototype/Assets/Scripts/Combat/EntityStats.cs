@@ -62,6 +62,8 @@ public class EntityStats : MonoBehaviour {
             Stat newStat = new Stat(stat, defaultModifierValue);
             statModifiers.Add(newStat.StatType, newStat);
         }
+
+        ApplyStatModifiers();
     }
 
     private void OnDisable()
@@ -106,7 +108,6 @@ public class EntityStats : MonoBehaviour {
 
         attackInfluence *= statModifiers[Stats.Reputation].StatValue;
 
-        Debug.Log(gameObject + " applying stat modifiers mH: " + maxHealth);
         CurrentHealth = maxHealth;
         CurrentStamina = maxStamina;
     }
@@ -137,8 +138,6 @@ public class EntityStats : MonoBehaviour {
         amount /= statModifiers[Stats.DamageReduction].StatValue;   //Max 300% damage reduction (Stat Value: 3)
         
         CurrentHealth -= (int)amount;
-
-        Debug.Log(gameObject + " taking dmg, hp: " + CurrentHealth);
 
         //3. Reduce health
         if (CurrentHealth <= 0)

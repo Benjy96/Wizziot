@@ -55,19 +55,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc1b0ef9dd650e34d972d9a2eef789ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds:
-  - name: Forest
-    soundClip: {fileID: 8300000, guid: 8044cadca7f13a746be1a936e7d644c9, type: 3}
-    volume: 0.3
-    pitch: 1
-    loop: 1
-    source: {fileID: 0}
-  - name: Heal
-    soundClip: {fileID: 8300000, guid: 32cb585ecc79b704f82e8cf2d920b106, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
+  sounds: []
 --- !u!114 &114229979343066084
 MonoBehaviour:
   m_ObjectHideFlags: 1
