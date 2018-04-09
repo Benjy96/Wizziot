@@ -98,7 +98,7 @@ MonoBehaviour:
   targetType: 0
   name: Pancake Hat
   icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  equipment: {fileID: 11400000, guid: ec7b7bb5cdfd57244b2cb3839104618e, type: 2}
+  equipment: {fileID: 11400000, guid: 1e6121a8431e4aa49a559355e1507b94, type: 2}
 --- !u!136 &136971160037424388
 CapsuleCollider:
   m_ObjectHideFlags: 1

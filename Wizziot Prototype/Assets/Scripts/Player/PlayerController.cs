@@ -108,7 +108,6 @@ public class PlayerController : MonoBehaviour {
     //Sends a raycast to detect "Targetable" type objects on the "Object" layer, ignoring trigger colliders
     private void HandleTargeting()
     {
-        if (target == null) statUI.ClearTarget();
         //Must be within x metres - using sqr values since getting root is expensive
         if(target != null && 
             (target.transform.position - transform.position).sqrMagnitude > playerStats.sqrMaxTargetDistance)
@@ -224,11 +223,11 @@ public class PlayerController : MonoBehaviour {
     }
 
     //Places a projector on the current target
-    private void SetTargetIndicatorPos(bool dontResetTarget)
+    private void SetTargetIndicatorPos(bool aboveTarget)
     {
         float height;
 
-        if (dontResetTarget)
+        if (aboveTarget)
         {
             height = target.transform.localScale.y * 5;
 
@@ -252,14 +251,15 @@ public class PlayerController : MonoBehaviour {
         {
             case TargetType.Item:
                 target.GetComponent<Item>().AddToInventory();
-                SetTargetIndicatorPos(false);
                 break;
 
             case TargetType.Story:
+                Debug.Log(target.name);
                 storyManager.AttemptToConverse((InteractableNPC) target);
                 break;
 
             default:
+                Debug.Log(target.targetType + " cannot be interacted with");
                 break;
         }
     }
