@@ -48,7 +48,6 @@ public class Saver {
     {
         SaveData save = new SaveData();
 
-        save.Save(GameMetaInfo._STATE_DATA[(int)StateData.Keybinds], GameMetaInfo.abilityKeybinds);
         save.Save(GameMetaInfo._STATE_DATA[(int)StateData.GameDifficulty], (int)GameMetaInfo._GAME_DIFFICULTY);
         save.Save(GameMetaInfo._STATE_DATA[(int)StateData.PlayerPosition], PlayerManager.Instance.player.transform.position);
         save.Save(GameMetaInfo._STATE_DATA[(int)StateData.PlayerHealth], PlayerManager.Instance.player.GetComponent<EntityStats>().CurrentHealth);
@@ -61,33 +60,5 @@ public class Saver {
         if (save.savedItems != GameMetaInfo._STATE_DATA.Count) throw new System.Exception("Not all required data has been saved");
 
         return save;
-    }
-
-    public static void WriteToEncryptedSaveFile(SaveData data)
-    {
-        using (var fs = File.Open(GameMetaInfo._SAVE_FILE_ENCRYPTED, FileMode.Create))
-        {
-            using (var writer = new BsonWriter(fs))
-            {
-                var serializer = new JsonSerializer()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                };
-                serializer.Serialize(writer, data);
-            }
-        }
-    }
-
-    public static void WriteToJsonSaveFile(SaveData data)
-    {
-        if (File.Exists(GameMetaInfo._SAVE_FILE_JSON))
-        {
-            File.WriteAllText(GameMetaInfo._SAVE_FILE_JSON, JsonConvert.SerializeObject(data, Formatting.Indented,
-                    new JsonSerializerSettings()
-                    {
-                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                    }
-                ));
-        }
     }
 }

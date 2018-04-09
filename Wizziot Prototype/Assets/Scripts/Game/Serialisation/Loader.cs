@@ -71,37 +71,6 @@ public class Loader : MonoBehaviour
             return true;
         }
     }
-
-    public static SaveData GetEncryptedSaveFile()
-    {
-        //Set difficulty in json file
-        if (File.Exists(GameMetaInfo._SAVE_FILE_ENCRYPTED))
-        {
-            //Get data from file
-            SaveData savedData = new SaveData();
-            using (var fs = File.OpenRead(GameMetaInfo._SAVE_FILE_ENCRYPTED))
-            {
-                using (var reader = new BsonReader(fs))
-                {
-                    var serializer = new JsonSerializer();
-                    savedData = serializer.Deserialize<SaveData>(reader);
-                }
-            }
-            return savedData;
-        }
-        return null;
-    }
-
-    public static SaveData GetJSONSaveFile()
-    {
-        if (File.Exists(GameMetaInfo._SAVE_FILE_JSON))
-        {
-            //Get save game file
-            SaveData savedData = new SaveData();
-            string dataAsJSON = File.ReadAllText(GameMetaInfo._SAVE_FILE_JSON);
-            savedData = JsonConvert.DeserializeObject<SaveData>(dataAsJSON);
-            return savedData;
-        }
-        return null;
-    }
 }
+
+
