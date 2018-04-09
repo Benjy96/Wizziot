@@ -7,6 +7,12 @@ public class CubeNPC : InteractableNPC
     protected override void RegisterExternalFunctions()
     {
         storyManager.BindExternalFunction("CubePushOff", CubePushOff);
+        storyManager.BindExternalFunction("CubeRevenge", CubeRevenge);
+    }
+
+    private void CubeRevenge()
+    {
+        MissionManager.Instance.GrantMission(mission);
     }
 
     private void CubePushOff()
