@@ -38,9 +38,6 @@ public class PlayerController : MonoBehaviour {
 
         target = null;
 
-        //Refresh keybinds
-        GameMetaInfo.keybindActions = new System.Collections.Generic.Dictionary<KeyCode, Action>();
-        GameMetaInfo.abilityKeybinds = new System.Collections.Generic.Dictionary<Abilities, KeyCode>();
         //Abilities
         GameMetaInfo.SetAbilityKeybindAction(Abilities.Zap, KeyCode.Alpha1, new Action(() => UseAbility(Abilities.Zap, target)));
         GameMetaInfo.SetAbilityKeybindAction(Abilities.Confuse, KeyCode.Alpha2, new Action(() => UseAbility(Abilities.Confuse, target)));

@@ -42,9 +42,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        //Ensure pause doesn't carry over between scenes
-        Time.timeScale = 1f;
-        //DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()

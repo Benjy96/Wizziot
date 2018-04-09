@@ -50,12 +50,9 @@ public class Loader : MonoBehaviour
         //Ensure correct scene loaded
         string sceneName = "";
         data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Scene], ref sceneName);
-        if (!sceneName.Equals(""))
+        if (SceneManager.GetActiveScene().name != sceneName)
         {
-            if (SceneManager.GetActiveScene().name != sceneName)
-            {
-                SceneManager.LoadScene(sceneName);
-            }
+            SceneManager.LoadScene(sceneName);
         }
 
         //Set Ability KeyCodes using ability keybinds (Abil/KeyCode)
@@ -64,16 +61,16 @@ public class Loader : MonoBehaviour
 
         //Use Ability KeyCodes to set Action KeyCodes
         //Temp so can iterate and modify at same time (iterate temp)
-        Dictionary<Abilities, KeyCode> abilKeybindsIteratable = new Dictionary<Abilities, KeyCode>(GameMetaInfo.abilityKeybinds); 
+        Dictionary<Abilities, KeyCode> abilKeybindsIteratable = new Dictionary<Abilities, KeyCode>(KeybindManager.Instance.abilityKeybinds); 
 
         foreach (KeyValuePair<Abilities, KeyCode> item in abilKeybindsIteratable)
         {
             Abilities currentAbil = item.Key;
             KeyCode currentAbilKey = abilKeybindsIteratable[currentAbil];
-            System.Action currentKeyAction = GameMetaInfo.keybindActions[currentAbilKey];
+            System.Action currentKeyAction = KeybindManager.Instance.keybindActions[currentAbilKey];
 
             //Using KeyCode from saveData, update the GameMetaInfo abil/keycode & keycode/action dictionaries (use current action/abil to update to new)
-            GameMetaInfo.SetAbilityKeybindAction(currentAbil, newAbilKeybinds[currentAbil], currentKeyAction);
+            KeybindManager.Instance.SetAbilityKeybindAction(currentAbil, newAbilKeybinds[currentAbil], currentKeyAction);
         }
 
         int difficulty = 0;

@@ -28,7 +28,7 @@ public class Inventory : MonoBehaviour {
         {
             Destroy(gameObject);
         }
-        //DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(gameObject);
     }
 
     public bool Add(Item item)
