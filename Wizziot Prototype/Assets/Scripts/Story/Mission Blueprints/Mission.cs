@@ -15,10 +15,7 @@ public class Mission : ScriptableObject {
 
     [Header("Completion Reward - For Multi-Stage, Set in First Stage Only")]
     [Tooltip("Replace x: Resources/Item Prefabs/x")]
-    [JsonIgnore] public GameObject missionReward1;       //CHANGE TO PREFAB NAME STRING FOR SERIALISATION
-    [JsonIgnore] public GameObject missionReward2;
-    [JsonIgnore] public GameObject missionReward3;
-    [HideInInspector] [JsonIgnore] public List<GameObject> missionRewards;
+    [JsonIgnore] public List<GameObject> missionRewards;
 
     [Header("Gameplay")]
     public Mission[] additionalMissionStages;
@@ -29,16 +26,6 @@ public class Mission : ScriptableObject {
     protected Waypoint waypoint;
 
     [HideInInspector] public bool completed = false;
-
-    private void Awake()
-    {
-        missionRewards = new List<GameObject>(3)
-        {
-            missionReward1,
-            missionReward2,
-            missionReward3
-        };
-    }
 
     //Insantiate a Mission SO using Resources folder to find asset type
     public Mission CreateMission()
@@ -54,7 +41,7 @@ public class Mission : ScriptableObject {
     }
 
     //Insantiate a child mission - inherits the rewards of the parent (first) mission
-    public Mission CreateMission(Mission chainParent)
+    public Mission CreateMission(Mission chainParent, ref List<GameObject> parentRewards)
     {
         Mission newMission = (Mission)Instantiate(Resources.Load("Mission Objects/" + name.Split('(')[0]));
 
@@ -65,22 +52,43 @@ public class Mission : ScriptableObject {
 
         //Set original mission
         newMission.parentMission = chainParent;
-        //Set rewards
-        newMission.missionRewards = chainParent.missionRewards;
+        //Set rewards - deep copy of references
+        newMission.missionRewards = new List<GameObject>(parentRewards);
 
         return newMission;
     }
 
+    /// <summary>
+    /// Use to destruct mission
+    /// </summary>
     public void CompleteMission()
     {
-        if (missionManager.activeMissions.Contains(this))
+        Destroy(waypointObject);
+        GrantRewards();
+    }
+
+    private void GrantRewards()
+    {
+        //Grant rewards
+        foreach (GameObject itemPrefab in missionRewards)
         {
-            //Remove waypoint
-            Destroy(waypointObject);
-        }
-        else
-        {
-            throw new System.Exception("Mission manager is not storing this mission!: " + name);
+            if (itemPrefab == null) continue;
+            //Make item of prefab
+            Debug.Log("Instantiating");
+            GameObject worldItem = Instantiate(itemPrefab, PlayerManager.Instance.player.transform.position, Quaternion.identity);
+            Debug.Assert(worldItem != null);
+            Item i = worldItem.GetComponent<Item>();
+            Debug.Assert(i != null);
+            if (i != null)
+            {
+                Debug.Log("Adding to inventory");
+                i.AddToInventory();
+            }
+            else
+            {
+                Debug.Log("Destroying item");
+                Destroy(worldItem);
+            }
         }
     }
 

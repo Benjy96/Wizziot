@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour {
     {
         storyManager = StoryManager.Instance;
         //EVENT: onTargetDestroyed - Invoked by target of player
-        PlayerManager.Instance.onTargetDestroyed += RegisterKill;    //Delegate: Register kill to mission manager & Reset target indicator when target is destroyed 
+        PlayerManager.Instance.onTargetDestroyed += RegisterKill;    //Delegate: Register to reset target indicator when target is destroyed 
     }
 
     //UNSUBSCRIBE EVENTS
@@ -185,16 +185,16 @@ public class PlayerController : MonoBehaviour {
             KeyCode code = (KeyCode)i;
             if (Input.GetKeyDown(code) && GameMetaInfo.keybindActions.ContainsKey(code))
             {
-                try
-                {
+                //try
+                //{
                     //todo: check target ain't null? or do in the methods / prob for abilcomp methods
                     GameMetaInfo.keybindActions[code]();
-                }
-                catch (Exception e)
-                {
-                Debug.Log(e.StackTrace);
-                Debug.Log("Either Keybind not able to trigger or an exception occurred");
-                }
+                //}
+                //catch (Exception e)
+                //{
+                //Debug.Log(e.StackTrace);
+                //Debug.Log("Either Keybind not able to trigger or an exception occurred");
+                //}
             }
         }
     }
@@ -219,7 +219,6 @@ public class PlayerController : MonoBehaviour {
     //Registers a kill and then resets the target
     private void RegisterKill()
     {
-        MissionManager.Instance.RegisterKill();
         SetTargetIndicatorPos(false);
     }
 

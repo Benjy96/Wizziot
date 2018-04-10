@@ -58,11 +58,11 @@ public class MissionManager : MonoBehaviour {
         //If the first of a chain, set child's parent reference as this, else carry previous parent
         if (mission.parentMission == null)
         {
-            grantedMission = mission.CreateMission(mission);
+            grantedMission = mission.CreateMission(mission, ref mission.missionRewards);
         }
         else
         {
-            grantedMission = mission.CreateMission(mission.parentMission); 
+            grantedMission = mission.CreateMission(mission.parentMission, ref mission.missionRewards); 
         }
 
         if (!activeMissions.Contains(grantedMission) && activeMissions.Count < maxMissions)
@@ -74,6 +74,9 @@ public class MissionManager : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Use to register a mission as complete
+    /// </summary>
     public void FinishMission(Mission mission)
     {
         activeMissions.Remove(mission);
@@ -115,39 +118,21 @@ public class MissionManager : MonoBehaviour {
         else
         {
             //If no stages left, grant the rewards
-            GrantRewards(mission);
+            mission.CompleteMission();
         }
 
         if (onActiveMissionsChanged != null) onActiveMissionsChanged.Invoke();
     }
 
-    private void GrantRewards(Mission mission)
+    public void RegisterKill(Enemy e)
     {
-        //Grant rewards
-        foreach (GameObject itemPrefab in mission.missionRewards)
-        {
-            //Make item of prefab
-            GameObject worldItem = Instantiate(itemPrefab, PlayerManager.Instance.player.transform.position, Quaternion.identity);
-            Item i = worldItem.GetComponent<Item>();
-            if (i != null)
-            {
-                i.AddToInventory();
-            }
-            else
-            {
-                Destroy(worldItem);
-            }
-        }
-    }
-
-    public void RegisterKill()
-    {
+        Debug.Log("Registering kill");
         Mission[] completed = new Mission[maxMissions];
         int count = 0;
         foreach (Mission mission in activeMissions)
         {
             if (mission == null || mission.GetType() != typeof(KillMission)) continue;
-            mission.UpdateMission(PlayerManager.Instance.playerControls.Target);
+            mission.UpdateMission(e);
             if (mission.completed) completed[count] = mission;
             count++;
         }
@@ -158,7 +143,6 @@ public class MissionManager : MonoBehaviour {
         {
             if (completed[i] != null)
             {
-                completed[i].CompleteMission();
                 FinishMission(completed[i]);
             }
         }

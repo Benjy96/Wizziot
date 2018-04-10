@@ -10,10 +10,10 @@ public class RewardSlot : MonoBehaviour {
         icon = GetComponent<Image>();
     }
 
-    public void AddItem(Item item)
+    public void SetImage(Sprite icon)
     {
-        icon.enabled = true;
-        icon.sprite = item.icon;
+        this.icon.enabled = true;
+        this.icon.sprite = icon;
     }
 
     public void ClearSlot()

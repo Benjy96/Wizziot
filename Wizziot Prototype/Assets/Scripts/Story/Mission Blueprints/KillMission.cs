@@ -13,11 +13,13 @@ public class KillMission : Mission {
     {
         int killTypeIndex = 0;
         string enemyName = enemy.name.Split('(')[0];    //disregard clone part of name
+        Debug.Log(enemyName + " killed");
         
         foreach (GameObject x in killTypes)
         {
+            Debug.Log("x name " + x.name);
             //If enemy matches type in kill types and the distance is within range of the waypoint, update the quest
-            if(x.name.Equals(enemyName) && (location - enemy.transform.position).sqrMagnitude < (waypointRadius * waypointRadius))
+            if(x.name.Equals(enemyName) && (location - enemy.transform.position).sqrMagnitude < Mathf.Pow(waypointRadius, 3f))
             {
                 Debug.Log("Quest conditions met, updating progress");
                 killsRequired[killTypeIndex]--;
