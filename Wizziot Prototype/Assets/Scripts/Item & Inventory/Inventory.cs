@@ -44,6 +44,10 @@ public class Inventory : MonoBehaviour {
             else
             {
                 Debug.Log("Updating inventory");
+                item.gameObject.SetActive(false);
+                item.gameObject.transform.SetParent(PlayerManager.Instance.player.transform);
+                item.gameObject.transform.position = PlayerManager.Instance.player.transform.position;
+
                 items.Add(item);
                 if(onItemChanged != null) onItemChanged.Invoke();
                 return true;

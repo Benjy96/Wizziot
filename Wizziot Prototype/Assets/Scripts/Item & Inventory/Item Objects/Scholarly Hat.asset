@@ -14,8 +14,9 @@ MonoBehaviour:
   slot: 0
   modifiers:
   - stat: 3
-    statValue: 0.9
+    statValue: 0.5
   - stat: 9
     statValue: 0.5
   - stat: 8
-    statValue: 1.2
+    statValue: 0.3
+  prefabName: Scholarly Hat

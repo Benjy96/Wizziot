@@ -32,11 +32,10 @@ public class Item : Targetable {
     {
         if ((PlayerManager.Instance.player.transform.position - transform.position).sqrMagnitude < interactionRadius)
         {
-            Inventory.Instance.Add(this);
-            MissionManager.Instance.RegisterItemFound(this);
-            gameObject.SetActive(false);
-            gameObject.transform.SetParent(PlayerManager.Instance.player.transform);
-            gameObject.transform.position = PlayerManager.Instance.player.transform.position;
+            if (Inventory.Instance.Add(this))
+            {
+                MissionManager.Instance.RegisterItemFound(this);
+            }
         }
     }
 

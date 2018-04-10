@@ -60,11 +60,18 @@ public class PlayerManager : MonoBehaviour {
         equipped[equipmentSlot] = item;
         Inventory.Instance.Remove(item);
 
-        //Get key
-        foreach (Stat stat in newEquipment.modifiers)
+        //Reset to player base modifiers before *= current equipment modifiers
+        playerStats.ResetModifiers();
+
+        //Apply modifiers of all current equipment
+        foreach (Item slotItem in equipped)
         {
-            //Set new stat value (apply modifier)
-            playerStats.statModifiers[stat.StatType] = stat;
+            if (slotItem == null) continue;
+            foreach (Stat stat in slotItem.equipment.modifiers)
+            {
+                float statValue = stat.StatValue;
+                PlayerStatModifiers[stat.StatType].StatValue = statValue; //prevents SO from being modified next time equipment is equipped and modifiers reset <- was reference
+            }
         }
 
         //Make item visible and enabled, disable collider
@@ -92,6 +99,7 @@ public class PlayerManager : MonoBehaviour {
                 break;
         }
 
+        Debug.Log("Applying stat modifiers");
         playerStats.ApplyStatModifiers();
     }
 
