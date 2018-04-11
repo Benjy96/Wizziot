@@ -31,6 +31,8 @@ The wizard wavers from side to side.
             ---- -> DONE
         ***  Wait, demons?
             "Don't worry, they're perfectly harmless. Unless, of course, you happen to be within a distance of, say, the average-sized continent."
+            -> DONE
+            
 *   {Tutorial_KillNuisance_Completed} I killed it.
     "Thank you. You saved those creatures." The wizard strokes his beard. "Now, where was I? Ah, yes, by grinding those little buggers into dust I can mix them into a solution of..." He continues wavering.
     -> DONE

@@ -34,6 +34,7 @@ public class StoryManager : MonoBehaviour {
     private bool storyDisplayActive = false;
     private bool storyChoiceDisplayActive = false;
     private bool takeStoryInput = false;
+    private bool trackDistance = false;
 
     private void Awake()
     {
@@ -160,7 +161,6 @@ public class StoryManager : MonoBehaviour {
     #region Story Implementation
     private void Converse()
     {
-        //TODO: If npc doesn't speak first, don't display text box - i.e. if a choice but no content, (on start) - hide text? OR change way ink is written
         //Set up output display
         if (scriptManager.ContentAvailable && storyDisplayActive == false)
         {
@@ -182,10 +182,32 @@ public class StoryManager : MonoBehaviour {
             storyChoiceDisplayActive = true;
         }
 
-        //If no content or choices available, end the conversation
-        if (!scriptManager.ContentAvailable && !scriptManager.ChoicesAvailable)
+        if (!scriptManager.ChoicesAvailable)
         {
-            StartCoroutine(ExitConversation);
+            DisableInput();
+        }
+
+        //If no content, track the player distance to prepare to close the story window when player moved out of range
+        if (!scriptManager.ContentAvailable)
+        {
+            if (!closingStory)
+            {
+                trackDistance = true;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Tracks the player's distance and closes the story when moving out of range - prevents long dialogues from closing before being read
+    /// </summary>
+    private void Update()
+    {
+        if (trackDistance)
+        {
+            if ((conversationTarget.transform.position - PlayerManager.Instance.player.transform.position).sqrMagnitude > (10f * 10f))
+            {
+                StartCoroutine(ExitConversation);
+            }
         }
     }
 
@@ -230,6 +252,7 @@ public class StoryManager : MonoBehaviour {
    
     private IEnumerator DisableStoryOnDelay()
     {
+        trackDistance = false;
         closingStory = true;
         DisableInput();
         yield return new WaitForSeconds(5f);
