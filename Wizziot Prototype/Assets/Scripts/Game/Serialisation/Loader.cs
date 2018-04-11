@@ -166,11 +166,11 @@ public class Loader : MonoBehaviour
         {
             if(m.parentMission == null)
             {
-                MissionManager.Instance.GrantMission(m);
+                MissionManager.Instance.GrantMission(m, m.inkName);
             }
             else
             {
-                MissionManager.Instance.GrantChildMission(m);
+                MissionManager.Instance.GrantChildMission(m, m.inkName, ref m.missionRewards);
             }
             
         }

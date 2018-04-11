@@ -27,13 +27,17 @@ public class MissionJournalSlot : MonoBehaviour {
             {
                 if (mission.missionRewards[i] == null) continue;
                 Item item = null;
+                Sprite icon = null;
                 if (mission != missionInSlot)
                 {
                     missionInSlot = mission;
                     item = Instantiate(mission.missionRewards[i]).GetComponent<Item>();
                 }
 
-                Sprite icon = item.icon;
+                if (item != null)
+                {
+                    icon = item.icon;
+                }
 
                 if (icon != null)
                 {

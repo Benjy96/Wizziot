@@ -12,6 +12,7 @@ public class RewardSlot : MonoBehaviour {
 
     public void SetImage(Sprite icon)
     {
+        Debug.Log("Set iamge");
         this.icon.enabled = true;
         this.icon.sprite = icon;
     }

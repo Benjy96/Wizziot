@@ -32,7 +32,10 @@ public class InteractableNPC : Targetable {
             int counter = 0;
             foreach (Mission m in missions)
             {
-                storyManager.BindExternalFunction(inkMissionNames[counter], () => GrantMission(m));
+                if (m == null) continue;
+                string inkMission = inkMissionNames[counter];
+                Debug.Log("im: " + inkMission);
+                storyManager.BindExternalFunction(inkMissionNames[counter], () => GrantMission(m, inkMission));
                 counter++;
             }
         }
@@ -63,8 +66,8 @@ public class InteractableNPC : Targetable {
     /// <summary>
     /// Can override this method to grant more missions
     /// </summary>
-    protected virtual void GrantMission(Mission mission)
+    protected virtual void GrantMission(Mission mission, string inkMissionName)
     {
-        MissionManager.Instance.GrantMission(mission);
+        MissionManager.Instance.GrantMission(mission, inkMissionName);
     }
 }

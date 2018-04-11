@@ -66,6 +66,11 @@ public class StoryManager : MonoBehaviour {
     }
 
     #region Interface
+    public void CompleteInkMission(string missionName)
+    {
+        scriptManager.InkScript.variablesState[missionName + "_Completed"] = true;
+    }
+
     public void BindExternalFunction(string functionToBind, Action UnityFunction)
     {
         try //Using try/catch like an if statement: If all externals not bound, bind UnityFunction
@@ -83,7 +88,7 @@ public class StoryManager : MonoBehaviour {
         if (targetNPC != null && targetNPC.targetType == TargetType.Story)
         {
             StopCoroutine(ExitConversation);
-            ExitConversation = DisableStoryOnDelay();   //Resubscribe the variable, otherwise null once stopped
+            ExitConversation = DisableStoryOnDelay();   //Reassign the variable, otherwise null once stopped
             ResetStoryInterface();
 
             //Find out if NPC has "anything to say"

@@ -21,29 +21,39 @@ public class Mission : ScriptableObject {
     public Mission[] additionalMissionStages;
     public Vector3 location;
 
+    [HideInInspector] public string inkName;
+    [HideInInspector] public bool completed = false;
+
     private GameObject waypointObject;
     protected float waypointRadius;
     protected Waypoint waypoint;
 
-    [HideInInspector] public bool completed = false;
-
     //Insantiate a Mission SO using Resources folder to find asset type
-    public Mission CreateMission()
+    public Mission CreateMission(string inkName)
     {
         Mission newMission = (Mission)Instantiate(Resources.Load("Mission Objects/" + name.Split('(')[0]));
+
+        //Link to the Ink script
+        newMission.inkName = inkName;
 
         //Instantiate & Setup Waypoint Radius
         newMission.waypointObject = Instantiate(MissionManager.Instance.waypointPrefab, location, Quaternion.Euler(-90f, 0f, 0f));
         newMission.waypointRadius = newMission.waypointObject.GetComponent<SphereCollider>().radius;
         newMission.waypoint = newMission.waypointObject.GetComponent<Waypoint>();
 
+        Debug.Log("nm.mr[0]: " + newMission.missionRewards[0].name);
+
         return newMission;
     }
 
     //Insantiate a child mission - inherits the rewards of the parent (first) mission
-    public Mission CreateMission(Mission chainParent, ref List<GameObject> parentRewards)
+    public Mission CreateMission(Mission chainParent, string parentInkName, ref List<GameObject> parentRewards)
     {
+        Debug.Log("parent rewards[0].name: " + parentRewards[0].name);
         Mission newMission = (Mission)Instantiate(Resources.Load("Mission Objects/" + name.Split('(')[0]));
+
+        //Link to ink
+        newMission.inkName = parentInkName;
 
         //Instantiate & Setup Waypoint Radius
         newMission.waypointObject = Instantiate(MissionManager.Instance.waypointPrefab, location, Quaternion.Euler(-90f, 0f, 0f));
@@ -54,6 +64,7 @@ public class Mission : ScriptableObject {
         newMission.parentMission = chainParent;
         //Set rewards - deep copy of references
         newMission.missionRewards = new List<GameObject>(parentRewards);
+        Debug.Log("child nm.mr[0]: " + newMission.missionRewards[0].name);
 
         return newMission;
     }
@@ -61,20 +72,20 @@ public class Mission : ScriptableObject {
     /// <summary>
     /// Use to destruct mission
     /// </summary>
-    public void CompleteMission()
+    public void Complete()
     {
         Destroy(waypointObject);
-        GrantRewards();
     }
 
-    private void GrantRewards()
+    public void GrantRewards()
     {
+        Debug.Log(missionRewards.Count);
+        Debug.Log("Granting rewards");
         //Grant rewards
         foreach (GameObject itemPrefab in missionRewards)
         {
-            if (itemPrefab == null) continue;
             //Make item of prefab
-            Debug.Log("Instantiating");
+            if (itemPrefab == null) continue;
             GameObject worldItem = Instantiate(itemPrefab, PlayerManager.Instance.player.transform.position, Quaternion.identity);
             Debug.Assert(worldItem != null);
             Item i = worldItem.GetComponent<Item>();

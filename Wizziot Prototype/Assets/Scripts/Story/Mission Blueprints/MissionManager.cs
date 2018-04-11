@@ -36,9 +36,9 @@ public class MissionManager : MonoBehaviour {
     /// <summary>
     /// Grant a mission or first stage of chain mission
     /// </summary>
-    public void GrantMission(Mission mission)
+    public void GrantMission(Mission mission, string inkMission)
     {
-        Mission grantedMission = mission.CreateMission();
+        Mission grantedMission = mission.CreateMission(inkMission);
 
         if (!activeMissions.Contains(grantedMission) && activeMissions.Count < maxMissions)
         {
@@ -52,17 +52,18 @@ public class MissionManager : MonoBehaviour {
     /// <summary>
     /// Grant a new part of a multi-stage mission, passing through the parent's rewards
     /// </summary>
-    public void GrantChildMission(Mission mission)
+    public void GrantChildMission(Mission mission, string inkName, ref List<GameObject> missionRewards)
     {
+        Debug.Log("GRantCHildMission: " + mission.missionRewards[0]);
         Mission grantedMission;
         //If the first of a chain, set child's parent reference as this, else carry previous parent
         if (mission.parentMission == null)
         {
-            grantedMission = mission.CreateMission(mission, ref mission.missionRewards);
+            grantedMission = mission.CreateMission(mission, inkName, ref missionRewards);
         }
         else
         {
-            grantedMission = mission.CreateMission(mission.parentMission, ref mission.missionRewards); 
+            grantedMission = mission.CreateMission(mission.parentMission, inkName, ref missionRewards); 
         }
 
         if (!activeMissions.Contains(grantedMission) && activeMissions.Count < maxMissions)
@@ -93,8 +94,7 @@ public class MissionManager : MonoBehaviour {
                 else
                 {
                     //Grant the child mission, and pass through the parent rewards
-                    if (m.missionRewards.Count != 0) GrantChildMission(m);
-                    else GrantMission(m);
+                    GrantChildMission(m, mission.inkName, ref mission.missionRewards);
                     break;
                 }
             }
@@ -109,8 +109,7 @@ public class MissionManager : MonoBehaviour {
                 else
                 {
                     //Grant the child mission, and pass through the parent rewards
-                    if (m.missionRewards.Count != 0) GrantChildMission(m);
-                    else GrantMission(m);
+                    GrantChildMission(m, mission.inkName, ref mission.missionRewards);
                     break;
                 }
             }
@@ -118,8 +117,11 @@ public class MissionManager : MonoBehaviour {
         else
         {
             //If no stages left, grant the rewards
-            mission.CompleteMission();
+            mission.GrantRewards();
+            StoryManager.Instance.CompleteInkMission(mission.inkName);
         }
+
+        mission.Complete(); //"Destructor" - Removes waypoints from world
 
         if (onActiveMissionsChanged != null) onActiveMissionsChanged.Invoke();
     }
@@ -169,7 +171,6 @@ public class MissionManager : MonoBehaviour {
         {
             if (completed[i] != null)
             {
-                completed[i].CompleteMission();
                 FinishMission(completed[i]);
             }
         }
@@ -193,7 +194,6 @@ public class MissionManager : MonoBehaviour {
         {
             if (completed[i] != null)
             {
-                completed[i].CompleteMission();
                 FinishMission(completed[i]);
             }
         }

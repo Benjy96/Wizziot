@@ -93,14 +93,8 @@ public class Enemy : Targetable {
 
     private void Die()
     {
-        try
-        {
-            MissionManager.Instance.RegisterKill(this);
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e.StackTrace);
-        }
+        MissionManager.Instance.RegisterKill(this);
+
         abilityComponent.enabled = false;
         emotionChip.enabled = false;
         navAgent.velocity = new Vector3(0f, 0f, 0f);
