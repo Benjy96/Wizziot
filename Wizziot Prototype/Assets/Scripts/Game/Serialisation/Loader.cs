@@ -144,7 +144,7 @@ public class Loader : MonoBehaviour
         data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Equipped], ref equipment);
         for (int i = 0; i < equipment.Count; i++)
         {
-            GameObject newItem = Instantiate((GameObject)Resources.Load("Item Prefabs/" + equipment[i].prefabName), PlayerManager.Instance.player.transform.position, Quaternion.identity);
+            GameObject newItem = Instantiate((GameObject)Resources.Load("Items/" + equipment[i].prefabName), PlayerManager.Instance.player.transform.position, Quaternion.identity);
             PlayerManager.Instance.EquipItem(newItem.GetComponent<Item>());
         }
 
@@ -153,7 +153,7 @@ public class Loader : MonoBehaviour
         data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Inventory], ref items);
         for(int i = 0; i < items.Count; i++)
         {
-            GameObject inventoryItem = Instantiate((GameObject)Resources.Load("Item Prefabs/" + items[i].prefabName), PlayerManager.Instance.player.transform.position, Quaternion.identity);
+            GameObject inventoryItem = Instantiate((GameObject)Resources.Load("Items/" + items[i].prefabName), PlayerManager.Instance.player.transform.position, Quaternion.identity);
             Debug.Assert(inventoryItem != null);
             Debug.Log("Adding to inventory: " + inventoryItem.name);
             inventoryItem.GetComponent<Item>().AddToInventoryFromSaveFile();
