@@ -82,8 +82,6 @@ public class EnemySpawnPoint : MonoBehaviour
         enemy.Spawn = this;
 
         enemiesSpawned.Add(enemy);
-        Debug.Log(e + " max health: " + e.GetComponent<EntityStats>().maxHealth);
-        Debug.Log(e + " current health: " + e.GetComponent<EntityStats>().CurrentHealth);
 
         if (enemiesSpawned.Count < spawnAmount && availableSpawnPoints.Count > 0) Invoke("InstantiateEnemy", spawnDelay);
     }

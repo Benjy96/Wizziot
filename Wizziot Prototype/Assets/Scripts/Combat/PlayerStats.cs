@@ -11,7 +11,9 @@ public class PlayerStats : EntityStats {
     }
 
     public override void ApplyStatModifiers()
-    {        
+    {
+        ResetModifiers();
+
         //Apply Modifiers to Variables
         maxHealth *= (int)statModifiers[Stats.MaxHealthModifier].StatValue;
         maxStamina *= (int)statModifiers[Stats.MaxHealthModifier].StatValue;
@@ -22,14 +24,6 @@ public class PlayerStats : EntityStats {
 
         CurrentHealth = maxHealth;
         CurrentStamina = maxStamina;
-    }
-
-    public void ResetModifiers()
-    {
-        foreach (Stats stat in Enum.GetValues(typeof(Stats)))
-        {
-            statModifiers[stat].StatValue = defaultModifierValue;
-        }
     }
 
     public override void InvokeDeathEvent()

@@ -70,7 +70,7 @@ public class PlayerManager : MonoBehaviour {
             foreach (Stat stat in slotItem.equipment.modifiers)
             {
                 float statValue = stat.StatValue;
-                PlayerStatModifiers[stat.StatType].StatValue = statValue; //prevents SO from being modified next time equipment is equipped and modifiers reset <- was reference
+                PlayerStatModifiers[stat.StatType].StatValue *= statValue; //prevents SO from being modified next time equipment is equipped and modifiers reset <- was reference
             }
         }
 
@@ -99,7 +99,6 @@ public class PlayerManager : MonoBehaviour {
                 break;
         }
 
-        Debug.Log("Applying stat modifiers");
         playerStats.ApplyStatModifiers();
     }
 

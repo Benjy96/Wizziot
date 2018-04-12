@@ -71,14 +71,15 @@ public class Enemy : Targetable {
     protected void Start () //Scripts initialised
     {
         if (player == null) player = PlayerManager.Instance.player;
+        SetStats(); //Update stats at start
 
         //Events
         stats.onDeath += Die;
-        GameManager.Instance.OnGameLoaded += SetStats;
+        GameManager.Instance.OnGameLoaded += SetStats;  //Update stats if game load after running
     }
 
     //Event unsubscriptions
-    private void OnDisable()
+    protected void OnDisable()
     {
         Spawn.RemoveEnemy(this);
         //Event Removals
