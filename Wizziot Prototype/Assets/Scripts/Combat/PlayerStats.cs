@@ -9,8 +9,6 @@ public class PlayerStats : EntityStats {
 
     public override void ApplyStatModifiers()
     {
-        ResetModifiers();
-
         //Apply Modifiers to Variables
         maxHealth *= (int)statModifiers[Stats.MaxHealthModifier].StatValue;
         maxStamina *= (int)statModifiers[Stats.MaxHealthModifier].StatValue;

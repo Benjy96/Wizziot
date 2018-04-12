@@ -136,6 +136,11 @@ public class Enemy : Targetable {
 
     public void MoveToRandomWaypoint()
     {
+        if(Spawn.spawnAreaWaypoints.Count <= 1)
+        {
+            MoveTo(RandomNavMeshPoint(SightRange));
+        }
+
         //Get random point, based upon spawner waypoints
         Vector3 patrolPos = Spawn.spawnAreaWaypoints[UnityEngine.Random.Range(0, Spawn.spawnAreaWaypoints.Count)];
 

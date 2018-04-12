@@ -90,7 +90,10 @@ public class EntityStats : MonoBehaviour {
         }
     }
 
-    //Parent Version: Apply stat modifiers, scaled by the game's difficulty
+    /// <summary>
+    /// TODO/NOTE: Enemies will need to call ResetModifiers() if they ever equip anything or change difficulty INSIDE THE SCENE WITHOUT going to menu
+    /// Apply stat modifiers, scaled by the game's difficulty
+    /// </summary>
     public virtual void ApplyStatModifiers()
     {
         //Scale is "1 + difficulty %" i.e.: Easy = + 0, Normal = + 0.25, Hard = + 0.5, Suicidal = + 0.75. Suicidal modifier would be 1.75
@@ -114,7 +117,7 @@ public class EntityStats : MonoBehaviour {
         CurrentStamina = maxStamina;
     }
 
-    protected void ResetModifiers()
+    public void ResetModifiers()
     {
         foreach (Stats stat in Enum.GetValues(typeof(Stats)))
         {

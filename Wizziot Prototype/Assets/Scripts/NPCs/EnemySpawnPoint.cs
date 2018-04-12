@@ -34,15 +34,19 @@ public class EnemySpawnPoint : MonoBehaviour
         enemiesSpawned = new List<Enemy>();
 
         GenerateWaypoints();
+    }
+
+    private void Start()
+    {
         if (availableSpawnPoints.Count > 0)
         {
-            if(GameManager.Instance.OnGameLoaded != null) GameManager.Instance.OnGameLoaded += InstantiateEnemy;
+            GameManager.Instance.OnGameLoaded += InstantiateEnemy;
         }
     }
 
     private void OnDisable()
     {
-        if(GameManager.Instance.OnGameLoaded != null) GameManager.Instance.OnGameLoaded -= InstantiateEnemy;
+        GameManager.Instance.OnGameLoaded -= InstantiateEnemy;
     }
 
     private void GenerateWaypoints()
@@ -60,10 +64,14 @@ public class EnemySpawnPoint : MonoBehaviour
 
             randomWaypoint = transform.position - randomWaypoint;   //convert to local co-ords about spawner
 
-            //Get Colliders that aren't marked as the "Ground" (detect obstacles)
-            Collider[] colliders = Physics.OverlapSphere(randomWaypoint, enemyPrefab.transform.localScale.sqrMagnitude, LayerMask.NameToLayer(GameMetaInfo._LAYER_GROUND_WALKABLE));
+            //Get Colliders in vicinity of point
+            //Collider[] colliders = Physics.OverlapSphere(randomWaypoint, enemyPrefab.transform.localScale.sqrMagnitude);
+            Collider[] colliders = Physics.OverlapSphere(randomWaypoint, enemyPrefab.transform.localScale.sqrMagnitude, 
+                LayerMask.GetMask(GameMetaInfo._LAYER_IMMOVABLE_OBJECT, GameMetaInfo._LAYER_AFFECTABLE_OBJECT),    //ignore environment -- don't place in objects
+                QueryTriggerInteraction.Ignore);
 
-            if (colliders.Length == 0 && !spawnAreaWaypoints.Contains(randomWaypoint))
+            //TODO: Optimisation - don't REALLY need the .Contains - most likely won't, and doesn't matter if it does - performance test the difference
+            if (colliders.Length == 0 /*&& !spawnAreaWaypoints.Contains(randomWaypoint)*/)
             {
                 spawnAreaWaypoints.Add(randomWaypoint);
                 availableSpawnPoints.Add(randomWaypoint);
