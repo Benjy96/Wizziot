@@ -185,16 +185,16 @@ public class PlayerController : MonoBehaviour {
             KeyCode code = (KeyCode)i;
             if (Input.GetKeyDown(code) && GameMetaInfo.keybindActions.ContainsKey(code))
             {
-                try
-                {
+                //try
+                //{
                     //todo: check target ain't null? or do in the methods / prob for abilcomp methods
                     GameMetaInfo.keybindActions[code]();
-                }
-                catch (Exception e)
-                {
-                Debug.Log(e.StackTrace);
-                Debug.Log("Either Keybind not able to trigger or an exception occurred");
-                }
+                //}
+                //catch (Exception e)
+                //{
+                //Debug.Log(e.StackTrace);
+                //Debug.Log("Either Keybind not able to trigger or an exception occurred");
+                //}
             }
         }
     }
@@ -264,7 +264,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     //Checks target can be attacked & handles "self abilities"
-    public void UseAbility(Abilities abil, Targetable target)
+    public void UseAbility(Abilities abil, Targetable target = null)
     {
         AbilityUI.Instance.ChangeSelectedDisplay(abil);
 
@@ -276,10 +276,16 @@ public class PlayerController : MonoBehaviour {
         {
             abilityComponent.PlayerUseInstant(abil, transform);
         }
-        else if((target.GetComponent<Targetable>().targetType == TargetType.Enemy || target.tag.Equals(GameMetaInfo._TAG_SHOOTABLE_BY_PLAYER)) 
-            && !GameMetaInfo._Is_Defense_Ability(abil))
+        else if(target != null)
         {
-            abilityComponent.PlayerUseInstant(abil, target.transform);
+            if((target.GetComponent<Targetable>().targetType == TargetType.Enemy || target.tag.Equals(GameMetaInfo._TAG_SHOOTABLE_BY_PLAYER)) && !GameMetaInfo._Is_Defense_Ability(abil))
+            {
+                abilityComponent.PlayerUseInstant(abil, target.transform);
+            }
+        }
+        else
+        {
+            abilityComponent.SelectAbility(abil);
         }
     }
 }

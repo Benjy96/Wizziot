@@ -77,6 +77,10 @@ public class AbilityComponent : MonoBehaviour {
     {
         if (unlockedAbilities.Contains(choice))
         {
+            if (!GameMetaInfo._Is_AoE_Ability(choice))
+            {
+                CancelAoE();
+            }
             SelectedAbility = choice;
         }
     }
@@ -198,7 +202,10 @@ public class AbilityComponent : MonoBehaviour {
                     break;
             }
             //Add to GCD if not an AoE - AoEs handle cooldown with bool check to verify they have actually been placed
-            if(!GameMetaInfo._Is_AoE_Ability(SelectedAbility)) globalCooldownFinishTime = Time.time + globalCooldown;  //Handle global cooldown
+            if (!GameMetaInfo._Is_AoE_Ability(SelectedAbility))
+            {
+                globalCooldownFinishTime = Time.time + globalCooldown;  //Handle global cooldown
+            }
             return true;
         }
         return false;
@@ -257,7 +264,7 @@ public class AbilityComponent : MonoBehaviour {
 
             deployed = spellPrefab.GetComponent<AreaAbility>();
 
-            Destroy(instantiatedAimingDisc.gameObject);
+            if(instantiatedAimingDisc.gameObject != null) Destroy(instantiatedAimingDisc.gameObject);
             aiming = false;
 
             float damage = 0f;
@@ -267,6 +274,12 @@ public class AbilityComponent : MonoBehaviour {
             aoePlaced = true;
             aoeFinishTime = Time.time + aoeCooldown;
         }
+    }
+
+    private void CancelAoE()
+    {
+        if (instantiatedAimingDisc != null) Destroy(instantiatedAimingDisc.gameObject);
+        aiming = false;
     }
 
     /// <summary>
@@ -296,14 +309,17 @@ public class AbilityComponent : MonoBehaviour {
 
     private IEnumerator Heal(float amount)
     {
-        if(currentTarget != null)
+        //Means if we change target, the new target isn't healed when coroutine finishes
+        EntityStats tempTarget = currentTargetStats;
+
+        if(tempTarget != null)
         {
             healFinishTime = Time.time + additionalHealCooldown;
             GameObject fx = Instantiate(healPrefab, currentTarget, false);
 
             yield return new WaitForSeconds(healFXTime);
             AudioManager.Instance.Play("Heal");
-            currentTargetStats.Heal(amount);
+            tempTarget.Heal(amount);
 
             Destroy(fx);
         }
