@@ -75,7 +75,6 @@ public class Enemy : Targetable {
 
         //Events
         stats.onDeath += Die;
-        GameManager.Instance.OnGameLoaded += SetStats;  //Update stats if game load after running
     }
 
     //Event unsubscriptions
@@ -84,7 +83,6 @@ public class Enemy : Targetable {
         Spawn.RemoveEnemy(this);
         //Event Removals
         stats.onDeath -= Die;
-        GameManager.Instance.OnGameLoaded -= SetStats;
     }
 
     protected void FixedUpdate()

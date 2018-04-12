@@ -93,8 +93,6 @@ public class EntityStats : MonoBehaviour {
     //Parent Version: Apply stat modifiers, scaled by the game's difficulty
     public virtual void ApplyStatModifiers()
     {
-        ResetModifiers();
-
         //Scale is "1 + difficulty %" i.e.: Easy = + 0, Normal = + 0.25, Hard = + 0.5, Suicidal = + 0.75. Suicidal modifier would be 1.75
         float difficultyScale = GameMetaInfo._DIFFICULTY_SCALE;
         
@@ -116,7 +114,7 @@ public class EntityStats : MonoBehaviour {
         CurrentStamina = maxStamina;
     }
 
-    public virtual void ResetModifiers()
+    protected void ResetModifiers()
     {
         foreach (Stats stat in Enum.GetValues(typeof(Stats)))
         {

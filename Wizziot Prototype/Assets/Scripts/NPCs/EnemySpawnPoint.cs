@@ -36,8 +36,13 @@ public class EnemySpawnPoint : MonoBehaviour
         GenerateWaypoints();
         if (availableSpawnPoints.Count > 0)
         {
-            InstantiateEnemy();
+            if(GameManager.Instance.OnGameLoaded != null) GameManager.Instance.OnGameLoaded += InstantiateEnemy;
         }
+    }
+
+    private void OnDisable()
+    {
+        if(GameManager.Instance.OnGameLoaded != null) GameManager.Instance.OnGameLoaded -= InstantiateEnemy;
     }
 
     private void GenerateWaypoints()
