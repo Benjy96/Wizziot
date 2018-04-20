@@ -61,7 +61,7 @@ public class Loader : MonoBehaviour
 
         int playerHealth = 0;
         data.Load(GameMetaInfo._STATE_DATA[(int)StateData.PlayerHealth], ref playerHealth);
-        PlayerManager.Instance.player.GetComponent<EntityStats>().CurrentHealth = playerHealth;
+        PlayerManager.Instance.player.GetComponent<AgentStats>().CurrentHealth = playerHealth;
 
         data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Coins], ref Inventory.Instance.coins);
 

@@ -22,7 +22,7 @@ public class Enemy : Targetable {
     [HideInInspector] public NavMeshAgent navAgent;
     [HideInInspector] public AbilityComponent abilityComponent;
     [HideInInspector] public Rigidbody rBody;
-    [HideInInspector] public EntityStats stats;
+    [HideInInspector] public AgentStats stats;
     [HideInInspector] public NeighbourhoodTracker neighbourhoodTracker;
 
     //Properties
@@ -63,7 +63,7 @@ public class Enemy : Targetable {
         navAgent = GetComponent<NavMeshAgent>();
         abilityComponent = GetComponent<AbilityComponent>();
         rBody = GetComponent<Rigidbody>();
-        stats = GetComponent<EntityStats>();
+        stats = GetComponent<AgentStats>();
         neighbourhoodTracker = GetComponent<NeighbourhoodTracker>();
     }
 
@@ -110,7 +110,6 @@ public class Enemy : Targetable {
         stats.ApplyStatModifiers();
 
         //Set Component Variables (may use stats)
-        emotionChip.ScaleEmotionWeights();
         neighbourhoodTracker.TrackingRadius = Mathf.Sqrt(stats.sqrMaxTargetDistance);
     }
 

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.AI;
 
 [CreateAssetMenu(fileName = "FollowState", menuName = "States/Follow")]
 [RequireComponent(typeof(NeighbourhoodTracker))]
@@ -11,10 +10,25 @@ public class FollowState : State {
 
     public override void Execute()
     {
-        target = SelectTarget();
+        if(target == null || (target.position - owner.Position).sqrMagnitude > owner.SightRange * owner.SightRange || target == owner.transform)
+        {
+            target = SelectTarget();
+            if(target != null) Debug.Log(name + " is targeting " + target.name);
+        }
+
         if (target != null && owner.CanSeeTarget(target))
         {
+            //enemies will attack if not hostile to interest but they are vulnerable - wrong!!!
+            //BUT I do like the behaviour -- can make abil comp method to aoe agro around target taking damage
             if (hostileToInterests) owner.Influence(Emotion.Anger, .5f * Time.fixedDeltaTime);
+            else if(targetStats.CurrentHealth < targetStats.maxHealth)  
+            {
+                owner.Influence(Emotion.Anger, .25f * Time.fixedDeltaTime);
+                if(targetStats.CurrentHealth < targetStats.maxHealth / 3)
+                {
+                    owner.Influence(Emotion.Anger, 1f * Time.fixedDeltaTime);
+                }
+            }
             patrolling = false;
             owner.MoveTo(target.position);
         }
@@ -22,7 +36,6 @@ public class FollowState : State {
         {
             if (Time.time >= patrolResetTime || owner.DestinationReached() || patrolling == false)
             {
-                owner.Influence(Emotion.Calm, .2f * Time.fixedDeltaTime);
                 patrolling = true;
                 owner.MoveToRandomWaypoint();
                 patrolResetTime = Time.time + patrolResetDuration;

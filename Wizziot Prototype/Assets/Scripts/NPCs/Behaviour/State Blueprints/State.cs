@@ -14,6 +14,7 @@ public class State : ScriptableObject {
     protected AbilityComponent abilComponent;
 
     protected Transform target;
+    protected AgentStats targetStats;
     
     /// <summary>
     /// Used to create a Scriptable Object instance
@@ -82,10 +83,12 @@ public class State : ScriptableObject {
         if (targetGO != null) target = targetGO.transform;
         if (target != null)
         {
+            targetStats = target.GetComponent<AgentStats>();
             return target;
         }
         else if (influencer != null && (influencer.transform.position - owner.Position).sqrMagnitude < (owner.SightRange * owner.SightRange))
         {
+            targetStats = influencer.GetComponent<AgentStats>();
             return influencer.transform;
         }
         return null;

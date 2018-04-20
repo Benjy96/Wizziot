@@ -75,7 +75,7 @@ NavMeshProjectSettings:
     agentTypeID: 0
     agentRadius: 0.5
     agentHeight: 1.78
-    agentSlope: 45
+    agentSlope: 60
     agentClimb: 1.27
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
@@ -85,5 +85,7 @@ NavMeshProjectSettings:
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
+    debug:
+      m_Flags: 0
   m_SettingNames:
   - Humanoid

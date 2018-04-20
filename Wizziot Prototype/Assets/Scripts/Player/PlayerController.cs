@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour {
     private AbilityComponent abilityComponent;
     private Projector targetIndicator;
     private Camera cam;
-    private EntityStats playerStats;
+    private AgentStats playerStats;
 
     //Interaction
     private Targetable target;
@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour {
         abilityComponent = GetComponent<AbilityComponent>();
         targetIndicator = GetComponentInChildren<Projector>();
         cam = Camera.main;
-        playerStats = GetComponent<EntityStats>();
+        playerStats = GetComponent<AgentStats>();
         pauseMenu = FindObjectOfType<PauseMenu>();
 
         target = null;
@@ -148,7 +148,7 @@ public class PlayerController : MonoBehaviour {
                             case TargetType.Enemy:
                                 target = pointHit.transform.GetComponent<Enemy>();
                                 SetTargetIndicatorPos(true);
-                                statUI.SetTarget(target.GetComponent<EntityStats>());
+                                statUI.SetTarget(target.GetComponent<AgentStats>());
                                 break;
 
                             case TargetType.Story:

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2584d28d3ed72240a33233b0e5011dd, type: 3}
+  m_Name: SuicideState
+  m_EditorClassIdentifier: 
+  interestedIn: {fileID: 0}
+  secondaryInterest: {fileID: 0}
+  hostileToInterests: 0
+  influencer: {fileID: 0}
+  target: {fileID: 0}
+  lastWords: 

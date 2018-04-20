@@ -1,6 +1,6 @@
 ﻿using System;
 
-public class PlayerStats : EntityStats {
+public class PlayerStats : AgentStats {
 
     private void Start()
     {

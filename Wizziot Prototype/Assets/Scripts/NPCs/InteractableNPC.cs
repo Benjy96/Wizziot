@@ -34,7 +34,6 @@ public class InteractableNPC : Targetable {
             {
                 if (m == null) continue;
                 string inkMission = inkMissionNames[counter];
-                Debug.Log("im: " + inkMission);
                 storyManager.BindExternalFunction(inkMissionNames[counter], () => GrantMission(m, inkMission));
                 counter++;
             }

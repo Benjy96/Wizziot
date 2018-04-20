@@ -50,7 +50,7 @@ public class EmotionChip : MonoBehaviour {
     /// How easy it is for an enemy is to change their current emotional state. Higher value means it takes longer to change emotion.
     /// NOT A WEIGHT.
     /// </summary>
-    [Tooltip("Higher means longer to change state")][Range(0.1f, 0.9f)] public float emotionalStability = 0.5f;
+    [Tooltip("Higher means longer to change state")][Range(0.1f, 0.9f)] public float emotionalStability = 0.66f;
 
     //The agent's emotional state(s)
     public Dictionary<Emotion, float> agentEmotions = new Dictionary<Emotion, float>();
@@ -89,19 +89,6 @@ public class EmotionChip : MonoBehaviour {
         }
         //List for iterating over emotions
         emotionKeys = new List<Emotion>(agentEmotions.Keys);
-    }
-
-    /// <summary>
-    /// As difficulty increases, enemy NPCs gain confidence.
-    /// </summary>
-    /// <param name="difficulty">The difficulty you wish to set this agent to</param>
-    public void ScaleEmotionWeights()
-    {
-        int difficultyFactor = ((int)GameMetaInfo._GAME_DIFFICULTY) + 1; //Easy == 0, Normal == 1
-
-        trust /= difficultyFactor;
-        irascibility *= difficultyFactor;
-        cowardice /= difficultyFactor;
     }
 
     /// <summary>

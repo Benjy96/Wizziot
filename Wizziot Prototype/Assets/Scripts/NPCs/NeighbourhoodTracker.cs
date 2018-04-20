@@ -4,6 +4,7 @@ using UnityEngine;
 //This class keeps track of nearby Enemies (agents)
 public class NeighbourhoodTracker : MonoBehaviour
 {
+    //TODO: can optimise - remove these lists and change to the neighbour dict
     public List<Enemy> neighbours;
     public List<Transform> obstacles;
 
@@ -207,7 +208,7 @@ public class NeighbourhoodTracker : MonoBehaviour
     public void ScanForNearby()
     {
         //Track self if interested
-        string[] thisName = name.Split('(');
+        string[] thisName = gameObject.name.Split('(');
         if (secondaryNeighbours.ContainsKey(thisName[0]))
         {
             if(!secondaryNeighbours[thisName[0]].Contains(gameObject))

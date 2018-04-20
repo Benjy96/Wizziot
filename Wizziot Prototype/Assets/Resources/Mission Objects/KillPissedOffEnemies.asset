@@ -12,17 +12,15 @@ MonoBehaviour:
   m_Name: KillPissedOffEnemies
   m_EditorClassIdentifier: 
   parentMission: {fileID: 0}
-  title: Rid Nuisance
+  title: The Wizard's Zoo Pt. 2
   description: There it is! A rabid one by the looks of it!
-  missionReward1: {fileID: 0}
-  missionReward2: {fileID: 0}
-  missionReward3: {fileID: 0}
   missionRewards:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   additionalMissionStages: []
   location: {x: -205, y: 29, z: 53.32}
+  inkName: 
   completed: 0
   killTypes:
   - {fileID: 1967363257081838, guid: e82303aed87cf3c489a837e2477aad19, type: 2}

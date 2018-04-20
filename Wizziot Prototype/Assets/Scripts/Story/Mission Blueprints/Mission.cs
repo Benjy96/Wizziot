@@ -41,8 +41,6 @@ public class Mission : ScriptableObject {
         newMission.waypointRadius = newMission.waypointObject.GetComponent<SphereCollider>().radius;
         newMission.waypoint = newMission.waypointObject.GetComponent<Waypoint>();
 
-        Debug.Log("nm.mr[0]: " + newMission.missionRewards[0].name);
-
         return newMission;
     }
 
@@ -79,17 +77,13 @@ public class Mission : ScriptableObject {
 
     public void GrantRewards()
     {
-        Debug.Log(missionRewards.Count);
-        Debug.Log("Granting rewards");
         //Grant rewards
         foreach (GameObject itemPrefab in missionRewards)
         {
             //Make item of prefab
             if (itemPrefab == null) continue;
             GameObject worldItem = Instantiate(itemPrefab, PlayerManager.Instance.player.transform.position, Quaternion.identity);
-            Debug.Assert(worldItem != null);
             Item i = worldItem.GetComponent<Item>();
-            Debug.Assert(i != null);
             if (i != null)
             {
                 Debug.Log("Adding to inventory");
@@ -97,7 +91,6 @@ public class Mission : ScriptableObject {
             }
             else
             {
-                Debug.Log("Destroying item");
                 Destroy(worldItem);
             }
         }

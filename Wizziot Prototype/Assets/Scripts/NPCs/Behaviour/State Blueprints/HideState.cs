@@ -35,7 +35,7 @@ public class HideState : State {
         hideSpot = Vector3.forward;
         chaser = SelectTarget();
 
-        if (chaser != null && chaser.GetComponent<EntityStats>() != null) chaserSightDist = chaser.GetComponent<EntityStats>().sqrMaxTargetDistance;
+        if (chaser != null && chaser.GetComponent<AgentStats>() != null) chaserSightDist = chaser.GetComponent<AgentStats>().sqrMaxTargetDistance;
 
         //If current hiding spot not letting us hide from player, re-evaluate
         if (chaser != null && owner.CanSeeTarget(chaser))

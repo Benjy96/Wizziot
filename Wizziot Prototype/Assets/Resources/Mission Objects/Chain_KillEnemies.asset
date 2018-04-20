@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Chain_KillEnemies
   m_EditorClassIdentifier: 
   parentMission: {fileID: 0}
-  title: Go to the Wizard's Zoo
+  title: The Wizard's Zoo Pt.1
   description: Some enemies are disturbing the Wizard's wildlife. Remove them.
   missionRewards:
   - {fileID: 1986077721385236, guid: 5a4dd3cba68095c4ca9bac724b8b00a7, type: 2}

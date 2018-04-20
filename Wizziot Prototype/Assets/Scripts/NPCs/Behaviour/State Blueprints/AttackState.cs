@@ -55,7 +55,6 @@ public class AttackState : State {
             {
                 owner.MoveToRandomWaypoint();
             }
-            owner.Influence(Emotion.Calm, .2f * Time.fixedDeltaTime);
         }
     }
 

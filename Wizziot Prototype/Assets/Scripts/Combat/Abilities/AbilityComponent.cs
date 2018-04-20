@@ -7,13 +7,13 @@ using UnityEngine;
 /// Interface for using Abilities for use by Player & AI.
 /// Applies damage & influence using stat component.
 /// </summary>
-[RequireComponent(typeof(EntityStats))]
+[RequireComponent(typeof(AgentStats))]
 public class AbilityComponent : MonoBehaviour {
 
     public event Action OnPlayerAbilitySelected;
 
-    private EntityStats statComponent;
-    private EntityStats currentTargetStats;
+    private AgentStats statComponent;
+    private AgentStats currentTargetStats;
 
     //Ability State Data
     [HideInInspector] public Abilities SelectedAbility;
@@ -54,11 +54,11 @@ public class AbilityComponent : MonoBehaviour {
     public GameObject healPrefab;
     [Tooltip("Adds onto an existing 5s CD")] public float additionalHealCooldown;
     private float healFinishTime;
-    private float healFXTime = -1f;    //-1f BECAUSE EFFECT TIME IS INACCURATE - THIS IS TO SYNC THE FX WITH HEALTH INCREASE
+    private float healFXTime = -1f;    //Time before heal after pressed: -1f BECAUSE EFFECT TIME IS INACCURATE - THIS IS TO SYNC THE FX WITH HEALTH INCREASE
 
     private void Awake()
     {
-        statComponent = GetComponent<EntityStats>();
+        statComponent = GetComponent<AgentStats>();
         if (zapSource != null)
         {
             zapTargeter = zapSource.GetComponentInChildren<particleAttractorLinear>();
@@ -144,7 +144,7 @@ public class AbilityComponent : MonoBehaviour {
         if (currentTarget != target)
         {
             currentTarget = target;
-            currentTargetStats = currentTarget.GetComponent<EntityStats>();
+            currentTargetStats = currentTarget.GetComponent<AgentStats>();
             targetRB = target.GetComponent<Rigidbody>();
         }
     }
@@ -299,7 +299,7 @@ public class AbilityComponent : MonoBehaviour {
             Enemy e = c.GetComponentInParent<Enemy>();
             if (e != null) e.Influence(gameObject, Emotion.Anger, statComponent.agro); enemies.Add(e);
 
-            EntityStats eS = c.GetComponentInParent<EntityStats>();
+            AgentStats eS = c.GetComponentInParent<AgentStats>();
             if (eS != null)
             {
                 StartCoroutine(eS.DoTDamage(damageToDo, AoEUsed.duration));
@@ -310,12 +310,14 @@ public class AbilityComponent : MonoBehaviour {
     private IEnumerator Heal(float amount)
     {
         //Means if we change target, the new target isn't healed when coroutine finishes
-        EntityStats tempTarget = currentTargetStats;
+        AgentStats tempTarget = currentTargetStats;
 
         if(tempTarget != null)
         {
             healFinishTime = Time.time + additionalHealCooldown;
             GameObject fx = Instantiate(healPrefab, currentTarget, false);
+            fx.transform.position = currentTarget.position;
+            fx.transform.parent = currentTarget;
 
             yield return new WaitForSeconds(healFXTime);
             AudioManager.Instance.Play("Heal");

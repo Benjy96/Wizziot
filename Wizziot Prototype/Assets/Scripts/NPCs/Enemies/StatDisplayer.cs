@@ -5,12 +5,12 @@ using UnityEngine;
 public class StatDisplayer : MonoBehaviour {
 
     Renderer rend;
-    EntityStats stats;
+    AgentStats stats;
 
 	// Use this for initialization
 	void Start () {
         rend = GetComponent<Renderer>();
-        stats = GetComponent<EntityStats>();
+        stats = GetComponent<AgentStats>();
 	}
 	
 	// Update is called once per frame

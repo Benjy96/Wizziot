@@ -8,11 +8,11 @@ public class StatUIManager : MonoBehaviour {
     public float stamina;
     public Image healthImage;
     public Image staminaImage;
-    EntityStats playerStats;
+    AgentStats playerStats;
 
     //Target
     public GameObject targetHealthUI;
-    EntityStats targetStats;
+    AgentStats targetStats;
     public float targetHealth;
     public float targetStamina;
     public Image targetHealthImage;
@@ -21,7 +21,7 @@ public class StatUIManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		playerStats = PlayerManager.Instance.player.GetComponent<EntityStats>();
+		playerStats = PlayerManager.Instance.player.GetComponent<AgentStats>();
     }
 	
 	// Update is called once per frame
@@ -48,7 +48,7 @@ public class StatUIManager : MonoBehaviour {
         }
     }
 
-    public void SetTarget(EntityStats eS)
+    public void SetTarget(AgentStats eS)
     {
         targetHealthUI.SetActive(true);
         targetStats = eS;
