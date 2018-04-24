@@ -20,7 +20,7 @@ public class AbilityComponent : MonoBehaviour {
     public List<Abilities> unlockedAbilities;
 
     private Transform currentTarget;
-    private Rigidbody targetRB;
+    private Enemy targetEnemy;
 
     [Header("Ability Cooldown")]
     public float globalCooldown = 1f;   //Standard cooldown - to prevent too many abil uses, going to use "Stamina" from stat system
@@ -94,6 +94,10 @@ public class AbilityComponent : MonoBehaviour {
     {
         SetTarget(target);
         UseAbility();
+        if (!GameMetaInfo._Is_Defense_Ability(SelectedAbility))
+        {
+            targetEnemy.Influence(gameObject, Emotion.Anger, statComponent.agro);
+        }
     }
 
     //Player interface
@@ -105,10 +109,9 @@ public class AbilityComponent : MonoBehaviour {
         {
             if (currentTarget != null)
             {
-                Enemy e = currentTarget.GetComponent<Enemy>();
-                if(e != null)
+                if(targetEnemy != null)
                 {
-                    e.Influence(gameObject, Emotion.Anger, statComponent.agro);
+                    targetEnemy.Influence(gameObject, Emotion.Anger, statComponent.agro);
                 }
                 UseAbility();
             }
@@ -145,7 +148,7 @@ public class AbilityComponent : MonoBehaviour {
         {
             currentTarget = target;
             currentTargetStats = currentTarget.GetComponent<AgentStats>();
-            targetRB = target.GetComponent<Rigidbody>();
+            targetEnemy = target.GetComponent<Enemy>();
         }
     }
 

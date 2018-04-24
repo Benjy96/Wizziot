@@ -13,7 +13,6 @@ public class FollowState : State {
         if(target == null || (target.position - owner.Position).sqrMagnitude > owner.SightRange * owner.SightRange || target == owner.transform)
         {
             target = SelectTarget();
-            if(target != null) Debug.Log(name + " is targeting " + target.name);
         }
 
         if (target != null && owner.CanSeeTarget(target))

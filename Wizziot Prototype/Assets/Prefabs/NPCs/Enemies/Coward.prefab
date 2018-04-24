@@ -351,7 +351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9fab411d5bac80408e8e2ba6118653e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 2000
   maxStamina: 100
   sqrMaxTargetDistance: 225
   speed: 5
@@ -420,6 +420,7 @@ MonoBehaviour:
   unlockedAbilities: 00000000
   globalCooldown: 1
   aimingDisc: {fileID: 4019791227191684, guid: 31faa8d85dd7c824bac358c123afb1e3, type: 2}
+  aoeCooldown: 3
   zapSource: {fileID: 1247003542369760}
   confusePrefab: {fileID: 0}
   confuseDuration: 3

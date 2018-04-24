@@ -61,7 +61,7 @@ public class EmotionChip : MonoBehaviour {
     public float cowardice = 1f;    //Fear weighting
 
     private GameObject influencedBy;
-    public GameObject LastInfluence { get { return influencedBy; } set { influencedBy = value; } }
+    public GameObject LastHostileInfluence { get { return influencedBy; } set { influencedBy = value; } }
 
     [SerializeField] private State currentState;
 
@@ -143,11 +143,15 @@ public class EmotionChip : MonoBehaviour {
     /// <summary>
     /// Influence this agent's state - you may become their target!
     /// </summary>
-    public void Influence(GameObject actor, Emotion intent, float amount)
+    public void Influence(GameObject attacker, Emotion intent, float amount)
     {
         Emotion emotionBeforeInfluence = currentEmotionalState;
         Influence(intent, amount);
-        if (currentEmotionalState != emotionBeforeInfluence && actor != null) LastInfluence = actor;  //Set actor that changed current state to influence
+        if (intent == Emotion.Anger)
+        {
+            LastHostileInfluence = attacker;  //Set actor that changed current state to influence
+            if (currentState.attackingInfluence != LastHostileInfluence) currentState.attackingInfluence = LastHostileInfluence;
+        }
     }
 
     /// <summary>
@@ -205,13 +209,17 @@ public class EmotionChip : MonoBehaviour {
                 switch (intent)
                 {
                     case Emotion.Calm:  //If actor intends to calm/anger the agent, do it, but reduce calming effect in relation to the agent's cowardice
-                    case Emotion.Anger: //If actor intends to anger the enemy, anger them, but anger them slowly in relation to cowardice
                         agentEmotions[intent] += amount / cowardice;
                         agentEmotions[Emotion.Fear] -= amount / cowardice;
                         break;
 
+                    case Emotion.Anger: //Agent is scared but also angered slowly
+                        agentEmotions[Emotion.Fear] += amount;
+                        agentEmotions[intent] += amount / cowardice;
+                        break;
+
                     case Emotion.Fear:  //If actor intends to scare enemy, scare them by a factor of the intent and cowardice
-                        agentEmotions[intent] += amount * cowardice;
+                        agentEmotions[Emotion.Fear] += amount * cowardice;
                         break;
                 }
                 break;
@@ -254,7 +262,7 @@ public class EmotionChip : MonoBehaviour {
         //If not in any state or specified state, set it up (enter/construct) : OR : current state not same type as goal AND current goal not being worked on
         if (currentState == null || currentState.GetType() != goal.GetType())
         {
-            currentState = goal.CreateState(agent, LastInfluence);
+            currentState = goal.CreateState(agent, LastHostileInfluence);
         }
 
         if(!exiting) currentState.Execute();
