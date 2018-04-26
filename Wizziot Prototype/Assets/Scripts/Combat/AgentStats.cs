@@ -21,11 +21,11 @@ public class AgentStats : MonoBehaviour {
     [Range(0, 10)] public float speed;
     [Range(50, 150)] public float turnSpeed;
 
-    [Header("Base Cost of Abilities")]
-    public float instantAbilityCost = 30f;
-    public float areaAbilityCost = 50f;
-    public float defenseAbilityCost = 40f;
-    public Dictionary<Abilities, float> abilityCosts;
+    [Header("Base Cost and Damage of Abilities")]
+    public float instantAbilityAmount = 30f;
+    public float areaAbilityAmount = 50f;
+    public float defenseAbilityAmount = 40f;
+    public Dictionary<Abilities, float> abilityAmounts;
 
     [Tooltip("How much attacks anger the target EmotionChip")][Header("Attack Agro")]
     public float agro = 0.5f;   //Affected by the "Reputation" stat - higher means enemies will be angered more easily
@@ -42,20 +42,20 @@ public class AgentStats : MonoBehaviour {
         onDeath += InvokeDeathEvent;  //Unsubscribe in OnDisable
 
         //Set ability costs
-        abilityCosts = new Dictionary<Abilities, float>();
+        abilityAmounts = new Dictionary<Abilities, float>();
         foreach (Abilities ability in Enum.GetValues(typeof(Abilities)))
         {
             if (GameMetaInfo._Is_Instant_Ability(ability))
             {
-                abilityCosts.Add(ability, instantAbilityCost);
+                abilityAmounts.Add(ability, instantAbilityAmount);
             }
             else if (GameMetaInfo._Is_AoE_Ability(ability))
             {
-                abilityCosts.Add(ability, areaAbilityCost);
+                abilityAmounts.Add(ability, areaAbilityAmount);
             }
             else if (GameMetaInfo._Is_Defense_Ability(ability))
             {
-                abilityCosts.Add(ability, areaAbilityCost);
+                abilityAmounts.Add(ability, areaAbilityAmount);
             }
         }
 
@@ -212,7 +212,7 @@ public class AgentStats : MonoBehaviour {
     /// <returns>True if you have enough stamina</returns>
     public bool TryUseAbility(Abilities ability, out float damage)
     {
-        if (abilityCosts[ability] <= CurrentStamina)
+        if (abilityAmounts[ability] <= CurrentStamina)
         {
             CurrentStamina = GetNewStaminaForUsingAbil(ability);
             damage = CalculateAbilDamage(ability);
@@ -230,9 +230,9 @@ public class AgentStats : MonoBehaviour {
     {
         float damage = 0f;
         //Damage dependent upon NPC ability cost, health, and then damage modifier. Increase in health/Decreases in cost will increase the damage the NPC can do.
-        if (GameMetaInfo._Is_Instant_Ability(ability)) damage = instantAbilityCost;
-        else if (GameMetaInfo._Is_AoE_Ability(ability)) damage = areaAbilityCost;
-        else if (GameMetaInfo._Is_Defense_Ability(ability)) damage = defenseAbilityCost;
+        if (GameMetaInfo._Is_Instant_Ability(ability)) damage = instantAbilityAmount;
+        else if (GameMetaInfo._Is_AoE_Ability(ability)) damage = areaAbilityAmount;
+        else if (GameMetaInfo._Is_Defense_Ability(ability)) damage = defenseAbilityAmount;
         damage /= 2;
 
         damage *= statModifiers[Stats.DamageModifier].StatValue;
@@ -245,7 +245,7 @@ public class AgentStats : MonoBehaviour {
     private float GetNewStaminaForUsingAbil(Abilities ability)
     {
         //Calculate Stamina to remove for using the ability
-        float staminaToReduceBy = abilityCosts[ability] / statModifiers[Stats.ActionCostReduction].StatValue;
+        float staminaToReduceBy = abilityAmounts[ability] / statModifiers[Stats.ActionCostReduction].StatValue;
         CurrentStamina -= (int)staminaToReduceBy;
         CurrentStamina = Mathf.Clamp(CurrentStamina, 0, maxStamina);
 

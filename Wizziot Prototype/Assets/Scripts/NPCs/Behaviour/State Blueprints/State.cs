@@ -6,7 +6,7 @@ public class State : ScriptableObject {
     public GameObject secondaryInterest;
     public bool hostileToInterests;
 
-    [HideInInspector] public GameObject attackingInfluence;   //use this when influencing - could be good for WHO to hide from or attack
+    [HideInInspector] public GameObject lastThreat;   //use this when influencing - could be good for WHO to hide from or attack
 
     protected Enemy owner;
     protected EnemySpawnPoint spawn;
@@ -36,7 +36,7 @@ public class State : ScriptableObject {
     protected virtual void EnterState(Enemy owner, GameObject lastInfluence)
     {
         this.owner = owner;
-        attackingInfluence = lastInfluence;
+        lastThreat = lastInfluence;
         spawn = owner.Spawn;
         neighbourhoodTracker = owner.neighbourhoodTracker;
         abilComponent = owner.abilityComponent;
@@ -86,10 +86,10 @@ public class State : ScriptableObject {
             targetStats = target.GetComponent<AgentStats>();
             return target;
         }
-        else if (attackingInfluence != null && (attackingInfluence.transform.position - owner.Position).sqrMagnitude < (owner.SightRange * owner.SightRange))
+        else if (lastThreat != null && (lastThreat.transform.position - owner.Position).sqrMagnitude < (owner.SightRange * owner.SightRange))
         {
-            targetStats = attackingInfluence.GetComponent<AgentStats>();
-            return attackingInfluence.transform;
+            targetStats = lastThreat.GetComponent<AgentStats>();
+            return lastThreat.transform;
         }
         return null;
     }

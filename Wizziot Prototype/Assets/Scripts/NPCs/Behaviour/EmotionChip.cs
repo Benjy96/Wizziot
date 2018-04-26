@@ -147,10 +147,10 @@ public class EmotionChip : MonoBehaviour {
     {
         Emotion emotionBeforeInfluence = currentEmotionalState;
         Influence(intent, amount);
-        if (intent == Emotion.Anger)
+        if (intent == Emotion.Anger || intent == Emotion.Fear)
         {
             LastHostileInfluence = attacker;  //Set actor that changed current state to influence
-            if (currentState.attackingInfluence != LastHostileInfluence) currentState.attackingInfluence = LastHostileInfluence;
+            if (currentState.lastThreat != LastHostileInfluence) currentState.lastThreat = LastHostileInfluence;
         }
     }
 

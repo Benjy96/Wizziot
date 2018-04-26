@@ -44,11 +44,6 @@ public class MissionUI : MonoBehaviour {
     {
         if(currentWaypoint != null)
         {
-            Transform player = PlayerManager.Instance.player.GetComponent<Transform>();
-
-            Vector3 playerPos = player.position;
-            Vector3 direction = (currentWaypoint - playerPos).normalized;
-
             //Unit circle & trigonometry: https://www.khanacademy.org/math/algebra2/trig-functions/unit-circle-definition-of-trig-functions-alg2/a/trig-unit-circle-review
             /** Get point on 2D unit circle:
              * Think of the 3D world from above as a graph
@@ -57,14 +52,19 @@ public class MissionUI : MonoBehaviour {
              * Using the hypoteneuse we then get the angle between the player and waypoint using (inverse) trigonometry (SOH CAH TOA)
              * Then use this angle to rotate the compass
              * */
-            float hypoteneuse = Mathf.Sqrt((direction.x * direction.x) + (direction.z * direction.z));  //Used for trig (calculating angle - Cos = A/H)
-            float angle = Mathf.Acos(direction.z / hypoteneuse) * Mathf.Rad2Deg;    //Angle to waypoint
-
             Quaternion q = new Quaternion();
 
             //Correct rotation (trig are repeating functions - need to flip the compass when on "other side" of waypoint)
             if (PlayerCamera.State == PlayerCamera.CameraMode.Follow)
             {
+                Transform player = PlayerManager.Instance.player.GetComponent<Transform>();
+
+                Vector3 playerPos = player.position;
+                Vector3 direction = (currentWaypoint - playerPos).normalized;
+
+                float hypoteneuse = Mathf.Sqrt((direction.x * direction.x) + (direction.z * direction.z));  //Used for trig (calculating angle - Cos = A/H)
+                float angle = Mathf.Acos(direction.z / hypoteneuse) * Mathf.Rad2Deg;    //Angle to waypoint
+
                 //Use this for rotating the compass DEPENDING on the player's rotation, rather than the world's
                 float playerFaceAngle = player.rotation.eulerAngles.y;
 
@@ -81,17 +81,26 @@ public class MissionUI : MonoBehaviour {
             }
             else if (PlayerCamera.State == PlayerCamera.CameraMode.Look)
             {
+                Vector3 camPos = Camera.main.transform.position;
+                Vector3 direction = (currentWaypoint - camPos).normalized;
+
+                float hypoteneuse = Mathf.Sqrt((direction.x * direction.x) + (direction.z * direction.z));  //Used for trig (calculating angle - Cos = A/H)
+                float angle = Mathf.Acos(direction.z / hypoteneuse) * Mathf.Rad2Deg;    //Angle to waypoint
+
+                //Use this for rotating the compass DEPENDING on the camera's rotation, rather than the world's
+                float camFaceAngle = Camera.main.transform.rotation.eulerAngles.y;
+
                 if (direction.x < 0)
                 {
-                    q = Quaternion.AngleAxis(angle, Vector3.forward);
+                    q = Quaternion.AngleAxis(angle + camFaceAngle, Vector3.forward);
                 }
                 else
                 {
-                    q = Quaternion.AngleAxis(-angle, Vector3.forward);
+                    q = Quaternion.AngleAxis(-angle + camFaceAngle, Vector3.forward);
                 }
-            }
+            }   //Same algorithm but with camera position
             
             compass.rotation = q;
         }
-    }
+    }//Update(){}
 }
