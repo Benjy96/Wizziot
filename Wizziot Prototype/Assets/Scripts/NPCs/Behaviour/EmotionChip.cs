@@ -119,7 +119,7 @@ public class EmotionChip : MonoBehaviour {
             if (agentEmotions[Emotion.Fear] > emotionalStability)
             {
                 currentEmotionalState = Emotion.Fear;
-                TakeAction(scaredState, agent);  //This is where goals come in -> each state could lead to next (in them or abstract above). e.g. run, but if fear too high, kill self
+                TakeAction(scaredState, agent);
             }
 
             //Step 2. Tend towards disposition
@@ -169,7 +169,7 @@ public class EmotionChip : MonoBehaviour {
         //Influence the NPC by the external factor's intent differently, based upon this agent's emotional disposition
         switch (disposition)
         {
-            //If agent is predisposed to calm, handle the intended emotional influences as such:
+            //If agent is predisposed to calm:
             case Emotion.Calm:
                 switch (intent)
                 {

@@ -38,40 +38,49 @@ public class MissionUI : MonoBehaviour {
             body.text = "Go to Waypoint: " + currentWaypoint;
         }
     }
-
-    //Rotate compass - rotates differently depending on Camera State (Look or Follow) - a bunch of trigonometry, so beware
+    //Unit circle & trigonometry: 
+    //https://www.khanacademy.org/math/algebra2/trig-functions/unit-circle-definition-of-trig-functions-alg2/a/trig-unit-circle-review
+    //Rotate compass - rotates differently depending on Camera State (Look or Follow)
+    //Calculating a 2D rotation from a 3D direction
     private void Update()
     {
         if(currentWaypoint != null)
         {
-            //Unit circle & trigonometry: https://www.khanacademy.org/math/algebra2/trig-functions/unit-circle-definition-of-trig-functions-alg2/a/trig-unit-circle-review
-            /** Get point on 2D unit circle:
-             * Think of the 3D world from above as a graph
-             * Direction vector made up of x and z (x and y of a 2d graph)
-             * We then use the x and y to calculate the hypoteneuse
-             * Using the hypoteneuse we then get the angle between the player and waypoint using (inverse) trigonometry (SOH CAH TOA)
-             * Then use this angle to rotate the compass
+            /** 
+             * 1. Normalize a vector to get a point on the "Unit Circle"
+             *    (Disregard one axis - y - to make it a 2D direction)
+             *    (y is height in 3D, doesn't matter for direction to a waypoint
+             *    since waypoints are infinite in height, only horizontal matters)
+             * 2. Use the x and z values of direction to calculate hypoteneuse
+             *    between the player and waypoint
+             * 3. Use trigonometry to get angle to waypoint
+             * 4. Set camera angle to this angle, adjusted
              * */
             Quaternion q = new Quaternion();
 
-            //Correct rotation (trig are repeating functions - need to flip the compass when on "other side" of waypoint)
+            //If camera locked, rotate compass depending on player rotation
             if (PlayerCamera.State == PlayerCamera.CameraMode.Follow)
             {
+                //Get player's world co-ordinates
                 Transform player = PlayerManager.Instance.player.GetComponent<Transform>();
 
                 Vector3 playerPos = player.position;
+                //1: Point on unit circle
                 Vector3 direction = (currentWaypoint - playerPos).normalized;
+                //2: Used for trig (calculating angle - Cos = A/H)
+                float hypoteneuse = Mathf.Sqrt((direction.x * direction.x) + (direction.z * direction.z));
+                //3: Angle to waypoint
+                float angle = Mathf.Acos(direction.z / hypoteneuse) * Mathf.Rad2Deg;
 
-                float hypoteneuse = Mathf.Sqrt((direction.x * direction.x) + (direction.z * direction.z));  //Used for trig (calculating angle - Cos = A/H)
-                float angle = Mathf.Acos(direction.z / hypoteneuse) * Mathf.Rad2Deg;    //Angle to waypoint
-
-                //Use this for rotating the compass DEPENDING on the player's rotation, rather than the world's
+                //For rotating the compass depending on the player's rotation, rather than the world's
                 float playerFaceAngle = player.rotation.eulerAngles.y;
 
+                //4. 
                 //Trig functions are repeating, so past 180 degrees we need to flip the angle
                 if (direction.x < 0)
                 {
-                    //Depend upon the player's rotation, not the "forward" direction of the Unity scene (+ playerFaceAngle)
+                    //playerFaceAngle makes rotation depend upon the player's rotation, 
+                    //not the "forward" direction of the Unity scene (+ playerFaceAngle)
                     q = Quaternion.AngleAxis(angle + playerFaceAngle, Vector3.forward);
                 }
                 else
@@ -79,6 +88,7 @@ public class MissionUI : MonoBehaviour {
                     q = Quaternion.AngleAxis(-angle + playerFaceAngle, Vector3.forward);
                 }
             }
+            //Same algorithm but based on camera position rather than player
             else if (PlayerCamera.State == PlayerCamera.CameraMode.Look)
             {
                 Vector3 camPos = Camera.main.transform.position;
@@ -98,8 +108,9 @@ public class MissionUI : MonoBehaviour {
                 {
                     q = Quaternion.AngleAxis(-angle + camFaceAngle, Vector3.forward);
                 }
-            }   //Same algorithm but with camera position
+            }   
             
+            //Rotate the compass
             compass.rotation = q;
         }
     }//Update(){}

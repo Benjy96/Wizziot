@@ -11,6 +11,7 @@ using UnityEngine;
 public class AbilityComponent : MonoBehaviour {
 
     public event Action OnPlayerAbilitySelected;
+    public event Action OnPlayerAbilityUsed;
 
     private AgentStats statComponent;
     private AgentStats currentTargetStats;
@@ -56,6 +57,28 @@ public class AbilityComponent : MonoBehaviour {
     private float healFinishTime;
     private float healFXTime = -1f;    //Time before heal after pressed: -1f BECAUSE EFFECT TIME IS INACCURATE - THIS IS TO SYNC THE FX WITH HEALTH INCREASE
 
+    public float GetCurrentCooldown(Abilities abil)
+    {
+        if (GameMetaInfo._Is_Instant_Ability(abil))
+        {
+            if (SelectedAbility == Abilities.Confuse) return confuseFinishTime - Time.time;
+            else
+            {
+                Debug.Log("global finish time : " + globalCooldownFinishTime);
+                return globalCooldownFinishTime - Time.time;
+            }
+        }
+        else if (GameMetaInfo._Is_Defense_Ability(abil))
+        {
+            return healFinishTime - Time.time;
+        }
+        else if (GameMetaInfo._Is_AoE_Ability(abil))
+        {
+            return aoeFinishTime - Time.time;
+        }
+        return 0f;
+    }
+
     private void Awake()
     {
         statComponent = GetComponent<AgentStats>();
@@ -96,7 +119,7 @@ public class AbilityComponent : MonoBehaviour {
         UseAbility();
         if (!GameMetaInfo._Is_Defense_Ability(SelectedAbility))
         {
-            targetEnemy.Influence(gameObject, Emotion.Anger, statComponent.agro);
+            if(targetEnemy != null) targetEnemy.Influence(gameObject, Emotion.Anger, statComponent.agro);
         }
     }
 
@@ -181,6 +204,7 @@ public class AbilityComponent : MonoBehaviour {
                         if (aoePlaced)
                         {
                             globalCooldownFinishTime = Time.time + globalCooldown;
+                            if (OnPlayerAbilityUsed != null) OnPlayerAbilityUsed.Invoke();
                         }
                     }
                     break;
@@ -192,6 +216,7 @@ public class AbilityComponent : MonoBehaviour {
                         if (aoePlaced)
                         {
                             globalCooldownFinishTime = Time.time + globalCooldown;
+                            if (OnPlayerAbilityUsed != null) OnPlayerAbilityUsed.Invoke();
                         }
                     }
                     break;
@@ -201,6 +226,7 @@ public class AbilityComponent : MonoBehaviour {
                     {
                         statComponent.TryUseAbility(SelectedAbility, out damageToDo);
                         StartCoroutine(Heal(damageToDo));
+                        if (OnPlayerAbilityUsed != null) OnPlayerAbilityUsed.Invoke();
                     }
                     break;
             }
@@ -208,6 +234,7 @@ public class AbilityComponent : MonoBehaviour {
             if (!GameMetaInfo._Is_AoE_Ability(SelectedAbility))
             {
                 globalCooldownFinishTime = Time.time + globalCooldown;  //Handle global cooldown
+                if (OnPlayerAbilityUsed != null) OnPlayerAbilityUsed.Invoke();
             }
             return true;
         }
