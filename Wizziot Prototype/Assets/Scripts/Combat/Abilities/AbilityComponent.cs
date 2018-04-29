@@ -295,11 +295,13 @@ public class AbilityComponent : MonoBehaviour {
             aiming = false;
 
             float damage = 0f;
-            statComponent.TryUseAbility(abil, out damage);
-            ApplyAoEEffects(damage, areaObject.transform, deployed);
+            if (statComponent.TryUseAbility(abil, out damage))
+            {
+                ApplyAoEEffects(damage, areaObject.transform, deployed);
 
-            aoePlaced = true;
-            aoeFinishTime = Time.time + aoeCooldown;
+                aoePlaced = true;
+                aoeFinishTime = Time.time + aoeCooldown;
+            };
         }
     }
 

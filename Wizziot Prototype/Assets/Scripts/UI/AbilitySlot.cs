@@ -38,7 +38,6 @@ public class AbilitySlot : MonoBehaviour {
     {
         if(coroutine != null) StopCoroutine(coroutine);
         currentCD = playerAbilComponent.GetCurrentCooldown(slotAbility);
-        Debug.Log("current cd : " + currentCD);
         if (currentCD > 0f)
         {
             coroutine = DecrementCooldownText(currentCD);
@@ -108,7 +107,6 @@ public class AbilitySlot : MonoBehaviour {
 
     private IEnumerator DecrementCooldownText(float cooldown)
     {
-        Debug.Log("Sup fam");
         cooldownText.SetText("");
         while (cooldown > 0)
         {

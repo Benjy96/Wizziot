@@ -128,7 +128,6 @@ public class MissionManager : MonoBehaviour {
 
     public void RegisterKill(Enemy e)
     {
-        Debug.Log("Registering kill");
         Mission[] completed = new Mission[maxMissions];
         int count = 0;
         foreach (Mission mission in activeMissions)
