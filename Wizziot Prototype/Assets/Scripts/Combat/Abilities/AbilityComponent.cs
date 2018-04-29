@@ -66,7 +66,6 @@ public class AbilityComponent : MonoBehaviour {
             if (SelectedAbility == Abilities.Confuse) return confuseFinishTime - Time.time;
             else
             {
-                Debug.Log("global finish time : " + globalCooldownFinishTime);
                 return globalCooldownFinishTime - Time.time;
             }
         }

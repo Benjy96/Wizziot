@@ -69,17 +69,28 @@ public class AbilitySlot : MonoBehaviour {
         //Set cooldown text on switch (if it has a cooldown)
         if (selectedAbilitySlot && abil != slotAbility)
         {
+            //Keybind & text
+            keybind = GameMetaInfo.abilityKeybinds[abil];
+            abilKeyDisplay.text = keybind.ToString();
+
+            //Ability Image
+            slotAbility = abil;
+            abilityImage.enabled = true;
+            abilityImage.sprite = GameMetaInfo.abilityIcons[abil];
+
             DisplayCooldownText();
         }
+        else
+        {
+            //Keybind & text
+            keybind = GameMetaInfo.abilityKeybinds[abil];
+            abilKeyDisplay.text = keybind.ToString();
 
-        //Keybind & text
-        keybind = GameMetaInfo.abilityKeybinds[abil];
-        abilKeyDisplay.text = keybind.ToString();
-
-        //Ability Image
-        slotAbility = abil;
-        abilityImage.enabled = true;
-        abilityImage.sprite = GameMetaInfo.abilityIcons[abil];
+            //Ability Image
+            slotAbility = abil;
+            abilityImage.enabled = true;
+            abilityImage.sprite = GameMetaInfo.abilityIcons[abil];
+        }
     }
 
     public void RemoveAbilityFromSlot(Abilities abil)
