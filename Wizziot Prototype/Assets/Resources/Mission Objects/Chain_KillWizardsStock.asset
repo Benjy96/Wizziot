@@ -13,8 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentMission: {fileID: 0}
   title: Destroy the Wizard's Zoo Pt. 1
-  description: An exiled wizard has asked you to sabotage on an old academic rival.
-    Destroy the creatures the Wizard's zoo.
+  description: An exiled wizard has asked you to sabotage an old academic rival. Destroy
+    the creatures the Wizard's zoo.
   missionRewards:
   - {fileID: 1510424759999940, guid: ea1aa2a6fbeb3c248bedcb7c2792c1eb, type: 2}
   - {fileID: 1615661566601068, guid: bd05844043ec1c24db76ec9977867554, type: 2}

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentMission: {fileID: 0}
   title: Destroy the Wizard's Zoo Pt. 2
-  description: Slaughter the little, cowardly creatures
+  description: Slaughter the cowardly little creatures
   missionRewards: []
   additionalMissionStages: []
   location: {x: -205, y: 29, z: 53.32}

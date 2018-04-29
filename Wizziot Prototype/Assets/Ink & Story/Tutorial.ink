@@ -25,7 +25,9 @@ EXTERNAL PushOff()
 // ----- Dialogue ----- //
 === wizard ===
 The wizard wavers from side to side.
-+   {not KillNuisance_Completed} What's wrong?
++   {KillWizardsStock_Completed} What?
+    "You're gonna end up face down in a pile of dirty robes."
++   {not KillNuisance_Completed && not KillWizardsStock_Completed} What's wrong?
     "I'll lose my tenure at the University if I don't get rid of that bloody ball!"
     **   What are you on about?
     **   It looks like a perfectly nice portal to me.
@@ -46,7 +48,6 @@ The wizard wavers from side to side.
             
 *   {KillNuisance_Completed} I killed it.
     "Thank you. You saved those creatures." The wizard strokes his beard. "Now, where was I? Ah, yes, by grinding those little buggers into dust I can mix them into a solution of..." He continues wavering.
-    -> DONE
 
 +   {KillNuisance_Completed} How's things?
     "Sorry! No time to chat. I'm in the middle of outlining my reports. Thanks again for your help."
@@ -76,14 +77,16 @@ The sphere leers.
         "See that Wizard? He's doing illegal experiments on one of these floating islands."
         **  Aren't Wizards exempt from the law?
             The sphere narrows its eyes. "You're not a lawyer, are you? Get lost."
-        **  Yeah, so what?
+            -> DONE
+        ++  {not help_exile} Yeah, so what?
             The sphere's eyes dart up, down, and back up again. "You're a tough looking block, and you have the right attitude. Want to help me get some justice?"
-            *** Yeah, why not.
+            *** (help_exile) Yeah, why not.
                 "Great, I'll give you something when you get back. If you didn't do it, I'll take something from you. Probably your third dimension. So don't mess around."
                     {KillWizardsStock()}
+                    -> DONE
             *** Not right now.
                 "If you change your mind, let me know. But don't take too long, or I'll change it for you."
-            -> DONE
+                -> DONE
 }
 
         
