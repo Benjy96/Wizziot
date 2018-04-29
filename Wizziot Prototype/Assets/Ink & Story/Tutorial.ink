@@ -7,9 +7,16 @@ VAR DEBUG = true
 //Wizard: Kill Nuisance - Kill Enemies Destroying His Zoo
 EXTERNAL Tutorial_KillNuisance()
 VAR Tutorial_KillNuisance_Completed = false
-
 == function Tutorial_KillNuisance() ==
 ~ return
+
+//Exile
+EXTERNAL Tutorial_KillWizardsStock()
+VAR Tutorial_KillWizardsStock_Completed = false
+== function Tutorial_KillWizardsStock() ==
+~ return
+
+// -----
 
 // ----- Dialogue ----- //
 === wizard ===
@@ -42,3 +49,25 @@ The wizard wavers from side to side.
 +   {deny} Still keeping those animals locked up, you prick?
     "Piss off, or I'll zap you." The wizard grumbles to himself. "God damn low-poly tree huggers."
 - -> DONE
+
+=== exile ===
+{Tutorial_KillNuisance_Completed | insult} The sphere leers.
+"Hey, got a minute?"
+    +   (insult) You look a bit creepy, so no.
+        "Watch your backs."
+    +   Sure, what's wrong?
+        "See that Wizard? He's doing illegal experiments on one of these floating islands."
+        **  Aren't Wizards exempt from the law?
+            The sphere narrows its eyes. "You're not a lawyer, are you? Get lost."
+        **  Yeah, so what?
+            The sphere's eyes dart up, down, and back up again. "You're a tough looking block, and you have the right attitude. Want to help me get some justice?"
+            *** Yeah, why not.
+                "Great, I'll give you something when you get back. If you didn't do it, I'll take something from you. Probably your third dimension. So don't mess around."
+                    {Tutorial_KillWizardsStock()}
+            *** Not right now.
+                "If you change your mind, let me know. But don't take too long, or I'll change it for you."
+            --- -> DONE
+- -> DONE
+        
+
+    

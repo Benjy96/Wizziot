@@ -1,0 +1,138 @@
+{
+  "boolData": {
+    "keys": [],
+    "values": [],
+    "Length": 0
+  },
+  "stringData": {
+    "keys": [
+      "Scene"
+    ],
+    "values": [
+      "Tutorial"
+    ],
+    "Length": 1
+  },
+  "intData": {
+    "keys": [
+      "GameDifficulty",
+      "PlayerHealth",
+      "Coins"
+    ],
+    "values": [
+      1,
+      200,
+      0
+    ],
+    "Length": 3
+  },
+  "v3Data": {
+    "keys": [
+      "PlayerPosition"
+    ],
+    "values": [
+      {
+        "x": -2.65059757,
+        "y": 2.195239,
+        "z": 86.8253555
+      }
+    ],
+    "Length": 1
+  },
+  "quaternionData": {
+    "keys": [],
+    "values": [],
+    "Length": 0
+  },
+  "abilityKeyData": {
+    "keys": [
+      "Keybinds"
+    ],
+    "values": [
+      {
+        "Zap": 49,
+        "Confuse": 50,
+        "Vortex": 51,
+        "Singularity": 52,
+        "Heal": 53
+      }
+    ],
+    "Length": 1
+  },
+  "missionData": {
+    "keys": [
+      "MissionsActive"
+    ],
+    "values": [
+      [
+        {
+          "parentMission": null,
+          "title": "The Wizard's Zoo Pt.1",
+          "description": "Some enemies are disturbing the Wizard's wildlife. Remove them.",
+          "additionalMissionStages": [
+            {
+              "killsRequired": [
+                1
+              ],
+              "parentMission": null,
+              "title": "The Wizard's Zoo Pt. 2",
+              "description": "There it is! A rabid one by the looks of it!",
+              "additionalMissionStages": [],
+              "location": {
+                "x": -205.0,
+                "y": 29.0,
+                "z": 53.32
+              },
+              "inkName": "",
+              "completed": false,
+              "name": "KillPissedOffEnemies",
+              "hideFlags": 0
+            }
+          ],
+          "location": {
+            "x": -5.6,
+            "y": 3.0,
+            "z": 97.3
+          },
+          "inkName": "Tutorial_KillNuisance",
+          "completed": true,
+          "name": "Chain_KillEnemies(Clone)",
+          "hideFlags": 0
+        }
+      ]
+    ],
+    "Length": 1
+  },
+  "equipmentData": {
+    "keys": [
+      "Inventory",
+      "Equipped"
+    ],
+    "values": [
+      [
+        {
+          "slot": 0,
+          "modifiers": [
+            {
+              "StatType": 1,
+              "StatValue": 1.5
+            },
+            {
+              "StatType": 3,
+              "StatValue": 1.5
+            },
+            {
+              "StatType": 8,
+              "StatValue": 3.0
+            }
+          ],
+          "prefabName": "Enchanted Hat",
+          "name": "Enchanted Hat",
+          "hideFlags": 0
+        }
+      ],
+      []
+    ],
+    "Length": 2
+  }
+}
