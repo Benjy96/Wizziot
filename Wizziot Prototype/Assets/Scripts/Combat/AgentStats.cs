@@ -135,7 +135,7 @@ public class AgentStats : MonoBehaviour {
     {
         Debug.Log(name + " is being healed for : " + amount);
         amount *= statModifiers[Stats.Fitness].StatValue;
-        CurrentHealth += (int)amount;
+        CurrentHealth = Mathf.Clamp(CurrentHealth += (int)amount, 0, maxHealth);
     }
 
     /// <summary>
