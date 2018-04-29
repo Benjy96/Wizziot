@@ -182,15 +182,19 @@ public class AbilityComponent : MonoBehaviour {
             switch (SelectedAbility)
             {
                 case Abilities.Zap:
-                    statComponent.TryUseAbility(SelectedAbility, out damageToDo);
-                    Zap(damageToDo);
+                    if (statComponent.TryUseAbility(SelectedAbility, out damageToDo))
+                    {
+                        Zap(damageToDo);
+                    }
                     break;
 
                 case Abilities.Confuse:
                     if (Time.time > confuseFinishTime)
                     {
-                        statComponent.TryUseAbility(SelectedAbility, out damageToDo);
-                        Confuse();
+                        if (statComponent.TryUseAbility(SelectedAbility, out damageToDo))
+                        {
+                            Confuse();
+                        }
                     }
                     break;
 
@@ -221,9 +225,11 @@ public class AbilityComponent : MonoBehaviour {
                 case Abilities.Heal:
                     if (Time.time > healFinishTime)
                     {
-                        statComponent.TryUseAbility(SelectedAbility, out damageToDo);
-                        StartCoroutine(Heal(damageToDo));
-                        if (OnPlayerAbilityUsed != null) OnPlayerAbilityUsed.Invoke();
+                        if (statComponent.TryUseAbility(SelectedAbility, out damageToDo))
+                        {
+                            StartCoroutine(Heal(damageToDo));
+                            if (OnPlayerAbilityUsed != null) OnPlayerAbilityUsed.Invoke();
+                        }
                     }
                     break;
             }
