@@ -147,21 +147,16 @@ public class AbilityComponent : MonoBehaviour {
         {
             SelectAbility(ability);
             if (OnPlayerAbilitySelected != null) OnPlayerAbilitySelected.Invoke();
+            UseAbility();
         }
     }
 
     //Player interface
     public void PlayerUseAoE(Abilities ability)    
     {
-        if (SelectedAbility == ability)
-        {
-            UseAbility();
-        }
-        else
-        {
-            SelectAbility(ability);
-            if (OnPlayerAbilitySelected != null) OnPlayerAbilitySelected.Invoke();
-        }
+        SelectAbility(ability);
+        if (OnPlayerAbilitySelected != null) OnPlayerAbilitySelected.Invoke();
+        UseAbility();
     }
 
     #region Implementation
