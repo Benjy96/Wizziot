@@ -1,27 +1,31 @@
 VAR DEBUG = true
 {DEBUG:
--> wizard
+-> exile
 }
+
+VAR KillNuisance_Completed = false
+VAR KillWizardsStock_Completed = false
 
 // ----- External Functions ----- //
 //Wizard: Kill Nuisance - Kill Enemies Destroying His Zoo
-EXTERNAL Tutorial_KillNuisance()
-VAR Tutorial_KillNuisance_Completed = false
-== function Tutorial_KillNuisance() ==
+EXTERNAL KillNuisance()
+== function KillNuisance() ==
 ~ return
 
 //Exile
-EXTERNAL Tutorial_KillWizardsStock()
-VAR Tutorial_KillWizardsStock_Completed = false
-== function Tutorial_KillWizardsStock() ==
+EXTERNAL KillWizardsStock()
+== function KillWizardsStock() ==
 ~ return
 
+EXTERNAL PushOff()
+== function PushOff()
+~ return
 // -----
 
 // ----- Dialogue ----- //
 === wizard ===
 The wizard wavers from side to side.
-+   {not Tutorial_KillNuisance_Completed} What's wrong?
++   {not KillNuisance_Completed} What's wrong?
     "I'll lose my tenure at the University if I don't get rid of that bloody ball!"
     **   What are you on about?
     **   It looks like a perfectly nice portal to me.
@@ -34,27 +38,40 @@ The wizard wavers from side to side.
                 "Piss off, then."
             **** Of course
                 "Excellent! I'll give you a pancake when you get back."
-                {Tutorial_KillNuisance()}
+                {KillNuisance()}
             ---- -> DONE
         ***  Wait, demons?
             "Don't worry, they're perfectly harmless. Unless, of course, you happen to be within a distance of, say, the average-sized continent."
             -> DONE
             
-*   {Tutorial_KillNuisance_Completed} I killed it.
+*   {KillNuisance_Completed} I killed it.
     "Thank you. You saved those creatures." The wizard strokes his beard. "Now, where was I? Ah, yes, by grinding those little buggers into dust I can mix them into a solution of..." He continues wavering.
     -> DONE
 
-+   {Tutorial_KillNuisance_Completed} How's things?
++   {KillNuisance_Completed} How's things?
     "Sorry! No time to chat. I'm in the middle of outlining my reports. Thanks again for your help."
 +   {deny} Still keeping those animals locked up, you prick?
     "Piss off, or I'll zap you." The wizard grumbles to himself. "God damn low-poly tree huggers."
 - -> DONE
 
 === exile ===
-{Tutorial_KillNuisance_Completed | insult} The sphere leers.
+{KillNuisance_Completed:
+The sphere leers.
+-> DONE
+}
+{insult:
+"Get lost!"
+-> DONE
+}
+{KillWizardsStock_Completed:
+"Thanks for the help, I hear the Wizard is going to lose his tenure. He has no work to show for his funding."
+-> DONE
+}
+{not KillWizardsStock_Completed: 
 "Hey, got a minute?"
     +   (insult) You look a bit creepy, so no.
         "Watch your backs."
+        -> DONE
     +   Sure, what's wrong?
         "See that Wizard? He's doing illegal experiments on one of these floating islands."
         **  Aren't Wizards exempt from the law?
@@ -63,11 +80,12 @@ The wizard wavers from side to side.
             The sphere's eyes dart up, down, and back up again. "You're a tough looking block, and you have the right attitude. Want to help me get some justice?"
             *** Yeah, why not.
                 "Great, I'll give you something when you get back. If you didn't do it, I'll take something from you. Probably your third dimension. So don't mess around."
-                    {Tutorial_KillWizardsStock()}
+                    {KillWizardsStock()}
             *** Not right now.
                 "If you change your mind, let me know. But don't take too long, or I'll change it for you."
-            --- -> DONE
-- -> DONE
+            -> DONE
+}
+
         
 
     

@@ -525,17 +525,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
-    - target: {fileID: 114257968466901038, guid: 85da5cf61d9ef5a48a2944a2411182e4,
-        type: 2}
-      propertyPath: inkMissionNames.Array.data[0]
-      value: Tutorial_KillNuisance
-      objectReference: {fileID: 0}
-    - target: {fileID: 114888721516274848, guid: 85da5cf61d9ef5a48a2944a2411182e4,
-        type: 2}
-      propertyPath: icon
-      value: 
-      objectReference: {fileID: 21300000, guid: 88c3a061f9828244c9fb964e11acec81,
-        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 85da5cf61d9ef5a48a2944a2411182e4, type: 2}
   m_IsPrefabParent: 0

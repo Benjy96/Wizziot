@@ -979,7 +979,7 @@ MonoBehaviour:
   targetType: 0
   inkConversationPath: exile
   inkMissionNames:
-  - Tutorial_KillWizardsStock
+  - KillWizardsStock
   missions:
   - {fileID: 11400000, guid: 361b84f024a73ff4fb02b060001fb7e8, type: 2}
 --- !u!114 &114679569967977028

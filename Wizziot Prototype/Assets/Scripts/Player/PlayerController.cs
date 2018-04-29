@@ -192,16 +192,16 @@ public class PlayerController : MonoBehaviour {
             KeyCode code = (KeyCode)i;
             if (Input.GetKeyDown(code) && GameMetaInfo.keybindActions.ContainsKey(code))
             {
-                try
-                {
+                //try
+                //{
                     //todo: check target ain't null? or do in the methods / prob for abilcomp methods
                     GameMetaInfo.keybindActions[code]();
-                }
-                    catch (Exception e)
-                {
-                Debug.Log(e.StackTrace);
-                Debug.Log("Either Keybind not able to trigger or an exception occurred");
-                }
+                //}
+                    //catch (Exception e)
+                //{
+                //Debug.Log(e.StackTrace);
+                //Debug.Log("Either Keybind not able to trigger or an exception occurred");
+                //}
             }
         }
     }

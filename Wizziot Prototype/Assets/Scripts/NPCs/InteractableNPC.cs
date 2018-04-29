@@ -15,6 +15,8 @@ public class InteractableNPC : Targetable {
     [Tooltip("Elements correspond to inkMissionNames array")]
     public Mission[] missions;
 
+    //TODO: To use multiple of same functions (e.g. push off) would need an action array like the missions
+
     // ----- VIRTUAL METHODS ----- //
     //Missions are linked explicity
     //Example: Interacble NPCs are characters: Bob.cs, Ben.cs, Sphere.cs

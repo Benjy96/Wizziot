@@ -54,7 +54,6 @@ public class MissionManager : MonoBehaviour {
     /// </summary>
     public void GrantChildMission(Mission mission, string inkName, ref List<GameObject> missionRewards)
     {
-        Debug.Log("GRantCHildMission: " + mission.missionRewards[0]);
         Mission grantedMission;
         //If the first of a chain, set child's parent reference as this, else carry previous parent
         if (mission.parentMission == null)

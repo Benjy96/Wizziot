@@ -67,6 +67,10 @@ public class StoryManager : MonoBehaviour {
     }
 
     #region Interface
+    /// <summary>
+    /// Inform the ink story that an npc's mission (an external function in ink) has been completed
+    /// </summary>
+    /// <param name="missionName"></param>
     public void CompleteInkMission(string missionName)
     {
         scriptManager.InkScript.variablesState[missionName + "_Completed"] = true;

@@ -36,6 +36,14 @@ public class Inventory : MonoBehaviour {
         Debug.Log("Adding item: " + item.name + ", item target type: " + item.targetType);
         if(item.targetType == TargetType.Item)
         {
+            Coin c = item.GetComponent<Coin>();
+            if(c != null)
+            {
+                AddCoins(c.coinValue);
+                Destroy(c.gameObject);
+                return true;
+            }
+
             if(items.Count >= space)
             {
                 Debug.Log("Inventory full");

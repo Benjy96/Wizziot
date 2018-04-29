@@ -10,7 +10,7 @@ public class Item : Targetable {
 
     private void Awake()
     {
-        equipment.prefabName = gameObject.name.Split('(')[0];
+        if(equipment != null) equipment.prefabName = gameObject.name.Split('(')[0];
         targetType = TargetType.Item;
     }
 

@@ -15,6 +15,7 @@ public class MissionJournalSlot : MonoBehaviour {
         rewards = GetComponentsInChildren<RewardSlot>(true);
     }
 
+    //Add mission details & rewards to slot
     public void AddMission(Mission mission)
     {
         missionTitle = GetComponent<TextMeshProUGUI>();
@@ -37,6 +38,14 @@ public class MissionJournalSlot : MonoBehaviour {
                 if (item != null)
                 {
                     icon = item.icon;
+                }
+                else
+                {
+                    item = Instantiate(mission.missionRewards[i].GetComponent<Coin>());
+                    if(item != null)
+                    {
+                        icon = item.icon;
+                    }
                 }
 
                 if (icon != null)

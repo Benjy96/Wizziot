@@ -14,10 +14,7 @@ MonoBehaviour:
   parentMission: {fileID: 0}
   title: The Wizard's Zoo Pt. 2
   description: There it is! A rabid one by the looks of it!
-  missionRewards:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  missionRewards: []
   additionalMissionStages: []
   location: {x: -205, y: 29, z: 53.32}
   inkName: 
