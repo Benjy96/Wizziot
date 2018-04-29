@@ -26,7 +26,7 @@ public class InventorySlot : MonoBehaviour {
 
     public void RemoveButton()
     {
-        Inventory.Instance.Remove(item);
+        UIManager.Instance.GetPlayerPermission(new System.Action(() => Inventory.Instance.Remove(item)));
     }
 
     public void UseItem()

@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Relating to the player and their actions
 public class PlayerManager : MonoBehaviour {
 
     private static PlayerManager _PlayerManager;
