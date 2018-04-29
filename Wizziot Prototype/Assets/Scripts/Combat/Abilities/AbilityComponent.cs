@@ -34,6 +34,8 @@ public class AbilityComponent : MonoBehaviour {
     private Transform instantiatedAimingDisc;
     private float aoeFinishTime;
 
+    public bool AbilityAimingActive { get { return (instantiatedAimingDisc != null); } }
+
     [Header("Zap")]
     public GameObject zapSource;
     private ParticleSystem zapParticles;
@@ -301,7 +303,7 @@ public class AbilityComponent : MonoBehaviour {
         }
     }
 
-    private void CancelAoE()
+    public void CancelAoE()
     {
         if (instantiatedAimingDisc != null) Destroy(instantiatedAimingDisc.gameObject);
         aiming = false;
