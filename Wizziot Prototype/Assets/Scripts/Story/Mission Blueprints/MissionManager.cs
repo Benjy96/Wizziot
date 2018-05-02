@@ -44,7 +44,7 @@ public class MissionManager : MonoBehaviour {
         {
             activeMissions.Add(grantedMission);
 
-            //ACTIVATE UI
+            //Update UI (Mission Log)
             if (onActiveMissionsChanged != null) onActiveMissionsChanged.Invoke();
         }
     }

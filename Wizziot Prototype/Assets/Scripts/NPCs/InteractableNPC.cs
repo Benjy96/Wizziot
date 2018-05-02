@@ -24,11 +24,12 @@ public class InteractableNPC : Targetable {
     //We then Add those functions as externals in their scripts, so 3 missions means 3 functions to bind to ink
     /// <summary>
     /// Override this method to register external functions. 
-    /// By default registers and links each element of missions/missionNames. 
+    /// Registers and links each element of missions/inkMissionNames. 
     /// For example, the first element of each array links an ink function (granting the mission) to the mission object.
     /// </summary>
-    protected virtual void RegisterExternalMissions()
+    protected void RegisterExternalMissions()
     {
+        //If there is an ink name for each mission stored by this NPC, then bind to it to its ink function
         if ((inkMissionNames != null && missions != null) && inkMissionNames.Length == missions.Length)
         {
             int counter = 0;
@@ -36,7 +37,7 @@ public class InteractableNPC : Targetable {
             {
                 if (m == null) continue;
                 string inkMission = inkMissionNames[counter];
-                storyManager.BindExternalFunction(inkMissionNames[counter], () => GrantMission(m, inkMission));
+                storyManager.BindExternalFunction(inkMissionNames[counter], () => MissionManager.Instance.GrantMission(m, inkMission));
                 counter++;
             }
         }
@@ -62,13 +63,5 @@ public class InteractableNPC : Targetable {
         //Set external functions in start - ensures story is loaded up - eliminates race condition
         RegisterExternalFunctions();
         RegisterExternalMissions();
-    }
-
-    /// <summary>
-    /// Can override this method to grant more missions
-    /// </summary>
-    protected virtual void GrantMission(Mission mission, string inkMissionName)
-    {
-        MissionManager.Instance.GrantMission(mission, inkMissionName);
     }
 }
