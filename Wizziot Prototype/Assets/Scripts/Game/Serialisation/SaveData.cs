@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
+/// The reason we use generics is so that the class is truly acting as a BLUEPRINT. i.e. we create structures that can vary in type, and their methods work for each.
 /// A data class that holds various key-value pairs (as part of a nested generic class) for serialisations.
 /// A SaveData object has dictionaries that can be saved to and accessed using overloaded generic methods. (Load() and Save())
 /// Load() will retrieve a value using a provided key and set your output via reference.
@@ -11,7 +12,7 @@ using UnityEngine;
 [Serializable]
 public class SaveData
 {
-    //The reason we use generics is so that the class is truly acting as a BLUEPRINT. i.e. we create structures that can vary in type, and their methods work for each.
+    //Key-value pair data structure
     [Serializable]
     public class SaveDictionary<T>
     {
@@ -55,13 +56,13 @@ public class SaveData
                 return false;
             }
         }
-    }//SaveDictionary
+    }
 
     //Data information to ensure all game-data has been saved & loaded
     [NonSerialized] public int savedItems = 0;
     [NonSerialized] public int loadedItems = 0;
 
-    //The data holders
+    //Primitive data holders
     public SaveDictionary<bool> boolData = new SaveDictionary<bool>();
     public SaveDictionary<string> stringData = new SaveDictionary<string>();
     public SaveDictionary<int> intData = new SaveDictionary<int>();

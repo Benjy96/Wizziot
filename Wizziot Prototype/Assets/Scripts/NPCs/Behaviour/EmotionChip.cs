@@ -261,11 +261,12 @@ public class EmotionChip : MonoBehaviour {
         {
             //ExitState() can tell the agent what to do next. If it is null, however, we simply do as directed by the emotional goal.
             currentState.ExitState();
+            currentState = null;
             exiting = true;
         }
 
         //If not in any state or specified state, set it up (enter/construct) : OR : current state not same type as goal AND current goal not being worked on
-        if (currentState == null || currentState.GetType() != goal.GetType() || !currentState.name.Split('(').Equals(goal.name.Split('(')))
+        if (currentState == null || currentState.GetType() != goal.GetType())
         {
             currentState = goal.CreateState(agent, LastHostileInfluence);
         }

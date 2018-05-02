@@ -48,6 +48,17 @@ public class Loader : MonoBehaviour
 
     private static bool LoadData(SaveData data)
     {
+        //Ensure correct scene loaded
+        string sceneName = "";
+        data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Scene], ref sceneName);
+        if (!sceneName.Equals(""))
+        {
+            if (SceneManager.GetActiveScene().name != sceneName)
+            {
+                SceneManager.LoadScene(sceneName);
+            }
+        }
+
         LoadAbilityKeybinds(data);
         LoadScriptableObjects(data);
 
@@ -104,17 +115,6 @@ public class Loader : MonoBehaviour
     #region Load Implementations
     private static void LoadAbilityKeybinds(SaveData data)
     {
-        //Ensure correct scene loaded
-        string sceneName = "";
-        data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Scene], ref sceneName);
-        if (!sceneName.Equals(""))
-        {
-            if (SceneManager.GetActiveScene().name != sceneName)
-            {
-                SceneManager.LoadScene(sceneName);
-            }
-        }
-
         //Set Ability KeyCodes using ability keybinds (Abil/KeyCode)
         Dictionary<Abilities, KeyCode> savedAbilKeybinds = new Dictionary<Abilities, KeyCode>();
         data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Keybinds], ref savedAbilKeybinds);
@@ -172,7 +172,6 @@ public class Loader : MonoBehaviour
             {
                 MissionManager.Instance.GrantChildMission(m, m.inkName, ref m.missionRewards);
             }
-            
         }
     }
     #endregion

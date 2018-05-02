@@ -42,20 +42,21 @@ public class MissionUI : MonoBehaviour {
     //https://www.khanacademy.org/math/algebra2/trig-functions/unit-circle-definition-of-trig-functions-alg2/a/trig-unit-circle-review
     //Rotate compass - rotates differently depending on Camera State (Look or Follow)
     //Calculating a 2D rotation from a 3D direction
+    /** 
+    * 1. Normalize a vector to get a point on the "Unit Circle"
+    *    (Disregard one axis - y - to make it a 2D direction)
+    *    (y is height in 3D, doesn't matter for direction to a waypoint
+    *    since waypoints are infinite in height, only horizontal matters)
+    * 2. Use the x and z values of direction to calculate hypoteneuse
+    *    between the player and waypoint
+    * 3. Use trigonometry to get angle to waypoint
+    * 4. Set camera angle to this angle, adjusted
+    * */
     private void Update()
     {
         if(currentWaypoint != null)
         {
-            /** 
-             * 1. Normalize a vector to get a point on the "Unit Circle"
-             *    (Disregard one axis - y - to make it a 2D direction)
-             *    (y is height in 3D, doesn't matter for direction to a waypoint
-             *    since waypoints are infinite in height, only horizontal matters)
-             * 2. Use the x and z values of direction to calculate hypoteneuse
-             *    between the player and waypoint
-             * 3. Use trigonometry to get angle to waypoint
-             * 4. Set camera angle to this angle, adjusted
-             * */
+            
             Quaternion q = new Quaternion();
 
             //If camera locked, rotate compass depending on player rotation
@@ -65,21 +66,20 @@ public class MissionUI : MonoBehaviour {
                 Transform player = PlayerManager.Instance.player.GetComponent<Transform>();
 
                 Vector3 playerPos = player.position;
-                //1: Point on unit circle
+                //1: Scale vector to unit circle size
                 Vector3 direction = (currentWaypoint - playerPos).normalized;
-                //2: Used for trig (calculating angle - Cos = A/H)
+                //2: Get hypoteneuse for trigonometry. 
                 float hypoteneuse = Mathf.Sqrt((direction.x * direction.x) + (direction.z * direction.z));
-                //3: Angle to waypoint
+                //3: Angle to waypoint. SOH CAH TOA: Cos(Adjacent/Hypoteneuse)
                 float angle = Mathf.Acos(direction.z / hypoteneuse) * Mathf.Rad2Deg;
 
                 //For rotating the compass depending on the player's rotation, rather than the world's
                 float playerFaceAngle = player.rotation.eulerAngles.y;
 
-                //4. 
                 //Trig functions are repeating, so past 180 degrees we need to flip the angle
                 if (direction.x < 0)
                 {
-                    //playerFaceAngle makes rotation depend upon the player's rotation, 
+                    //4: playerFaceAngle makes rotation depend upon the player's rotation, 
                     //not the "forward" direction of the Unity scene (+ playerFaceAngle)
                     q = Quaternion.AngleAxis(angle + playerFaceAngle, Vector3.forward);
                 }
@@ -110,7 +110,7 @@ public class MissionUI : MonoBehaviour {
                 }
             }   
             
-            //Rotate the compass
+            //5: Rotate the compass
             compass.rotation = q;
         }
     }//Update(){}

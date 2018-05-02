@@ -41,7 +41,7 @@ public static class Saver {
     }
 
     /// <summary>
-    /// Create a save object using state data from GameMetaInfo
+    /// Creates a save object
     /// </summary>
     /// <returns>A data structure containing key-value pairs with all data to be maintained between game sessions</returns>
     private static SaveData CreateSaveGame()
@@ -98,14 +98,11 @@ public static class Saver {
 
     public static void WriteToJsonSaveFile(SaveData data)
     {
-        if (File.Exists(GameMetaInfo._SAVE_FILE_JSON))
-        {
-            File.WriteAllText(GameMetaInfo._SAVE_FILE_JSON, JsonConvert.SerializeObject(data, Formatting.Indented,
-                    new JsonSerializerSettings()
-                    {
-                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                    }
-                ));
-        }
+        File.WriteAllText(GameMetaInfo._SAVE_FILE_JSON, JsonConvert.SerializeObject(data, Formatting.Indented,
+                new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                }
+            ));
     }
 }

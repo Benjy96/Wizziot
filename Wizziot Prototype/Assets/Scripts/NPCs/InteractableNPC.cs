@@ -32,13 +32,14 @@ public class InteractableNPC : Targetable {
         //If there is an ink name for each mission stored by this NPC, then bind to it to its ink function
         if ((inkMissionNames != null && missions != null) && inkMissionNames.Length == missions.Length)
         {
-            int counter = 0;
+            int syncArrayCounter = 0;
             foreach (Mission m in missions)
             {
                 if (m == null) continue;
-                string inkMission = inkMissionNames[counter];
-                storyManager.BindExternalFunction(inkMissionNames[counter], () => MissionManager.Instance.GrantMission(m, inkMission));
-                counter++;
+                string inkMission = inkMissionNames[syncArrayCounter];
+                storyManager.BindExternalFunction(inkMissionNames[syncArrayCounter], 
+                    () => MissionManager.Instance.GrantMission(m, inkMission));
+                syncArrayCounter++;
             }
         }
     }

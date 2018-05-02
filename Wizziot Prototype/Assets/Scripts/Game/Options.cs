@@ -22,17 +22,23 @@ public class Options : MonoBehaviour {
     private void RewriteEncryptedFileDifficulty(Difficulty diff)
     {
         SaveData saveData = Loader.GetEncryptedSaveFile();
-        //Modify difficulty
-        saveData.Save(GameMetaInfo._STATE_DATA[(int)StateData.GameDifficulty], (int)diff);
-        Saver.WriteToEncryptedSaveFile(saveData);
+        if(saveData != null)
+        {
+            //Modify difficulty
+            saveData.Save(GameMetaInfo._STATE_DATA[(int)StateData.GameDifficulty], (int)diff);
+            Saver.WriteToEncryptedSaveFile(saveData);
+        }
     }
 
     //Open file, modify difficulty, save
     private void RewriteJSONFileDifficulty(Difficulty diff)
     {
         SaveData saveData = Loader.GetJSONSaveFile();
-        //Modify difficulty
-        saveData.Save(GameMetaInfo._STATE_DATA[(int)StateData.GameDifficulty], (int)diff);
-        Saver.WriteToJsonSaveFile(saveData);
+        if(saveData != null)
+        {
+            //Modify difficulty
+            saveData.Save(GameMetaInfo._STATE_DATA[(int)StateData.GameDifficulty], (int)diff);
+            Saver.WriteToJsonSaveFile(saveData);
+        }
     }
 }

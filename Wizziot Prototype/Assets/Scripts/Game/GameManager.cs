@@ -80,6 +80,8 @@ public class GameManager : MonoBehaviour
         Loader.LoadGame(encryptGameSave);
 
         if (OnGameLoaded != null) OnGameLoaded.Invoke();
+
+        Debug.Log("Game loaded. Difficulty: " + GameMetaInfo._GAME_DIFFICULTY);
     }
 
     public void SaveGame()
