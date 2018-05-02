@@ -105,7 +105,10 @@ public class AgentStats : MonoBehaviour {
         //Set Modifiers
         foreach (KeyValuePair<Stats,Stat> item in statModifiers)
         {
+            Debug.Log("before val: " + item.Value.StatValue);
+            Debug.Log("difficulty scale: " + GameMetaInfo._DIFFICULTY_SCALE + " and diff: " + GameMetaInfo._GAME_DIFFICULTY);
             item.Value.StatValue *= difficultyScale;
+            Debug.Log("after val: " + item.Value.StatValue);
         }
 
         //Apply Modifiers to Variables
