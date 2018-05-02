@@ -94,19 +94,16 @@ public class PlayerCamera : MonoBehaviour {
         switch (State)
         {
             case CameraMode.Follow:
-                //TODO: Rotate camera around player's position
                 desiredPos = startPos * zoom;
                 transform.localPosition = Vector3.Lerp(transform.localPosition, desiredPos, smoothSpeed * Time.deltaTime);
                 break;
 
             case CameraMode.Look:
                 //Yaw and pitch control (and offset)
-                offset = Quaternion.AngleAxis(yawInput, Vector3.up) * Quaternion.AngleAxis(-pitchInput, Vector3.right) * offset;
+                offset = Quaternion.AngleAxis(yawInput, Vector3.up) * Quaternion.AngleAxis(pitchInput, Vector3.right) * offset;
 
                 //Smoothing (interpolate between current position, desired position (offsetted and zoomed) with smooth speed)
                 desiredPos = player.position + offset * zoom;
-                //Max camera pitch
-                desiredPos.y = Mathf.Clamp(desiredPos.y, 2f, 15f);
 
                 //Camera position
                 transform.localPosition = Vector3.Lerp(transform.localPosition, desiredPos, smoothSpeed * Time.deltaTime);
