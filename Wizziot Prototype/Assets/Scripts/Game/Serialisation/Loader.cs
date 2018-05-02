@@ -68,13 +68,15 @@ public class Loader : MonoBehaviour
 
         Vector3 newPlayerPos = new Vector3();
         data.Load(GameMetaInfo._STATE_DATA[(int)StateData.PlayerPosition], ref newPlayerPos);
-        PlayerManager.Instance.player.transform.position = newPlayerPos;
+        if(newPlayerPos != Vector3.zero) PlayerManager.Instance.player.transform.position = newPlayerPos;
 
         int playerHealth = 0;
         data.Load(GameMetaInfo._STATE_DATA[(int)StateData.PlayerHealth], ref playerHealth);
-        PlayerManager.Instance.player.GetComponent<AgentStats>().CurrentHealth = playerHealth;
+        if(playerHealth != 0) PlayerManager.Instance.player.GetComponent<AgentStats>().CurrentHealth = playerHealth;
 
+        int coins = 0;
         data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Coins], ref Inventory.Instance.coins);
+        if (coins != 0) Inventory.Instance.coins = coins;
 
         return true;
     }
@@ -118,6 +120,7 @@ public class Loader : MonoBehaviour
         //Set Ability KeyCodes using ability keybinds (Abil/KeyCode)
         Dictionary<Abilities, KeyCode> savedAbilKeybinds = new Dictionary<Abilities, KeyCode>();
         data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Keybinds], ref savedAbilKeybinds);
+        if (savedAbilKeybinds.Count == 0) return;
 
         //Use Ability KeyCodes to set Action KeyCodes
         //Temp so can iterate and modify at same time (iterate temp)
@@ -142,35 +145,44 @@ public class Loader : MonoBehaviour
         //Equipment
         List<Equipment> equipment = new List<Equipment>();
         data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Equipped], ref equipment);
-        for (int i = 0; i < equipment.Count; i++)
+        if (equipment.Count > 0)
         {
-            GameObject newItem = Instantiate((GameObject)Resources.Load("Items/" + equipment[i].prefabName), PlayerManager.Instance.player.transform.position, Quaternion.identity);
-            Debug.Assert(newItem != null);  //If triggered, items are likely stored in the wrong location
-            PlayerManager.Instance.EquipItem(newItem.GetComponent<Item>());
+            for (int i = 0; i < equipment.Count; i++)
+            {
+                GameObject newItem = Instantiate((GameObject)Resources.Load("Items/" + equipment[i].prefabName), PlayerManager.Instance.player.transform.position, Quaternion.identity);
+                Debug.Assert(newItem != null);  //If triggered, items are likely stored in the wrong location
+                PlayerManager.Instance.EquipItem(newItem.GetComponent<Item>());
+            }
         }
 
         //Inventory
         List<Equipment> items = new List<Equipment>();
         data.Load(GameMetaInfo._STATE_DATA[(int)StateData.Inventory], ref items);
-        for(int i = 0; i < items.Count; i++)
+        if (items.Count > 0)
         {
-            GameObject inventoryItem = Instantiate((GameObject)Resources.Load("Items/" + items[i].prefabName), PlayerManager.Instance.player.transform.position, Quaternion.identity);
-            Debug.Assert(inventoryItem != null);    //If triggered, items are likely stored in the wrong location
-            inventoryItem.GetComponent<Item>().AddToInventoryFromSaveFile();
+            for (int i = 0; i < items.Count; i++)
+            {
+                GameObject inventoryItem = Instantiate((GameObject)Resources.Load("Items/" + items[i].prefabName), PlayerManager.Instance.player.transform.position, Quaternion.identity);
+                Debug.Assert(inventoryItem != null);    //If triggered, items are likely stored in the wrong location
+                inventoryItem.GetComponent<Item>().AddToInventoryFromSaveFile();
+            }
         }
 
         //Missions
         List<Mission> missions = new List<Mission>();
         data.Load(GameMetaInfo._STATE_DATA[(int)StateData.MissionsActive], ref missions);
-        foreach (Mission m in missions)
+        if (missions.Count > 0)
         {
-            if(m.parentMission == null)
+            foreach (Mission m in missions)
             {
-                MissionManager.Instance.GrantMission(m, m.inkName);
-            }
-            else
-            {
-                MissionManager.Instance.GrantChildMission(m, m.inkName, ref m.missionRewards);
+                if (m.parentMission == null)
+                {
+                    MissionManager.Instance.GrantMission(m, m.inkName);
+                }
+                else
+                {
+                    MissionManager.Instance.GrantChildMission(m, m.inkName, ref m.missionRewards);
+                }
             }
         }
     }

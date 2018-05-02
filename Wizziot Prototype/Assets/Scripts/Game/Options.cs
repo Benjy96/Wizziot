@@ -32,6 +32,7 @@ public class Options : MonoBehaviour {
         {
             saveData = new SaveData();
             saveData.Save(GameMetaInfo._STATE_DATA[(int)StateData.GameDifficulty], (int)diff);
+            Saver.WriteToEncryptedSaveFile(saveData);
         }
     }
 
@@ -49,6 +50,7 @@ public class Options : MonoBehaviour {
         {
             saveData = new SaveData();
             saveData.Save(GameMetaInfo._STATE_DATA[(int)StateData.GameDifficulty], (int)diff);
+            Saver.WriteToJsonSaveFile(saveData);
         }
     }
 }
