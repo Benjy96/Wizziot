@@ -47,10 +47,10 @@ public class EmotionChip : MonoBehaviour {
     [Tooltip("Higher means lerps toward disposition more slowly")][Range(0.1f, 0.9f)] public float reluctance = 0.5f;
 
     /// <summary>
-    /// How easy it is for an enemy is to change their current emotional state. Higher value means it takes longer to change emotion.
+    /// How easy it is for an enemy is to change their current emotional state. Higher value means it is harder to influence their emotion.
     /// NOT A WEIGHT.
     /// </summary>
-    [Tooltip("Higher means longer to change state")][Range(0.1f, 0.9f)] public float emotionalStability = 0.66f;
+    [Tooltip("Higher means harder to change state")][Range(0.1f, 0.9f)] public float emotionalStability = 0.66f;
 
     //The agent's emotional state(s)
     public Dictionary<Emotion, float> agentEmotions = new Dictionary<Emotion, float>();
@@ -70,7 +70,7 @@ public class EmotionChip : MonoBehaviour {
     public State scaredState;
     public State fallbackState;   //fallback
 
-    [HideInInspector] public bool enraged;  //Used to enable the fallback state - if other behaviours fail, use this as a "last stand" or act behaviour
+    [HideInInspector] public bool enraged;  //Used to enable the fallback state - if other behaviours fail, use this as a last stand behaviour
 
     private void Awake()
     {
@@ -127,9 +127,10 @@ public class EmotionChip : MonoBehaviour {
             {
                 if (key == disposition)
                 {
-                    //Every second with standard values, ~ 0.05 is applied to the disposition. If Stability = 0.5, then Stability / 0.05 = 10 Seconds to reach & surpass Stability (and change state)
-                    //Debug.Log("Applying " + Time.fixedDeltaTime / (10f / reluctance) + " to disposition");
-                    agentEmotions[key] = Mathf.Lerp(agentEmotions[key], 1f, Time.fixedDeltaTime / (10f / reluctance));   //Approx 10 seconds to return to disposition (assuming no external influences)
+                    //.05 towards disposition every second (Execute called 50 times per second)
+                    //If Stability == 0.5, then Stability / 0.05 == 10 Seconds to surpass Stability (and change state)
+                    //Therefore, approx 10 seconds to return to disposition (assuming no external influences)
+                    agentEmotions[key] = Mathf.Lerp(agentEmotions[key], 1f, Time.fixedDeltaTime / (10f / reluctance));
                 }
                 else
                 {
@@ -156,12 +157,13 @@ public class EmotionChip : MonoBehaviour {
 
     /// <summary>
     /// This method provides a way in which to influence this agent's emotional state - will not influence who the agent targets.
-    /// DISPOSITION (Calm): will tend towards the intent at a rate modified by trust.
-    /// DISPOSITION (Anger): will tend towards the intent scaled by irascibility, except fear will anger the agent further.
-    /// DISPOSITION (Fear): will tend towards the intent scaled by cowardice.
+    /// Calm: will tend towards the intent at a rate modified by trust.
+    /// Anger: will tend towards the intent scaled by irascibility, except fear will anger the agent further.
+    /// Fear: will tend towards the intent scaled by cowardice.
     /// </summary>
     /// <param name="intent">The way in which the actor intends to influence this agent</param>
-    /// <param name="amount">How much to influence the agent's emotions in the range of 0 to 1. In update methods, scale by deltaTime.</param>
+    /// <param name="amount">How much to influence the agent's emotions in the range of 0 to 1. 
+    /// In update methods, scale by deltaTime.</param>
     public void Influence(Emotion intent, float amount)
     {
         amount = Mathf.Clamp(amount, 0f, 1f);
@@ -173,11 +175,13 @@ public class EmotionChip : MonoBehaviour {
             case Emotion.Calm:
                 switch (intent)
                 {
-                    case Emotion.Calm:  //If actor intends to calm the agent, do it scaled by a factor of the agent's trust
+                    //Easy to calm the agent
+                    case Emotion.Calm:  
                         agentEmotions[intent] += amount * trust;
                         break;
 
-                    case Emotion.Anger: //If actor intends to scare or anger enemy, anger/scare them, but reduced by a factor of their trust (harder to anger/scare if calm)
+                    //Hard to anger or scare the agent
+                    case Emotion.Anger: 
                     case Emotion.Fear:
                         agentEmotions[Emotion.Calm] -= amount / trust;
                         agentEmotions[intent] += amount / trust;
@@ -224,7 +228,8 @@ public class EmotionChip : MonoBehaviour {
                 }
                 break;
         }
-        ScaleEmotions();    //This reduces the complexity of each assignment to emotion - we can go over 1 all the time without issue.
+        //Bring values back into the range of 0 to 1
+        ScaleEmotions();    
     }
 
     #region Implementation
@@ -260,7 +265,7 @@ public class EmotionChip : MonoBehaviour {
         }
 
         //If not in any state or specified state, set it up (enter/construct) : OR : current state not same type as goal AND current goal not being worked on
-        if (currentState == null || currentState.GetType() != goal.GetType())
+        if (currentState == null || currentState.GetType() != goal.GetType() || !currentState.name.Split('(').Equals(goal.name.Split('(')))
         {
             currentState = goal.CreateState(agent, LastHostileInfluence);
         }

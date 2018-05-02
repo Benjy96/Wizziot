@@ -88,7 +88,6 @@ public class GameManager : MonoBehaviour
         StoryManager.Instance.SaveStory();
 
         Debug.Log("Saving game data...");
-        Saver saver = new Saver();
-        saver.SaveGame(encryptGameSave);        
+        Saver.SaveGame(encryptGameSave);        
     }
 }

@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine.SceneManagement;
 
-public class Saver {
+public static class Saver {
 
     // ----- Save ----- //
-    public void SaveGame(bool encrypt)
+    public static void SaveGame(bool encrypt)
     {
         string file = GameManager.Instance.GameSaveFile;
 
@@ -41,24 +41,23 @@ public class Saver {
     }
 
     /// <summary>
-    /// Where the what is saved is stored (where the magic happens)
+    /// Create a save object using state data from GameMetaInfo
     /// </summary>
-    /// <returns>A data structure containing key value (dictionary) pairs with all decided upon info to be tracked for game objects in the scene</returns>
-    private SaveData CreateSaveGame()
+    /// <returns>A data structure containing key-value pairs with all data to be maintained between game sessions</returns>
+    private static SaveData CreateSaveGame()
     {
         SaveData save = new SaveData();
 
+        //Primitive data types
         save.Save(GameMetaInfo._STATE_DATA[(int)StateData.Scene], SceneManager.GetActiveScene().name);
         save.Save(GameMetaInfo._STATE_DATA[(int)StateData.GameDifficulty], (int)GameMetaInfo._GAME_DIFFICULTY);
         save.Save(GameMetaInfo._STATE_DATA[(int)StateData.PlayerPosition], PlayerManager.Instance.player.transform.position);
-        save.Save(GameMetaInfo._STATE_DATA[(int)StateData.PlayerHealth], PlayerManager.Instance.player.GetComponent<AgentStats>().CurrentHealth);
+        save.Save(GameMetaInfo._STATE_DATA[(int)StateData.PlayerHealth], PlayerManager.Instance.playerStats.CurrentHealth);
         save.Save(GameMetaInfo._STATE_DATA[(int)StateData.Coins], Inventory.Instance.coins);
 
-        #region Custom Data Types (Keybinds, Equipment, items, missions)
-        //Keybind Combos
+        //Custom Data Types (Keybinds, Equipment, items, missions)
         save.Save(GameMetaInfo._STATE_DATA[(int)StateData.Keybinds], GameMetaInfo.abilityKeybinds);
         
-        //Inventory Items
         List<Equipment> equipment = new List<Equipment>();
         foreach (Item item in Inventory.Instance.items)
         {
@@ -66,7 +65,6 @@ public class Saver {
         }
         save.Save(GameMetaInfo._STATE_DATA[(int)StateData.Inventory], equipment);
 
-        //Equipped Items
         List<Equipment> equipped = new List<Equipment>();
         foreach (Item item in PlayerManager.Instance.equipped)
         {
@@ -75,9 +73,10 @@ public class Saver {
         }
         save.Save(GameMetaInfo._STATE_DATA[(int)StateData.Equipped], equipped);
 
-        //Missions
         save.Save(GameMetaInfo._STATE_DATA[(int)StateData.MissionsActive], MissionManager.Instance.activeMissions);
-        #endregion
+
+        //Ensure all state data has been saved
+        if (save.savedItems != GameMetaInfo._STATE_DATA.Count) throw new System.Exception("Not all state data has been saved");
 
         return save;
     }

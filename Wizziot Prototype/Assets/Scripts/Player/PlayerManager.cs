@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,11 +14,13 @@ public class PlayerManager : MonoBehaviour {
 
     public Action onTargetDestroyed;    //for targeting, xp, etc...
 
-    private PlayerStats playerStats;
-    private AbilityComponent playerAbilComponent;
+    public PlayerStats playerStats;
+    public AbilityComponent playerAbilComponent;
 
     public List<Abilities> UnlockedAbilities { get { return playerAbilComponent.unlockedAbilities; } }
     public Dictionary<Stats, Stat> PlayerStatModifiers { get { return playerStats.statModifiers; } }
+
+    //TODO: Level -> add to state data, make xp increase by 2 per level, max 50, increase stat modifiers each time, gain xp on kill, xp on enemy attribute
 
     private void Awake()
     {

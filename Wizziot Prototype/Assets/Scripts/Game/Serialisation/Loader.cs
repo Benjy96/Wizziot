@@ -145,6 +145,7 @@ public class Loader : MonoBehaviour
         for (int i = 0; i < equipment.Count; i++)
         {
             GameObject newItem = Instantiate((GameObject)Resources.Load("Items/" + equipment[i].prefabName), PlayerManager.Instance.player.transform.position, Quaternion.identity);
+            Debug.Assert(newItem != null);  //If triggered, items are likely stored in the wrong location
             PlayerManager.Instance.EquipItem(newItem.GetComponent<Item>());
         }
 
@@ -154,8 +155,7 @@ public class Loader : MonoBehaviour
         for(int i = 0; i < items.Count; i++)
         {
             GameObject inventoryItem = Instantiate((GameObject)Resources.Load("Items/" + items[i].prefabName), PlayerManager.Instance.player.transform.position, Quaternion.identity);
-            Debug.Assert(inventoryItem != null);
-            Debug.Log("Adding to inventory: " + inventoryItem.name);
+            Debug.Assert(inventoryItem != null);    //If triggered, items are likely stored in the wrong location
             inventoryItem.GetComponent<Item>().AddToInventoryFromSaveFile();
         }
 

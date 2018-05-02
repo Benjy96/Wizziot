@@ -1,0 +1,82 @@
+{
+  "boolData": {
+    "keys": [],
+    "values": [],
+    "Length": 0
+  },
+  "stringData": {
+    "keys": [
+      "Scene"
+    ],
+    "values": [
+      "Tutorial"
+    ],
+    "Length": 1
+  },
+  "intData": {
+    "keys": [
+      "GameDifficulty",
+      "PlayerHealth",
+      "Coins"
+    ],
+    "values": [
+      1,
+      200,
+      0
+    ],
+    "Length": 3
+  },
+  "v3Data": {
+    "keys": [
+      "PlayerPosition"
+    ],
+    "values": [
+      {
+        "x": 3.844397,
+        "y": 2.097106,
+        "z": 35.9140472
+      }
+    ],
+    "Length": 1
+  },
+  "quaternionData": {
+    "keys": [],
+    "values": [],
+    "Length": 0
+  },
+  "abilityKeyData": {
+    "keys": [
+      "Keybinds"
+    ],
+    "values": [
+      {
+        "Zap": 49,
+        "Confuse": 50,
+        "Vortex": 51,
+        "Singularity": 52,
+        "Heal": 53
+      }
+    ],
+    "Length": 1
+  },
+  "missionData": {
+    "keys": [
+      "MissionsActive"
+    ],
+    "values": [
+      []
+    ],
+    "Length": 1
+  },
+  "equipmentData": {
+    "keys": [
+      "Inventory",
+      "Equipped"
+    ],
+    "values": [
+      [],
+      []
+    ],
+    "Length": 2
+  }
+}

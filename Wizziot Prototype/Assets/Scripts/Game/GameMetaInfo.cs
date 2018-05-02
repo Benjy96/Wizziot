@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 
-public class GameMetaInfo {
+public static class GameMetaInfo {
 
     // ----- Save & State Data ----- //
     public static string _SAVE_FILE_ENCRYPTED = Path.Combine(Application.streamingAssetsPath, "wizziot.dat");

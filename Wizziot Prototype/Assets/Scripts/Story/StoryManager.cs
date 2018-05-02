@@ -88,6 +88,10 @@ public class StoryManager : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Checks whether you can talk to an NPC, and if so, starts a conversation
+    /// </summary>
+    /// <param name="targetNPC">The Story NPC being interacted with by the player</param>
     public void AttemptToConverse(InteractableNPC targetNPC)
     {
         if (targetNPC != null && targetNPC.targetType == TargetType.Story)
@@ -96,7 +100,7 @@ public class StoryManager : MonoBehaviour {
             ExitConversation = DisableStoryOnDelay();   //Reassign the variable, otherwise null once stopped
             ResetStoryInterface();
 
-            //Find out if NPC has "anything to say"
+            //Find out if NPC has anything to say
             conversationTarget = targetNPC;
             scriptManager.StoryPosition = targetNPC.inkConversationPath;
 
@@ -173,25 +177,26 @@ public class StoryManager : MonoBehaviour {
             storyDisplayActive = true;
         }
 
-        //INK: 1. Present Story
+        //Present Story
         if (scriptManager.ContentAvailable && storyDisplayActive == true)
         {
             PresentStory();
         }
 
+        //Present Choices
         if (scriptManager.ChoicesAvailable)
         {
             interfaceManager.DisplayButtons(scriptManager.NumChoicesAvailable);
             EnableInput();
             storyChoiceDisplayActive = true;
         }
-
-        if (!scriptManager.ChoicesAvailable)
+        else
         {
             DisableInput();
         }
 
-        //If no content, track the player distance to prepare to close the story window when player moved out of range
+        //If no content, track the player distance 
+        //so the story window closes when out of range
         if (!scriptManager.ContentAvailable)
         {
             if (!closingStory)
