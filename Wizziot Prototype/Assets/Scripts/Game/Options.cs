@@ -28,6 +28,11 @@ public class Options : MonoBehaviour {
             saveData.Save(GameMetaInfo._STATE_DATA[(int)StateData.GameDifficulty], (int)diff);
             Saver.WriteToEncryptedSaveFile(saveData);
         }
+        else
+        {
+            saveData = new SaveData();
+            saveData.Save(GameMetaInfo._STATE_DATA[(int)StateData.GameDifficulty], (int)diff);
+        }
     }
 
     //Open file, modify difficulty, save
@@ -39,6 +44,11 @@ public class Options : MonoBehaviour {
             //Modify difficulty
             saveData.Save(GameMetaInfo._STATE_DATA[(int)StateData.GameDifficulty], (int)diff);
             Saver.WriteToJsonSaveFile(saveData);
+        }
+        else
+        {
+            saveData = new SaveData();
+            saveData.Save(GameMetaInfo._STATE_DATA[(int)StateData.GameDifficulty], (int)diff);
         }
     }
 }

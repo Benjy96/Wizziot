@@ -105,10 +105,7 @@ public class AgentStats : MonoBehaviour {
         //Set Modifiers
         foreach (KeyValuePair<Stats,Stat> item in statModifiers)
         {
-            Debug.Log("before val: " + item.Value.StatValue);
-            Debug.Log("difficulty scale: " + GameMetaInfo._DIFFICULTY_SCALE + " and diff: " + GameMetaInfo._GAME_DIFFICULTY);
             item.Value.StatValue *= difficultyScale;
-            Debug.Log("after val: " + item.Value.StatValue);
         }
 
         //Apply Modifiers to Variables
@@ -147,6 +144,7 @@ public class AgentStats : MonoBehaviour {
     /// <param name="amount">How powerful the attack is. External agent provides this value</param>
     public void Damage(float amount)
     {
+        Debug.Log(name + "being damaged for " + amount);
         //1. Mitigate Attack
         if(UnityEngine.Random.Range(0, 100) < statModifiers[Stats.MitigationChance].StatValue)  //Max 3% mitigation chance (range: 0 -> 3 for Stat Value)
         {
