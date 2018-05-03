@@ -80,6 +80,8 @@ public class PlayerController : MonoBehaviour {
         HandleTargeting();
         HandleKeyboardInput();
         HandleConversationInput();
+
+        CheckStuck();
     }
     
     #region Event Triggers - Escape & Mission Journal
@@ -102,6 +104,51 @@ public class PlayerController : MonoBehaviour {
         if (MissionManager.Instance.onJournalOpened != null) MissionManager.Instance.onJournalOpened.Invoke();
     }
     #endregion
+
+    //Attempts to converse with story NPCs or pick up objects
+    public void Interact()
+    {
+        switch (target.targetType)
+        {
+            case TargetType.Item:
+                target.GetComponent<Item>().AddToInventory();
+                SetTargetIndicatorPos(false);
+                break;
+
+            case TargetType.Story:
+                storyManager.AttemptToConverse((InteractableNPC)target);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    //Checks target can be attacked & handles "self abilities"
+    public void UseAbility(Abilities abil, Targetable target = null)
+    {
+        AbilityUI.Instance.ChangeSelectedDisplay(abil);
+
+        if (GameMetaInfo._Is_AoE_Ability(abil))
+        {
+            abilityComponent.PlayerUseAoE(abil);
+        }
+        else if (GameMetaInfo._Is_Defense_Ability(abil))
+        {
+            abilityComponent.PlayerUseInstant(abil, transform);
+        }
+        else if (target != null)
+        {
+            if ((target.GetComponent<Targetable>().targetType == TargetType.Enemy || target.tag.Equals(GameMetaInfo._TAG_SHOOTABLE_BY_PLAYER)) && !GameMetaInfo._Is_Defense_Ability(abil))
+            {
+                abilityComponent.PlayerUseInstant(abil, target.transform);
+            }
+        }
+        else
+        {
+            abilityComponent.SelectAbility(abil);
+        }
+    }
 
     //Simple axis movement
     private void HandleDirectionInput()
@@ -251,48 +298,8 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    //Attempts to converse with story NPCs or pick up objects
-    public void Interact()
+    private void CheckStuck()
     {
-        switch (target.targetType)
-        {
-            case TargetType.Item:
-                target.GetComponent<Item>().AddToInventory();
-                SetTargetIndicatorPos(false);
-                break;
-
-            case TargetType.Story:
-                storyManager.AttemptToConverse((InteractableNPC) target);
-                break;
-
-            default:
-                break;
-        }
-    }
-
-    //Checks target can be attacked & handles "self abilities"
-    public void UseAbility(Abilities abil, Targetable target = null)
-    {
-        AbilityUI.Instance.ChangeSelectedDisplay(abil);
-
-        if (GameMetaInfo._Is_AoE_Ability(abil))
-        {
-            abilityComponent.PlayerUseAoE(abil);
-        }
-        else if (GameMetaInfo._Is_Defense_Ability(abil))
-        {
-            abilityComponent.PlayerUseInstant(abil, transform);
-        }
-        else if(target != null)
-        {
-            if((target.GetComponent<Targetable>().targetType == TargetType.Enemy || target.tag.Equals(GameMetaInfo._TAG_SHOOTABLE_BY_PLAYER)) && !GameMetaInfo._Is_Defense_Ability(abil))
-            {
-                abilityComponent.PlayerUseInstant(abil, target.transform);
-            }
-        }
-        else
-        {
-            abilityComponent.SelectAbility(abil);
-        }
+        //implement
     }
 }

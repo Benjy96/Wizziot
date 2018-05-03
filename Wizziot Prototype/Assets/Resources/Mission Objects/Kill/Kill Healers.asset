@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8aeeb188642b88645929862131006b01, type: 3}
+  m_Name: Kill Healers
+  m_EditorClassIdentifier: 
+  parentMission: {fileID: 0}
+  title: I hate the doctor
+  description: A doctor once said, "This won't hurt a bit." He was wrong.
+  missionRewards: []
+  additionalMissionStages: []
+  location: {x: -205, y: 29, z: 55}
+  inkName: 
+  completed: 0
+  killTypes:
+  - {fileID: 1967363257081838, guid: 1041e25ac4bd26d46af210548d19d2c4, type: 2}
+  killsRequired: 00000000

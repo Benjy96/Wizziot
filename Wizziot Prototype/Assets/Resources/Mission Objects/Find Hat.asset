@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 193135d83a241094c868a47731457531, type: 3}
+  m_Name: Find Hat
+  m_EditorClassIdentifier: 
+  parentMission: {fileID: 0}
+  title: Find a hat
+  description: Why not?
+  missionRewards:
+  - {fileID: 1615661566601068, guid: bd05844043ec1c24db76ec9977867554, type: 2}
+  additionalMissionStages: []
+  location: {x: 0, y: 0, z: 0}
+  inkName: 
+  completed: 0
+  collectItem: {fileID: 1510424759999940, guid: ea1aa2a6fbeb3c248bedcb7c2792c1eb,
+    type: 2}
