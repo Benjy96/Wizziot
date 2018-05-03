@@ -144,7 +144,6 @@ public class AgentStats : MonoBehaviour {
     /// <param name="amount">How powerful the attack is. External agent provides this value</param>
     public void Damage(float amount)
     {
-        Debug.Log(name + "being damaged for " + amount);
         //1. Mitigate Attack
         if(UnityEngine.Random.Range(0, 100) < statModifiers[Stats.MitigationChance].StatValue)  //Max 3% mitigation chance (range: 0 -> 3 for Stat Value)
         {
