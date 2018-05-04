@@ -11,7 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8aeeb188642b88645929862131006b01, type: 3}
   m_Name: KillPissedOffEnemies
   m_EditorClassIdentifier: 
-  parentMission: {fileID: 0}
+  parent: {fileID: 0}
+  parentName: 
+  missionStage: 0
   title: The Wizard's Zoo Pt. 2
   description: There it is! A rabid one by the looks of it!
   missionRewards: []

@@ -11,7 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8aeeb188642b88645929862131006b01, type: 3}
   m_Name: Kill Healers
   m_EditorClassIdentifier: 
-  parentMission: {fileID: 0}
+  parent: {fileID: 0}
+  parentName: 
+  missionStage: 0
   title: I hate the doctor
   description: A doctor once said, "This won't hurt a bit." He was wrong.
   missionRewards: []

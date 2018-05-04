@@ -11,7 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a5351461bd830f46bd4cdd96c7ac429, type: 3}
   m_Name: Chain_KillWizardsStock
   m_EditorClassIdentifier: 
-  parentMission: {fileID: 0}
+  parent: {fileID: 0}
+  parentName: 
+  missionStage: 0
   title: Destroy the Wizard's Zoo Pt. 1
   description: An exiled wizard has asked you to sabotage an old academic rival. Destroy
     the creatures the Wizard's zoo.

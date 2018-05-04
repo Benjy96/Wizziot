@@ -38,6 +38,14 @@ public class Mission : ScriptableObject {
         newMission.parent = newMission;
         newMission.parentName = newMission.parent.name.Split('(')[0];
 
+        //Being loaded, so get rewards
+        if (parent != null)
+        {
+            Mission parentMission = (Mission)Instantiate(Resources.Load("Mission Objects/" + parent.parentName));
+            newMission.missionRewards = new List<GameObject>(parentMission.missionRewards);
+            
+        }
+
         //Set stage (parent of chain)
         newMission.missionStage = -1;
 
@@ -55,14 +63,19 @@ public class Mission : ScriptableObject {
     //Insantiate a child mission - inherits the rewards of the parent (first) mission
     public Mission CreateChild()
     {
-        Mission newMission = (Mission)Instantiate(Resources.Load("Mission Objects/" + name.Split('(')[0]));
+        //Update stage
+        missionStage += 1;
+        string childMissionName = additionalMissionStages[missionStage].name.Split('(')[0];
+
+        //Create child
+        Mission newMission = (Mission)Instantiate(Resources.Load("Mission Objects/" + childMissionName));
         newMission.parent = (Mission)Instantiate(Resources.Load("Mission Objects/" + parentName));
 
-        //Update stage
-        newMission.missionStage = missionStage + 1;
+        //Set rewards - deep copy
+        newMission.missionRewards = new List<GameObject>(newMission.parent.missionRewards);
 
         //Link to ink
-        newMission.inkName = newMission.parent.inkName;
+        newMission.inkName = inkName;
 
         //Instantiate & Setup Waypoint Radius
         newMission.waypointObject = Instantiate(MissionManager.Instance.waypointPrefab, location, Quaternion.Euler(-90f, 0f, 0f));

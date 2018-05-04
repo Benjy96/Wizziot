@@ -11,7 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8aeeb188642b88645929862131006b01, type: 3}
   m_Name: Kill Enemies
   m_EditorClassIdentifier: 
-  parentMission: {fileID: 0}
+  parent: {fileID: 0}
+  parentName: 
+  missionStage: 0
   title: Kill Enemies
   description: No reason. I'm just a violent man.
   missionRewards: []

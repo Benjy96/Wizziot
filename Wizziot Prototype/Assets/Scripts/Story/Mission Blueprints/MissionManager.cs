@@ -55,16 +55,7 @@ public class MissionManager : MonoBehaviour {
     public void GrantChildMission(Mission mission)
     {
         Mission grantedMission;
-        //If the first of a chain (no parent), set child's parent reference as this, else carry previous parent
-
-        if (mission.parent.additionalMissionStages == null)
-        {
-            grantedMission = mission.CreateMission(mission.inkName);
-        }
-        else
-        {
-            grantedMission = mission.CreateChild();
-        }
+        grantedMission = mission.CreateChild();
 
         if (!activeMissions.Contains(grantedMission) && activeMissions.Count < maxMissions)
         {
@@ -82,11 +73,10 @@ public class MissionManager : MonoBehaviour {
     {
         activeMissions.Remove(mission);
         completedMissions.Add(mission);
-        
+
         //Activate next mission stage (As parent)
         if(mission.additionalMissionStages.Length > mission.missionStage)
         {
-            Debug.Log("here");
             GrantChildMission(mission);
         }
         else
@@ -94,6 +84,7 @@ public class MissionManager : MonoBehaviour {
             Debug.Log("granting rewards");
             //If no stages left, grant the rewards
             mission.GrantRewards();
+            Debug.Log("mission ink name: " + mission.inkName);
             StoryManager.Instance.CompleteInkMission(mission.inkName);
         }
 

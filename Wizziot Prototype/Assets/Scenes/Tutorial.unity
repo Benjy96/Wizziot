@@ -15187,13 +15187,13 @@ GameObject:
   - component: {fileID: 1053897499}
   - component: {fileID: 1053897498}
   - component: {fileID: 1053897497}
+  - component: {fileID: 1053897496}
   - component: {fileID: 1053897500}
+  - component: {fileID: 1294397448}
   - component: {fileID: 1596915822}
-  - component: {fileID: 211431228}
   - component: {fileID: 1034514362}
   - component: {fileID: 1053897495}
-  - component: {fileID: 1053897496}
-  - component: {fileID: 1294397448}
+  - component: {fileID: 211431228}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged

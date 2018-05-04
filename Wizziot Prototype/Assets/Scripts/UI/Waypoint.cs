@@ -45,8 +45,9 @@ public class Waypoint : MonoBehaviour {
             //If player is a third of the radius distance to the center of the waypoint, register we have reached it
             if((player.transform.position - transform.position).sqrMagnitude <= (wpCollider.radius * wpCollider.radius) / 4)
             {
-                MissionManager.Instance.RegisterWaypointReached(this);
+                Debug.Log("registering complete wayoint reached");
                 trackPlayerDist = false;
+                MissionManager.Instance.RegisterWaypointReached(this);
             }
         }
     }
