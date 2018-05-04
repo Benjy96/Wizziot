@@ -7,7 +7,10 @@ using Newtonsoft.Json;
 public class Mission : ScriptableObject {
 
     protected MissionManager missionManager = MissionManager.Instance;
-    public Mission parentMission;
+
+    [HideInInspector] public Mission parent;
+    [HideInInspector] public string parentName;
+    [HideInInspector] public int missionStage;
 
     [Header("Displayed in Journal and Log")]
     public string title;
@@ -32,6 +35,11 @@ public class Mission : ScriptableObject {
     public Mission CreateMission(string inkName)
     {
         Mission newMission = (Mission)Instantiate(Resources.Load("Mission Objects/" + name.Split('(')[0]));
+        newMission.parent = newMission;
+        newMission.parentName = newMission.parent.name.Split('(')[0];
+
+        //Set stage (parent of chain)
+        newMission.missionStage = -1;
 
         //Link to the Ink script
         newMission.inkName = inkName;
@@ -45,24 +53,21 @@ public class Mission : ScriptableObject {
     }
 
     //Insantiate a child mission - inherits the rewards of the parent (first) mission
-    public Mission CreateMission(Mission chainParent, string parentInkName, ref List<GameObject> parentRewards)
+    public Mission CreateChild()
     {
-        Debug.Log("parent rewards[0].name: " + parentRewards[0].name);
         Mission newMission = (Mission)Instantiate(Resources.Load("Mission Objects/" + name.Split('(')[0]));
+        newMission.parent = (Mission)Instantiate(Resources.Load("Mission Objects/" + parentName));
+
+        //Update stage
+        newMission.missionStage = missionStage + 1;
 
         //Link to ink
-        newMission.inkName = parentInkName;
+        newMission.inkName = newMission.parent.inkName;
 
         //Instantiate & Setup Waypoint Radius
         newMission.waypointObject = Instantiate(MissionManager.Instance.waypointPrefab, location, Quaternion.Euler(-90f, 0f, 0f));
         newMission.waypointRadius = newMission.waypointObject.GetComponent<SphereCollider>().radius;
         newMission.waypoint = newMission.waypointObject.GetComponent<Waypoint>();
-
-        //Set original mission
-        newMission.parentMission = chainParent;
-        //Set rewards - deep copy of references
-        newMission.missionRewards = new List<GameObject>(parentRewards);
-        Debug.Log("child nm.mr[0]: " + newMission.missionRewards[0].name);
 
         return newMission;
     }

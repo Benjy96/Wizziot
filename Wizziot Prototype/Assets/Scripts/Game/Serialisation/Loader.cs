@@ -175,13 +175,13 @@ public class Loader : MonoBehaviour
         {
             foreach (Mission m in missions)
             {
-                if (m.parentMission == null)
+                if (m.missionStage > -1)
                 {
-                    MissionManager.Instance.GrantMission(m, m.inkName);
+                    MissionManager.Instance.GrantChildMission(m);
                 }
                 else
                 {
-                    MissionManager.Instance.GrantChildMission(m, m.inkName, ref m.missionRewards);
+                    MissionManager.Instance.GrantMission(m, m.inkName);
                 }
             }
         }

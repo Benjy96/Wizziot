@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+//TODO: List of types corresponding to number...would be nice to have the cowards x5 spawning with a pissed off x1
+//TODO: Respawning after death
+    //TODO: Optimise above: Object pool
 public class EnemySpawnPoint : MonoBehaviour
 { 
     public List<Enemy> enemiesSpawned;  //Hold reference to all enemies spawned at this point

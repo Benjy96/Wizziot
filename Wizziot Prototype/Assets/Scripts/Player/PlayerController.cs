@@ -28,6 +28,10 @@ public class PlayerController : MonoBehaviour {
     public float Speed { get { return playerStats.speed; } }
     public float TurnSpeed { get { return playerStats.turnSpeed; } }
 
+    //Utility
+    private float checkStuckInterval = 5f;
+    private float resetRotationTime;
+
     //References & initialisation - Start is once scripts are definitely enabled - Awake the GOs are all enabled
     private void Awake()    
     {
@@ -49,15 +53,15 @@ public class PlayerController : MonoBehaviour {
         GameMetaInfo.SetAbilityKeybindAction(Abilities.Singularity, KeyCode.Alpha4, new Action(() => UseAbility(Abilities.Singularity, target)));
         GameMetaInfo.SetAbilityKeybindAction(Abilities.Heal, KeyCode.Alpha5, new Action(() => UseAbility(Abilities.Heal, target)));
 
-        //General
+        //General & UI
         GameMetaInfo.keybindActions.Add(KeyCode.F, Interact);
         GameMetaInfo.keybindActions.Add(KeyCode.Escape, TriggerEscapeAction);
-
-        //Camera
-        GameMetaInfo.keybindActions.Add(KeyCode.LeftAlt, cam.GetComponent<PlayerCamera>().SwitchCameraMode);
         GameMetaInfo.keybindActions.Add(KeyCode.I, new Action(() => inventoryUI.gameObject.SetActive(!inventoryUI.activeSelf)));
         GameMetaInfo.keybindActions.Add(KeyCode.J, TriggerJournalLoad);
         GameMetaInfo.keybindActions.Add(KeyCode.C, characterSheet.OpenOrClose);
+
+        //Camera
+        GameMetaInfo.keybindActions.Add(KeyCode.LeftAlt, cam.GetComponent<PlayerCamera>().SwitchCameraMode);
     }
 
     //EVENT SUBSCRIPTIONS & Script property references
@@ -81,7 +85,7 @@ public class PlayerController : MonoBehaviour {
         HandleKeyboardInput();
         HandleConversationInput();
 
-        CheckStuck();
+        //CheckStuck();//TODO: Test
     }
     
     #region Event Triggers - Escape & Mission Journal
@@ -241,7 +245,6 @@ public class PlayerController : MonoBehaviour {
             {
                 try
                 {
-                    //todo: check target ain't null? or do in the methods / prob for abilcomp methods
                     GameMetaInfo.keybindActions[code]();
                 }
                 catch (Exception e)
@@ -300,6 +303,14 @@ public class PlayerController : MonoBehaviour {
 
     private void CheckStuck()
     {
-        //implement
+        //TODO: test
+        if(transform.localEulerAngles.x > 50f)
+        {
+            resetRotationTime = Time.time + checkStuckInterval;
+            if(Time.time > resetRotationTime)
+            {
+                transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
+            }
+        }
     }
 }

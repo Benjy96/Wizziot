@@ -52,17 +52,18 @@ public class MissionManager : MonoBehaviour {
     /// <summary>
     /// Grant a new part of a multi-stage mission, passing through the parent's rewards
     /// </summary>
-    public void GrantChildMission(Mission mission, string inkName, ref List<GameObject> missionRewards)
+    public void GrantChildMission(Mission mission)
     {
         Mission grantedMission;
-        //If the first of a chain, set child's parent reference as this, else carry previous parent
-        if (mission.parentMission == null)
+        //If the first of a chain (no parent), set child's parent reference as this, else carry previous parent
+
+        if (mission.parent.additionalMissionStages == null)
         {
-            grantedMission = mission.CreateMission(mission, inkName, ref missionRewards);
+            grantedMission = mission.CreateMission(mission.inkName);
         }
         else
         {
-            grantedMission = mission.CreateMission(mission.parentMission, inkName, ref missionRewards); 
+            grantedMission = mission.CreateChild();
         }
 
         if (!activeMissions.Contains(grantedMission) && activeMissions.Count < maxMissions)
@@ -82,39 +83,15 @@ public class MissionManager : MonoBehaviour {
         activeMissions.Remove(mission);
         completedMissions.Add(mission);
         
-        //Activate next mission stage (From parent)
-        if(mission.additionalMissionStages.Length > 0)
+        //Activate next mission stage (As parent)
+        if(mission.additionalMissionStages.Length > mission.missionStage)
         {
-            //Activate first non-null stage
-            foreach (Mission m in mission.additionalMissionStages)
-            {
-                //If stage is null or has been completed, continue
-                if (m == null || completedMissions.Contains(m)) continue;
-                else
-                {
-                    //Grant the child mission, and pass through the parent rewards
-                    GrantChildMission(m, mission.inkName, ref mission.missionRewards);
-                    break;
-                }
-            }
-        }
-        else if (mission.parentMission.additionalMissionStages.Length > 0)  //(From child)
-        {
-            //Activate first non-null stage
-            foreach (Mission m in mission.parentMission.additionalMissionStages)
-            {
-                //If stage is null or has been completed, continue
-                if (m == null || completedMissions.Contains(m)) continue;
-                else
-                {
-                    //Grant the child mission, and pass through the parent rewards
-                    GrantChildMission(m, mission.inkName, ref mission.missionRewards);
-                    break;
-                }
-            }
+            Debug.Log("here");
+            GrantChildMission(mission);
         }
         else
         {
+            Debug.Log("granting rewards");
             //If no stages left, grant the rewards
             mission.GrantRewards();
             StoryManager.Instance.CompleteInkMission(mission.inkName);

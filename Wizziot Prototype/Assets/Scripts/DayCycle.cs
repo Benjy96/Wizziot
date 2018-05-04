@@ -21,7 +21,6 @@ public class DayCycle : MonoBehaviour {
 
         if(transform.localEulerAngles.x > 180f)
         {
-            Debug.Log("Scaring");
             ScareAllEnemies();   
         }
 	}
