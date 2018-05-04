@@ -1,3 +1,10 @@
+To play, open:
+
+./Wizziot Prototype/Builds/wizziot.exe
+
+GitHub: https://www.github.com/Benjy96/Wizziot
+GitHub notes:
+--
 Designed in a way that you can create the game solely through the Unity inspector with maximum flexibility.
 
 # Story and Exciting AI Design
@@ -25,7 +32,7 @@ For example:
 
 **Features**
 - Story System (Interactive, e.g., KOTOR)
-- AI System - Each agent has an "EmotionChip" which stores their emotional disposition and calm state, angry state, etc..
+- Emotion System - Each agent has an "EmotionChip" which stores their emotional disposition and calm state, angry state, etc..
 - Mission System - Multi-stage missions & rewards, granted by Story NPCs (linked to Ink script). Mission journal & log
 - Stat System - Ability modifiers determined by the component base modifier value, equipped items, and game difficulty
 - Item System (Using Stat System)
@@ -34,9 +41,12 @@ For example:
 - Save/Load System - custom generic class (SaveData.cs) for storing Key Value pair data. Loader.cs/Saver.cs determine what to save.
 - Keybinding System
 - Spawn points for enemy prefabs
+- Day/night cycle that scares enemies using the emotion system
 
 **Most interesting scripts:**
 
 - EmotionChip.cs
-- State.cs
+- State.cs (& HideState.cs, AttackState.cs, etc..)
 - StoryManager.cs
+- MissionUI.cs (Compass code)
+- AbilityComponent.cs
