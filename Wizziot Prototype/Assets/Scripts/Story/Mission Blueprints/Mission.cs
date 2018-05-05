@@ -78,7 +78,7 @@ public class Mission : ScriptableObject {
         newMission.inkName = inkName;
 
         //Instantiate & Setup Waypoint Radius
-        newMission.waypointObject = Instantiate(MissionManager.Instance.waypointPrefab, location, Quaternion.Euler(-90f, 0f, 0f));
+        newMission.waypointObject = Instantiate(MissionManager.Instance.waypointPrefab, newMission.location, Quaternion.Euler(-90f, 0f, 0f));
         newMission.waypointRadius = newMission.waypointObject.GetComponent<SphereCollider>().radius;
         newMission.waypoint = newMission.waypointObject.GetComponent<Waypoint>();
 
@@ -90,6 +90,7 @@ public class Mission : ScriptableObject {
     /// </summary>
     public void Complete()
     {
+        Debug.Log("Destroying waypoint");
         Destroy(waypointObject);
     }
 

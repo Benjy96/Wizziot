@@ -18,4 +18,15 @@ MonoBehaviour:
   - compileAutomatically: 0
     inkAsset: {fileID: 102900000, guid: 6c22a3d37f42da242b4810f99285096d, type: 3}
     jsonAsset: {fileID: 4900000, guid: 3fa0c6383865c5c46ae13b94988742e7, type: 3}
-  compilationStack: []
+  compilationStack:
+  - state: 1
+    inkFile:
+      compileAutomatically: 0
+      inkAsset: {fileID: 102900000, guid: 6c22a3d37f42da242b4810f99285096d, type: 3}
+      jsonAsset: {fileID: 4900000, guid: 3fa0c6383865c5c46ae13b94988742e7, type: 3}
+    inkAbsoluteFilePath: C:/Users/Ben/Coding/Projects/Unity/Wizziot/Wizziot Prototype/Assets/Ink
+      & Story/Tutorial.ink
+    jsonAbsoluteFilePath: C:/Users/Ben/Coding/Projects/Unity/Wizziot/Wizziot Prototype/Assets/Ink
+      & Story/Tutorial.json
+    output: 
+    errorOutput: 
