@@ -1,3 +1,5 @@
+![combat gameplay](https://raw.githubusercontent.com/Benjy96/Wizziot/master/ability_instant.PNG)
+
 To play, open:
 
 ./Wizziot Prototype/Builds/wizziot.exe
@@ -50,6 +52,20 @@ For example:
 - StoryManager.cs
 - MissionUI.cs (Compass code)
 - AbilityComponent.cs
+
+**Feature Flows**
+
+*Story*
+
+![Story granting flowchart](https://raw.githubusercontent.com/Benjy96/Wizziot/master/story_flow%20(1).png)
+
+*Emotion-State AI Architecture*
+
+![Emotion-State change flowchart](https://raw.githubusercontent.com/Benjy96/Wizziot/master/emotion%20state%20process(1).png)
+
+*Missions (Using Scriptable Object System)*
+
+![Scriptable Object mission granting process](https://raw.githubusercontent.com/Benjy96/Wizziot/master/Mission_Creation_Flow_UML.png)
 
 **Architecture UML Diagram**
 
