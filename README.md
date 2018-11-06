@@ -53,4 +53,4 @@ For example:
 
 **Architecture UML Diagram**
 
-![Architecture Image](Wiz_Game_Management_UML (9) (8).png)
+![Architecture Image](https://raw.githubusercontent.com/Benjy96/Wizziot/master/Wiz_Game_Management_UML%20(9)%20(8).png)
