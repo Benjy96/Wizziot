@@ -50,3 +50,7 @@ For example:
 - StoryManager.cs
 - MissionUI.cs (Compass code)
 - AbilityComponent.cs
+
+**Architecture UML Diagram**
+
+![Architecture Image](Wiz_Game_Management_UML (9) (8).png)
