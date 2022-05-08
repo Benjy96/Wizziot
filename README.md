@@ -2,8 +2,7 @@ To play, open:
 
 ./Wizziot Prototype/Builds/wizziot.exe
 
-GitHub: https://www.github.com/Benjy96/Wizziot
-GitHub notes:
+What's good?:
 --
 Designed in a way that you can create the game solely through the Unity inspector with maximum flexibility.
 
