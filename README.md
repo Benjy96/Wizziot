@@ -1,5 +1,3 @@
-![combat gameplay](https://raw.githubusercontent.com/Benjy96/Wizziot/master/ability_instant.PNG)
-
 To play, open:
 
 ./Wizziot Prototype/Builds/wizziot.exe
