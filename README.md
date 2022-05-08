@@ -4,7 +4,7 @@ To play, open:
 
 What's good?:
 --
-Designed in a way that you can create a multiple-choice story and combat game with multiple enemy types, with differing emotional dispositions, solely through the Unity inspector with maximum flexibility.
+Architecture is designed in a way that a game designer can create a multiple-choice story with multiple enemy types, each with customisable emotional dispositions and behaviours, solely through the Unity inspector with maximum flexibility.
 
 # Story and Exciting AI Design
 *How the story is handled*
