@@ -4,7 +4,7 @@ To play, open:
 
 What's good?:
 --
-Designed in a way that you can create the game solely through the Unity inspector with maximum flexibility.
+Designed in a way that you can create a multiple-choice story and combat game with multiple enemy types, with differing emotional dispositions, solely through the Unity inspector with maximum flexibility.
 
 # Story and Exciting AI Design
 *How the story is handled*
