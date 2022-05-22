@@ -2,8 +2,8 @@ To play, open:
 
 ./Wizziot Prototype/Builds/wizziot.exe
 
-What's good?:
---
+# What's good?
+
 Architecture is designed in a way that a game designer can create a multiple-choice story with multiple enemy types, each with customisable emotional dispositions and behaviours, solely through the Unity inspector with maximum flexibility.
 
 # Architecture & Features
