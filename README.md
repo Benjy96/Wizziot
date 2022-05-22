@@ -23,7 +23,8 @@ Architecture is designed in a way that a game designer can create a multiple-cho
 - Spawn points for enemy prefabs
 - Day/night cycle that scares enemies using the emotion system
 
-*Example showing mission system and waypoints, targeted enemy, and ability bar.*
+*Example showing mission system and waypoints, targeting an enemy, and abilities and a ability bar.*
+
 ![Mission System Gameplay](https://raw.githubusercontent.com/Benjy96/Wizziot/master/UI_wizziot.PNG)
 
 **Most interesting scripts:**
