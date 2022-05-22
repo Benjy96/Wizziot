@@ -29,6 +29,8 @@ For example:
 
 5.) Add a spawner to the world, and hit Play.
 
+![Emotion-State change flowchart](https://raw.githubusercontent.com/Benjy96/Wizziot/master/emotion%20state%20process(1).png)
+
 **Features**
 - Story System (Interactive, e.g., KOTOR)
 - Emotion System - Each agent has an "EmotionChip" which stores their emotional disposition and calm state, angry state, etc..
