@@ -6,6 +6,8 @@ What's good?:
 --
 Architecture is designed in a way that a game designer can create a multiple-choice story with multiple enemy types, each with customisable emotional dispositions and behaviours, solely through the Unity inspector with maximum flexibility.
 
+![Architecture Image](https://raw.githubusercontent.com/Benjy96/Wizziot/master/Wiz_Game_Management_UML%20(9)%20(8).png)
+
 # Story and Exciting AI Design
 *How the story is handled*
 
