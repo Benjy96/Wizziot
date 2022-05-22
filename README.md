@@ -6,7 +6,30 @@ What's good?:
 --
 Architecture is designed in a way that a game designer can create a multiple-choice story with multiple enemy types, each with customisable emotional dispositions and behaviours, solely through the Unity inspector with maximum flexibility.
 
+# Architecture & Features
+
 ![Architecture Image](https://raw.githubusercontent.com/Benjy96/Wizziot/master/Wiz_Game_Management_UML%20(9)%20(8).png)
+
+**Features**
+- Story System (Interactive, e.g., KOTOR)
+- Emotion System - Each agent has an "EmotionChip" which stores their emotional disposition and calm state, angry state, etc..
+- Mission System - Multi-stage missions & rewards, granted by Story NPCs (linked to Ink script). Mission journal & log
+- Stat System - Ability modifiers determined by the component base modifier value, equipped items, and game difficulty
+- Item System (Using Stat System)
+- Ability/Combat System
+- Inventory System
+- Save/Load System - custom generic class (SaveData.cs) for storing Key Value pair data. Loader.cs/Saver.cs determine what to save.
+- Keybinding System
+- Spawn points for enemy prefabs
+- Day/night cycle that scares enemies using the emotion system
+
+**Most interesting scripts:**
+
+- EmotionChip.cs
+- State.cs (& HideState.cs, AttackState.cs, etc..)
+- StoryManager.cs
+- MissionUI.cs (Compass code)
+- AbilityComponent.cs
 
 # Story and Exciting AI Design
 **How the story is handled**
@@ -32,27 +55,6 @@ For example:
 5.) Add a spawner to the world, and hit Play.
 
 ![Emotion-State change flowchart](https://raw.githubusercontent.com/Benjy96/Wizziot/master/emotion%20state%20process(1).png)
-
-**Features**
-- Story System (Interactive, e.g., KOTOR)
-- Emotion System - Each agent has an "EmotionChip" which stores their emotional disposition and calm state, angry state, etc..
-- Mission System - Multi-stage missions & rewards, granted by Story NPCs (linked to Ink script). Mission journal & log
-- Stat System - Ability modifiers determined by the component base modifier value, equipped items, and game difficulty
-- Item System (Using Stat System)
-- Ability/Combat System
-- Inventory System
-- Save/Load System - custom generic class (SaveData.cs) for storing Key Value pair data. Loader.cs/Saver.cs determine what to save.
-- Keybinding System
-- Spawn points for enemy prefabs
-- Day/night cycle that scares enemies using the emotion system
-
-**Most interesting scripts:**
-
-- EmotionChip.cs
-- State.cs (& HideState.cs, AttackState.cs, etc..)
-- StoryManager.cs
-- MissionUI.cs (Compass code)
-- AbilityComponent.cs
 
 # Feature Flows
 
