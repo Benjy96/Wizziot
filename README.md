@@ -1,4 +1,4 @@
-![Mission System Gameplay](https://raw.githubusercontent.com/Benjy96/Wizziot/master/UI_wizziot.png)
+![Mission System Gameplay](https://raw.githubusercontent.com/Benjy96/Wizziot/master/UI_wizziot.PNG)
 
 To play, open:
 
