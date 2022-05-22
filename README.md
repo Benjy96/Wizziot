@@ -60,14 +60,6 @@ For example:
 
 ![Story granting flowchart](https://raw.githubusercontent.com/Benjy96/Wizziot/master/story_flow%20(1).png)
 
-*Emotion-State AI Architecture*
-
-![Emotion-State change flowchart](https://raw.githubusercontent.com/Benjy96/Wizziot/master/emotion%20state%20process(1).png)
-
 *Missions (Using Scriptable Object System)*
 
 ![Scriptable Object mission granting process](https://raw.githubusercontent.com/Benjy96/Wizziot/master/Mission_Creation_Flow_UML.png)
-
-**Architecture UML Diagram**
-
-![Architecture Image](https://raw.githubusercontent.com/Benjy96/Wizziot/master/Wiz_Game_Management_UML%20(9)%20(8).png)
