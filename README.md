@@ -66,6 +66,6 @@ For example:
 
 ![Scriptable Object mission granting process](https://raw.githubusercontent.com/Benjy96/Wizziot/master/Mission_Creation_Flow_UML.png)
 
-** AI Emotions **
+**AI Emotions**
 
 ![Emotion-State change flowchart](https://raw.githubusercontent.com/Benjy96/Wizziot/master/emotion%20state%20process(1).png)
