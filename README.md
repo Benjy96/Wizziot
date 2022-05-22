@@ -1,5 +1,3 @@
-![Mission System Gameplay](https://raw.githubusercontent.com/Benjy96/Wizziot/master/UI_wizziot.PNG)
-
 To play, open:
 
 ./Wizziot Prototype/Builds/wizziot.exe
@@ -24,6 +22,9 @@ Architecture is designed in a way that a game designer can create a multiple-cho
 - Keybinding System
 - Spawn points for enemy prefabs
 - Day/night cycle that scares enemies using the emotion system
+
+*Example showing mission system and waypoints, targeted enemy, and ability bar.*
+![Mission System Gameplay](https://raw.githubusercontent.com/Benjy96/Wizziot/master/UI_wizziot.PNG)
 
 **Most interesting scripts:**
 
