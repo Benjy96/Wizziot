@@ -1,3 +1,5 @@
+![Mission System Gameplay](https://raw.githubusercontent.com/Benjy96/Wizziot/master/UI_wizziot.png)
+
 To play, open:
 
 ./Wizziot Prototype/Builds/wizziot.exe
