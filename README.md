@@ -60,6 +60,6 @@ For example:
 
 ![Story granting flowchart](https://raw.githubusercontent.com/Benjy96/Wizziot/master/story_flow%20(1).png)
 
-*Missions (Using Scriptable Object System)*
+**Missions (Using Scriptable Object System)**
 
 ![Scriptable Object mission granting process](https://raw.githubusercontent.com/Benjy96/Wizziot/master/Mission_Creation_Flow_UML.png)
