@@ -9,11 +9,11 @@ Architecture is designed in a way that a game designer can create a multiple-cho
 ![Architecture Image](https://raw.githubusercontent.com/Benjy96/Wizziot/master/Wiz_Game_Management_UML%20(9)%20(8).png)
 
 # Story and Exciting AI Design
-*How the story is handled*
+**How the story is handled**
 
 Using Ink markup language and plugin with Unity to create a choice-based story RPG. Similar to games such as KOTOR and Mass Effect, you can select story dialogue choices which affect the subsequent story direction. Each section of the story is "pointed to" by Story NPCs in the game world. Conversing with them accesses the relevant part of the Story script.
 
-*Interesting AI Architecture*
+**Interesting AI Architecture**
 
 I designed an "EMOTIONAL STATE MACHINE", based upon a Finite State Machine and Goal Oriented Action Planning. The EmotionChip (EmotionChip.cs) provides whatever it is attached to with an emotional disposition and three primary emotions (anger, fear, calm). ANY external factor can INFLUENCE (through a public interface method) emotions. The INTENT of the external actor is INTERPRETED depending on the NPC's EMOTIONAL DISPOSITION. 
 
@@ -56,7 +56,7 @@ For example:
 
 **Feature Flows**
 
-*Story*
+**Story**
 
 ![Story granting flowchart](https://raw.githubusercontent.com/Benjy96/Wizziot/master/story_flow%20(1).png)
 
