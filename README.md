@@ -6,12 +6,9 @@ To play, open:
 
 Architecture is designed in a way that a game designer can create a multiple-choice story with multiple enemy types, each with customisable emotional dispositions and behaviours, solely through the Unity inspector with maximum flexibility.
 
-# Architecture & Features
+# Features
 
-![Architecture Image](https://raw.githubusercontent.com/Benjy96/Wizziot/master/Wiz_Game_Management_UML%20(9)%20(8).png)
-
-**Features**
-- Story System (Interactive, e.g., KOTOR)
+- Multiple Choice Story System (Interactive, e.g., KOTOR)
 - Emotion System - Each agent has an "EmotionChip" which stores their emotional disposition and calm state, angry state, etc..
 - Mission System - Multi-stage missions & rewards, granted by Story NPCs (linked to Ink script). Mission journal & log
 - Stat System - Ability modifiers determined by the component base modifier value, equipped items, and game difficulty
@@ -26,6 +23,10 @@ Architecture is designed in a way that a game designer can create a multiple-cho
 *Example showing mission system and waypoints, targeting an enemy, health and stamina system, and abilities and an ability bar.*
 
 ![Mission System Gameplay](https://raw.githubusercontent.com/Benjy96/Wizziot/master/UI_wizziot.PNG)
+
+# Architecture
+
+![Architecture Image](https://raw.githubusercontent.com/Benjy96/Wizziot/master/Wiz_Game_Management_UML%20(9)%20(8).png)
 
 **Most interesting scripts:**
 
